@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lorem Ipsum Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #output { white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 5px; min-height: 120px; }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
+          <span class="navbar-brand ms-2">Lorem Ipsum Generator</span>
+        </div>
+      </nav>
+
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">Lorem Ipsum Generator</h1>
+            <p class="text-muted small mb-0">
+              Hasilkan teks dummy (kata, kalimat, atau paragraf) untuk kebutuhan desain dan uji coba.
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <form id="loremForm" class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label class="form-label">Jumlah</label>
+          <input type="number" id="amount" class="form-control" min="1" value="3">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Tipe</label>
+          <select id="type" class="form-select">
+            <option value="paragraphs">Paragraf</option>
+            <option value="sentences">Kalimat</option>
+            <option value="words">Kata</option>
+          </select>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+          <button type="submit" class="btn btn-success w-100">Generate</button>
+        </div>
+      </form>
+
+      <div class="card shadow-sm p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0">Hasil:</h5>
+          <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
+        </div>
+        <div id="output"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\n\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\n\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\n\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\n\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
+
+function generateLorem(amount, type) {
+  var words = loremText.split(/\s+/);
+  var sentences = loremText.split(/(?<=[.!?])\s+/);
+  var paragraphs = loremText.split(/\n\s*\n/);
+  var result = '';
+
+  if (type === 'words') {
+    for (var i = 0; i < amount; i++) {
+      var randomIndex = Math.floor(Math.random() * words.length);
+      result += words[randomIndex] + ' ';
+    }
+  } else if (type === 'sentences') {
+    for (var i = 0; i < amount; i++) {
+      var randomIndex = Math.floor(Math.random() * sentences.length);
+      result += sentences[randomIndex] + ' ';
+    }
+  } else {
+    for (var i = 0; i < amount; i++) {
+      var randomIndex = Math.floor(Math.random() * paragraphs.length);
+      result += paragraphs[randomIndex] + '\n\n';
+    }
+  }
+
+  return result.trim();
+}
+
+document.getElementById('loremForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var amount = parseInt(document.getElementById('amount').value);
+  var type = document.getElementById('type').value;
+  document.getElementById('output').textContent = generateLorem(amount, type);
+});
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+  var text = document.getElementById('output').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(function() {
+    alert('Hasil berhasil dicopy!');
+  });
+});
+</script>
+</body>
+</html>

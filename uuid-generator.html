@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UUID / GUID Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .uuid-code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size:0.95rem; }
+    .toast-fixed { position: fixed; right: 20px; bottom: 20px; z-index: 9999; }
+  </style>
+</head>
+<body class="bg-light">
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar Desktop -->
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Mobile (Offcanvas) -->
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <main class="col-md-9 col-lg-10 p-4">
+      <!-- Navbar khusus mobile -->
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+            ☰
+          </button>
+          <span class="navbar-brand ms-2">UUID Generator</span>
+        </div>
+      </nav>
+
+      <header class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex gap-3 align-items-center">
+          <div class="bg-info rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">UUID / GUID Generator</h1>
+            <p class="text-muted small mb-0">Generate UUID v1, v3, v4, v5 — pilih quantity dan format (uppercase / braces).</p>
+          </div>
+        </div>
+      </header>
+
+      <form id="uuidForm" onsubmit="return generateUUIDs()" class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label for="version" class="form-label">Versi UUID</label>
+          <select id="version" class="form-select" required>
+            <option value="v4" selected>v4 (Random) — direkomendasikan</option>
+            <option value="v1">v1 (Time-based)</option>
+            <option value="v3">v3 (MD5, namespace+name)</option>
+            <option value="v5">v5 (SHA1, namespace+name)</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="count" class="form-label">Jumlah</label>
+          <select id="count" class="form-select">
+            <option value="1" selected>1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label for="format" class="form-label">Format</label>
+          <div class="d-flex gap-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="format_upper">
+              <label class="form-check-label" for="format_upper">UPPERCASE</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="format_braces">
+              <label class="form-check-label" for="format_braces">{braces}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" id="nsSection" style="display:none;">
+          <label for="namespace" class="form-label">Namespace UUID</label>
+          <input type="text" id="namespace" class="form-control" placeholder="6ba7b810-9dad-11d1-80b4-00c04fd430c8">
+          <div class="form-text">Default DNS namespace</div>
+        </div>
+
+        <div class="col-12">
+          <label for="name" class="form-label">Name (untuk v3/v5)</label>
+          <input type="text" id="name" class="form-control" placeholder="Name string (mis: example.com)">
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-info">Generate</button>
+          <button type="button" id="btnCopyAll" class="btn btn-outline-secondary ms-2" disabled>Copy All</button>
+        </div>
+      </form>
+
+      <div id="results"></div>
+    </main>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      © <span id="year">2025</span> WebApps · Dibuat dengan <span class="text-danger">❤️</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- crypto-js for MD5, SHA1 hashing in v3/v5 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const NAMESPACES = {
+  'dns': '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
+  'url': '6ba7b811-9dad-11d1-80b4-00c04fd430c8',
+  'oid': '6ba7b812-9dad-11d1-80b4-00c04fd430c8',
+  'x500': '6ba7b814-9dad-11d1-80b4-00c04fd430c8'
+};
+
+let generatedUUIDs = [];
+
+function uuidV1() {
+  const now = Date.now();
+  const time = (now + 12219292800000) * 10000 + Math.floor(Math.random() * 10000);
+  const timeLow = (time >>> 0).toString(16).padStart(8, '0');
+  const timeMid = ((time / 0x100000000) >>> 0).toString(16).padStart(4, '0');
+  const timeHiVersion = (((time / 0x1000000000000) >>> 0) & 0x0fff | 0x1000).toString(16).padStart(4, '0');
+
+  const clockSeq = Math.floor(Math.random() * 0x4000);
+  const clockSeqHi = (((clockSeq >> 8) & 0x3f) | 0x80).toString(16).padStart(2, '0');
+  const clockSeqLow = (clockSeq & 0xff).toString(16).padStart(2, '0');
+
+  const node = Math.floor(Math.random() * 0xffffffffffff).toString(16).padStart(12, '0');
+
+  return `${timeLow}-${timeMid}-${timeHiVersion}-${clockSeqHi}${clockSeqLow}-${node}`;
+}
+
+function uuidV4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function hexToBinary(hex) {
+  const binary = [];
+  for (let i = 0; i < hex.length; i += 2) {
+    binary.push(parseInt(hex.substr(i, 2), 16));
+  }
+  return new Uint8Array(binary);
+}
+
+function binaryToHex(arr) {
+  return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function uuidFromHash(name, namespace, version) {
+  const nsClean = namespace.replace(/[-{}]/g, '');
+  if (nsClean.length !== 32) return null;
+
+  const nsBinary = hexToBinary(nsClean);
+  const nameBytes = new TextEncoder().encode(name);
+  const combined = new Uint8Array(nsBinary.length + nameBytes.length);
+  combined.set(nsBinary);
+  combined.set(nameBytes, nsBinary.length);
+
+  let hash;
+  if (version === 3) {
+    hash = CryptoJS.MD5(binaryToHex(combined)).toString();
+  } else {
+    hash = CryptoJS.SHA1(binaryToHex(combined)).toString();
+  }
+
+  const timeLow = hash.substr(0, 8);
+  const timeMid = hash.substr(8, 4);
+  let timeHiVersion = hash.substr(12, 4);
+  let clockSeqHi = hash.substr(16, 2);
+  const clockSeqLow = hash.substr(18, 2);
+  const node = hash.substr(20, 12);
+
+  timeHiVersion = ((parseInt(timeHiVersion, 16) & 0x0fff) | (version << 12)).toString(16).padStart(4, '0');
+  clockSeqHi = ((parseInt(clockSeqHi, 16) & 0x3f) | 0x80).toString(16).padStart(2, '0');
+
+  return `${timeLow}-${timeMid}-${timeHiVersion}-${clockSeqHi}${clockSeqLow}-${node}`;
+}
+
+function formatUUID(uuid, uppercase, braces) {
+  let result = uppercase ? uuid.toUpperCase() : uuid.toLowerCase();
+  if (braces) result = '{' + result + '}';
+  return result;
+}
+
+function generateUUIDs() {
+  const version = document.getElementById('version').value;
+  const count = Math.min(50, Math.max(1, parseInt(document.getElementById('count').value)));
+  const upper = document.getElementById('format_upper').checked;
+  const braces = document.getElementById('format_braces').checked;
+  const name = document.getElementById('name').value;
+  let namespace = document.getElementById('namespace').value.trim();
+
+  if (!namespace) namespace = NAMESPACES.dns;
+
+  generatedUUIDs = [];
+  const results = [];
+
+  if ((version === 'v3' || version === 'v5') && name && !isValidNamespace(namespace)) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Namespace tidak valid. Masukkan UUID namespace yang benar.</div>';
+    return false;
+  }
+
+  for (let i = 0; i < count; i++) {
+    let uuid;
+    switch (version) {
+      case 'v1': uuid = uuidV1(); break;
+      case 'v3': uuid = uuidFromHash(name, namespace, 3); break;
+      case 'v5': uuid = uuidFromHash(name, namespace, 5); break;
+      default: uuid = uuidV4();
+    }
+
+    if (!uuid) {
+      document.getElementById('results').innerHTML = '<div class="alert alert-danger">Gagal generate UUID. Periksa input Anda.</div>';
+      return false;
+    }
+
+    const formatted = formatUUID(uuid, upper, braces);
+    results.push(formatted);
+    generatedUUIDs.push(formatted);
+  }
+
+  renderResults(results);
+  document.getElementById('btnCopyAll').disabled = false;
+
+  return false;
+}
+
+function isValidNamespace(ns) {
+  const pattern = /^(\{)?[0-9a-fA-F]{8}(-)?[0-9a-fA-F]{4}(-)?[0-9a-fA-F]{4}(-)?[0-9a-fA-F]{4}(-)?[0-9a-fA-F]{12}(\})?$/;
+  return pattern.test(ns);
+}
+
+function renderResults(uuids) {
+  let html = '<div class="card shadow-sm p-3 mb-4"><h5 class="mb-3">Hasil UUID</h5><div class="table-responsive"><table class="table table-sm table-bordered align-middle"><thead class="table-light"><tr><th>#</th><th>UUID</th><th>Aksi</th></tr></thead><tbody>';
+
+  uuids.forEach((uuid, idx) => {
+    const id = `uuid_${idx}`;
+    html += `<tr><td>${idx + 1}</td><td class="uuid-code"><code id="${id}">${escapeHtml(uuid)}</code></td><td><button class="btn btn-sm btn-outline-secondary" onclick="copyText('${id}')">Copy</button></td></tr>`;
+  });
+
+  html += '</tbody></table></div></div>';
+  document.getElementById('results').innerHTML = html;
+}
+
+function copyText(id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast align-items-center text-bg-light border p-2 toast-fixed';
+  toast.innerHTML = `<div class="d-flex"><div class="toast-body">${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close"></button></div>`;
+  document.body.appendChild(toast);
+  toast.querySelector('.btn-close').addEventListener('click', () => toast.remove());
+  setTimeout(() => toast.remove(), 2200);
+}
+
+document.getElementById('version').addEventListener('change', () => {
+  const v = document.getElementById('version').value;
+  document.getElementById('nsSection').style.display = (v === 'v3' || v === 'v5') ? 'block' : 'none';
+});
+
+document.getElementById('btnCopyAll').addEventListener('click', () => {
+  if (generatedUUIDs.length === 0) {
+    showToast('Tidak ada data untuk disalin');
+    return;
+  }
+  navigator.clipboard.writeText(generatedUUIDs.join('\n')).then(() => showToast('All UUIDs copied'));
+});
+</script>
+</body>
+</html>

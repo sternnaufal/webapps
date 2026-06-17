@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subnetting Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
+          <span class="navbar-brand ms-2">Subnetting Calculator</span>
+        </div>
+      </nav>
+
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-success rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">Subnetting Calculator</h1>
+            <p class="text-muted small mb-0">
+              Hitung network, broadcast, host range, jumlah host, subnet mask, wildcard mask, kelas IP, dan tabel hasil subnetting (CIDR).
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <form id="subnetForm" class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label for="ip" class="form-label">IP Address</label>
+          <input type="text" id="ip" class="form-control" placeholder="192.168.10.0" required>
+        </div>
+        <div class="col-md-4">
+          <label for="prefix" class="form-label">Prefix Awal</label>
+          <select id="prefix" class="form-select" required>
+            <option value="">/ Prefix</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="newprefix" class="form-label">Prefix Baru</label>
+          <select id="newprefix" class="form-select" required>
+            <option value="">/ Prefix</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">Hitung</button>
+        </div>
+      </form>
+
+      <div id="results"></div>
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+function ip2long(ip) {
+  return ip.split('.').reduce(function(acc, oct) {
+    return (acc << 8) + parseInt(oct, 10);
+  }, 0) >>> 0;
+}
+
+function long2ip(long) {
+  return [
+    (long >>> 24) & 0xFF,
+    (long >>> 16) & 0xFF,
+    (long >>> 8) & 0xFF,
+    long & 0xFF
+  ].join('.');
+}
+
+function getIPClass(firstOctet) {
+  if (firstOctet >= 1 && firstOctet <= 126) return { name: 'A', defaultPrefix: 8 };
+  if (firstOctet >= 128 && firstOctet <= 191) return { name: 'B', defaultPrefix: 16 };
+  if (firstOctet >= 192 && firstOctet <= 223) return { name: 'C', defaultPrefix: 24 };
+  if (firstOctet >= 224 && firstOctet <= 239) return { name: 'D (Multicast)', defaultPrefix: null };
+  return { name: 'E (Experimental)', defaultPrefix: null };
+}
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function calculate(e) {
+  e.preventDefault();
+
+  var ip = document.getElementById('ip').value.trim();
+  var prefix = parseInt(document.getElementById('prefix').value, 10);
+  var newprefix = parseInt(document.getElementById('newprefix').value, 10);
+
+  if (!ip || !prefix || !newprefix) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Lengkapi semua field.</div>';
+    return;
+  }
+
+  var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+  var match = ip.match(ipPattern);
+  if (!match) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">IP tidak valid.</div>';
+    return;
+  }
+
+  for (var i = 1; i <= 4; i++) {
+    var oct = parseInt(match[i], 10);
+    if (oct < 0 || oct > 255) {
+      document.getElementById('results').innerHTML = '<div class="alert alert-danger">IP tidak valid.</div>';
+      return;
+    }
+  }
+
+  if (prefix < 1 || prefix > 32 || newprefix < prefix || newprefix > 32) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Prefix tidak valid. Pastikan prefix baru &ge; prefix awal.</div>';
+    return;
+  }
+
+  var ipLong = ip2long(ip);
+  var mask = (-1 << (32 - prefix)) >>> 0;
+  var network = ipLong & mask;
+  var broadcast = (network | (~mask >>> 0)) >>> 0;
+
+  var firstHost = (prefix < 31) ? long2ip(network + 1) : 'N/A';
+  var lastHost = (prefix < 31) ? long2ip(broadcast - 1) : 'N/A';
+  var totalHosts = (prefix === 32) ? 1 : Math.max(0, Math.pow(2, 32 - prefix) - 2);
+
+  var firstOctet = parseInt(match[1], 10);
+  var ipClass = getIPClass(firstOctet);
+
+  var subnetMask = long2ip(mask);
+  var wildcard = long2ip((~mask) >>> 0);
+
+  var html = '<div class="card shadow-sm p-3 mb-4">';
+  html += '<h5 class="mb-3">Subnet Asal</h5>';
+  html += '<ul class="list-unstyled">';
+  html += '<li><strong>IP Address:</strong> ' + escapeHtml(ip) + '/' + prefix + '</li>';
+  html += '<li><strong>Kelas:</strong> ' + ipClass.name + '</li>';
+  if (ipClass.defaultPrefix) {
+    var defMask = (-1 << (32 - ipClass.defaultPrefix)) >>> 0;
+    html += '<li><strong>Default Mask:</strong> /' + ipClass.defaultPrefix + ' (' + long2ip(defMask) + ')</li>';
+  }
+  html += '<li><strong>Subnet Mask:</strong> ' + subnetMask + '</li>';
+  html += '<li><strong>Wildcard Mask:</strong> ' + wildcard + '</li>';
+  html += '<li><strong>Network Address:</strong> ' + long2ip(network) + '</li>';
+  html += '<li><strong>Broadcast Address:</strong> ' + long2ip(broadcast) + '</li>';
+  html += '<li><strong>First Host:</strong> ' + firstHost + '</li>';
+  html += '<li><strong>Last Host:</strong> ' + lastHost + '</li>';
+  html += '<li><strong>Jumlah Host:</strong> ' + totalHosts + '</li>';
+  html += '</ul></div>';
+
+  var subnetCount = Math.pow(2, newprefix - prefix);
+  var step = Math.pow(2, 32 - newprefix);
+  var maxSubnets = 4096;
+
+  if (subnetCount > maxSubnets) {
+    html += '<div class="alert alert-warning">Jumlah subnet (' + subnetCount + ') terlalu besar. Maksimal hanya ' + maxSubnets + ' subnet ditampilkan.</div>';
+  } else {
+    html += '<div class="card shadow-sm p-3">';
+    html += '<h5 class="mb-3">Hasil Pemotongan (' + subnetCount + ' subnet)</h5>';
+    html += '<div class="table-responsive">';
+    html += '<table class="table table-bordered table-sm">';
+    html += '<thead><tr><th>#</th><th>Network</th><th>First Host</th><th>Last Host</th><th>Broadcast</th><th>Hosts</th><th>CIDR</th></tr></thead><tbody>';
+
+    for (var i = 0; i < subnetCount; i++) {
+      var subNet = network + (i * step);
+      var subBroadcast = subNet + step - 1;
+      var subFirst = (newprefix < 31) ? long2ip(subNet + 1) : 'N/A';
+      var subLast = (newprefix < 31) ? long2ip(subBroadcast - 1) : 'N/A';
+      var subHosts = (newprefix === 32) ? 1 : Math.max(0, Math.pow(2, 32 - newprefix) - 2);
+
+      html += '<tr>';
+      html += '<td>' + (i + 1) + '</td>';
+      html += '<td>' + long2ip(subNet) + '/' + newprefix + '</td>';
+      html += '<td>' + subFirst + '</td>';
+      html += '<td>' + subLast + '</td>';
+      html += '<td>' + long2ip(subBroadcast) + '</td>';
+      html += '<td>' + subHosts + '</td>';
+      html += '<td>/' + newprefix + '</td>';
+      html += '</tr>';
+    }
+
+    html += '</tbody></table></div></div>';
+  }
+
+  document.getElementById('results').innerHTML = html;
+}
+
+(function init() {
+  var prefixSelect = document.getElementById('prefix');
+  var newprefixSelect = document.getElementById('newprefix');
+  for (var i = 1; i <= 32; i++) {
+    var opt1 = document.createElement('option');
+    opt1.value = i;
+    opt1.textContent = '/' + i;
+    prefixSelect.appendChild(opt1);
+
+    var opt2 = document.createElement('option');
+    opt2.value = i;
+    opt2.textContent = '/' + i;
+    newprefixSelect.appendChild(opt2);
+  }
+  document.getElementById('subnetForm').addEventListener('submit', calculate);
+})();
+</script>
+</body>
+</html>

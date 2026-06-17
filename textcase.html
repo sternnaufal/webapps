@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Text Case Converter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
+          <span class="navbar-brand ms-2">Text Case Converter</span>
+        </div>
+      </nav>
+
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">Text Case Converter</h1>
+            <p class="text-muted small mb-0">
+              Ubah teks menjadi UPPERCASE, lowercase, Title Case, snake_case, atau camelCase.
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <div class="row g-3 mb-4">
+        <div class="col-12">
+          <label for="text" class="form-label">Masukkan Teks</label>
+          <textarea id="text" class="form-control" rows="4" placeholder="Masukkan teks di sini..."></textarea>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="upper" class="btn btn-primary convert-btn">UPPERCASE</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="lower" class="btn btn-primary convert-btn">lowercase</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="title" class="btn btn-primary convert-btn">Title Case</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="snake" class="btn btn-primary convert-btn">snake_case</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="camel" class="btn btn-primary convert-btn">camelCase</button>
+        </div>
+      </div>
+
+      <div id="resultContainer" style="display:none;">
+        <div class="card shadow-sm p-3">
+          <h5 class="mb-3">Hasil</h5>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <pre id="resultText" class="bg-light p-3 border rounded mb-0 flex-grow-1"></pre>
+            <button id="copyResultBtn" class="btn btn-sm btn-outline-secondary ms-2">Copy</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+function convert(action) {
+  var input = document.getElementById('text').value;
+  if (!input.trim()) {
+    alert('Masukkan teks terlebih dahulu');
+    return;
+  }
+
+  var result = '';
+  switch (action) {
+    case 'upper':
+      result = input.toUpperCase();
+      break;
+    case 'lower':
+      result = input.toLowerCase();
+      break;
+    case 'title':
+      result = input.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+      break;
+    case 'snake':
+      result = input.toLowerCase().trim().replace(/\s+/g, '_');
+      break;
+    case 'camel':
+      result = input.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); }).replace(/\s+/g, '').replace(/^./, function(c) { return c.toLowerCase(); });
+      break;
+  }
+
+  document.getElementById('resultText').textContent = result;
+  document.getElementById('resultContainer').style.display = 'block';
+}
+
+document.querySelectorAll('.convert-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    convert(this.getAttribute('data-action'));
+  });
+});
+
+document.getElementById('copyResultBtn').addEventListener('click', function() {
+  var text = document.getElementById('resultText').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copyResultBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+});
+</script>
+</body>
+</html>

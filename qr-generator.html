@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Code Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3 d-none d-md-block">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+      <hr class="border-secondary">
+      <div class="small">
+        <p class="text-secondary mb-1 fw-semibold">Tentang alat ini</p>
+        <p class="text-secondary mb-0">Buat QR code dari teks atau URL. Semua proses terjadi di browser kamu (privasi aman).</p>
+      </div>
+    </aside>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
+          <span class="navbar-brand ms-2">QR Code Generator</span>
+        </div>
+      </nav>
+
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">QR Code Generator</h1>
+            <p class="text-muted small mb-0">Masukkan teks/URL &rarr; atur opsi &rarr; generate &amp; download sebagai PNG.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <form id="qrForm" class="row g-3" onsubmit="return false;">
+                <div class="col-12">
+                  <label for="qrText" class="form-label">Teks / URL</label>
+                  <textarea id="qrText" class="form-control" rows="4" placeholder="https://naufalrakha.my.id atau teks biasa..."></textarea>
+                  <div class="form-text">Tip: kamu juga bisa prefill via URL parameter <code>?t=...</code></div>
+                </div>
+
+                <div class="col-6 col-md-4">
+                  <label for="qrSize" class="form-label">Ukuran</label>
+                  <select id="qrSize" class="form-select">
+                    <option value="128">128 px</option>
+                    <option value="192">192 px</option>
+                    <option value="256" selected>256 px</option>
+                    <option value="320">320 px</option>
+                    <option value="384">384 px</option>
+                    <option value="512">512 px</option>
+                    <option value="640">640 px</option>
+                    <option value="768">768 px</option>
+                    <option value="896">896 px</option>
+                    <option value="1024">1024 px</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-4">
+                  <label for="qrEcc" class="form-label">Error Correction</label>
+                  <select id="qrEcc" class="form-select">
+                    <option value="L">L (7%)</option>
+                    <option value="M" selected>M (15%)</option>
+                    <option value="Q">Q (25%)</option>
+                    <option value="H">H (30%)</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-4">
+                  <label for="qrMargin" class="form-label">Margin</label>
+                  <select id="qrMargin" class="form-select">
+                    <option value="0">0 px</option>
+                    <option value="1">1 px</option>
+                    <option value="2" selected>2 px</option>
+                    <option value="3">3 px</option>
+                    <option value="4">4 px</option>
+                    <option value="5">5 px</option>
+                    <option value="6">6 px</option>
+                    <option value="7">7 px</option>
+                    <option value="8">8 px</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-4">
+                  <label for="qrFg" class="form-label">Warna Foreground</label>
+                  <input type="color" id="qrFg" class="form-control form-control-color" value="#000000" title="Pilih warna kode">
+                </div>
+
+                <div class="col-6 col-md-4">
+                  <label for="qrBg" class="form-label">Warna Background</label>
+                  <input type="color" id="qrBg" class="form-control form-control-color" value="#ffffff" title="Pilih warna latar">
+                </div>
+
+                <div class="col-12 d-flex gap-2">
+                  <button type="button" id="btnGenerate" class="btn btn-primary">Generate</button>
+                  <button type="button" id="btnDownload" class="btn btn-outline-secondary" disabled>Download PNG</button>
+                  <button type="button" id="btnSample" class="btn btn-outline-info">Sample</button>
+                  <button type="button" id="btnClear" class="btn btn-outline-danger">Clear</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Preview</h5>
+              <div id="qrWrap" class="border rounded d-flex align-items-center justify-content-center p-3 bg-white" style="min-height:320px;">
+                <div id="qrcode" class="user-select-none"></div>
+              </div>
+              <div class="small text-muted mt-3">
+                Ukuran preview dibatasi max 320px. Unduhan akan sesuai ukuran pilihan kamu.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-muted small mt-4">
+        Catatan: QR code dibuat sepenuhnya di sisi klien (browser). Tidak ada data yang dikirim ke server.
+      </p>
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+(function(){
+  var elText   = document.getElementById('qrText');
+  var elSize   = document.getElementById('qrSize');
+  var elEcc    = document.getElementById('qrEcc');
+  var elMargin = document.getElementById('qrMargin');
+  var elFg     = document.getElementById('qrFg');
+  var elBg     = document.getElementById('qrBg');
+  var elGen    = document.getElementById('btnGenerate');
+  var elDl     = document.getElementById('btnDownload');
+  var elSample = document.getElementById('btnSample');
+  var elClear  = document.getElementById('btnClear');
+  var wrap     = document.getElementById('qrcode');
+  var wrapOuter= document.getElementById('qrWrap');
+
+  var lastCanvasDataURL = null;
+
+  function clearQR(){
+    wrap.innerHTML = '';
+    lastCanvasDataURL = null;
+    elDl.disabled = true;
+  }
+
+  function gen(previewOnly){
+    if (previewOnly === undefined) previewOnly = true;
+    var text = elText.value.trim();
+    if (!text) return;
+
+    clearQR();
+
+    var LEVEL = QRCode.CorrectLevel;
+    var chosenLevel = LEVEL[elEcc.value] || LEVEL.M;
+    var size = parseInt(elSize.value, 10);
+    var previewSize = Math.min(size, 320);
+
+    new QRCode(wrap, {
+      text: text,
+      width: previewOnly ? previewSize : size,
+      height: previewOnly ? previewSize : size,
+      colorDark: elFg.value,
+      colorLight: elBg.value,
+      correctLevel: chosenLevel
+    });
+
+    wrapOuter.style.padding = Math.max(0, parseInt(elMargin.value, 10)) + 'px';
+
+    setTimeout(function() {
+      var canvas = wrap.querySelector('canvas');
+      if (canvas) {
+        lastCanvasDataURL = canvas.toDataURL('image/png');
+        elDl.disabled = false;
+      }
+    }, 80);
+  }
+
+  function downloadPNG(){
+    var text = elText.value.trim();
+    if (!text) return;
+
+    var LEVEL = QRCode.CorrectLevel;
+    var chosenLevel = LEVEL[elEcc.value] || LEVEL.M;
+    var size = parseInt(elSize.value, 10);
+
+    var tempDiv = document.createElement('div');
+    new QRCode(tempDiv, {
+      text: text,
+      width: size,
+      height: size,
+      colorDark: elFg.value,
+      colorLight: elBg.value,
+      correctLevel: chosenLevel
+    });
+
+    setTimeout(function() {
+      var canvas = tempDiv.querySelector('canvas');
+      if (canvas) {
+        var a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'qrcode.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    }, 100);
+  }
+
+  function sample(){
+    elText.value = 'https://webapps.naufalrakha.my.id/?ref=qr';
+    elSize.value = '320';
+    elEcc.value  = 'M';
+    elMargin.value = '2';
+    elFg.value = '#000000';
+    elBg.value = '#ffffff';
+    gen();
+  }
+
+  function clearAll(){
+    elText.value = '';
+    clearQR();
+    elText.focus();
+  }
+
+  (function() {
+    var params = new URLSearchParams(location.search);
+    var t = params.get('t');
+    if (t) {
+      elText.value = decodeURIComponent(t);
+      gen();
+    }
+  })();
+
+  elGen.addEventListener('click', function() { gen(true); });
+  elDl.addEventListener('click', downloadPNG);
+  elSample.addEventListener('click', sample);
+  elClear.addEventListener('click', clearAll);
+
+  [elSize, elEcc, elMargin, elFg, elBg].forEach(function(el) {
+    el.addEventListener('change', function() { if (elText.value.trim()) gen(); });
+  });
+})();
+</script>
+</body>
+</html>

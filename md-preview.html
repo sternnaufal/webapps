@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Markdown Previewer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github.min.css">
+  <style>
+    #editor { height: 300px; font-family: monospace; resize: vertical; }
+    #preview { border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: #fff; min-height: 300px; overflow-y: auto; }
+    pre { background: #f8f9fa; padding: 10px; border-radius: 6px; }
+    .table-md td { font-family: monospace; white-space: nowrap; }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
+          <span class="navbar-brand ms-2">Markdown Previewer</span>
+        </div>
+      </nav>
+
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">📝 Markdown Previewer</h1>
+            <p class="text-muted small mb-0">Tulis Markdown di kiri, lihat hasil HTML di kanan. Klik tombol copy untuk menyalin hasil.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label for="editor" class="form-label">Markdown Input</label>
+          <textarea id="editor" class="form-control" placeholder="# Judul&#10;Teks **bold** dan *italic*&#10;- List item 1&#10;- List item 2"></textarea>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label class="form-label mb-0">Live Preview</label>
+            <button id="copyBtn" class="btn btn-sm btn-outline-primary">📋 Copy HTML</button>
+          </div>
+          <div id="preview"></div>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <h5>📖 Markdown Cheat Sheet</h5>
+        <table class="table table-bordered table-striped table-sm table-md mt-3">
+          <thead class="table-light">
+            <tr><th>Simbol</th><th>Fungsi</th><th>Contoh</th><th>Hasil</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>#</td><td>Heading 1</td><td><code># Judul</code></td><td><h1>Judul</h1></td></tr>
+            <tr><td>##</td><td>Heading 2</td><td><code>## Subjudul</code></td><td><h2>Subjudul</h2></td></tr>
+            <tr><td>**teks**</td><td>Bold</td><td><code>**teks tebal**</code></td><td><b>teks tebal</b></td></tr>
+            <tr><td>*teks*</td><td>Italic</td><td><code>*teks miring*</code></td><td><i>teks miring</i></td></tr>
+            <tr><td>- item</td><td>List</td><td><code>- satu<br>- dua</code></td><td><ul><li>satu</li><li>dua</li></ul></td></tr>
+            <tr><td>[teks](url)</td><td>Link</td><td><code>[Google](https://google.com)</code></td><td><a href="https://google.com">Google</a></td></tr>
+            <tr><td>`kode`</td><td>Inline Code</td><td><code>`console.log("Hi")`</code></td><td><code>console.log("Hi")</code></td></tr>
+            <tr><td>```</td><td>Code Block</td><td><code>```js<br>console.log("Hi")<br>```</code></td><td><pre><code>console.log("Hi")</code></pre></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js/lib/common.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+  highlight: function(code, lang) {
+    return hljs.highlightAuto(code, [lang]).value;
+  }
+});
+
+var editor = document.getElementById('editor');
+var preview = document.getElementById('preview');
+var copyBtn = document.getElementById('copyBtn');
+
+function updatePreview() {
+  preview.innerHTML = marked.parse(editor.value);
+}
+
+editor.addEventListener('input', updatePreview);
+
+copyBtn.addEventListener('click', function() {
+  navigator.clipboard.writeText(preview.innerHTML)
+    .then(function() {
+      copyBtn.textContent = '✅ Copied!';
+      setTimeout(function() { copyBtn.textContent = '📋 Copy HTML'; }, 1500);
+    });
+});
+
+editor.value = '# Selamat Datang 👋\n\nIni **Markdown Previewer**!\n\n- Tulisan *italic*\n- Tulisan **bold**\n- Link: [Web Naufal Rakha](https://naufalrakha.my.id)\n\n```js\nconsole.log(\'Hello World\');\n```';
+updatePreview();
+</script>
+</body>
+</html>

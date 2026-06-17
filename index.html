@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebApps Tools</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/"/>
+  <!-- Favicon dasar -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="48x48">
+  <!-- Favicon untuk browser desktop -->
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <!-- Android Chrome -->
+  <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+  <!-- Apple Touch Icon (iOS / Safari) -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body class="bg-light">
+
+<!-- Navbar khusus mobile -->
+<nav class="navbar navbar-dark bg-dark d-md-none sticky-top">
+  <div class="container-fluid">
+    <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+      ☰
+    </button>
+    <span class="navbar-brand ms-2">WebApps NaufalRakha</span>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar Desktop -->
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Mobile (Offcanvas) -->
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4">
+            <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+              <span class="fw-bold">WebApps NaufalRakha</span>
+            </a>
+          </div>
+          <nav class="nav flex-column mb-auto">
+            <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+            <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+            <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+            <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+            <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+            <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+            <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+            <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+            <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+            <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+            <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+            <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+            <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+          </nav>
+          <div class="mt-4 small">
+            <hr class="border-secondary">
+            <p class="mb-1"><strong>About</strong></p>
+            <p class="mb-0 text-light">
+              <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <main class="col-md-9 col-lg-10 p-4">
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">Selamat Datang 👋</h1>
+            <p class="text-muted small mb-0">Kumpulan WebApps untuk kebutuhan sehari-hari IT & umum.</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- List Tools -->
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Konverter Bilangan</h5>
+              <p class="card-text small text-muted">Konversi antar desimal, biner, oktal, dan heksadesimal.</p>
+              <a href="konverter-bilangan.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Kalkulator Subnetting</h5>
+              <p class="card-text small text-muted">Hitung network, host range, broadcast, dan CIDR subnetting.</p>
+              <a href="subnetting.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Hash Generator</h5>
+              <p class="card-text small text-muted">Generate hash MD5, SHA1, SHA256, dll dari teks.</p>
+              <a href="hash-generator.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Password Generator</h5>
+              <p class="card-text small text-muted">Buat password acak yang kuat dan aman.</p>
+              <a href="password-generator.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Base64 Encode/Decode</h5>
+              <p class="card-text small text-muted">Ubah teks ke Base64 atau decode kembali.</p>
+              <a href="base64-coded.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">UUID/GUID Generator</h5>
+              <p class="card-text small text-muted">Generate UUID/GUID unik untuk identifikasi data.</p>
+              <a href="uuid-generator.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">QR Code Generator</h5>
+              <p class="card-text small text-muted">Buat dan unduh QR code dari teks atau URL.</p>
+              <a href="qr-generator.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Color Picker</h5>
+              <p class="card-text small text-muted">Pilih dan konversi warna ke berbagai format.</p>
+              <a href="color-picker.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Markdown Previewer</h5>
+              <p class="card-text small text-muted">Preview markdown dengan syntax highlighting.</p>
+              <a href="md-preview.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Lorem Ipsum</h5>
+              <p class="card-text small text-muted">Generate placeholder text Lorem Ipsum.</p>
+              <a href="lorem-ipsum.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Text Case Generator</h5>
+              <p class="card-text small text-muted">Ubah format teks (uppercase, lowercase, title case, dll).</p>
+              <a href="textcase.html" class="btn btn-success btn-sm">Buka</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      © <span id="year">2025</span> WebApps · Dibuat dengan <span class="text-danger">❤️</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

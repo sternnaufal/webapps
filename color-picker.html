@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Color Picker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .preview-box { width: 100%; height: 150px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; transition: background 0.3s; }
+    .saved-colors div { width: 40px; height: 40px; border-radius: 6px; cursor: pointer; border: 1px solid #ddd; }
+    input.copyable { cursor: text; }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
+          <span class="navbar-brand ms-2">Color Picker</span>
+        </div>
+      </nav>
+
+      <header class="mb-4 d-flex align-items-center gap-3">
+        <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+        <div>
+          <h1 class="h3 mb-0">🎨 Color Picker</h1>
+          <p class="text-muted small mb-0">Pilih atau masukkan warna, semua format akan otomatis sinkron.</p>
+        </div>
+      </header>
+
+      <div class="card p-4 shadow">
+        <div id="previewBox" class="preview-box mb-3">Preview</div>
+
+        <div class="text-center mb-3">
+          <input type="color" id="colorInput" value="#3498db"
+                 class="form-control form-control-color"
+                 style="width: 120px; height: 120px;">
+        </div>
+
+        <div class="mb-3">
+          <label for="alphaRange" class="form-label">Transparansi (Alpha)</label>
+          <input type="range" class="form-range" min="0" max="1" step="0.01" id="alphaRange" value="1">
+        </div>
+
+        <div class="row text-center">
+          <div class="col-md-3 mb-3">
+            <h6>HEX</h6>
+            <input type="text" id="hexValue" class="form-control copyable">
+          </div>
+          <div class="col-md-3 mb-3">
+            <h6>RGB</h6>
+            <input type="text" id="rgbValue" class="form-control copyable">
+          </div>
+          <div class="col-md-3 mb-3">
+            <h6>HSL</h6>
+            <input type="text" id="hslValue" class="form-control copyable">
+          </div>
+          <div class="col-md-3 mb-3">
+            <h6>CMYK</h6>
+            <input type="text" id="cmykValue" class="form-control copyable">
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-secondary" id="btnRandom">🎲 Random</button>
+          <button class="btn btn-success" id="btnSave">💾 Save</button>
+        </div>
+
+        <div class="mt-4">
+          <h6>Saved Colors</h6>
+          <div id="savedColors" class="d-flex gap-2 flex-wrap saved-colors"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+function hexToRgb(hex) {
+  hex = hex.replace(/^#/, '');
+  if (hex.length === 3) hex = hex.split('').map(function(c) { return c + c; }).join('');
+  var bigint = parseInt(hex, 16);
+  return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+}
+
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(function(x) { return x.toString(16).padStart(2, '0'); }).join('').toUpperCase();
+}
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+  if (max === min) { h = s = 0; }
+  else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function rgbToCmyk(r, g, b) {
+  var c = 1 - r/255, m = 1 - g/255, y = 1 - b/255;
+  var k = Math.min(c, m, y);
+  if (k === 1) return [0, 0, 0, 100];
+  return [
+    Math.round(((c - k) / (1 - k)) * 100),
+    Math.round(((m - k) / (1 - k)) * 100),
+    Math.round(((y - k) / (1 - k)) * 100),
+    Math.round(k * 100)
+  ];
+}
+
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100; h /= 360;
+  var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  var p = 2 * l - q;
+  function f(t) { if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1/6) return p + (q - p) * 6 * t; if (t < 1/2) return q; if (t < 2/3) return p + (q - p) * (2/3 - t) * 6; return p; }
+  return [Math.round(f(h + 1/3) * 255), Math.round(f(h) * 255), Math.round(f(h - 1/3) * 255)];
+}
+
+function updateValues(from) {
+  if (from === undefined) from = 'picker';
+  var hex, r, g, b, h, s, l, c, m, y, k;
+  var alpha = parseFloat(document.getElementById('alphaRange').value);
+
+  if (from === 'hex') {
+    hex = document.getElementById('hexValue').value;
+    if (!/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(hex)) return;
+    var rgb = hexToRgb(hex);
+    r = rgb[0]; g = rgb[1]; b = rgb[2];
+  } else if (from === 'rgb') {
+    var match = document.getElementById('rgbValue').value.match(/\d+/g);
+    if (!match) return;
+    r = Number(match[0]); g = Number(match[1]); b = Number(match[2]);
+    hex = rgbToHex(r, g, b);
+  } else if (from === 'hsl') {
+    var match = document.getElementById('hslValue').value.match(/\d+/g);
+    if (!match) return;
+    h = Number(match[0]); s = Number(match[1]); l = Number(match[2]);
+    var rgb2 = hslToRgb(h, s, l);
+    r = rgb2[0]; g = rgb2[1]; b = rgb2[2];
+    hex = rgbToHex(r, g, b);
+  } else {
+    hex = document.getElementById('colorInput').value;
+    var rgb = hexToRgb(hex);
+    r = rgb[0]; g = rgb[1]; b = rgb[2];
+  }
+
+  var hsl = rgbToHsl(r, g, b);
+  h = hsl[0]; s = hsl[1]; l = hsl[2];
+  var cmyk = rgbToCmyk(r, g, b);
+  c = cmyk[0]; m = cmyk[1]; y = cmyk[2]; k = cmyk[3];
+
+  document.getElementById('hexValue').value = hex;
+  document.getElementById('rgbValue').value = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  document.getElementById('hslValue').value = 'hsl(' + h + ',' + s + '%,' + l + '%)';
+  document.getElementById('cmykValue').value = 'cmyk(' + c + '%,' + m + '%,' + y + '%,' + k + '%)';
+
+  var preview = document.getElementById('previewBox');
+  preview.style.background = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  preview.style.color = (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000' : '#fff';
+  preview.textContent = hex + ' (' + alpha + ')';
+
+  document.getElementById('colorInput').value = hex;
+}
+
+function copyOnClick(e) {
+  navigator.clipboard.writeText(e.target.value);
+  e.target.classList.add('border-success');
+  setTimeout(function() { e.target.classList.remove('border-success'); }, 500);
+}
+
+function randomColor() {
+  var rand = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+  document.getElementById('colorInput').value = rand;
+  updateValues();
+}
+
+function saveColor() {
+  var hex = document.getElementById('hexValue').value;
+  var saved = JSON.parse(localStorage.getItem('savedColors') || '[]');
+  if (!saved.includes(hex)) saved.push(hex);
+  localStorage.setItem('savedColors', JSON.stringify(saved));
+  renderSaved();
+}
+
+function renderSaved() {
+  var saved = JSON.parse(localStorage.getItem('savedColors') || '[]');
+  var container = document.getElementById('savedColors');
+  container.innerHTML = '';
+  saved.forEach(function(hex) {
+    var box = document.createElement('div');
+    box.style.background = hex;
+    box.title = hex;
+    box.onclick = function() { document.getElementById('hexValue').value = hex; updateValues('hex'); };
+    container.appendChild(box);
+  });
+}
+
+document.getElementById('colorInput').addEventListener('input', function() { updateValues(); });
+document.getElementById('alphaRange').addEventListener('input', function() { updateValues(); });
+document.getElementById('hexValue').addEventListener('input', function() { updateValues('hex'); });
+document.getElementById('rgbValue').addEventListener('input', function() { updateValues('rgb'); });
+document.getElementById('hslValue').addEventListener('input', function() { updateValues('hsl'); });
+document.querySelectorAll('.copyable').forEach(function(el) { el.addEventListener('click', copyOnClick); });
+document.getElementById('btnRandom').addEventListener('click', randomColor);
+document.getElementById('btnSave').addEventListener('click', saveColor);
+
+updateValues();
+renderSaved();
+</script>
+</body>
+</html>

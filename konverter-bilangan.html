@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Konverter Bilangan</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar Desktop -->
+    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4">
+          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
+            <span class="fw-bold">WebApps NaufalRakha</span>
+          </a>
+        </div>
+        <nav class="nav flex-column mb-auto">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+        <div class="mt-4 small">
+          <hr class="border-secondary">
+          <p class="mb-1"><strong>About</strong></p>
+          <p class="mb-0 text-light">
+            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Mobile (Offcanvas) -->
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+          <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
+          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
+          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
+          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
+          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
+          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
+          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
+          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
+          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
+          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
+          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <main class="col-md-9 col-lg-10 p-4">
+      <!-- Navbar khusus mobile -->
+      <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
+        <div class="container-fluid">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+            ☰
+          </button>
+          <span class="navbar-brand ms-2">Konverter Bilangan</span>
+        </div>
+      </nav>
+
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div>
+            <h1 class="h3 mb-0">Konverter Bilangan</h1>
+            <p class="text-muted small mb-0">Desimal ⇄ Hexadesimal ⇄ Biner ⇄ Oktal — real-time, akurat, dukung angka besar (BigInt).</p>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-outline-secondary" id="btnClear" title="Bersihkan semua">🧹</button>
+          <button class="btn btn-outline-secondary" id="btnSample" title="Contoh cepat">🎲</button>
+        </div>
+      </header>
+
+      <div class="row g-4">
+        <!-- Desimal -->
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Desimal <span class="badge bg-primary">basis 10</span></h5>
+              <div class="input-group mb-2">
+                <input id="dec" class="form-control" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
+                <button class="btn btn-outline-secondary" data-copy="dec" title="Salin">📋</button>
+              </div>
+              <div class="small text-muted">Karakter valid: 0–9, opsional tanda minus.</div>
+              <div class="mt-2 d-flex justify-content-between">
+                <span class="badge bg-secondary" id="decInfo">—</span>
+              </div>
+              <div class="text-danger small mt-1" id="decErr"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hex -->
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Hexadesimal <span class="badge bg-primary">basis 16</span></h5>
+              <div class="input-group mb-2">
+                <input id="hex" class="form-control" placeholder="Misal: 1A3F atau -ff" />
+                <button class="btn btn-outline-secondary" data-copy="hex" title="Salin">📋</button>
+              </div>
+              <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="hexUpper">
+                <label class="form-check-label" for="hexUpper">Uppercase</label>
+              </div>
+              <div class="small text-muted">Karakter valid: 0–9, a–f. Gunakan tanda minus untuk negatif.</div>
+              <div class="mt-2 d-flex justify-content-between">
+                <span class="badge bg-secondary" id="hexInfo">—</span>
+              </div>
+              <div class="text-danger small mt-1" id="hexErr"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Biner -->
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Biner <span class="badge bg-primary">basis 2</span></h5>
+              <div class="input-group mb-2">
+                <input id="bin" class="form-control" placeholder="Misal: 101010 atau -1111" />
+                <button class="btn btn-outline-secondary" data-copy="bin" title="Salin">📋</button>
+              </div>
+              <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="binGroup" checked>
+                <label class="form-check-label" for="binGroup">Kelompok 4-bit</label>
+              </div>
+              <div class="small text-muted">Karakter valid: 0 atau 1. Min untuk negatif.</div>
+              <div class="mt-2 d-flex justify-content-between">
+                <span class="badge bg-secondary" id="binInfo">—</span>
+              </div>
+              <div class="text-danger small mt-1" id="binErr"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oktal -->
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">Oktal <span class="badge bg-primary">basis 8</span></h5>
+              <div class="input-group mb-2">
+                <input id="oct" class="form-control" placeholder="Misal: 755 atau -17" />
+                <button class="btn btn-outline-secondary" data-copy="oct" title="Salin">📋</button>
+              </div>
+              <div class="small text-muted">Karakter valid: 0–7. Min untuk negatif.</div>
+              <div class="mt-2 d-flex justify-content-between">
+                <span class="badge bg-secondary" id="octInfo">—</span>
+              </div>
+              <div class="text-danger small mt-1" id="octErr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-muted small mt-4">
+        💡 Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
+      </p>
+    </main>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <p class="mb-0">
+      © <span id="year">2025</span> WebApps · Dibuat dengan <span class="text-danger">❤️</span> oleh
+      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
+    </p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const el = id => document.getElementById(id);
+
+const RE = {
+  dec: /^-?[0-9]+$/i,
+  hex: /^-?[0-9a-f]+$/i,
+  bin: /^-?[01]+$/,
+  oct: /^-?[0-7]+$/
+};
+
+function stripGrouping(s){ return s.replace(/\s+/g, ""); }
+
+function parseToBigInt(str, base){
+  let neg = false;
+  let s = stripGrouping(String(str).trim());
+  if (!s) return null;
+  if (s[0] === '-') { neg = true; s = s.slice(1); }
+  let bi;
+  if (base === 10) {
+    bi = BigInt(s);
+  } else if (base === 16) {
+    bi = BigInt('0x' + s);
+  } else if (base === 2) {
+    bi = BigInt('0b' + s);
+  } else if (base === 8) {
+    bi = BigInt('0o' + s);
+  } else {
+    bi = [...s].reduce((acc, ch)=>{
+      const d = parseInt(ch, 36);
+      if (Number.isNaN(d) || d >= base) throw new Error('invalid');
+      return acc * BigInt(base) + BigInt(d);
+    }, 0n);
+  }
+  return neg ? -bi : bi;
+}
+
+function toBaseString(bi, base, {uppercase=false}={}){
+  let s = bi.toString(base);
+  if (uppercase) s = s.toUpperCase();
+  return s;
+}
+
+function groupBinary(s){
+  const neg = s.startsWith('-');
+  if (neg) s = s.slice(1);
+  const pad = (4 - (s.length % 4)) % 4;
+  s = '0'.repeat(pad) + s;
+  const parts = s.match(/.{1,4}/g) || [s];
+  const out = parts.join(' ');
+  return (neg?'-':'') + out;
+}
+
+function setInfo(){
+  const dec = el('dec').value.trim();
+  const hex = el('hex').value.trim();
+  const bin = el('bin').value.trim();
+  const oct = el('oct').value.trim();
+  el('decInfo').textContent = dec ? `${dec.length} digit` : '—';
+  el('hexInfo').textContent = hex ? `${stripGrouping(hex).length} digit` : '—';
+  el('binInfo').textContent = bin ? `${stripGrouping(bin).replace(/^-/, '').replace(/\s+/g,'').length} bit` : '—';
+  el('octInfo').textContent = oct ? `${stripGrouping(oct).length} digit` : '—';
+}
+
+function showError(which, msg){ el(which+'Err').textContent = msg || ''; }
+function clearErrors(){ ['dec','hex','bin','oct'].forEach(x=>showError(x,'')); }
+
+let editing = null;
+
+function updateFrom(source){
+  if (editing && editing !== source) return;
+  editing = source;
+  clearErrors();
+
+  const optsUpper = el('hexUpper').checked;
+  const optsGroup = el('binGroup').checked;
+
+  const raw = el(source).value.trim();
+  const valid = RE[source].test(stripGrouping(raw));
+
+  if (!raw){
+    ['dec','hex','bin','oct'].forEach(id=>{ el(id).value=''; });
+    setInfo(); editing=null; return;
+  }
+
+  if (!valid){
+    showError(source, 'Input tidak valid untuk basis ini.');
+    editing=null; return;
+  }
+
+  try{
+    const base = {dec:10, hex:16, bin:2, oct:8}[source];
+    const bi = parseToBigInt(raw, base);
+
+    el('dec').value = bi.toString(10);
+    el('hex').value = toBaseString(bi, 16, {uppercase: optsUpper});
+    let bin = toBaseString(bi, 2);
+    el('bin').value = optsGroup ? groupBinary(bin) : bin;
+    el('oct').value = toBaseString(bi, 8);
+    setInfo();
+  } catch(e){
+    showError(source, 'Terjadi kesalahan saat konversi.');
+  } finally{
+    editing=null;
+  }
+}
+
+['dec','hex','bin','oct'].forEach(id=>{
+  el(id).addEventListener('input', ()=>updateFrom(id));
+  el(id).addEventListener('blur', setInfo);
+});
+
+el('hexUpper').addEventListener('change', ()=>{
+  if (el('hex').value.trim()) updateFrom('hex');
+});
+el('binGroup').addEventListener('change', ()=>{
+  if (el('bin').value.trim()) updateFrom('bin');
+  else if (el('dec').value.trim()) updateFrom('dec');
+});
+
+document.querySelectorAll('[data-copy]').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    const id = btn.getAttribute('data-copy');
+    const val = el(id).value;
+    if (!val) return;
+    try{ await navigator.clipboard.writeText(val); btn.textContent='✅'; setTimeout(()=>btn.textContent='📋', 900); }
+    catch{ btn.textContent='❌'; setTimeout(()=>btn.textContent='📋', 900); }
+  });
+});
+
+el('btnClear').addEventListener('click', ()=>{
+  ['dec','hex','bin','oct'].forEach(id=>el(id).value='');
+  clearErrors(); setInfo(); el('dec').focus();
+});
+
+el('btnSample').addEventListener('click', ()=>{
+  el('hexUpper').checked = true; el('binGroup').checked = true;
+  el('dec').value = '2025'; updateFrom('dec');
+});
+
+setInfo();
+</script>
+</body>
+</html>
