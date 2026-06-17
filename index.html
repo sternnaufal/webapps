@@ -43,27 +43,84 @@
             <span class="fw-bold">WebApps NaufalRakha</span>
           </a>
         </div>
-        <nav class="nav flex-column mb-auto">
+        <nav class="nav flex-column mb-auto" id="sidebarNavDesktop">
           <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
           <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
-          <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
-          <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
-          <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
-          <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
-          <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
-          <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
-          <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
-          <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
-          <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
-          <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
-          <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
-          <a class="nav-link text-white" href="json-formatter.html">JSON Formatter</a>
-          <a class="nav-link text-white" href="url-encode.html">URL Encode/Decode</a>
-          <a class="nav-link text-white" href="regex-tester.html">Regex Tester</a>
-          <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
-          <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
-          <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <hr class="border-secondary my-2">
+
+          <div class="sidebar-cat">
+            <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catDev" role="button" aria-expanded="true">
+              <span>Developer Tools</span> <span class="cat-chevron">&#x25BC;</span>
+            </a>
+            <div class="collapse show" id="catDev" data-bs-parent="#sidebarNavDesktop">
+              <a class="nav-link text-white ps-3 py-1 small" href="hash-generator.html">Hash Generator</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="uuid-generator.html">UUID/GUID Generator</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="base64-coded.html">Base64 Encode/Decode</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="json-formatter.html">JSON Formatter</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="regex-tester.html">Regex Tester</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="diff-checker.html">Diff Checker</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="sql-formatter.html">SQL Formatter</a>
+            </div>
+          </div>
+
+          <div class="sidebar-cat">
+            <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catNetwork" role="button" aria-expanded="false">
+              <span>Network &amp; URL</span> <span class="cat-chevron">&#x25BC;</span>
+            </a>
+            <div class="collapse" id="catNetwork" data-bs-parent="#sidebarNavDesktop">
+              <a class="nav-link text-white ps-3 py-1 small" href="subnetting.html">Kalkulator Subnetting</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="ip-calculator.html">IP Calculator</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="url-encode.html">URL Encode/Decode</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="cron-builder.html">Cron Builder</a>
+            </div>
+          </div>
+
+          <div class="sidebar-cat">
+            <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catText" role="button" aria-expanded="false">
+              <span>Text &amp; Media</span> <span class="cat-chevron">&#x25BC;</span>
+            </a>
+            <div class="collapse" id="catText" data-bs-parent="#sidebarNavDesktop">
+              <a class="nav-link text-white ps-3 py-1 small" href="textcase.html">Text Case Converter</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="lorem-ipsum.html">Lorem Ipsum</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="md-preview.html">Markdown Previewer</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="color-picker.html">Color Picker</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="image-to-base64.html">Image to Base64</a>
+            </div>
+          </div>
+
+          <div class="sidebar-cat">
+            <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catGen" role="button" aria-expanded="false">
+              <span>Generators</span> <span class="cat-chevron">&#x25BC;</span>
+            </a>
+            <div class="collapse" id="catGen" data-bs-parent="#sidebarNavDesktop">
+              <a class="nav-link text-white ps-3 py-1 small" href="password-generator.html">Password Generator</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="qr-generator.html">QR Code Generator</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="rsa-generator.html">RSA Key Generator</a>
+            </div>
+          </div>
+
+          <div class="sidebar-cat">
+            <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catConvert" role="button" aria-expanded="false">
+              <span>Converters</span> <span class="cat-chevron">&#x25BC;</span>
+            </a>
+            <div class="collapse" id="catConvert" data-bs-parent="#sidebarNavDesktop">
+              <a class="nav-link text-white ps-3 py-1 small" href="konverter-bilangan.html">Konverter Bilangan</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="unit-converter.html">Unit Converter</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="time-converter.html">Time Converter</a>
+            </div>
+          </div>
+
+          <div class="sidebar-cat">
+            <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catUtils" role="button" aria-expanded="false">
+              <span>Utilities</span> <span class="cat-chevron">&#x25BC;</span>
+            </a>
+            <div class="collapse" id="catUtils" data-bs-parent="#sidebarNavDesktop">
+              <a class="nav-link text-white ps-3 py-1 small" href="timer.html">Timer &amp; Stopwatch</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="csv-viewer.html">CSV Viewer</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="contrast-checker.html">Contrast Checker</a>
+              <a class="nav-link text-white ps-3 py-1 small" href="screen-recorder.html">Screen Recorder</a>
+            </div>
+          </div>
         </nav>
         <div class="mt-4 small">
           <hr class="border-secondary">
@@ -88,28 +145,85 @@
               <span class="fw-bold">WebApps NaufalRakha</span>
             </a>
           </div>
-          <nav class="nav flex-column mb-auto">
-            <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
-            <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
-            <a class="nav-link text-white" href="konverter-bilangan.html">Konverter Bilangan</a>
-            <a class="nav-link text-white" href="subnetting.html">Kalkulator Subnetting</a>
-            <a class="nav-link text-white" href="hash-generator.html">Hash Generator</a>
-            <a class="nav-link text-white" href="password-generator.html">Password Generator</a>
-            <a class="nav-link text-white" href="base64-coded.html">Base64 Encode/Decode</a>
-            <a class="nav-link text-white" href="uuid-generator.html">UUID/GUID Generator</a>
-            <a class="nav-link text-white" href="qr-generator.html">QR Generator</a>
-            <a class="nav-link text-white" href="color-picker.html">Color Picker</a>
-            <a class="nav-link text-white" href="md-preview.html">Markdown Previewer</a>
-            <a class="nav-link text-white" href="lorem-ipsum.html">Lorem Ipsum</a>
-            <a class="nav-link text-white" href="textcase.html">Text Case Generator</a>
-            <a class="nav-link text-white" href="json-formatter.html">JSON Formatter</a>
-            <a class="nav-link text-white" href="url-encode.html">URL Encode/Decode</a>
-            <a class="nav-link text-white" href="regex-tester.html">Regex Tester</a>
-            <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
-            <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
-            <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-            <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
-          </nav>
+            <nav class="nav flex-column mb-auto" id="sidebarNavMobile">
+              <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
+              <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
+              <hr class="border-secondary my-2">
+
+              <div class="sidebar-cat">
+                <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catDevM" role="button" aria-expanded="true">
+                  <span>Developer Tools</span> <span class="cat-chevron">&#x25BC;</span>
+                </a>
+                <div class="collapse show" id="catDevM" data-bs-parent="#sidebarNavMobile">
+                  <a class="nav-link text-white ps-3 py-1 small" href="hash-generator.html">Hash Generator</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="uuid-generator.html">UUID/GUID Generator</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="base64-coded.html">Base64 Encode/Decode</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="json-formatter.html">JSON Formatter</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="regex-tester.html">Regex Tester</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="diff-checker.html">Diff Checker</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="sql-formatter.html">SQL Formatter</a>
+                </div>
+              </div>
+
+              <div class="sidebar-cat">
+                <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catNetworkM" role="button" aria-expanded="false">
+                  <span>Network &amp; URL</span> <span class="cat-chevron">&#x25BC;</span>
+                </a>
+                <div class="collapse" id="catNetworkM" data-bs-parent="#sidebarNavMobile">
+                  <a class="nav-link text-white ps-3 py-1 small" href="subnetting.html">Kalkulator Subnetting</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="ip-calculator.html">IP Calculator</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="url-encode.html">URL Encode/Decode</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="cron-builder.html">Cron Builder</a>
+                </div>
+              </div>
+
+              <div class="sidebar-cat">
+                <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catTextM" role="button" aria-expanded="false">
+                  <span>Text &amp; Media</span> <span class="cat-chevron">&#x25BC;</span>
+                </a>
+                <div class="collapse" id="catTextM" data-bs-parent="#sidebarNavMobile">
+                  <a class="nav-link text-white ps-3 py-1 small" href="textcase.html">Text Case Converter</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="lorem-ipsum.html">Lorem Ipsum</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="md-preview.html">Markdown Previewer</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="color-picker.html">Color Picker</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="image-to-base64.html">Image to Base64</a>
+                </div>
+              </div>
+
+              <div class="sidebar-cat">
+                <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catGenM" role="button" aria-expanded="false">
+                  <span>Generators</span> <span class="cat-chevron">&#x25BC;</span>
+                </a>
+                <div class="collapse" id="catGenM" data-bs-parent="#sidebarNavMobile">
+                  <a class="nav-link text-white ps-3 py-1 small" href="password-generator.html">Password Generator</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="qr-generator.html">QR Code Generator</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="rsa-generator.html">RSA Key Generator</a>
+                </div>
+              </div>
+
+              <div class="sidebar-cat">
+                <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catConvertM" role="button" aria-expanded="false">
+                  <span>Converters</span> <span class="cat-chevron">&#x25BC;</span>
+                </a>
+                <div class="collapse" id="catConvertM" data-bs-parent="#sidebarNavMobile">
+                  <a class="nav-link text-white ps-3 py-1 small" href="konverter-bilangan.html">Konverter Bilangan</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="unit-converter.html">Unit Converter</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="time-converter.html">Time Converter</a>
+                </div>
+              </div>
+
+              <div class="sidebar-cat">
+                <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href="#catUtilsM" role="button" aria-expanded="false">
+                  <span>Utilities</span> <span class="cat-chevron">&#x25BC;</span>
+                </a>
+                <div class="collapse" id="catUtilsM" data-bs-parent="#sidebarNavMobile">
+                  <a class="nav-link text-white ps-3 py-1 small" href="timer.html">Timer &amp; Stopwatch</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="csv-viewer.html">CSV Viewer</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="contrast-checker.html">Contrast Checker</a>
+                  <a class="nav-link text-white ps-3 py-1 small" href="screen-recorder.html">Screen Recorder</a>
+                </div>
+              </div>
+            </nav>
           <div class="mt-4 small">
             <hr class="border-secondary">
             <p class="mb-1"><strong>About</strong></p>
@@ -119,6 +233,7 @@
           </div>
         </div>
       </div>
+    </div>
 
     <!-- Main App -->
     <main class="col-md-9 col-lg-10 p-4">

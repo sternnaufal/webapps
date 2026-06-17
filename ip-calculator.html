@@ -1,27 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Base64 Encode / Decode</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>IP Calculator</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></head>
 <body class="bg-light">
-
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar Desktop -->
-    <aside class="d-none d-md-block col-md-3 col-lg-2 sidebar text-white min-vh-100 p-3">
-      <div class="d-flex flex-column h-100">
-        <div class="mb-4">
-          <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
-            <span class="fw-bold">WebApps NaufalRakha</span>
-          </a>
-        </div>
+<div class="container-fluid"><div class="row">
+<aside class="d-none d-md-block col-md-3 col-lg-2 sidebar text-white min-vh-100 p-3">
+<div class="d-flex flex-column h-100">
+<div class="mb-4"><a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white"><span class="fw-bold">WebApps NaufalRakha</span></a></div>
         <nav class="nav flex-column mb-auto" id="sidebarNavDesktop">
           <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
           <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
@@ -101,23 +85,12 @@
             </div>
           </div>
         </nav>
-        <div class="mt-4 small">
-          <hr class="border-secondary">
-          <p class="mb-1"><strong>About</strong></p>
-          <p class="mb-0 text-light">
-            <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.
-          </p>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Sidebar Mobile (Offcanvas) -->
-    <div class="offcanvas offcanvas-start sidebar text-white" tabindex="-1" id="mobileSidebar">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Menu</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-      </div>
-      <div class="offcanvas-body">
+<div class="mt-4 small"><hr class="border-secondary"><p class="mb-1"><strong>About</strong></p><p class="mb-0 text-light"><span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.</p></div>
+</div>
+</aside>
+<div class="offcanvas offcanvas-start sidebar text-white" tabindex="-1" id="mobileSidebar">
+<div class="offcanvas-header"><h5 class="offcanvas-title">Menu</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button></div>
+<div class="offcanvas-body">
         <nav class="nav flex-column mb-auto" id="sidebarNavMobile">
           <a class="nav-link text-white" href="https://naufalrakha.my.id"><span class="fw-bold">Back to Root</span></a>
           <a class="nav-link text-white" href="index.html"><span class="fw-bold">Home</span></a>
@@ -196,133 +169,23 @@
               <a class="nav-link text-white ps-3 py-1 small" href="screen-recorder.html">Screen Recorder</a>
             </div>
           </div>
-        </nav>
-      </div>
-    </div>
-
-    <!-- Main App -->
-    <main class="col-md-9 col-lg-10 p-4">
-      <!-- Navbar khusus mobile -->
-      <nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4">
-        <div class="container-fluid">
-          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-            ☰
-          </button>
-          <span class="navbar-brand ms-2">Base64 Encode/Decode</span>
-        </div>
-      </nav>
-
-      <header class="d-flex justify-content-between align-items-center mb-4">
-        <div class="d-flex align-items-center gap-3">
-          <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
-          <div>
-            <h1 class="h3 mb-0">Base64 Encode / Decode</h1>
-            <p class="text-muted small mb-0">
-              Ubah teks menjadi Base64 atau sebaliknya.
-            </p>
-          </div>
-        </div>
-      </header>
-
-      <!-- Form -->
-      <div class="row g-3 mb-4">
-        <div class="col-12">
-          <label for="text" class="form-label">Masukkan Teks</label>
-          <textarea id="text" class="form-control" rows="4" placeholder="Teks untuk encode atau Base64 untuk decode"></textarea>
-        </div>
-        <div class="col-md-6 d-grid">
-          <button type="button" id="encodeBtn" class="btn btn-success">Encode</button>
-        </div>
-        <div class="col-md-6 d-grid">
-          <button type="button" id="decodeBtn" class="btn btn-warning">Decode</button>
-        </div>
-      </div>
-
-      <!-- Hasil -->
-      <div id="results" style="display: none;">
-        <div class="card shadow-sm p-3">
-          <h5 class="mb-3">Hasil</h5>
-          <div id="resultContent"></div>
-          <div class="mt-3">
-            <button type="button" id="copyBtn" class="btn btn-sm btn-outline-secondary">Copy</button>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="bg-dark text-light py-3">
-  <div class="container text-center small">
-    <p class="mb-0">
-      © <span id="year">2025</span> WebApps · Dibuat dengan <span class="text-danger">❤️</span> oleh
-      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
-    </p>
-  </div>
-</footer>
-
-<!-- Bootstrap JS -->
+        </nav></div></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button><span class="navbar-brand ms-2">IP Calculator</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#10b981;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">IP Calculator</h1><p class="text-muted small mb-0">Informasi detail IP Address — representasi biner, kelas, range, dan reverse lookup.</p></div></header>
+<div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label">IP Address</label><input id="ipInput" class="form-control font-mono" value="192.168.1.1"><button id="btnCalc" class="btn btn-primary mt-2">Hitung</button></div></div>
+<div id="ipResult" style="display:none;"><div class="card shadow-sm p-3"><div id="ipInfo" class="row g-3"></div></div></div>
+</main></div></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">&copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
-let currentResult = '';
-
-function encode() {
-  const input = document.getElementById('text').value;
-  if (!input.trim()) {
-    alert('Masukkan teks terlebih dahulu');
-    return;
-  }
-  try {
-    currentResult = btoa(unescape(encodeURIComponent(input)));
-    showResult(`<p><strong>Encoded:</strong></p><pre class='bg-light p-3 border rounded'>${escapeHtml(currentResult)}</pre>`);
-  } catch (e) {
-    alert('Gagal encode: ' + e.message);
-  }
-}
-
-function decode() {
-  const input = document.getElementById('text').value;
-  if (!input.trim()) {
-    alert('Masukkan Base64 terlebih dahulu');
-    return;
-  }
-  try {
-    currentResult = decodeURIComponent(escape(atob(input)));
-    showResult(`<p><strong>Decoded:</strong></p><pre class='bg-light p-3 border rounded'>${escapeHtml(currentResult)}</pre>`);
-  } catch (e) {
-    alert('Input bukan Base64 yang valid!');
-  }
-}
-
-function showResult(html) {
-  document.getElementById('resultContent').innerHTML = html;
-  document.getElementById('results').style.display = 'block';
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function copyResult() {
-  navigator.clipboard.writeText(currentResult).then(() => {
-    const btn = document.getElementById('copyBtn');
-    const oldText = btn.textContent;
-    btn.textContent = '✅ Copied!';
-    setTimeout(() => { btn.textContent = oldText; }, 2000);
-  }).catch(() => {
-    alert('Gagal menyalin');
-  });
-}
-
-document.getElementById('encodeBtn').addEventListener('click', encode);
-document.getElementById('decodeBtn').addEventListener('click', decode);
-document.getElementById('copyBtn').addEventListener('click', copyResult);
-</script>
-</body>
-</html>
+<script>document.getElementById('year').textContent=new Date().getFullYear();
+function calc(){var ip=document.getElementById('ipInput').value.trim(),parts=ip.split('.');if(parts.length!==4||parts.some(function(p){var n=parseInt(p,10);return isNaN(n)||n<0||n>255})){document.getElementById('ipResult').innerHTML='<div class="alert alert-danger">IP tidak valid</div>';document.getElementById('ipResult').style.display='block';return}
+var nums=parts.map(function(p){return parseInt(p,10)}),long=((nums[0]<<24)+(nums[1]<<16)+(nums[2]<<8)+nums[3])>>>0,binary=nums.map(function(n){return n.toString(2).padStart(8,'0')}).join('.');
+var oct1=nums[0],cls,defMask;if(oct1>=1&&oct1<=126){cls='A';defMask='255.0.0.0'}else if(oct1>=128&&oct1<=191){cls='B';defMask='255.255.0.0'}else if(oct1>=192&&oct1<=223){cls='C';defMask='255.255.255.0'}else if(oct1>=224&&oct1<=239){cls='D (Multicast)';defMask='N/A'}else{cls='E (Experimental)';defMask='N/A'}
+var range=cls==='A'?nums[0]+'.0.0.0 - '+nums[0]+'.255.255.255':cls==='B'?nums[0]+'.'+nums[1]+'.0.0 - '+nums[0]+'.'+nums[1]+'.255.255':cls==='C'?nums[0]+'.'+nums[1]+'.'+nums[2]+'.0 - '+nums[0]+'.'+nums[1]+'.'+nums[2]+'.255':'-';
+var hex='0x'+nums.map(function(n){return n.toString(16).padStart(2,'0')}).join(''),rev='';if(cls==='A'||cls==='B'||cls==='C'){var r=nums.slice().reverse();rev=r.join('.')+'.in-addr.arpa'}
+var h='';function r(l,v){h+='<div class="col-md-6 col-lg-4"><div class="p-3 rounded" style="background:var(--surface-soft)"><small class="text-muted">'+l+'</small><div class="fw-semibold font-mono mt-1">'+v+'</div></div></div>'}
+r('IP Address',ip);r('Decimal',long);r('Binary',binary);r('Hex',hex);r('Class',cls);r('Default Mask',defMask);r('Network Range',range);r('Reverse DNS',rev);r('Octets',nums.join(' . '));
+document.getElementById('ipInfo').innerHTML=h;document.getElementById('ipResult').style.display='block'}
+document.getElementById('btnCalc').addEventListener('click',calc);calc();</script>
+</body></html>
