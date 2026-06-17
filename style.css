@@ -38,18 +38,17 @@ a:hover { color: var(--accent); }
 
 .sidebar {
   background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  overflow: hidden;
 }
-.sidebar .flex-column.h-100 {
-  overflow: hidden;
-}
-.sidebar .nav.flex-column.mb-auto {
+.sidebar .sidebar-header { flex-shrink: 0; text-align: center; padding: 2px 0 6px; }
+.sidebar .sidebar-search-wrap { flex-shrink: 0; padding: 0 0 4px; }
+.sidebar .sidebar-tools {
   overflow-y: auto;
   flex: 1 1 auto;
   min-height: 0;
+}
+.sidebar .sidebar-footer {
+  flex-shrink: 0;
+  padding-top: 4px;
 }
 [data-bs-theme=dark] .sidebar { background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); }
 [data-bs-theme=dark] .bg-white,
