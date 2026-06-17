@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum Generator</title>
+  <title>Regex Tester</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    #output { white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 5px; min-height: 120px; }
+    .match-highlight { background: #fff3cd; border-radius: 2px; }
+    .match-highlight.active { background: #ffc107; }
+    .match-info { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 0.8rem; }
+    #testArea { font-family: monospace; font-size: 0.9rem; resize: vertical; min-height: 180px; }
   </style>
 </head>
 <body class="bg-light">
@@ -40,7 +43,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
         <div class="mt-4 small">
           <hr class="border-secondary">
@@ -78,7 +81,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
       </div>
     </div>
@@ -87,7 +90,7 @@
       <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
         <div class="container-fluid">
           <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
-          <span class="navbar-brand ms-2">Lorem Ipsum Generator</span>
+          <span class="navbar-brand ms-2">Regex Tester</span>
         </div>
       </nav>
 
@@ -95,38 +98,47 @@
         <div class="d-flex align-items-center gap-3">
           <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
           <div>
-            <h1 class="h3 mb-0">Lorem Ipsum Generator</h1>
-            <p class="text-muted small mb-0">
-              Hasilkan teks dummy (kata, kalimat, atau paragraf) untuk kebutuhan desain dan uji coba.
-            </p>
+            <h1 class="h3 mb-0">Regex Tester</h1>
+            <p class="text-muted small mb-0">Uji coba regular expression secara live — match, group, dan replace.</p>
           </div>
         </div>
       </header>
 
-      <form id="loremForm" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label class="form-label">Jumlah</label>
-          <input type="number" id="amount" class="form-control" min="1" value="3">
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label for="regexPattern" class="form-label">Pattern</label>
+          <div class="input-group">
+            <span class="input-group-text">/</span>
+            <input type="text" id="regexPattern" class="form-control font-monospace" placeholder="[a-z]+" value="\b\w{4,}\b">
+            <span class="input-group-text">/</span>
+            <input type="text" id="regexFlags" class="form-control font-monospace" placeholder="gmi" value="gm" style="max-width: 80px;">
+          </div>
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Tipe</label>
-          <select id="type" class="form-select">
-            <option value="paragraphs">Paragraf</option>
-            <option value="sentences">Kalimat</option>
-            <option value="words">Kata</option>
-          </select>
+        <div class="col-md-3">
+          <label class="form-label">Replace with</label>
+          <input type="text" id="replaceText" class="form-control font-monospace" placeholder="(opsional)">
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-success w-100">Generate</button>
+        <div class="col-md-3 d-flex align-items-end gap-2">
+          <button id="btnReplace" class="btn btn-warning">Replace</button>
+          <button id="btnClear" class="btn btn-outline-danger">Clear</button>
         </div>
-      </form>
+      </div>
 
-      <div class="card shadow-sm p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h5 class="mb-0">Hasil:</h5>
-          <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <label for="testArea" class="form-label">Test String</label>
+          <textarea id="testArea" class="form-control" placeholder="Masukkan teks untuk diuji...">The quick brown fox jumps over the lazy dog. Contact: support@example.com or call 555-1234.</textarea>
+          <div id="highlightedPreview" class="border rounded p-3 mt-2 bg-white" style="min-height: 80px; white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;"></div>
         </div>
-        <div id="output"></div>
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header fw-semibold">Match Results</div>
+            <div class="card-body p-2">
+              <div id="matchCount" class="small mb-2 text-muted">0 matches</div>
+              <div id="matchList" style="max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.8rem;"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -134,10 +146,7 @@
 
 <footer class="bg-dark text-light py-3">
   <div class="container text-center small">
-    <p class="mb-0">
-      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
-      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
-    </p>
+    <p class="mb-0">&copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p>
   </div>
 </footer>
 
@@ -145,48 +154,80 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 <script>
-var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\n\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\n\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\n\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\n\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
+var pattern = document.getElementById('regexPattern');
+var flags = document.getElementById('regexFlags');
+var testArea = document.getElementById('testArea');
+var preview = document.getElementById('highlightedPreview');
+var matchCount = document.getElementById('matchCount');
+var matchList = document.getElementById('matchList');
+var replaceText = document.getElementById('replaceText');
 
-function generateLorem(amount, type) {
-  var words = loremText.split(/\s+/);
-  var sentences = loremText.split(/(?<=[.!?])\s+/);
-  var paragraphs = loremText.split(/\n\s*\n/);
-  var result = '';
+function update() {
+  try {
+    var re = new RegExp(pattern.value, flags.value);
+    var text = testArea.value;
+    var matches = [];
+    var m;
+    while ((m = re.exec(text)) !== null) {
+      matches.push({ index: m.index, text: m[0], groups: m.slice(1) });
+      if (!re.global) break;
+    }
 
-  if (type === 'words') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * words.length);
-      result += words[randomIndex] + ' ';
+    if (matches.length === 0) {
+      preview.textContent = text;
+      matchCount.textContent = '0 matches';
+      matchList.innerHTML = '<div class="text-muted p-2">No matches</div>';
+      return;
     }
-  } else if (type === 'sentences') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * sentences.length);
-      result += sentences[randomIndex] + ' ';
-    }
-  } else {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * paragraphs.length);
-      result += paragraphs[randomIndex] + '\n\n';
-    }
+
+    matchCount.textContent = matches.length + (matches.length === 1 ? ' match' : ' matches');
+    var listHtml = '';
+    matches.forEach(function(mt, i) {
+      var groups = mt.groups.length > 0 ? ' groups: [' + mt.groups.join(', ') + ']' : '';
+      listHtml += '<div class="border-bottom py-1 px-1"><span class="badge bg-secondary me-1">' + (i + 1) + '</span> <span class="text-success">"' + escapeHtml(mt.text) + '"</span> <span class="text-muted">@' + mt.index + '</span>' + groups + '</div>';
+    });
+    matchList.innerHTML = listHtml;
+
+    var html = '';
+    var lastIdx = 0;
+    matches.forEach(function(mt) {
+      html += escapeHtml(text.slice(lastIdx, mt.index));
+      html += '<span class="bg-warning bg-opacity-25 border border-warning rounded px-1">' + escapeHtml(mt.text) + '</span>';
+      lastIdx = mt.index + mt.text.length;
+    });
+    html += escapeHtml(text.slice(lastIdx));
+    preview.innerHTML = html;
+  } catch (e) {
+    preview.textContent = 'Error: ' + e.message;
+    matchCount.textContent = '—';
+    matchList.innerHTML = '<div class="text-danger p-2">' + escapeHtml(e.message) + '</div>';
   }
-
-  return result.trim();
 }
 
-document.getElementById('loremForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var amount = parseInt(document.getElementById('amount').value);
-  var type = document.getElementById('type').value;
-  document.getElementById('output').textContent = generateLorem(amount, type);
-});
+function escapeHtml(s) {
+  var div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
 
-document.getElementById('copyBtn').addEventListener('click', function() {
-  var text = document.getElementById('output').textContent;
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(function() {
-    alert('Hasil berhasil dicopy!');
-  });
-});
+function doReplace() {
+  try {
+    var re = new RegExp(pattern.value, flags.value);
+    var replacement = replaceText.value;
+    testArea.value = testArea.value.replace(re, replacement);
+    update();
+  } catch (e) {
+    alert('Regex error: ' + e.message);
+  }
+}
+
+pattern.addEventListener('input', update);
+flags.addEventListener('input', update);
+testArea.addEventListener('input', update);
+document.getElementById('btnReplace').addEventListener('click', doReplace);
+document.getElementById('btnClear').addEventListener('click', function() { testArea.value = ''; update(); });
+
+update();
 </script>
 </body>
 </html>

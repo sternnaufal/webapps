@@ -3,11 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum Generator</title>
+  <title>Unit Converter</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    #output { white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 5px; min-height: 120px; }
-  </style>
 </head>
 <body class="bg-light">
 
@@ -40,7 +37,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
         <div class="mt-4 small">
           <hr class="border-secondary">
@@ -78,7 +75,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
       </div>
     </div>
@@ -87,7 +84,7 @@
       <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
         <div class="container-fluid">
           <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
-          <span class="navbar-brand ms-2">Lorem Ipsum Generator</span>
+          <span class="navbar-brand ms-2">Unit Converter</span>
         </div>
       </nav>
 
@@ -95,38 +92,49 @@
         <div class="d-flex align-items-center gap-3">
           <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
           <div>
-            <h1 class="h3 mb-0">Lorem Ipsum Generator</h1>
-            <p class="text-muted small mb-0">
-              Hasilkan teks dummy (kata, kalimat, atau paragraf) untuk kebutuhan desain dan uji coba.
-            </p>
+            <h1 class="h3 mb-0">Unit Converter</h1>
+            <p class="text-muted small mb-0">Konversi satuan Length, Weight, Temperature, Volume, Area, Speed, dan Data.</p>
           </div>
         </div>
       </header>
 
-      <form id="loremForm" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label class="form-label">Jumlah</label>
-          <input type="number" id="amount" class="form-control" min="1" value="3">
+      <div class="card p-4 shadow-sm">
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Kategori</label>
+            <select id="category" class="form-select">
+              <option value="length">Length</option>
+              <option value="weight">Weight</option>
+              <option value="temperature">Temperature</option>
+              <option value="volume">Volume</option>
+              <option value="area">Area</option>
+              <option value="speed">Speed</option>
+              <option value="data">Data</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="fromVal" class="form-label">Nilai</label>
+            <input type="number" id="fromVal" class="form-control" value="1" step="any">
+          </div>
+          <div class="col-md-2">
+            <label for="fromUnit" class="form-label">Dari</label>
+            <select id="fromUnit" class="form-select"></select>
+          </div>
+          <div class="col-md-2">
+            <label for="toUnit" class="form-label">Ke</label>
+            <select id="toUnit" class="form-select"></select>
+          </div>
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Tipe</label>
-          <select id="type" class="form-select">
-            <option value="paragraphs">Paragraf</option>
-            <option value="sentences">Kalimat</option>
-            <option value="words">Kata</option>
-          </select>
+        <div class="row g-3 align-items-end">
+          <div class="col-md-8">
+            <div class="p-3 bg-light rounded border">
+              <div class="h4 mb-0" id="resultDisplay">1 = 1</div>
+            </div>
+          </div>
+          <div class="col-md-4 d-grid">
+            <button id="btnSwap" class="btn btn-outline-secondary">Swap Units</button>
+          </div>
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-success w-100">Generate</button>
-        </div>
-      </form>
-
-      <div class="card shadow-sm p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h5 class="mb-0">Hasil:</h5>
-          <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
-        </div>
-        <div id="output"></div>
       </div>
     </main>
   </div>
@@ -134,10 +142,7 @@
 
 <footer class="bg-dark text-light py-3">
   <div class="container text-center small">
-    <p class="mb-0">
-      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
-      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
-    </p>
+    <p class="mb-0">&copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p>
   </div>
 </footer>
 
@@ -145,48 +150,110 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 <script>
-var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\n\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\n\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\n\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\n\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
-
-function generateLorem(amount, type) {
-  var words = loremText.split(/\s+/);
-  var sentences = loremText.split(/(?<=[.!?])\s+/);
-  var paragraphs = loremText.split(/\n\s*\n/);
-  var result = '';
-
-  if (type === 'words') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * words.length);
-      result += words[randomIndex] + ' ';
-    }
-  } else if (type === 'sentences') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * sentences.length);
-      result += sentences[randomIndex] + ' ';
-    }
-  } else {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * paragraphs.length);
-      result += paragraphs[randomIndex] + '\n\n';
-    }
+var UNITS = {
+  length: {
+    base: 'm',
+    units: { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344 }
+  },
+  weight: {
+    base: 'kg',
+    units: { mg: 0.000001, g: 0.001, kg: 1, ton: 1000, oz: 0.0283495, lb: 0.453592 }
+  },
+  volume: {
+    base: 'L',
+    units: { mL: 0.001, L: 1, 'm\u00B3': 1000, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.236588, floz: 0.0295735 }
+  },
+  area: {
+    base: 'm\u00B2',
+    units: { 'mm\u00B2': 0.000001, 'cm\u00B2': 0.0001, 'm\u00B2': 1, ha: 10000, 'km\u00B2': 1000000, 'in\u00B2': 0.00064516, 'ft\u00B2': 0.092903, ac: 4046.86 }
+  },
+  speed: {
+    base: 'm/s',
+    units: { 'm/s': 1, 'km/h': 0.277778, 'mph': 0.44704, knot: 0.514444, 'ft/s': 0.3048 }
+  },
+  data: {
+    base: 'B',
+    units: { B: 1, KB: 1000, MB: 1000000, GB: 1000000000, TB: 1000000000000, KiB: 1024, MiB: 1048576, GiB: 1073741824 }
   }
+};
 
-  return result.trim();
+// Temperature special case
+UNITS.temperature = {
+  base: 'C',
+  units: { C: 'c', F: 'f', K: 'k' },
+  convert: function(val, from, to) {
+    var c;
+    if (from === 'C') c = val;
+    else if (from === 'F') c = (val - 32) * 5/9;
+    else c = val - 273.15;
+
+    if (to === 'C') return c;
+    if (to === 'F') return c * 9/5 + 32;
+    return c + 273.15;
+  }
+};
+
+var category = document.getElementById('category');
+var fromUnit = document.getElementById('fromUnit');
+var toUnit = document.getElementById('toUnit');
+var fromVal = document.getElementById('fromVal');
+var resultDisplay = document.getElementById('resultDisplay');
+
+function populateUnits(cat) {
+  fromUnit.innerHTML = '';
+  toUnit.innerHTML = '';
+  var units = UNITS[cat];
+  var keys;
+  if (cat === 'temperature') {
+    keys = ['C', 'F', 'K'];
+  } else {
+    keys = Object.keys(units.units);
+  }
+  keys.forEach(function(k, i) {
+    var opt1 = document.createElement('option');
+    opt1.value = k;
+    opt1.textContent = k;
+    fromUnit.appendChild(opt1);
+    var opt2 = document.createElement('option');
+    opt2.value = k;
+    opt2.textContent = k;
+    toUnit.appendChild(opt2);
+  });
+  if (keys.length > 1) toUnit.value = keys[1];
+  convert();
 }
 
-document.getElementById('loremForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var amount = parseInt(document.getElementById('amount').value);
-  var type = document.getElementById('type').value;
-  document.getElementById('output').textContent = generateLorem(amount, type);
+function convert() {
+  var cat = category.value;
+  var val = parseFloat(fromVal.value) || 0;
+  var from = fromUnit.value;
+  var to = toUnit.value;
+
+  var result;
+  if (cat === 'temperature') {
+    result = UNITS.temperature.convert(val, from, to);
+  } else {
+    var u = UNITS[cat].units;
+    var baseVal = val * u[from];
+    result = baseVal / u[to];
+  }
+
+  resultDisplay.textContent = val + ' ' + from + ' = ' + result.toPrecision(10).replace(/\.?0+$/, '') + ' ' + to;
+}
+
+category.addEventListener('change', function() { populateUnits(this.value); });
+fromUnit.addEventListener('change', convert);
+toUnit.addEventListener('change', convert);
+fromVal.addEventListener('input', convert);
+
+document.getElementById('btnSwap').addEventListener('click', function() {
+  var tmp = fromUnit.value;
+  fromUnit.value = toUnit.value;
+  toUnit.value = tmp;
+  convert();
 });
 
-document.getElementById('copyBtn').addEventListener('click', function() {
-  var text = document.getElementById('output').textContent;
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(function() {
-    alert('Hasil berhasil dicopy!');
-  });
-});
+populateUnits('length');
 </script>
 </body>
 </html>

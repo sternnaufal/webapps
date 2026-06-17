@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum Generator</title>
+  <title>Image to Base64</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    #output { white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 5px; min-height: 120px; }
+    #preview img { max-width: 100%; max-height: 300px; border-radius: 8px; }
+    #outputText { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 0.75rem; resize: vertical; min-height: 140px; word-break: break-all; }
+    .drop-zone { border: 2px dashed #ccc; border-radius: 10px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .drop-zone:hover, .drop-zone.dragover { border-color: #0d6efd; background: #f0f7ff; }
   </style>
 </head>
 <body class="bg-light">
@@ -40,7 +43,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
         <div class="mt-4 small">
           <hr class="border-secondary">
@@ -78,7 +81,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
       </div>
     </div>
@@ -87,7 +90,7 @@
       <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
         <div class="container-fluid">
           <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
-          <span class="navbar-brand ms-2">Lorem Ipsum Generator</span>
+          <span class="navbar-brand ms-2">Image to Base64</span>
         </div>
       </nav>
 
@@ -95,38 +98,39 @@
         <div class="d-flex align-items-center gap-3">
           <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
           <div>
-            <h1 class="h3 mb-0">Lorem Ipsum Generator</h1>
-            <p class="text-muted small mb-0">
-              Hasilkan teks dummy (kata, kalimat, atau paragraf) untuk kebutuhan desain dan uji coba.
-            </p>
+            <h1 class="h3 mb-0">Image to Base64</h1>
+            <p class="text-muted small mb-0">Konversi gambar ke data URI Base64 — drag & drop atau pilih file. Semua di browser, data tetap privat.</p>
           </div>
         </div>
       </header>
 
-      <form id="loremForm" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label class="form-label">Jumlah</label>
-          <input type="number" id="amount" class="form-control" min="1" value="3">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="drop-zone" id="dropZone">
+            <div class="mb-2">
+              <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="mb-1 fw-semibold">Drag & drop gambar di sini</p>
+            <p class="text-muted small mb-3">atau</p>
+            <label class="btn btn-primary btn-sm">
+              Pilih File
+              <input type="file" id="fileInput" accept="image/*" hidden>
+            </label>
+            <p class="text-muted small mt-2 mb-0">Format: PNG, JPG, GIF, WebP, SVG</p>
+          </div>
+          <div id="info" class="small text-muted mt-2"></div>
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Tipe</label>
-          <select id="type" class="form-select">
-            <option value="paragraphs">Paragraf</option>
-            <option value="sentences">Kalimat</option>
-            <option value="words">Kata</option>
-          </select>
+        <div class="col-lg-7">
+          <div id="preview" class="mb-2"></div>
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label fw-semibold mb-0">Base64 Data URI</label>
+            <div>
+              <button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button>
+              <button id="btnClear" class="btn btn-sm btn-outline-danger ms-1">Clear</button>
+            </div>
+          </div>
+          <textarea id="outputText" class="form-control" readonly placeholder="Hasil Base64 akan muncul di sini..."></textarea>
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-success w-100">Generate</button>
-        </div>
-      </form>
-
-      <div class="card shadow-sm p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h5 class="mb-0">Hasil:</h5>
-          <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
-        </div>
-        <div id="output"></div>
       </div>
     </main>
   </div>
@@ -134,10 +138,7 @@
 
 <footer class="bg-dark text-light py-3">
   <div class="container text-center small">
-    <p class="mb-0">
-      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
-      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
-    </p>
+    <p class="mb-0">&copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p>
   </div>
 </footer>
 
@@ -145,47 +146,54 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 <script>
-var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\n\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\n\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\n\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\n\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
+var dropZone = document.getElementById('dropZone');
+var fileInput = document.getElementById('fileInput');
+var preview = document.getElementById('preview');
+var output = document.getElementById('outputText');
+var info = document.getElementById('info');
 
-function generateLorem(amount, type) {
-  var words = loremText.split(/\s+/);
-  var sentences = loremText.split(/(?<=[.!?])\s+/);
-  var paragraphs = loremText.split(/\n\s*\n/);
-  var result = '';
-
-  if (type === 'words') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * words.length);
-      result += words[randomIndex] + ' ';
-    }
-  } else if (type === 'sentences') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * sentences.length);
-      result += sentences[randomIndex] + ' ';
-    }
-  } else {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * paragraphs.length);
-      result += paragraphs[randomIndex] + '\n\n';
-    }
+function handleFile(file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    alert('File harus berupa gambar');
+    return;
   }
 
-  return result.trim();
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUri = e.target.result;
+    output.value = dataUri;
+    preview.innerHTML = '<img src="' + dataUri + '" alt="preview">';
+    var sizeKB = (file.size / 1024).toFixed(1);
+    var base64Len = dataUri.length;
+    info.textContent = file.name + ' | ' + sizeKB + ' KB | Base64: ' + base64Len + ' chars';
+  };
+  reader.readAsDataURL(file);
 }
 
-document.getElementById('loremForm').addEventListener('submit', function(e) {
+dropZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+dropZone.addEventListener('drop', function(e) {
   e.preventDefault();
-  var amount = parseInt(document.getElementById('amount').value);
-  var type = document.getElementById('type').value;
-  document.getElementById('output').textContent = generateLorem(amount, type);
+  this.classList.remove('dragover');
+  if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
 });
+dropZone.addEventListener('click', function() { fileInput.click(); });
+fileInput.addEventListener('change', function() { if (this.files.length > 0) handleFile(this.files[0]); });
 
-document.getElementById('copyBtn').addEventListener('click', function() {
-  var text = document.getElementById('output').textContent;
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(function() {
-    alert('Hasil berhasil dicopy!');
+document.getElementById('btnCopy').addEventListener('click', function() {
+  if (!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function() {
+    var btn = document.getElementById('btnCopy');
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
   });
+});
+document.getElementById('btnClear').addEventListener('click', function() {
+  output.value = '';
+  preview.innerHTML = '';
+  info.textContent = '';
+  fileInput.value = '';
 });
 </script>
 </body>

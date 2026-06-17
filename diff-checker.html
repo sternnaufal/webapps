@@ -3,10 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum Generator</title>
+  <title>Diff Checker</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    #output { white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 5px; min-height: 120px; }
+    .diff-added { background: #d4edda; }
+    .diff-removed { background: #f8d7da; }
+    .diff-unchanged { background: #fff; }
+    .diff-table { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 0.8rem; width: 100%; }
+    .diff-table td { padding: 1px 8px; vertical-align: top; white-space: pre-wrap; word-break: break-all; }
+    .diff-table .line-num { color: #999; text-align: right; user-select: none; width: 40px; }
+    .diff-empty { color: #ccc; }
   </style>
 </head>
 <body class="bg-light">
@@ -40,7 +46,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
         <div class="mt-4 small">
           <hr class="border-secondary">
@@ -78,7 +84,7 @@
           <a class="nav-link text-white" href="unit-converter.html">Unit Converter</a>
           <a class="nav-link text-white" href="diff-checker.html">Diff Checker</a>
           <a class="nav-link text-white" href="image-to-base64.html">Image to Base64</a>
-          <a class="nav-link text-white" href="timer.html">Timer &amp; Stopwatch</a>
+          <a class="nav-link text-white" href="timer.html">Timer & Stopwatch</a>
         </nav>
       </div>
     </div>
@@ -87,7 +93,7 @@
       <nav class="navbar navbar-dark bg-dark d-md-none sticky-top mb-4">
         <div class="container-fluid">
           <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button>
-          <span class="navbar-brand ms-2">Lorem Ipsum Generator</span>
+          <span class="navbar-brand ms-2">Diff Checker</span>
         </div>
       </nav>
 
@@ -95,38 +101,44 @@
         <div class="d-flex align-items-center gap-3">
           <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
           <div>
-            <h1 class="h3 mb-0">Lorem Ipsum Generator</h1>
-            <p class="text-muted small mb-0">
-              Hasilkan teks dummy (kata, kalimat, atau paragraf) untuk kebutuhan desain dan uji coba.
-            </p>
+            <h1 class="h3 mb-0">Diff Checker</h1>
+            <p class="text-muted small mb-0">Bandingkan dua teks side-by-side — line diff dengan highlight tambah/hapus.</p>
           </div>
         </div>
       </header>
 
-      <form id="loremForm" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label class="form-label">Jumlah</label>
-          <input type="number" id="amount" class="form-control" min="1" value="3">
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="textA" class="form-label fw-semibold">Original (A)</label>
+          <textarea id="textA" class="form-control font-monospace" rows="8" placeholder="Text A...">Hello World
+This is line two
+Another line here</textarea>
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Tipe</label>
-          <select id="type" class="form-select">
-            <option value="paragraphs">Paragraf</option>
-            <option value="sentences">Kalimat</option>
-            <option value="words">Kata</option>
-          </select>
+        <div class="col-md-6">
+          <label for="textB" class="form-label fw-semibold">Modified (B)</label>
+          <textarea id="textB" class="form-control font-monospace" rows="8" placeholder="Text B...">Hello World
+This is line two modified
+Another line here
+New line added</textarea>
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-success w-100">Generate</button>
-        </div>
-      </form>
+      </div>
+      <div class="d-flex gap-2 mb-4">
+        <button id="btnDiff" class="btn btn-primary">Compare</button>
+        <button id="btnClear" class="btn btn-outline-danger">Clear</button>
+      </div>
 
-      <div class="card shadow-sm p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h5 class="mb-0">Hasil:</h5>
-          <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
+      <div id="diffOutput" style="display:none;">
+        <div class="card shadow-sm">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-semibold">Diff Result</span>
+            <span id="diffStats" class="small text-muted"></span>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="diff-table" id="diffTable"></table>
+            </div>
+          </div>
         </div>
-        <div id="output"></div>
       </div>
     </main>
   </div>
@@ -134,10 +146,7 @@
 
 <footer class="bg-dark text-light py-3">
   <div class="container text-center small">
-    <p class="mb-0">
-      &copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh
-      <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
-    </p>
+    <p class="mb-0">&copy; <span id="year">2025</span> WebApps &middot; Dibuat dengan <span class="text-danger">&hearts;</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p>
   </div>
 </footer>
 
@@ -145,47 +154,77 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 <script>
-var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\n\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\n\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\n\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\n\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
-
-function generateLorem(amount, type) {
-  var words = loremText.split(/\s+/);
-  var sentences = loremText.split(/(?<=[.!?])\s+/);
-  var paragraphs = loremText.split(/\n\s*\n/);
-  var result = '';
-
-  if (type === 'words') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * words.length);
-      result += words[randomIndex] + ' ';
-    }
-  } else if (type === 'sentences') {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * sentences.length);
-      result += sentences[randomIndex] + ' ';
-    }
-  } else {
-    for (var i = 0; i < amount; i++) {
-      var randomIndex = Math.floor(Math.random() * paragraphs.length);
-      result += paragraphs[randomIndex] + '\n\n';
+function diff(a, b) {
+  var linesA = a.split('\n');
+  var linesB = b.split('\n');
+  var m = linesA.length, n = linesB.length;
+  var dp = [];
+  for (var i = 0; i <= m; i++) { dp[i] = []; dp[i][0] = i; }
+  for (var j = 0; j <= n; j++) { dp[0][j] = j; }
+  for (var i = 1; i <= m; i++) {
+    for (var j = 1; j <= n; j++) {
+      var cost = linesA[i - 1] === linesB[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
     }
   }
 
-  return result.trim();
+  var result = [];
+  var i = m, j = n;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && linesA[i - 1] === linesB[j - 1]) {
+      result.unshift({ type: 'unchanged', textA: linesA[i - 1], textB: linesB[j - 1], lineA: i, lineB: j });
+      i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j - 1] + 1 <= dp[i - 1][j])) {
+      result.unshift({ type: 'added', textA: '', textB: linesB[j - 1], lineA: null, lineB: j });
+      j--;
+    } else if (i > 0) {
+      result.unshift({ type: 'removed', textA: linesA[i - 1], textB: '', lineA: i, lineB: null });
+      i--;
+    }
+  }
+  return result;
 }
 
-document.getElementById('loremForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var amount = parseInt(document.getElementById('amount').value);
-  var type = document.getElementById('type').value;
-  document.getElementById('output').textContent = generateLorem(amount, type);
-});
+function escapeHtml(s) {
+  var div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
 
-document.getElementById('copyBtn').addEventListener('click', function() {
-  var text = document.getElementById('output').textContent;
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(function() {
-    alert('Hasil berhasil dicopy!');
+function compare() {
+  var a = document.getElementById('textA').value;
+  var b = document.getElementById('textB').value;
+  var result = diff(a, b);
+  var table = document.getElementById('diffTable');
+  table.innerHTML = '';
+  var added = 0, removed = 0;
+
+  result.forEach(function(row) {
+    var tr = document.createElement('tr');
+    if (row.type === 'added') {
+      tr.className = 'diff-added';
+      added++;
+      tr.innerHTML = '<td class="line-num"></td><td></td><td class="line-num">' + row.lineB + '</td><td><span class="text-success">+ </span>' + escapeHtml(row.textB) + '</td>';
+    } else if (row.type === 'removed') {
+      tr.className = 'diff-removed';
+      removed++;
+      tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td><span class="text-danger">- </span>' + escapeHtml(row.textA) + '</td><td class="line-num"></td><td></td>';
+    } else {
+      tr.className = 'diff-unchanged';
+      tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td>' + escapeHtml(row.textA) + '</td><td class="line-num">' + row.lineB + '</td><td>' + escapeHtml(row.textB) + '</td>';
+    }
+    table.appendChild(tr);
   });
+
+  document.getElementById('diffOutput').style.display = 'block';
+  document.getElementById('diffStats').textContent = added + ' added, ' + removed + ' removed, ' + (result.length - added - removed) + ' unchanged';
+}
+
+document.getElementById('btnDiff').addEventListener('click', compare);
+document.getElementById('btnClear').addEventListener('click', function() {
+  document.getElementById('textA').value = '';
+  document.getElementById('textB').value = '';
+  document.getElementById('diffOutput').style.display = 'none';
 });
 </script>
 </body>

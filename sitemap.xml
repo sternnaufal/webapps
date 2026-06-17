@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://webapps.naufalrakha.my.id/</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url><loc>https://webapps.naufalrakha.my.id/konverter-bilangan</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/subnetting</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/hash-generator</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/password-generator</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/base64-coded</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/uuid-generator</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/qr-generator</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/color-picker</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/md-preview</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/lorem-ipsum</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/textcase</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/json-formatter</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/url-encode</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/regex-tester</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/unit-converter</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/diff-checker</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/image-to-base64</loc><priority>0.9</priority></url>
+  <url><loc>https://webapps.naufalrakha.my.id/timer</loc><priority>0.9</priority></url>
+
+</urlset>
