@@ -15,6 +15,21 @@
   --radius-sm: 8px;
 }
 
+[data-bs-theme=dark] {
+  --accent: #818cf8;
+  --accent-soft: #1e1b4b;
+  --accent-dark: #6366f1;
+  --surface: #111111;
+  --surface-soft: #000000;
+  --border: #222222;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.6);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+
 html { scroll-behavior: smooth; }
 body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--surface-soft); color: var(--text); }
 
@@ -22,6 +37,13 @@ a { transition: color .15s ease; }
 a:hover { color: var(--accent); }
 
 .sidebar { background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); }
+[data-bs-theme=dark] .sidebar { background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); }
+[data-bs-theme=dark] .bg-white,
+[data-bs-theme=dark] .bg-light { background: var(--surface) !important; }
+[data-bs-theme=dark] .bg-body { background: var(--surface-soft) !important; }
+[data-bs-theme=dark] .card.border-0 { border: 1px solid var(--border) !important; }
+[data-bs-theme=dark] pre, [data-bs-theme=dark] code { background: #0a0a0a; }
+[data-bs-theme=dark] .table { --bs-table-bg: transparent; --bs-table-border-color: var(--border); }
 .sidebar .nav-link {
   border-radius: var(--radius-sm);
   padding: 8px 12px;
@@ -30,13 +52,15 @@ a:hover { color: var(--accent); }
   transition: all .15s ease;
 }
 .sidebar .nav-link:hover { background: rgba(255,255,255,.08); color: #fff; }
+.sidebar .nav-link.active { background: rgba(255,255,255,.12); color: #fff; font-weight: 600; }
 .sidebar-cat-header { cursor: pointer; user-select: none; border-radius: var(--radius-sm); font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: rgba(255,255,255,.7) !important; }
 .sidebar-cat-header:hover { background: rgba(255,255,255,.06); color: #fff !important; }
 .cat-chevron { font-size: .6rem; transition: transform .2s ease; }
-.sidebar-cat-header[aria-expanded="false"] .cat-chevron { transform: rotate(-90deg); }
+.sidebar-cat-header[aria-expanded=false] .cat-chevron { transform: rotate(-90deg); }
 .sidebar .nav-link.ps-3 { font-weight: 400; letter-spacing: 0; text-transform: none; }
 
 .card {
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   transition: all .2s ease;
@@ -87,7 +111,7 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
 pre, code, .font-mono { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace; }
 
 .card-header-pattern {
-  background: linear-gradient(135deg, var(--accent-soft) 0%, #fff 100%);
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--surface) 100%);
   border-bottom: 1px solid var(--border);
 }
 

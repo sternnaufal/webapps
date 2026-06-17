@@ -87,28 +87,41 @@
     ].join('\n');
   }
 
-  function wrap(wrapper, navHtml) {
-    if (wrapper === 'aside') {
+  function wrap(type, navHtml, suffix) {
+    var searchId = 'sidebarSearch' + (suffix || '');
+    var darkId = 'darkToggle' + (suffix || '');
+
+    var common = [
+      '    <div class="mb-4">',
+      '      <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">',
+      '        <span class="fw-bold">WebApps NaufalRakha</span>',
+      '      </a>',
+      '    </div>',
+      '    <input type="text" id="' + searchId + '" class="sidebar-search form-control form-control-sm mb-2" placeholder="&#x1F50D; Cari tool..." style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#fff;">',
+      navHtml,
+      '    <div class="mt-3 small">',
+      '      <hr class="border-secondary">',
+      '      <div class="d-flex justify-content-between align-items-center">',
+      '        <p class="mb-1"><strong>About</strong></p>',
+      '        <button class="dark-toggle btn btn-sm" style="line-height:1;font-size:1rem;padding:2px 8px;" title="Toggle Dark Mode">&#x1F319;</button>',
+      '      </div>',
+'      <p class="mb-0 text-light">',
+'        <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.',
+'      </p>',
+'      <a href="https://saweria.co/naufalrakha" target="_blank" class="btn btn-sm w-100 mt-2" style="background:#ff7a00;color:#fff;border:none;">&#x2615; Donasi</a>',
+'    </div>'
+    ].join('\n');
+
+    if (type === 'aside') {
       return [
         '<aside class="d-none d-md-block col-md-3 col-lg-2 sidebar text-white min-vh-100 p-3">',
         '  <div class="d-flex flex-column h-100">',
-        '    <div class="mb-4">',
-        '      <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">',
-        '        <span class="fw-bold">WebApps NaufalRakha</span>',
-        '      </a>',
-        '    </div>',
-        navHtml,
-        '    <div class="mt-4 small">',
-        '      <hr class="border-secondary">',
-        '      <p class="mb-1"><strong>About</strong></p>',
-        '      <p class="mb-0 text-light">',
-        '        <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.',
-        '      </p>',
-        '    </div>',
+        common,
         '  </div>',
         '</aside>'
       ].join('\n');
     }
+
     return [
       '<div class="offcanvas offcanvas-start sidebar text-white" tabindex="-1" id="mobileSidebar">',
       '  <div class="offcanvas-header">',
@@ -117,28 +130,68 @@
       '  </div>',
       '  <div class="offcanvas-body">',
       '    <div class="d-flex flex-column h-100">',
-      '      <div class="mb-4">',
-      '        <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">',
-      '          <span class="fw-bold">WebApps NaufalRakha</span>',
-      '        </a>',
-      '      </div>',
-      navHtml,
-      '      <div class="mt-4 small">',
-      '        <hr class="border-secondary">',
-      '        <p class="mb-1"><strong>About</strong></p>',
-      '        <p class="mb-0 text-light">',
-      '          <span class="text-white">WebApp naufalrakha</span> adalah kumpulan aplikasi mini berbasis web.',
-      '        </p>',
-      '      </div>',
+      common,
       '    </div>',
       '  </div>',
       '</div>'
     ].join('\n');
   }
 
+  // ---- Inject ----
   var desktop = document.getElementById('sidebar-desktop');
-  if (desktop) desktop.innerHTML = wrap('aside', makeNav(''));
-
   var mobile = document.getElementById('sidebar-mobile');
-  if (mobile) mobile.innerHTML = wrap('offcanvas', makeNav('M'));
+  if (desktop) desktop.innerHTML = wrap('aside', makeNav(''), '');
+  if (mobile) mobile.innerHTML = wrap('offcanvas', makeNav('M'), 'M');
+
+  // ---- Active link ----
+  var current = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.sidebar .nav-link').forEach(function (a) {
+    if (a.getAttribute('href') === current) a.classList.add('active');
+  });
+
+  // ---- Search ----
+  document.querySelectorAll('.sidebar-search').forEach(function (input) {
+    var timer;
+    input.addEventListener('input', function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        var q = input.value.toLowerCase();
+        var root = input.closest('.sidebar') || input.closest('.offcanvas-body');
+        if (!root) return;
+        root.querySelectorAll('.sidebar-cat').forEach(function (cat) {
+          var links = cat.querySelectorAll('.nav-link.ps-3');
+          var has = false;
+          links.forEach(function (a) {
+            var show = a.textContent.toLowerCase().includes(q);
+            a.style.display = show ? '' : 'none';
+            if (show) has = true;
+          });
+          cat.style.display = (!q || has) ? '' : 'none';
+        });
+      }, 150);
+    });
+  });
+
+  // ---- Dark mode ----
+  function setTheme(dark) {
+    document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'light');
+    document.querySelectorAll('.dark-toggle').forEach(function (b) { b.textContent = dark ? '\u2600\uFE0F' : '\uD83C\uDF19'; });
+    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+  }
+
+  var saved;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved) setTheme(saved === 'dark');
+  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dark-toggle')) setTheme(document.documentElement.getAttribute('data-bs-theme') !== 'dark');
+  });
+
+  // ---- PWA ----
+  var ml = document.createElement('link');
+  ml.rel = 'manifest'; ml.href = 'manifest.json';
+  document.head.appendChild(ml);
+
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');
 })();
