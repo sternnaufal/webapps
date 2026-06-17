@@ -6,7 +6,10 @@
   <title>WebApps Tools</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
   <link rel="canonical" href="https://webapps.naufalrakha.my.id/"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Favicon dasar -->
   <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="48x48">
   <!-- Favicon untuk browser desktop -->
@@ -33,7 +36,7 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar Desktop -->
-    <aside class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white min-vh-100 p-3">
+    <aside class="d-none d-md-block col-md-3 col-lg-2 sidebar text-white min-vh-100 p-3">
       <div class="d-flex flex-column h-100">
         <div class="mb-4">
           <a href="https://webapps.naufalrakha.my.id" class="d-flex align-items-center text-decoration-none text-white">
@@ -73,7 +76,7 @@
     </aside>
 
     <!-- Sidebar Mobile (Offcanvas) -->
-    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+    <div class="offcanvas offcanvas-start sidebar text-white" tabindex="-1" id="mobileSidebar">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menu</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
@@ -121,195 +124,235 @@
     <main class="col-md-9 col-lg-10 p-4">
       <header class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center gap-3">
-          <div class="bg-primary rounded-circle" style="width:40px;height:40px;"></div>
+          <div class="tool-icon bg-primary bg-opacity-10 text-primary rounded-3">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M8 10h8M8 14h4"/></svg>
+          </div>
           <div>
             <h1 class="h3 mb-0">Selamat Datang 👋</h1>
-            <p class="text-muted small mb-0">Kumpulan WebApps untuk kebutuhan sehari-hari IT & umum.</p>
+            <p class="text-muted small mb-0">Kumpulan WebApps untuk kebutuhan sehari-hari IT &amp; umum.</p>
           </div>
         </div>
       </header>
 
       <!-- List Tools -->
       <div class="row g-4">
+
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Konverter Bilangan</h5>
-              <p class="card-text small text-muted">Konversi antar desimal, biner, oktal, dan heksadesimal.</p>
-              <a href="konverter-bilangan.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#eef2ff;color:#6366f1;">🔢</div>
+                <div><h5 class="card-title mb-1">Konverter Bilangan</h5><p class="card-text small text-muted mb-0">Desimal, biner, oktal, heksadesimal</p></div>
+              </div>
+              <div class="mt-auto"><a href="konverter-bilangan.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Kalkulator Subnetting</h5>
-              <p class="card-text small text-muted">Hitung network, host range, broadcast, dan CIDR subnetting.</p>
-              <a href="subnetting.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#10b981;">🌐</div>
+                <div><h5 class="card-title mb-1">Kalkulator Subnetting</h5><p class="card-text small text-muted mb-0">Network, broadcast, CIDR, host range</p></div>
+              </div>
+              <div class="mt-auto"><a href="subnetting.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Hash Generator</h5>
-              <p class="card-text small text-muted">Generate hash MD5, SHA1, SHA256, dll dari teks.</p>
-              <a href="hash-generator.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#ef4444;">#️⃣</div>
+                <div><h5 class="card-title mb-1">Hash Generator</h5><p class="card-text small text-muted mb-0">MD5, SHA1, SHA256, SHA512</p></div>
+              </div>
+              <div class="mt-auto"><a href="hash-generator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Password Generator</h5>
-              <p class="card-text small text-muted">Buat password acak yang kuat dan aman.</p>
-              <a href="password-generator.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fff7ed;color:#f97316;">🔑</div>
+                <div><h5 class="card-title mb-1">Password Generator</h5><p class="card-text small text-muted mb-0">Password acak kuat & aman</p></div>
+              </div>
+              <div class="mt-auto"><a href="password-generator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Base64 Encode/Decode</h5>
-              <p class="card-text small text-muted">Ubah teks ke Base64 atau decode kembali.</p>
-              <a href="base64-coded.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0ea5e9;">🔤</div>
+                <div><h5 class="card-title mb-1">Base64 Encode/Decode</h5><p class="card-text small text-muted mb-0">Encode & decode Base64</p></div>
+              </div>
+              <div class="mt-auto"><a href="base64-coded.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">UUID/GUID Generator</h5>
-              <p class="card-text small text-muted">Generate UUID/GUID unik untuk identifikasi data.</p>
-              <a href="uuid-generator.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f5f3ff;color:#8b5cf6;">🆔</div>
+                <div><h5 class="card-title mb-1">UUID/GUID Generator</h5><p class="card-text small text-muted mb-0">v1, v4, v3, v5 UUID</p></div>
+              </div>
+              <div class="mt-auto"><a href="uuid-generator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">QR Code Generator</h5>
-              <p class="card-text small text-muted">Buat dan unduh QR code dari teks atau URL.</p>
-              <a href="qr-generator.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#22c55e;">📱</div>
+                <div><h5 class="card-title mb-1">QR Code Generator</h5><p class="card-text small text-muted mb-0">Buat & download QR code</p></div>
+              </div>
+              <div class="mt-auto"><a href="qr-generator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Color Picker</h5>
-              <p class="card-text small text-muted">Pilih dan konversi warna ke berbagai format.</p>
-              <a href="color-picker.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fefce8;color:#eab308;">🎨</div>
+                <div><h5 class="card-title mb-1">Color Picker</h5><p class="card-text small text-muted mb-0">HEX, RGB, HSL, CMYK</p></div>
+              </div>
+              <div class="mt-auto"><a href="color-picker.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Markdown Previewer</h5>
-              <p class="card-text small text-muted">Preview markdown dengan syntax highlighting.</p>
-              <a href="md-preview.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">📝</div>
+                <div><h5 class="card-title mb-1">Markdown Previewer</h5><p class="card-text small text-muted mb-0">Live preview markdown</p></div>
+              </div>
+              <div class="mt-auto"><a href="md-preview.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Lorem Ipsum</h5>
-              <p class="card-text small text-muted">Generate placeholder text Lorem Ipsum.</p>
-              <a href="lorem-ipsum.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#faf5ff;color:#a855f7;">📄</div>
+                <div><h5 class="card-title mb-1">Lorem Ipsum</h5><p class="card-text small text-muted mb-0">Dummy text generator</p></div>
+              </div>
+              <div class="mt-auto"><a href="lorem-ipsum.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Text Case Generator</h5>
-              <p class="card-text small text-muted">Ubah format teks (uppercase, lowercase, title case, dll).</p>
-              <a href="textcase.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Aa</div>
+                <div><h5 class="card-title mb-1">Text Case Converter</h5><p class="card-text small text-muted mb-0">UPPER, lower, Title, snake, camel</p></div>
+              </div>
+              <div class="mt-auto"><a href="textcase.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">JSON Formatter</h5>
-              <p class="card-text small text-muted">Format, validasi, dan minify JSON dengan cepat.</p>
-              <a href="json-formatter.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#eef2ff;color:#4f46e5;">{ }</div>
+                <div><h5 class="card-title mb-1">JSON Formatter</h5><p class="card-text small text-muted mb-0">Format, validasi, minify JSON</p></div>
+              </div>
+              <div class="mt-auto"><a href="json-formatter.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">URL Encode/Decode</h5>
-              <p class="card-text small text-muted">Encode atau decode URL-encoded string.</p>
-              <a href="url-encode.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#dc2626;">🔗</div>
+                <div><h5 class="card-title mb-1">URL Encode/Decode</h5><p class="card-text small text-muted mb-0">Encode & decode URL strings</p></div>
+              </div>
+              <div class="mt-auto"><a href="url-encode.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Regex Tester</h5>
-              <p class="card-text small text-muted">Uji regex dengan live highlighting, match info, dan replace.</p>
-              <a href="regex-tester.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">.*</div>
+                <div><h5 class="card-title mb-1">Regex Tester</h5><p class="card-text small text-muted mb-0">Live regex match & replace</p></div>
+              </div>
+              <div class="mt-auto"><a href="regex-tester.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Unit Converter</h5>
-              <p class="card-text small text-muted">Konversi Length, Weight, Temperature, Volume, Area, Speed, Data.</p>
-              <a href="unit-converter.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f5f3ff;color:#7c3aed;">📐</div>
+                <div><h5 class="card-title mb-1">Unit Converter</h5><p class="card-text small text-muted mb-0">Length, Weight, Temp, Volume, Speed</p></div>
+              </div>
+              <div class="mt-auto"><a href="unit-converter.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Diff Checker</h5>
-              <p class="card-text small text-muted">Bandingkan dua teks side-by-side dengan line diff.</p>
-              <a href="diff-checker.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fff7ed;color:#ea580c;">⇄</div>
+                <div><h5 class="card-title mb-1">Diff Checker</h5><p class="card-text small text-muted mb-0">Bandingkan dua teks</p></div>
+              </div>
+              <div class="mt-auto"><a href="diff-checker.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Image to Base64</h5>
-              <p class="card-text small text-muted">Konversi gambar ke data URI Base64 via drag & drop.</p>
-              <a href="image-to-base64.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fefce8;color:#ca8a04;">🖼️</div>
+                <div><h5 class="card-title mb-1">Image to Base64</h5><p class="card-text small text-muted mb-0">Drag & drop to Base64</p></div>
+              </div>
+              <div class="mt-auto"><a href="image-to-base64.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">Timer &amp; Stopwatch</h5>
-              <p class="card-text small text-muted">Stopwatch dengan lap times &amp; countdown timer.</p>
-              <a href="timer.html" class="btn btn-success btn-sm">Buka</a>
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#eef2ff;color:#6366f1;">⏱️</div>
+                <div><h5 class="card-title mb-1">Timer &amp; Stopwatch</h5><p class="card-text small text-muted mb-0">Lap times &amp; countdown</p></div>
+              </div>
+              <div class="mt-auto"><a href="timer.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
+
       </div>
     </main>
   </div>
