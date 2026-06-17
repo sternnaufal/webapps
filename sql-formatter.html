@@ -1,6 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>SQL Formatter</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></head>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SQL Formatter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  <meta name="description" content="Format dan beautify SQL query online. SQL formatter dengan dukungan MySQL, PostgreSQL, SQL Server.">
+  <meta name="keywords" content="sql formatter, sql beautifier, format sql, sql online, sql prettify">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/sql-formatter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SQL Formatter">
+  <meta property="og:description" content="Format dan beautify SQL query online. SQL formatter dengan dukungan MySQL, PostgreSQL, SQL Server.">
+  <meta property="og:url" content="https://webapps.naufalrakha.my.id/sql-formatter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://webapps.naufalrakha.my.id/android-chrome-512x512.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SQL Formatter">
+  <meta name="twitter:description" content="Format dan beautify SQL query online. SQL formatter dengan dukungan MySQL, PostgreSQL, SQL Server.">
+  <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/android-chrome-512x512.png">
+</head>
 <body class="bg-light">
 <div class="container-fluid"><div class="row">
 <div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2"></div>
@@ -38,3 +56,5 @@ document.getElementById('btnClear').addEventListener('click',function(){inp.valu
 document.getElementById('btnCopy').addEventListener('click',function(){if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
+

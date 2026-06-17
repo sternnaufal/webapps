@@ -114,7 +114,7 @@
 
     if (type === 'aside') {
       return [
-        '<aside class="d-none d-md-block col-md-3 col-lg-2 sidebar text-white min-vh-100 p-3">',
+        '<aside class="sidebar text-white min-vh-100 p-3">',
         '  <div class="d-flex flex-column h-100">',
         common,
         '  </div>',

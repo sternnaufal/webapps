@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://webapps.naufalrakha.my.id/sitemap.xml
