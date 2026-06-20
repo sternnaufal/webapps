@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Savings Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Kalkulator tabungan online. Hitung bunga majemuk, target tabungan, dan simulasi investasi.">
+  <meta name="keywords" content="savings calculator, kalkulator tabungan, bunga majemuk, compound interest, investasi">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/savings-calculator.html">
+  <meta property="og:title" content="Savings Calculator">
+  <meta property="og:description" content="Hitung tabungan dan bunga majemuk online.">
+  <meta name="twitter:title" content="Savings Calculator">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Savings Calculator","url":"https://webapps.naufalrakha.my.id/savings-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Savings Calc</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h1 class="h3 mb-0">Savings Calculator</h1><p class="text-muted small mb-0">Hitung tabungan dengan bunga majemuk. Lihat simulasi pertumbuhan uang Anda.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Jumlah Awal (Rp)</label><input type="number" id="initialAmount" class="form-control" value="1000000" step="100000"></div>
+<div class="mb-3"><label class="form-label fw-semibold">Setoran Bulanan (Rp)</label><input type="number" id="monthlyAmount" class="form-control" value="500000" step="50000"></div>
+<div class="mb-3"><label class="form-label fw-semibold">Bunga per Tahun (%)</label><input type="number" id="interestRate" class="form-control" value="6" step="0.1"></div>
+<div class="row g-2 mb-3"><div class="col-6"><label class="form-label small">Jangka Waktu</label><input type="number" id="years" class="form-control" value="5" min="1" max="50"></div>
+<div class="col-6"><label class="form-label small">Frekuensi Bunga</label><select id="compoundFreq" class="form-select"><option value="12">Bulanan</option><option value="4">Kuartalan</option><option value="1" selected>Tahunan</option></select></div></div>
+<button id="btnCalc" class="btn btn-primary w-100">Hitung</button>
+</div></div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<h6 class="mb-3">Hasil Simulasi</h6>
+<div class="row g-3"><div class="col-4"><div class="p-3 rounded text-center" style="background:#eef2ff"><small class="text-muted">Total Setoran</small><div class="h5 mb-0 fw-bold" id="totalContrib" style="color:#6366f1">Rp0</div></div></div>
+<div class="col-4"><div class="p-3 rounded text-center" style="background:#f0fdf4"><small class="text-muted">Bunga</small><div class="h5 mb-0 fw-bold" id="totalInterest" style="color:#16a34a">Rp0</div></div></div>
+<div class="col-4"><div class="p-3 rounded text-center" style="background:#fefce8"><small class="text-muted">Total Akhir</small><div class="h5 mb-0 fw-bold" id="totalFinal" style="color:#ca8a04">Rp0</div></div></div></div>
+</div>
+<div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Detail per Tahun</h6>
+<div class="table-responsive" style="max-height:300px;overflow-y:auto"><table class="table table-sm small mb-0"><thead><tr><th>Tahun</th><th>Setoran</th><th>Bunga</th><th>Saldo</th></tr></thead><tbody id="yearlyTable"></tbody></table></div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Savings Calculator</h6><p class="small mb-1" style="line-height:1.6">Kalkulator tabungan ini menghitung pertumbuhan uang dengan bunga majemuk (compound interest). Cocok untuk simulasi tabungan, investasi, atau dana pensiun. Hasil perhitungan menunjukkan total setoran, total bunga yang diperoleh, dan saldo akhir.</p><p class="small mb-0" style="line-height:1.6"><strong>Cara pakai:</strong> Masukkan jumlah awal, setoran bulanan, suku bunga per tahun, dan jangka waktu. Pilih frekuensi bunga (bulanan/kuartalan/tahunan) untuk hasil lebih akurat.</p></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var initial=document.getElementById('initialAmount'),monthly=document.getElementById('monthlyAmount'),rate=document.getElementById('interestRate'),years=document.getElementById('years'),freq=document.getElementById('compoundFreq');
+function fmt(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
+
+document.getElementById('btnCalc').addEventListener('click',function(){
+  var P=parseFloat(initial.value)||0,M=parseFloat(monthly.value)||0,r=parseFloat(rate.value)/100/100,y=parseInt(years.value)||1,n=parseInt(freq.value);
+  var totalContrib=P+(M*12*y),balance=P,prevBalance=P,totalInterest=0;
+  var rows='',monthsPerYear=12,months=y*12,monthlyRate=r/12;
+
+  for(var year=1;year<=y;year++){
+    var annualContrib=M*12;
+    for(var m=1;m<=12;m++){
+      balance=(balance+monthlyRate)*(1+monthlyRate);
+      balance+=M;
+    }
+    var yearInterest=balance-prevBalance-annualContrib;
+    totalInterest+=yearInterest;
+    prevBalance=balance;
+    rows+='<tr><td>'+year+'</td><td>'+fmt(totalContrib)+'</td><td>'+fmt(totalInterest)+'</td><td class="fw-bold">'+fmt(balance)+'</td></tr>';
+  }
+
+  document.getElementById('totalContrib').textContent=fmt(totalContrib);
+  document.getElementById('totalInterest').textContent=fmt(totalInterest);
+  document.getElementById('totalFinal').textContent=fmt(balance);
+  document.getElementById('yearlyTable').innerHTML=rows;
+});
+document.getElementById('btnCalc').click();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

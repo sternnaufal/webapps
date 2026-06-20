@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Roman Numeral Converter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Konverter angka Romawi online. Ubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.">
+  <meta name="keywords" content="roman numeral converter, angka romawi, romawi converter, roman to number, number to roman">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/roman-numeral.html">
+  <meta property="og:title" content="Roman Numeral Converter">
+  <meta property="og:description" content="Konversi angka Romawi dan desimal online.">
+  <meta name="twitter:title" content="Roman Numeral Converter">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Roman Numeral Converter","url":"https://webapps.naufalrakha.my.id/roman-numeral.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Roman Numerals</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">IV</div><div><h1 class="h3 mb-0">Roman Numeral Converter</h1><p class="text-muted small mb-0">Konversi angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<div class="btn-group mb-3 w-100" role="group"><button id="modeToRoman" class="btn btn-primary w-50">Desimal → Romawi</button><button id="modeToDecimal" class="btn btn-outline-primary w-50">Romawi → Desimal</button></div>
+<div id="toRomanPane"><label class="form-label fw-semibold">Angka Desimal</label><input type="number" id="decimalInput" class="form-control font-mono" value="2024" min="1" max="3999">
+<button id="btnToRoman" class="btn btn-primary w-100 mt-2">Konversi ke Romawi</button>
+<div id="romanResult" class="mt-3 p-3 bg-light rounded text-center"><div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">MMXXIV</div></div></div>
+<div id="toDecimalPane" style="display:none"><label class="form-label fw-semibold">Angka Romawi</label><input type="text" id="romanInput" class="form-control font-mono" value="MMXXIV" maxlength="20">
+<button id="btnToDecimal" class="btn btn-primary w-100 mt-2">Konversi ke Desimal</button>
+<div id="decimalResult" class="mt-3 p-3 bg-light rounded text-center"><div class="display-5 fw-bold" style="color:#6366f1">2024</div></div></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Tabel Referensi Cepat</h6>
+<div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Romawi</th><th>Desimal</th><th>Romawi</th><th>Desimal</th></tr></thead><tbody>
+<tr><td>I</td><td>1</td><td>XL</td><td>40</td></tr>
+<tr><td>IV</td><td>4</td><td>L</td><td>50</td></tr>
+<tr><td>V</td><td>5</td><td>XC</td><td>90</td></tr>
+<tr><td>IX</td><td>9</td><td>C</td><td>100</td></tr>
+<tr><td>X</td><td>10</td><td>CD</td><td>400</td></tr>
+<tr><td>XIV</td><td>14</td><td>D</td><td>500</td></tr>
+<tr><td>XIX</td><td>19</td><td>CM</td><td>900</td></tr>
+<tr><td>XX</td><td>20</td><td>M</td><td>1000</td></tr>
+</tbody></table></div></div>
+</div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Konversi Cepat</h6>
+<div class="row g-2">
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="1">I</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="4">IV</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="5">V</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="9">IX</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="10">X</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="14">XIV</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="19">XIX</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="20">XX</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="40">XL</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="50">L</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="90">XC</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="100">C</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="400">CD</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="500">D</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="900">CM</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="1000">M</button>
+</div>
+</div>
+<div class="card shadow-sm border-0 p-3 mt-3">
+<h6 class="mb-3">Tahun Romawi Populer</h6>
+<div id="yearList" class="small"></div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Konverter angka Romawi online untuk mengubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya. Angka Romawi adalah sistem penulisan angka yang berasal dari Roma kuno dan masih digunakan untuk penanggalan, jam, bab buku, dan acara besar.</p><p class="small mb-0" style="line-height:1.6">Alat ini mendukung angka 1 hingga 3999. Cukup masukkan angka desimal untuk mendapatkan Romawi, atau sebaliknya. Dilengkapi tabel referensi dan konversi cepat.</p></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+function toRoman(n){
+  if(n<1||n>3999)return '';
+  var vals=[1000,900,500,400,100,90,50,40,10,9,5,4,1],nums=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'],r='';
+  for(var i=0;i<vals.length;i++){while(n>=vals[i]){r+=nums[i];n-=vals[i]}}
+  return r;
+}
+function fromRoman(r){
+  var m={I:1,V:5,X:10,L:50,C:100,D:500,M:1000},total=0;
+  for(var i=0;i<r.length;i++){
+    var cur=m[r[i]]||0,next=m[r[i+1]]||0;
+    if(cur<next){total-=cur}else{total+=cur}
+  }
+  return total;
+}
+
+var mode='roman';
+document.getElementById('modeToRoman').addEventListener('click',function(){
+  mode='roman';this.className='btn btn-primary w-50';
+  document.getElementById('modeToDecimal').className='btn btn-outline-primary w-50';
+  document.getElementById('toRomanPane').style.display='block';
+  document.getElementById('toDecimalPane').style.display='none';
+});
+document.getElementById('modeToDecimal').addEventListener('click',function(){
+  mode='decimal';this.className='btn btn-primary w-50';
+  document.getElementById('modeToRoman').className='btn btn-outline-primary w-50';
+  document.getElementById('toRomanPane').style.display='none';
+  document.getElementById('toDecimalPane').style.display='block';
+});
+
+document.getElementById('btnToRoman').addEventListener('click',function(){
+  var v=parseInt(document.getElementById('decimalInput').value)||0;
+  document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'<span class="text-danger">Invalid</span>')+'</div>';
+});
+document.getElementById('btnToDecimal').addEventListener('click',function(){
+  var v=document.getElementById('romanInput').value.toUpperCase().replace(/[^IVXLCDM]/g,'');
+  document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
+});
+document.getElementById('decimalInput').addEventListener('input',function(){
+  var v=parseInt(this.value)||0;
+  document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'')+'</div>';
+});
+document.getElementById('romanInput').addEventListener('input',function(){
+  var v=this.value.toUpperCase().replace(/[^IVXLCDM]/g,'');
+  document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
+});
+
+document.querySelectorAll('[data-val]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=parseInt(this.dataset.val),r=toRoman(v);
+    if(mode==='roman'){document.getElementById('decimalInput').value=v;document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+r+'</div>'}
+    else{document.getElementById('romanInput').value=r;document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+v+'</div>'}
+  });
+});
+
+var yearsHtml='';
+[1990,2000,2010,2020,2024,2025,2026,2027,2045,2050].forEach(function(y){
+  yearsHtml+='<span class="badge bg-light text-dark me-1 mb-1" style="cursor:pointer" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span> ';
+});
+document.getElementById('yearList').innerHTML=yearsHtml;
+document.querySelectorAll('[data-yr]').forEach(function(el){
+  el.addEventListener('click',function(){
+    var y=parseInt(this.dataset.yr);
+    document.getElementById('decimalInput').value=y;
+    document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+toRoman(y)+'</div>';
+  });
+});
+</script>
+<script src="sidebar.js"></script>
+</body></html>

@@ -74,6 +74,9 @@
         { name: 'Age Calculator',     url: 'age-calculator.html' },
         { name: 'Percentage Calculator', url: 'percentage-calculator.html' },
         { name: 'Pomodoro Timer',     url: 'pomodoro.html' },
+        { name: 'Countdown Timer',    url: 'countdown.html' },
+        { name: 'Savings Calculator', url: 'savings-calculator.html' },
+        { name: 'Roman Numeral Converter', url: 'roman-numeral.html' },
       ],
     },
   ]
