@@ -30,6 +30,16 @@
   <meta name="twitter:title" content="WebApps NaufalRakha">
   <meta name="twitter:description" content="Kumpulan tools online gratis untuk developer: konverter, generator, kalkulator jaringan, dan utilitas web. Akses gratis tanpa install.">
   <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "WebApps NaufalRakha",
+    "description": "Kumpulan tools online gratis untuk developer: konverter, generator, kalkulator jaringan, dan utilitas web.",
+    "url": "https://webapps.naufalrakha.my.id/",
+    "author": { "@type": "Person", "name": "Naufal Rakha Putra", "url": "https://naufalrakha.my.id" }
+  }
+  </script>
 </head>
 <body class="bg-light">
 
@@ -51,19 +61,25 @@
 
     <!-- Main App -->
     <main class="col-md-9 col-lg-10 p-4">
-      <header class="d-flex justify-content-between align-items-center mb-4">
-        <div class="d-flex align-items-center gap-3">
-          <div class="tool-icon bg-primary bg-opacity-10 text-primary rounded-3">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M8 10h8M8 14h4"/></svg>
+
+      <!-- Hero -->
+      <div class="hero-section">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M8 10h8M8 14h4"/></svg>
           </div>
           <div>
-            <h1 class="h3 mb-0">Selamat Datang ??</h1>
-            <p class="text-muted small mb-0">Kumpulan WebApps untuk kebutuhan sehari-hari IT &amp; umum.</p>
+            <h1 class="h3 mb-0">WebApps Tools</h1>
+            <p class="text-muted small mb-0">Kumpulan tools online gratis untuk developer, desainer, dan kebutuhan IT sehari-hari.</p>
           </div>
         </div>
-      </header>
+        <div class="mt-3 d-flex align-items-center gap-3 flex-wrap">
+          <input type="text" id="toolSearch" class="form-control" placeholder="Cari tools berdasarkan nama atau kategori..." style="max-width:450px;" autofocus>
+          <small class="text-muted" id="toolCount"></small>
+        </div>
+      </div>
 
-      <!-- List Tools -->
+      <div class="row g-4">
       <div class="row g-4">
 
         <div class="col-md-6 col-lg-4">
@@ -370,10 +386,226 @@
           <div class="card shadow-sm h-100 border-0">
             <div class="card-body d-flex flex-column">
               <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fffbeb;color:#d97706;">YML</div>
+                <div><h5 class="card-title mb-1">YAML ↔ JSON Converter</h5><p class="card-text small text-muted mb-0">Convert YAML to/from JSON</p></div>
+              </div>
+              <div class="mt-auto"><a href="yaml-json.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
                 <div class="tool-icon" style="background:#faf5ff;color:#9333ea;">&#x23f0;</div>
                 <div><h5 class="card-title mb-1">Time Converter</h5><p class="card-text small text-muted mb-0">Epoch &amp; timezone converter</p></div>
               </div>
               <div class="mt-auto"><a href="time-converter.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Grd</div>
+                <div><h5 class="card-title mb-1">CSS Gradient Generator</h5><p class="card-text small text-muted mb-0">Buat CSS gradient kustom</p></div>
+              </div>
+              <div class="mt-auto"><a href="gradient-generator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#dc2626;">??</div>
+                <div><h5 class="card-title mb-1">World Clock</h5><p class="card-text small text-muted mb-0">Zona waktu seluruh dunia</p></div>
+              </div>
+              <div class="mt-auto"><a href="world-clock.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fefce8;color:#ca8a04;">JWT</div>
+                <div><h5 class="card-title mb-1">JWT Decoder</h5><p class="card-text small text-muted mb-0">Decode &amp; verify JWT token</p></div>
+              </div>
+              <div class="mt-auto"><a href="jwt-decoder.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">&lt;/&gt;</div>
+                <div><h5 class="card-title mb-1">HTML Live Preview</h5><p class="card-text small text-muted mb-0">Live HTML/CSS/JS preview</p></div>
+              </div>
+              <div class="mt-auto"><a href="html-preview.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#dc2626;">??</div>
+                <div><h5 class="card-title mb-1">HTTP Status Codes</h5><p class="card-text small text-muted mb-0">Referensi kode HTTP</p></div>
+              </div>
+              <div class="mt-auto"><a href="http-status.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div>
+                <div><h5 class="card-title mb-1">Character Counter</h5><p class="card-text small text-muted mb-0">Analisis teks: karakter, kata, kalimat</p></div>
+              </div>
+              <div class="mt-auto"><a href="char-counter.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fefce8;color:#ca8a04;">CSV</div>
+                <div><h5 class="card-title mb-1">JSON ↔ CSV Converter</h5><p class="card-text small text-muted mb-0">Konversi JSON &amp; CSV</p></div>
+              </div>
+              <div class="mt-auto"><a href="json-csv.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">CSS</div>
+                <div><h5 class="card-title mb-1">CSS Unit Converter</h5><p class="card-text small text-muted mb-0">px, rem, em, vw, vh, %</p></div>
+              </div>
+              <div class="mt-auto"><a href="css-unit.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                <div><h5 class="card-title mb-1">Password Strength Checker</h5><p class="card-text small text-muted mb-0">Analisis kekuatan password</p></div>
+              </div>
+              <div class="mt-auto"><a href="password-strength.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                <div><h5 class="card-title mb-1">Date Duration Calculator</h5><p class="card-text small text-muted mb-0">Selisih &amp; konversi tanggal</p></div>
+              </div>
+              <div class="mt-auto"><a href="date-calculator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fefce8;color:#ca8a04;">&amp;</div>
+                <div><h5 class="card-title mb-1">HTML Entity Encoder/Decoder</h5><p class="card-text small text-muted mb-0">Encode/decode HTML entities</p></div>
+              </div>
+              <div class="mt-auto"><a href="html-entity.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+                <div><h5 class="card-title mb-1">BMI Calculator</h5><p class="card-text small text-muted mb-0">Hitung Indeks Massa Tubuh</p></div>
+              </div>
+              <div class="mt-auto"><a href="bmi-calculator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                <div><h5 class="card-title mb-1">Tip Calculator</h5><p class="card-text small text-muted mb-0">Hitung tip &amp; bagi tagihan</p></div>
+              </div>
+              <div class="mt-auto"><a href="tip-calculator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#faf5ff;color:#a855f7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.5 2L2 9.5 9.5 17 17 9.5z"/><path d="M9.5 17L17 9.5 22 14.5 14.5 22z"/></svg></div>
+                <div><h5 class="card-title mb-1">Decision Maker</h5><p class="card-text small text-muted mb-0">Acak pilihan, koin, dadu, 8 Ball</p></div>
+              </div>
+              <div class="mt-auto"><a href="decision-maker.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                <div><h5 class="card-title mb-1">Age Calculator</h5><p class="card-text small text-muted mb-0">Hitung usia real-time</p></div>
+              </div>
+              <div class="mt-auto"><a href="age-calculator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">%</div>
+                <div><h5 class="card-title mb-1">Percentage Calculator</h5><p class="card-text small text-muted mb-0">Hitung persentase &amp; diskon</p></div>
+              </div>
+              <div class="mt-auto"><a href="percentage-calculator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div><h5 class="card-title mb-1">Pomodoro Timer</h5><p class="card-text small text-muted mb-0">Fokus 25 menit, istirahat 5 menit</p></div>
+              </div>
+              <div class="mt-auto"><a href="pomodoro.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
             </div>
           </div>
         </div>
@@ -412,7 +644,127 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script src="sidebar.js"></script>
-</body>
+<script>
+var grid = document.querySelector('.row.g-4');
+var cards = grid ? Array.from(grid.querySelectorAll(':scope > .col-md-6')) : [];
+
+cards.forEach(function(c) {
+  var star = document.createElement('span');
+  star.className = 'pin-star';
+  star.textContent = '\u2606';
+  star.style.cssText = 'cursor:pointer;position:absolute;top:8px;right:8px;font-size:1.2rem;line-height:1;z-index:2;opacity:0.4;transition:.2s';
+  c.style.position = 'relative';
+  c.insertBefore(star, c.firstChild);
+});
+
+function loadPins() {
+  try { return JSON.parse(localStorage.getItem('webapps_pins') || '[]'); } catch(e) { return []; }
+}
+function savePins(p) {
+  try { localStorage.setItem('webapps_pins', JSON.stringify(p)); } catch(e) {}
+}
+function getCardName(c) {
+  var t = c.querySelector('.card-title');
+  return t ? t.textContent.trim() : '';
+}
+
+var pins = loadPins();
+cards.forEach(function(c) {
+  var n = getCardName(c);
+  var s = c.querySelector('.pin-star');
+  if (pins.indexOf(n) !== -1) {
+    s.textContent = '\u2605';
+    s.style.opacity = '1';
+    s.style.color = '#f59e0b';
+    c.dataset.pinned = '1';
+  }
+  s.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var pinned = c.dataset.pinned === '1';
+    if (pinned) {
+      c.dataset.pinned = '';
+      s.textContent = '\u2606';
+      s.style.opacity = '0.4';
+      s.style.color = '';
+      var idx = pins.indexOf(n);
+      if (idx !== -1) pins.splice(idx, 1);
+    } else {
+      c.dataset.pinned = '1';
+      s.textContent = '\u2605';
+      s.style.opacity = '1';
+      s.style.color = '#f59e0b';
+      if (pins.indexOf(n) === -1) pins.push(n);
+    }
+    savePins(pins);
+    sortPinned();
+  });
+});
+
+function sortPinned() {
+  var parent = grid;
+  var pinned = [], unpinned = [];
+  Array.from(parent.children).forEach(function(child) {
+    if (child.dataset && child.dataset.pinned === '1') pinned.push(child);
+    else unpinned.push(child);
+  });
+  pinned.forEach(function(c) { parent.appendChild(c); });
+  unpinned.forEach(function(c) { parent.appendChild(c); });
+}
+sortPinned();
+
+var tc = document.getElementById('toolCount');
+function countVisible(){
+  var visible = cards.filter(function(c){return c.style.display!=='none'}).length;
+  tc.textContent = visible + '/' + cards.length + ' tools';
+}
+countVisible();
+
+document.getElementById('toolSearch').addEventListener('input', function() {
+  var q = this.value.toLowerCase();
+  cards.forEach(function(card) {
+    var match = card.textContent.toLowerCase().includes(q);
+    card.style.display = match ? '' : 'none';
+  });
+  countVisible();
+});
+
+var catColors = {
+  'Converters':'#6366f1',
+  'Network &amp; URL':'#10b981',
+  'Developer Tools':'#f97316',
+  'Text &amp; Media':'#8b5cf6',
+  'Generators':'#0ea5e9',
+  'Utilities':'#ef4444'
+};
+var catMap = {
+  'Konverter Bilangan':'Converters','Color Picker':'Converters','Unit Converter':'Converters','Contrast Checker':'Converters','Time Converter':'Converters',
+  'Hash Generator':'Developer Tools','Password Generator':'Developer Tools','Base64':'Developer Tools','UUID':'Developer Tools','JSON Formatter':'Developer Tools','Regex Tester':'Developer Tools','Diff Checker':'Developer Tools','SQL Formatter':'Developer Tools','YAML':'Developer Tools','Markdown Previewer':'Developer Tools','Image to Base64':'Developer Tools','CSV':'Developer Tools','RSA Key Generator':'Developer Tools',
+  'Kalkulator Subnetting':'Network &amp; URL','IP Calculator':'Network &amp; URL','URL Encode':'Network &amp; URL','Cron Builder':'Network &amp; URL',
+  'Text Case Converter':'Text &amp; Media','Lorem Ipsum':'Text &amp; Media',
+  'QR Code':'Generators','Gradient Generator':'Generators',
+  'Timer':'Utilities','Screen Recorder':'Utilities','World Clock':'Utilities',
+  'JWT Decoder':'Developer Tools','HTML Live Preview':'Developer Tools','HTTP Status Codes':'Developer Tools','Character Counter':'Text &amp; Media','CSS Unit Converter':'Developer Tools',
+  'JSON ↔ CSV':'Developer Tools','Password Strength':'Utilities','Date Duration':'Converters','HTML Entity':'Developer Tools',
+  'BMI Calculator':'Utilities','Tip Calculator':'Utilities','Decision Maker':'Utilities',
+  'Age Calculator':'Utilities','Percentage Calculator':'Utilities','Pomodoro Timer':'Utilities'
+};
+cards.forEach(function(col){
+  var title = col.querySelector('.card-title');
+  if(!title)return;
+  var txt = title.textContent.trim();
+  var cat = '';
+  for(var key in catMap){
+    if(txt.indexOf(key)!==-1){cat=catMap[key];break;}
+  }
+  if(cat){
+    var badge = document.createElement('span');
+    badge.textContent = cat.replace('&amp;','&');
+    badge.style.cssText = 'position:absolute;top:6px;left:8px;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:'+(catColors[cat]||'#6b7280')+';color:#fff;opacity:0.85;line-height:1.4;z-index:2;';
+    col.style.position = 'relative';
+    col.insertBefore(badge, col.firstChild);
+  }
+});
+</script></body>
 </html>
 
 

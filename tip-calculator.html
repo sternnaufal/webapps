@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Tip Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Kalkulator tip online. Hitung tip, bagi bill, dan conversion mata uang.">
+  <meta name="keywords" content="tip calculator, bill splitter, tip, kalkulator tip, bagi tagihan">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/tip-calculator.html">
+  <meta property="og:title" content="Tip Calculator">
+  <meta property="og:description" content="Hitung tip dan bagi tagihan online.">
+  <meta name="twitter:title" content="Tip Calculator">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Tip Calculator","url":"https://webapps.naufalrakha.my.id/tip-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Tip Calculator</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h1 class="h3 mb-0">Tip Calculator</h1><p class="text-muted small mb-0">Hitung tip, bagi bill, dan lihat total per orang.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-5"><div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Total Tagihan</label><div class="input-group"><span class="input-group-text">Rp</span><input type="number" id="billInput" class="form-control" value="500000" step="1000"></div></div>
+<div class="mb-3"><label class="form-label fw-semibold">Persentase Tip</label>
+<div class="d-flex gap-2 flex-wrap" id="tipPresets">
+<button class="btn btn-outline-primary btn-sm" data-pct="5">5%</button>
+<button class="btn btn-outline-primary btn-sm" data-pct="10">10%</button>
+<button class="btn btn-primary btn-sm" data-pct="15">15%</button>
+<button class="btn btn-outline-primary btn-sm" data-pct="20">20%</button>
+<button class="btn btn-outline-primary btn-sm" data-pct="25">25%</button>
+</div>
+<div class="mt-2"><input type="range" id="tipRange" class="form-range" min="0" max="50" value="15"><div class="d-flex justify-content-between small text-muted"><span>0%</span><span id="tipLabel">15%</span><span>50%</span></div></div></div>
+<div class="mb-3"><label class="form-label fw-semibold">Jumlah Orang</label><div class="input-group"><button id="decPeople" class="btn btn-outline-secondary">-</button><input type="number" id="peopleInput" class="form-control text-center" value="1" min="1" max="100"><button id="incPeople" class="btn btn-outline-secondary">+</button></div></div>
+</div></div>
+<div class="col-lg-7"><div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Ringkasan</h6>
+<div class="row g-3"><div class="col-6"><div class="p-3 bg-light rounded text-center"><small class="text-muted">Tip</small><div class="h4 mb-0 fw-bold" id="tipAmount">Rp 75.000</div></div></div>
+<div class="col-6"><div class="p-3 bg-light rounded text-center"><small class="text-muted">Total + Tip</small><div class="h4 mb-0 fw-bold" id="totalAmount">Rp 575.000</div></div></div>
+<div class="col-6"><div class="p-3 bg-light rounded text-center"><small class="text-muted">Per Orang (tip)</small><div class="h4 mb-0 fw-bold" id="tipPerPerson">Rp 75.000</div></div></div>
+<div class="col-6"><div class="p-3" style="background:#eef2ff;border-radius:8px;text-align:center"><small class="text-muted">Total Per Orang</small><div class="h4 mb-0 fw-bold" id="totalPerPerson" style="color:var(--accent)">Rp 575.000</div></div></div>
+</div>
+<div class="mt-3 p-3 bg-light rounded small">
+<div id="breakdown"></div>
+</div>
+</div></div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var bill=document.getElementById('billInput'),tipRange=document.getElementById('tipRange'),tipLabel=document.getElementById('tipLabel'),people=document.getElementById('peopleInput');
+function fmt(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
+function calc(){
+  var b=parseFloat(bill.value)||0,p=parseInt(people.value)||1,t=parseFloat(tipRange.value);
+  var tip=b*t/100,total=b+tip,tipPP=tip/p,totalPP=total/p;
+  document.getElementById('tipAmount').textContent=fmt(tip);
+  document.getElementById('totalAmount').textContent=fmt(total);
+  document.getElementById('tipPerPerson').textContent=fmt(tipPP);
+  document.getElementById('totalPerPerson').textContent=fmt(totalPP);
+  document.getElementById('breakdown').innerHTML=
+    '<table class="table table-sm small mb-0"><tr><td>Tagihan</td><td class="text-end">'+fmt(b)+'</td></tr>'+
+    '<tr><td>Tip ('+t+'%)</td><td class="text-end">'+fmt(tip)+'</td></tr>'+
+    '<tr class="fw-bold"><td>Total</td><td class="text-end">'+fmt(total)+'</td></tr>'+
+    '<tr><td colspan="2"><hr class="my-1"></td></tr>'+
+    '<tr><td>Dibagi '+p+' orang</td><td class="text-end">'+fmt(totalPP)+'/orang</td></tr></table>';
+}
+bill.addEventListener('input',calc);
+tipRange.addEventListener('input',function(){tipLabel.textContent=this.value+'%';calc();});
+people.addEventListener('input',calc);
+document.getElementById('decPeople').addEventListener('click',function(){people.value=Math.max(1,parseInt(people.value)-1);calc();});
+document.getElementById('incPeople').addEventListener('click',function(){people.value=Math.min(100,parseInt(people.value)+1);calc();});
+document.querySelectorAll('#tipPresets .btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#tipPresets .btn').forEach(function(x){x.className='btn btn-outline-primary btn-sm'});
+    this.className='btn btn-primary btn-sm';
+    tipRange.value=this.dataset.pct;tipLabel.textContent=this.dataset.pct+'%';calc();
+  });
+});
+calc();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

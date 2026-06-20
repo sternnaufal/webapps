@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>World Clock</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="World clock online. Lihat waktu saat ini di berbagai zona waktu dunia. WIB, WITA, WIT, UTC, dan lainnya.">
+  <meta name="keywords" content="world clock, timezone converter, waktu dunia, zona waktu, WIB, WITA, WIT">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/world-clock.html">
+  <meta property="og:title" content="World Clock">
+  <meta property="og:description" content="Lihat waktu saat ini di berbagai zona waktu dunia.">
+  <meta property="og:url" content="https://webapps.naufalrakha.my.id/world-clock.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="World Clock">
+  <meta name="twitter:description" content="Lihat waktu saat ini di berbagai zona waktu dunia.">
+  <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"World Clock","url":"https://webapps.naufalrakha.my.id/world-clock.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}
+  </script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-label="Buka menu navigasi">?</button><span class="navbar-brand ms-2">World Clock</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">World Clock</h1><p class="text-muted small mb-0">Lihat waktu saat ini di berbagai zona waktu. Update real-time.</p></div></header>
+
+<div class="row g-4" id="clockGrid">
+</div>
+
+<div class="card shadow-sm border-0 p-3 mt-4">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-semibold small">Nama Kota/Zona</label>
+      <input type="text" id="newName" class="form-control" placeholder="Contoh: Tokyo" list="tzSuggest">
+      <datalist id="tzSuggest">
+        <option value="Tokyo"><option value="London"><option value="New York"><option value="Dubai"><option value="Singapore"><option value="Sydney"><option value="Paris"><option value="Seoul"><option value="Mumbai"><option value="Moscow">
+      </datalist>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-semibold small">Timezone (IANA)</label>
+      <input type="text" id="newTz" class="form-control font-mono" placeholder="Asia/Tokyo" list="tzList">
+      <datalist id="tzList">
+        <option value="Asia/Jakarta"><option value="Asia/Makassar"><option value="Asia/Jayapura"><option value="Asia/Tokyo"><option value="Asia/Singapore"><option value="Asia/Shanghai"><option value="Asia/Dubai"><option value="Asia/Kolkata"><option value="Europe/London"><option value="Europe/Paris"><option value="Europe/Moscow"><option value="America/New_York"><option value="America/Chicago"><option value="America/Denver"><option value="America/Los_Angeles"><option value="Australia/Sydney"><option value="Pacific/Auckland"><option value="UTC">
+      </datalist>
+    </div>
+    <div class="col-md-3 col-6">
+      <label class="form-label fw-semibold small">Offset UTC</label>
+      <select id="newOffset" class="form-select">
+        <option value="-12">UTC-12</option><option value="-11">UTC-11</option><option value="-10">UTC-10</option><option value="-9">UTC-9</option><option value="-8">UTC-8</option><option value="-7">UTC-7</option><option value="-6">UTC-6</option><option value="-5">UTC-5</option><option value="-4">UTC-4</option><option value="-3">UTC-3</option><option value="-2">UTC-2</option><option value="-1">UTC-1</option><option value="0" selected>UTC+0</option><option value="1">UTC+1</option><option value="2">UTC+2</option><option value="3">UTC+3</option><option value="4">UTC+4</option><option value="5">UTC+5</option><option value="6">UTC+6</option><option value="7">UTC+7</option><option value="8">UTC+8</option><option value="9">UTC+9</option><option value="10">UTC+10</option><option value="11">UTC+11</option><option value="12">UTC+12</option>
+      </select>
+    </div>
+    <div class="col-md-2 col-6">
+      <label class="form-label fw-semibold small">&nbsp;</label>
+      <button id="btnAdd" class="btn btn-primary w-100">Tambah</button>
+    </div>
+  </div>
+</div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
+      <a href="https://naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Root</a>
+      <span style="color:#444;">|</span>
+      <a href="https://digital.naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Digital</a>
+      <span style="color:#444;">|</span>
+      <a href="https://demo.naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Demo Art</a>
+      <span style="color:#444;">|</span>
+      <a href="https://koleksilama.naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Koleksi</a>
+      <span style="color:#444;">|</span>
+      <a href="https://webapps.naufalrakha.my.id" target="_blank" class="text-decoration-none text-info" style="font-size:0.75rem;font-weight:600;">WebApps</a>
+    </div>
+    <p class="mb-0">? <span id="year">2025</span> WebApps ? Dibuat dengan <span class="text-danger">??</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p>
+  <div class="mt-2"><a href="https://saweria.co/naufalrakha" target="_blank" class="btn btn-sm" style="background:#ff6b6b;color:#fff;border-radius:20px;font-size:0.75rem;padding:2px 14px;">&#x2665; Donasi via Saweria</a></div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var defaultClocks=[
+  {name:'Jakarta (WIB)',tz:'Asia/Jakarta',offset:7},
+  {name:'Makassar (WITA)',tz:'Asia/Makassar',offset:8},
+  {name:'Jayapura (WIT)',tz:'Asia/Jayapura',offset:9},
+  {name:'UTC',tz:'UTC',offset:0},
+  {name:'Tokyo',tz:'Asia/Tokyo',offset:9},
+  {name:'London',tz:'Europe/London',offset:1},
+  {name:'New York',tz:'America/New_York',offset:-4},
+  {name:'Dubai',tz:'Asia/Dubai',offset:4},
+];
+
+var clocks=[];
+
+function loadClocks(){
+  try{var d=JSON.parse(localStorage.getItem('wc_clocks'));if(d&&d.length)clocks=d;else clocks=defaultClocks;}
+  catch(e){clocks=defaultClocks;}
+}
+function saveClocks(){try{localStorage.setItem('wc_clocks',JSON.stringify(clocks))}catch(e){}}
+
+function formatTime(offset){
+  var now=new Date();
+  var utc=now.getTime()+now.getTimezoneOffset()*60000;
+  var d=new Date(utc+offset*3600000);
+  return d.toLocaleString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+}
+function formatDate(offset){
+  var now=new Date();
+  var utc=now.getTime()+now.getTimezoneOffset()*60000;
+  var d=new Date(utc+offset*3600000);
+  return d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'short',year:'numeric'});
+}
+
+function render(){
+  var g=document.getElementById('clockGrid');g.innerHTML='';
+  clocks.forEach(function(c,i){
+    var col=document.createElement('div');col.className='col-md-3 col-sm-6';
+    col.innerHTML='<div class="card shadow-sm border-0 h-100"><div class="card-body text-center d-flex flex-column justify-content-center" style="min-height:140px">'+
+      '<div class="fw-bold small text-muted mb-1">'+c.name+'</div>'+
+      '<div class="display-6 fw-semibold mb-0" style="font-size:1.8rem;letter-spacing:1px">'+formatTime(c.offset)+'</div>'+
+      '<div class="small text-muted mt-1">'+formatDate(c.offset)+'</div>'+
+      '<div class="small text-muted">UTC'+(c.offset>=0?'+':'')+c.offset+'</div>'+
+      '<button class="btn btn-sm btn-outline-danger mt-2 remove-btn" data-idx="'+i+'" style="font-size:0.7rem">Hapus</button>'+
+    '</div></div>';
+    g.appendChild(col);
+  });
+  document.querySelectorAll('.remove-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var idx=parseInt(this.dataset.idx);
+      clocks.splice(idx,1);saveClocks();render();
+    });
+  });
+}
+
+loadClocks();render();
+setInterval(function(){render()},1000);
+
+document.getElementById('btnAdd').addEventListener('click',function(){
+  var name=document.getElementById('newName').value.trim();
+  var tz=document.getElementById('newTz').value.trim();
+  var offset=parseInt(document.getElementById('newOffset').value);
+  if(!name){alert('Nama kota tidak boleh kosong');return;}
+  if(!tz){alert('Timezone tidak boleh kosong');return;}
+  clocks.push({name:name,tz:tz,offset:offset});
+  saveClocks();render();
+  document.getElementById('newName').value='';document.getElementById('newTz').value='';
+});
+</script>
+<script src="sidebar.js"></script>
+</body></html>

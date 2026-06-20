@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Character Counter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Character counter online. Hitung karakter, kata, kalimat, paragraf, dan baris secara real-time.">
+  <meta name="keywords" content="character counter, word counter, character count, word count, text analyzer">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/char-counter.html">
+  <meta property="og:title" content="Character Counter">
+  <meta property="og:description" content="Hitung karakter, kata, kalimat, dan paragraf online.">
+  <meta name="twitter:title" content="Character Counter">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Character Counter","url":"https://webapps.naufalrakha.my.id/char-counter.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Char Counter</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div><div><h1 class="h3 mb-0">Character Counter</h1><p class="text-muted small mb-0">Analisis teks secara real-time: karakter, kata, kalimat, paragraf, dan lainnya.</p></div></header>
+<textarea id="textInput" class="form-control font-mono mb-3" rows="8" placeholder="Ketik atau paste teks di sini..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea>
+<div class="row g-3">
+<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="charCount">0</div><small class="text-muted">Karakter</small></div></div>
+<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="charNoSpace">0</div><small class="text-muted">Tanpa Spasi</small></div></div>
+<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="wordCount">0</div><small class="text-muted">Kata</small></div></div>
+<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="sentCount">0</div><small class="text-muted">Kalimat</small></div></div>
+<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="paraCount">0</div><small class="text-muted">Paragraf</small></div></div>
+<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="lineCount">0</div><small class="text-muted">Baris</small></div></div>
+</div>
+<div class="row g-3 mt-2">
+<div class="col-md-3"><div class="card shadow-sm border-0 p-3 text-center"><div class="h5 mb-0 fw-bold" id="readTime">0</div><small class="text-muted">Menit baca</small></div></div>
+<div class="col-md-3"><div class="card shadow-sm border-0 p-3 text-center"><div class="h5 mb-0 fw-bold" id="density">0</div><small class="text-muted">Kata unik</small></div></div>
+<div class="col-md-6"><div class="card shadow-sm border-0 p-3"><small class="text-muted">Top words:</small><div id="topWords" class="small mt-1"></div></div></div>
+</div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('textInput');
+['charCount','charNoSpace','wordCount','sentCount','paraCount','lineCount','readTime','density'].forEach(function(id){window[id]=document.getElementById(id)});
+window.topWords=document.getElementById('topWords');
+function analyze(){
+  var t=inp.value;
+  charCount.textContent=t.length;
+  charNoSpace.textContent=t.replace(/\s/g,'').length;
+  wordCount.textContent=t.trim()?t.trim().split(/\s+/).length:0;
+  sentCount.textContent=t.split(/[.!?]+/).filter(function(s){return s.trim().length>0}).length;
+  paraCount.textContent=t.split(/\n\s*\n/).filter(function(p){return p.trim().length>0}).length;
+  lineCount.textContent=t.split('\n').length;
+  readTime.textContent=Math.max(1,Math.round((t.trim().split(/\s+/).length||0)/200))+' menit';
+  var words=t.toLowerCase().match(/\b\w+\b/g)||[];
+  var uniq={};words.forEach(function(w){uniq[w]=(uniq[w]||0)+1});
+  var keys=Object.keys(uniq);
+  density.textContent=keys.length;
+  var sorted=keys.sort(function(a,b){return uniq[b]-uniq[a]}).slice(0,6);
+  topWords.innerHTML=sorted.map(function(w){return '<span class="badge bg-light text-dark me-1 mb-1">'+w+' <span class="text-muted">x'+uniq[w]+'</span></span>'}).join('');
+}
+inp.addEventListener('input',analyze);analyze();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

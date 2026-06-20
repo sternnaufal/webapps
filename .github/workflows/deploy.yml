@@ -23,3 +23,8 @@ jobs:
           {"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}
           EOF
           npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+
+      - name: Notify Bing (IndexNow)
+        run: |
+          curl -sS "https://www.bing.com/ping?sitemap=https://webapps.naufalrakha.my.id/sitemap.xml" -o /dev/null -w "Bing: %{http_code}\n"
+          echo "Search engines notified"

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>HTML Live Preview</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Live HTML preview online. Tulis HTML, CSS, JS dan lihat hasilnya secara real-time.">
+  <meta name="keywords" content="html preview, live html editor, html css js playground">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/html-preview.html">
+  <meta property="og:title" content="HTML Live Preview">
+  <meta property="og:description" content="Live HTML preview online.">
+  <meta name="twitter:title" content="HTML Live Preview">
+  <meta name="twitter:description" content="Live HTML preview online.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"HTML Live Preview","url":"https://webapps.naufalrakha.my.id/html-preview.html","applicationCategory":"DeveloperApplication","operatingSystem":"All"}</script>
+  <style>html,body{height:100%}.row,main{height:100%}textarea{resize:none;font-size:0.8rem}iframe{width:100%;height:100%;border:none;background:#fff}</style>
+</head>
+<body>
+<div class="container-fluid h-100"><div class="row h-100">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-0 d-flex flex-column">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">HTML Preview</span></div></nav>
+<div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom bg-light">
+  <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;width:28px;height:28px;font-size:0.7rem;">&lt;/&gt;</div>
+  <h1 class="h6 mb-0 fw-bold">HTML Live Preview</h1>
+  <span class="badge bg-success ms-auto">Real-time</span>
+  <button id="btnRun" class="btn btn-sm btn-primary d-md-none">Run</button>
+</div>
+<div class="row g-0 flex-grow-1"><div class="col-md-6 border-end">
+<textarea id="htmlInput" class="form-control h-100 border-0 p-3 font-mono" placeholder="&lt;h1&gt;Hello World&lt;/h1&gt;">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body { font-family: system-ui; padding: 2rem; background: #f8fafc; }
+  h1 { color: #2563eb; }
+  .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="card"&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;p&gt;Edit HTML/CSS/JS di sini, lihat hasilnya secara real-time.&lt;/p&gt;
+    &lt;button onclick="alert('Halo!')"&gt;Klik Aku&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+</div><div class="col-md-6 p-0"><iframe id="preview" srcdoc=" "></iframe></div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+var inp=document.getElementById('htmlInput'),pre=document.getElementById('preview');
+function update(){pre.srcdoc=inp.value;}
+inp.addEventListener('input',update);
+document.getElementById('btnRun').addEventListener('click',update);
+update();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

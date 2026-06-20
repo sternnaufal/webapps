@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CSS Gradient Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Buat CSS gradient kustom online. Pilih warna, arah, dan tipe gradient. Preview live & copy CSS.">
+  <meta name="keywords" content="css gradient generator, gradient css, linear gradient, radial gradient, color picker">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/gradient-generator.html">
+  <meta property="og:title" content="CSS Gradient Generator">
+  <meta property="og:description" content="Buat CSS gradient kustom online.">
+  <meta property="og:url" content="https://webapps.naufalrakha.my.id/gradient-generator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Gradient Generator">
+  <meta name="twitter:description" content="Buat CSS gradient kustom online.">
+  <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"CSS Gradient Generator","url":"https://webapps.naufalrakha.my.id/gradient-generator.html","applicationCategory":"DeveloperApplication","operatingSystem":"All"}
+  </script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-label="Buka menu navigasi">?</button><span class="navbar-brand ms-2">Gradient Generator</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg></div><div><h1 class="h3 mb-0">CSS Gradient Generator</h1><p class="text-muted small mb-0">Buat gradient CSS kustom dengan preview langsung.</p></div></header>
+
+<div class="row g-4">
+<div class="col-lg-4">
+  <div class="card shadow-sm border-0 p-3">
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Tipe</label>
+      <select id="gradType" class="form-select">
+        <option value="linear">Linear</option>
+        <option value="radial">Radial</option>
+      </select>
+    </div>
+    <div class="mb-3" id="directionGroup">
+      <label class="form-label fw-semibold">Arah</label>
+      <select id="gradDirection" class="form-select">
+        <option value="to bottom">Atas ke Bawah</option>
+        <option value="to top">Bawah ke Atas</option>
+        <option value="to right">Kiri ke Kanan</option>
+        <option value="to left">Kanan ke Kiri</option>
+        <option value="to bottom right">Diagonal ↘</option>
+        <option value="to bottom left">Diagonal ↙</option>
+        <option value="to top right">Diagonal ↗</option>
+        <option value="to top left">Diagonal ↖</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Warna 1</label>
+      <div class="d-flex align-items-center gap-2">
+        <input type="color" id="color1" class="form-control form-control-color" value="#3b82f6">
+        <input type="text" id="hex1" class="form-control font-mono" value="#3b82f6" style="max-width:100px;font-size:0.8rem;">
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Warna 2</label>
+      <div class="d-flex align-items-center gap-2">
+        <input type="color" id="color2" class="form-control form-control-color" value="#8b5cf6">
+        <input type="text" id="hex2" class="form-control font-mono" value="#8b5cf6" style="max-width:100px;font-size:0.8rem;">
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Warna 3 <small class="text-muted">(opsional)</small></label>
+      <div class="d-flex align-items-center gap-2">
+        <input type="color" id="color3" class="form-control form-control-color" value="#ec4899">
+        <input type="text" id="hex3" class="form-control font-mono" value="#ec4899" style="max-width:100px;font-size:0.8rem;">
+      </div>
+      <div class="form-check mt-1">
+        <input type="checkbox" id="useColor3" class="form-check-input" checked>
+        <label class="form-check-label" for="useColor3">Gunakan warna ke-3</label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-8">
+  <div class="card shadow-sm border-0 p-3">
+    <div id="preview" class="mb-3 rounded" style="height:200px;border:1px solid #ddd;"></div>
+    <div class="d-flex justify-content-between align-items-center mb-1">
+      <label class="form-label fw-semibold mb-0">CSS Code</label>
+      <button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button>
+    </div>
+    <textarea id="cssOutput" class="form-control font-mono" rows="4" readonly></textarea>
+  </div>
+</div>
+</div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3">
+  <div class="container text-center small">
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
+      <a href="https://naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Root</a>
+      <span style="color:#444;">|</span>
+      <a href="https://digital.naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Digital</a>
+      <span style="color:#444;">|</span>
+      <a href="https://demo.naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Demo Art</a>
+      <span style="color:#444;">|</span>
+      <a href="https://koleksilama.naufalrakha.my.id" target="_blank" class="text-decoration-none text-secondary-emphasis" style="font-size:0.75rem;">Koleksi</a>
+      <span style="color:#444;">|</span>
+      <a href="https://webapps.naufalrakha.my.id" target="_blank" class="text-decoration-none text-info" style="font-size:0.75rem;font-weight:600;">WebApps</a>
+    </div>
+    <p class="mb-0">? <span id="year">2025</span> WebApps ? Dibuat dengan <span class="text-danger">??</span> oleh <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a></p>
+  <div class="mt-2"><a href="https://saweria.co/naufalrakha" target="_blank" class="btn btn-sm" style="background:#ff6b6b;color:#fff;border-radius:20px;font-size:0.75rem;padding:2px 14px;">&#x2665; Donasi via Saweria</a></div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var color1=document.getElementById('color1'),hex1=document.getElementById('hex1');
+var color2=document.getElementById('color2'),hex2=document.getElementById('hex2');
+var color3=document.getElementById('color3'),hex3=document.getElementById('hex3');
+var use3=document.getElementById('useColor3');
+var type=document.getElementById('gradType'),dir=document.getElementById('gradDirection');
+var preview=document.getElementById('preview'),output=document.getElementById('cssOutput');
+
+function syncHex(picker,hex){hex.value=picker.value}
+function syncPicker(hex,picker){picker.value=hex.value}
+color1.addEventListener('input',function(){syncHex(color1,hex1);update();});
+color2.addEventListener('input',function(){syncHex(color2,hex2);update();});
+color3.addEventListener('input',function(){syncHex(color3,hex3);update();});
+hex1.addEventListener('input',function(){syncPicker(hex1,color1);update();});
+hex2.addEventListener('input',function(){syncPicker(hex2,color2);update();});
+hex3.addEventListener('input',function(){syncPicker(hex3,color3);update();});
+use3.addEventListener('change',update);
+type.addEventListener('change',function(){document.getElementById('directionGroup').style.display=this.value==='linear'?'block':'none';update();});
+dir.addEventListener('change',update);
+
+function update(){
+  var c1=color1.value,c2=color2.value,c3=color3.value;
+  var css;
+  if(type.value==='linear'){
+    var d=dir.value;
+    if(use3.checked) css='linear-gradient('+d+', '+c1+', '+c2+', '+c3+')';
+    else css='linear-gradient('+d+', '+c1+', '+c2+')';
+  } else {
+    if(use3.checked) css='radial-gradient(circle, '+c1+', '+c2+', '+c3+')';
+    else css='radial-gradient(circle, '+c1+', '+c2+')';
+  }
+  preview.style.background=css;
+  output.value='background: '+css+';';
+}
+update();
+
+document.getElementById('btnCopy').addEventListener('click',function(){
+  var b=this;navigator.clipboard.writeText(output.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+</script>
+<script src="sidebar.js"></script>
+</body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>JSON ↔ CSV Converter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Konversi JSON ke CSV dan CSV ke JSON online. Upload file atau paste data.">
+  <meta name="keywords" content="json to csv, csv to json, json converter, csv converter, data converter">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/json-csv.html">
+  <meta property="og:title" content="JSON ↔ CSV Converter">
+  <meta property="og:description" content="Konversi JSON ke CSV dan CSV ke JSON online.">
+  <meta name="twitter:title" content="JSON ↔ CSV Converter">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON ↔ CSV Converter","url":"https://webapps.naufalrakha.my.id/json-csv.html","applicationCategory":"DeveloperApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">JSON ↔ CSV</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h12"/></svg></div><div><h1 class="h3 mb-0">JSON ↔ CSV Converter</h1><p class="text-muted small mb-0">Konversi data antara JSON dan CSV. Upload file atau paste langsung.</p></div></header>
+<div class="row g-4 mb-3">
+<div class="col-lg-6"><label class="form-label fw-semibold">Input</label>
+<textarea id="inputArea" class="form-control font-mono" rows="10" placeholder="Paste JSON atau CSV...">[
+  {"nama":"Naufal","usia":25,"kota":"Jakarta","pekerjaan":"Developer"},
+  {"nama":"Rakha","usia":28,"kota":"Bandung","pekerjaan":"Designer"},
+  {"nama":"Putra","usia":22,"kota":"Surabaya","pekerjaan":"Student"}
+]</textarea>
+<div class="d-flex gap-2 mt-2 flex-wrap">
+<button id="btnToCsv" class="btn btn-primary">JSON → CSV</button>
+<button id="btnToJson" class="btn btn-success">CSV → JSON</button>
+<button id="btnClear" class="btn btn-outline-danger">Clear</button>
+<label class="btn btn-outline-secondary mb-0"><input type="file" id="fileInput" accept=".json,.csv" style="display:none">Upload File</label>
+</div></div>
+<div class="col-lg-6"><div class="d-flex justify-content-between align-items-center mb-1"><label class="form-label fw-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
+<textarea id="outputArea" class="form-control font-mono" rows="10" readonly></textarea>
+<div class="mt-2"><button id="btnDownload" class="btn btn-sm btn-outline-primary">Download</button></div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
+function escapeCSV(v){if(v==null)return '';v=String(v);if(v.includes(',')||v.includes('"')||v.includes('\n')){v=v.replace(/"/g,'""');v='"'+v+'"'}return v}
+function toCSV(){
+  try{
+    var data=JSON.parse(inp.value);
+    if(!Array.isArray(data)||!data.length){out.value='Error: Input harus array JSON';return}
+    var headers=Object.keys(data[0]);
+    var rows=[headers.join(',')];
+    data.forEach(function(row){
+      rows.push(headers.map(function(h){return escapeCSV(row[h])}).join(','));
+    });
+    out.value=rows.join('\n');
+  }catch(e){out.value='Error: '+e.message}
+}
+function toJSON(){
+  try{
+    var lines=inp.value.trim().split('\n');
+    if(lines.length<2){out.value='Error: CSV harus punya header + minimal 1 baris data';return}
+    var headers=lines[0].split(',').map(function(h){return h.trim()});
+    var result=[];
+    for(var i=1;i<lines.length;i++){
+      if(!lines[i].trim())continue;
+      var vals=parseCSVLine(lines[i]);
+      if(vals.length!==headers.length)continue;
+      var obj={};
+      headers.forEach(function(h,j){obj[h]=vals[j]});
+      result.push(obj);
+    }
+    out.value=JSON.stringify(result,null,2);
+  }catch(e){out.value='Error: '+e.message}
+}
+function parseCSVLine(line){
+  var result=[],cur='',inQuotes=false;
+  for(var i=0;i<line.length;i++){
+    var c=line[i];
+    if(inQuotes){
+      if(c=='"'){if(line[i+1]=='"'){cur+='"';i++}else{inQuotes=false}}
+      else cur+=c;
+    }else{
+      if(c=='"'){inQuotes=true}
+      else if(c==','){result.push(cur.trim());cur=''}
+      else cur+=c;
+    }
+  }
+  result.push(cur.trim());
+  return result;
+}
+document.getElementById('btnToCsv').addEventListener('click',toCSV);
+document.getElementById('btnToJson').addEventListener('click',toJSON);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+document.getElementById('fileInput').addEventListener('change',function(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){inp.value=r.result};
+  r.readAsText(f);
+});
+document.getElementById('btnDownload').addEventListener('click',function(){
+  if(!out.value)return;
+  var isCSV=out.value.startsWith('{')||out.value.startsWith('[');
+  var blob=new Blob([out.value],{type:isCSV?'application/json':'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='output.'+(isCSV?'json':'csv');a.click();
+});
+</script>
+<script src="sidebar.js"></script>
+</body></html>

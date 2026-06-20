@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>HTTP Status Codes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Referensi HTTP status codes lengkap. 1xx, 2xx, 3xx, 4xx, 5xx beserta penjelasan.">
+  <meta name="keywords" content="http status codes, http status, error codes, 404, 500, 200, 301">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/http-status.html">
+  <meta property="og:title" content="HTTP Status Codes">
+  <meta property="og:description" content="Referensi HTTP status codes lengkap.">
+  <meta name="twitter:title" content="HTTP Status Codes">
+  <meta name="twitter:description" content="Referensi HTTP status codes lengkap.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"HTTP Status Codes","url":"https://webapps.naufalrakha.my.id/http-status.html","applicationCategory":"DeveloperApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">HTTP Status</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div><h1 class="h3 mb-0">HTTP Status Codes</h1><p class="text-muted small mb-0">Referensi lengkap kode status HTTP. Cari berdasarkan kode atau deskripsi.</p></div></header>
+<div class="mb-3"><input type="text" id="statusSearch" class="form-control" placeholder="Cari kode atau deskripsi..." style="max-width:400px;"></div>
+<div id="statusList" class="row g-3"></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var statuses=[
+  {code:100,cat:'Informational',label:'Continue',desc:'Server menerima header request, client bisa lanjut kirim body.'},
+  {code:101,cat:'Informational',label:'Switching Protocols',desc:'Server setuju switch protocol sesuai request client.'},
+  {code:200,cat:'Success',label:'OK',desc:'Request berhasil. Response tergantung method yang digunakan.'},
+  {code:201,cat:'Success',label:'Created',desc:'Request berhasil dan resource baru telah dibuat.'},
+  {code:204,cat:'Success',label:'No Content',desc:'Request berhasil tapi tidak ada konten yang dikembalikan.'},
+  {code:301,cat:'Redirection',label:'Moved Permanently',desc:'Resource sudah pindah permanen ke URL baru.'},
+  {code:302,cat:'Redirection',label:'Found',desc:'Resource sementara ada di URL berbeda.'},
+  {code:304,cat:'Redirection',label:'Not Modified',desc:'Resource tidak berubah sejak akses terakhir (cache).'},
+  {code:400,cat:'Client Error',label:'Bad Request',desc:'Server tidak bisa memproses request karena syntax salah.'},
+  {code:401,cat:'Client Error',label:'Unauthorized',desc:'Memerlukan autentikasi.'},
+  {code:403,cat:'Client Error',label:'Forbidden',desc:'Server menolak request, tidak ada akses.'},
+  {code:404,cat:'Client Error',label:'Not Found',desc:'Resource tidak ditemukan di server.'},
+  {code:405,cat:'Client Error',label:'Method Not Allowed',desc:'Method HTTP tidak didukung untuk resource ini.'},
+  {code:408,cat:'Client Error',label:'Request Timeout',desc:'Server timeout menunggu request dari client.'},
+  {code:409,cat:'Client Error',label:'Conflict',desc:'Request bentrok dengan kondisi server saat ini.'},
+  {code:422,cat:'Client Error',label:'Unprocessable Entity',desc:'Request tidak bisa diproses karena semantic error.'},
+  {code:429,cat:'Client Error',label:'Too Many Requests',desc:'Client melebihi batas request (rate limiting).'},
+  {code:500,cat:'Server Error',label:'Internal Server Error',desc:'Server mengalami error internal.'},
+  {code:502,cat:'Server Error',label:'Bad Gateway',desc:'Gateway menerima response invalid dari server upstream.'},
+  {code:503,cat:'Server Error',label:'Service Unavailable',desc:'Server sementara tidak bisa melayani (overload/maintenance).'},
+  {code:504,cat:'Server Error',label:'Gateway Timeout',desc:'Gateway tidak menerima response dari server upstream.'},
+];
+
+var catColors={Informational:'#3b82f6',Success:'#22c55e',Redirection:'#f59e0b','Client Error':'#ef4444','Server Error':'#dc2626'};
+
+function render(q){
+  q=(q||'').toLowerCase();
+  var list=document.getElementById('statusList');list.innerHTML='';
+  statuses.forEach(function(s){
+    if(q&&!String(s.code).includes(q)&&!s.label.toLowerCase().includes(q)&&!s.cat.toLowerCase().includes(q)&&!s.desc.toLowerCase().includes(q))return;
+    var col=document.createElement('div');col.className='col-md-4 col-sm-6';
+    col.innerHTML='<div class="card shadow-sm border-0 h-100 p-3">'+
+      '<div class="d-flex align-items-center gap-2 mb-1"><span class="badge" style="background:'+(catColors[s.cat]||'#6b7280')+'">'+s.code+'</span><span class="fw-semibold small">'+s.label+'</span></div>'+
+      '<div class="small text-muted">'+s.desc+'</div>'+
+      '<div class="mt-1"><span class="badge bg-light text-dark" style="font-size:0.6rem;">'+s.cat+'</span></div></div>';
+    list.appendChild(col);
+  });
+}
+render();
+document.getElementById('statusSearch').addEventListener('input',function(){render(this.value)});
+</script>
+<script src="sidebar.js"></script>
+</body></html>

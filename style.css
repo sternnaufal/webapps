@@ -154,7 +154,44 @@ pre, code, .font-mono { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace
 
 footer { border-top: 1px solid var(--border); }
 
+.card {
+  animation: fadeUp .35s ease both;
+}
+.card:nth-child(1) { animation-delay:0s }
+.card:nth-child(2) { animation-delay:.02s }
+.card:nth-child(3) { animation-delay:.04s }
+.card:nth-child(4) { animation-delay:.06s }
+.card:nth-child(5) { animation-delay:.08s }
+.card:nth-child(6) { animation-delay:.1s }
+.card:nth-child(7) { animation-delay:.12s }
+.card:nth-child(8) { animation-delay:.14s }
+.card:nth-child(9) { animation-delay:.16s }
+.card:nth-child(10) { animation-delay:.18s }
+.card:nth-child(11) { animation-delay:.2s }
+.card:nth-child(12) { animation-delay:.22s }
+.card:nth-child(13) { animation-delay:.24s }
+.card:nth-child(14) { animation-delay:.26s }
+.card:nth-child(15) { animation-delay:.28s }
+.card:nth-child(16) { animation-delay:.3s }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(12px) }
+  to { opacity:1; transform:translateY(0) }
+}
+
+.hero-section {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 100%);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+}
+.hero-section h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -.03em; }
+.hero-section p { max-width: 540px; color: var(--text-muted); }
+
 @media (max-width: 767.98px) {
   .sidebar-desktop { display: none; }
   .main-content { padding: 1rem !important; }
+  .hero-section { padding: 1.25rem; }
+  .hero-section h1 { font-size: 1.35rem; }
 }

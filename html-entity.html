@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>HTML Entity Encoder/Decoder</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Encode dan decode HTML entities online. Konversi &lt; &gt; &amp; &quot; ke entity HTML.">
+  <meta name="keywords" content="html entity encoder, html entity decoder, html escape, html unescape, special characters">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/html-entity.html">
+  <meta property="og:title" content="HTML Entity Encoder/Decoder">
+  <meta property="og:description" content="Encode dan decode HTML entities online.">
+  <meta name="twitter:title" content="HTML Entity Encoder/Decoder">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"HTML Entity Encoder/Decoder","url":"https://webapps.naufalrakha.my.id/html-entity.html","applicationCategory":"DeveloperApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">HTML Entity</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">&amp;</div><div><h1 class="h3 mb-0">HTML Entity Encoder / Decoder</h1><p class="text-muted small mb-0">Encode atau decode karakter khusus HTML seperti &lt;, &gt;, &amp;, &quot; menjadi entity HTML.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-6"><label class="form-label fw-semibold">Input</label>
+<textarea id="inputArea" class="form-control font-mono" rows="8" placeholder="Paste teks..." autofocus>&lt;div class="container"&gt;
+  &lt;h1&gt;Hello &amp; Welcome!&lt;/h1&gt;
+  &lt;p&gt;Harga: Rp 50.000 &amp; diskon 20%&lt;/p&gt;
+&lt;/div&gt;</textarea>
+<div class="d-flex gap-2 mt-2 flex-wrap">
+<button id="btnEncode" class="btn btn-primary">Encode</button>
+<button id="btnDecode" class="btn btn-success">Decode</button>
+<button id="btnClear" class="btn btn-outline-danger">Clear</button>
+<button id="btnSwap" class="btn btn-outline-secondary">Swap Input ↔ Output</button>
+</div></div>
+<div class="col-lg-6"><div class="d-flex justify-content-between align-items-center mb-1"><label class="form-label fw-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
+<textarea id="outputArea" class="form-control font-mono" rows="8" readonly></textarea>
+<div class="mt-2">
+<div class="form-check form-check-inline"><input type="radio" name="encodeMode" id="modeNamed" class="form-check-input" checked><label class="form-check-label small" for="modeNamed">Named (&amp;nbsp;)</label></div>
+<div class="form-check form-check-inline"><input type="radio" name="encodeMode" id="modeNumeric" class="form-check-input"><label class="form-check-label small" for="modeNumeric">Numeric (&amp;#160;)</label></div>
+<div class="form-check form-check-inline"><input type="radio" name="encodeMode" id="modeHex" class="form-check-input"><label class="form-check-label small" for="modeHex">Hex (&amp;#xA0;)</label></div>
+</div></div></div>
+<div class="row mt-4"><div class="col-12">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Referensi Cepat HTML Entities</h6>
+<div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Karakter</th><th>Entity</th><th>Deskripsi</th><th>Karakter</th><th>Entity</th><th>Deskripsi</th></tr></thead><tbody id="entityTable"></tbody></table></div></div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
+
+var namedEntities={
+  '&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&nbsp;':'\xa0','&copy;':'©','&reg;':'®','&trade;':'™','&euro;':'€','&pound;':'£','&yen;':'¥','&cent;':'¢','&sect;':'§','&deg;':'°','&plusmn;':'±','&times;':'×','&divide;':'÷','&micro;':'µ','&middot;':'·','&bull;':'•','&hellip;':'…','&prime;':'′','&Prime;':'″','&larr;':'←','&rarr;':'→','&uarr;':'↑','&darr;':'↓','&harr;':'↔','&spades;':'♠','&clubs;':'♣','&hearts;':'♥','&diams;':'♦','&there4;':'∴','&permil;':'‰','&sum;':'∑','&prod;':'∏','&radic;':'√','&infin;':'∞','&int;':'∫','&asymp;':'≈','&ne;':'≠','&equiv;':'≡','&le;':'≤','&ge;':'≥','&nabla;':'∇','&alpha;':'α','&beta;':'β','&gamma;':'γ','&delta;':'δ','&pi;':'π','&omega;':'ω',
+};
+var namedToChar={};for(var k in namedEntities)namedToChar[namedEntities[k]]=k;
+
+function getMode(){return document.querySelector('input[name=encodeMode]:checked').id}
+
+function encode(){
+  var t=inp.value,mode=getMode();
+  var r='';
+  for(var i=0;i<t.length;i++){
+    var c=t[i],code=t.charCodeAt(i);
+    if(c==='&'){r+='&amp;';continue}
+    if(c==='<'){r+='&lt;';continue}
+    if(c==='>'){r+='&gt;';continue}
+    if(c==='"'){r+='&quot;';continue}
+    if(c==="'"){r+='&apos;';continue}
+    if(code>127||code<32){
+      if(mode==='modeNamed'&&namedToChar[c]){r+=namedToChar[c];continue}
+      if(mode==='modeNumeric'){r+='&#'+code+';';continue}
+      if(mode==='modeHex'){r+='&#x'+code.toString(16).toUpperCase()+';';continue}
+    }
+    r+=c;
+  }
+  out.value=r;
+}
+
+function decode(){
+  var t=inp.value;
+  t=t.replace(/&amp;/g,'&');
+  t=t.replace(/&lt;/g,'<');
+  t=t.replace(/&gt;/g,'>');
+  t=t.replace(/&quot;/g,'"');
+  t=t.replace(/&apos;/g,"'");
+  t=t.replace(/&#x([0-9a-fA-F]+);/g,function(m,h){return String.fromCodePoint(parseInt(h,16))});
+  t=t.replace(/&#(\d+);/g,function(m,d){return String.fromCodePoint(parseInt(d))});
+  for(var e in namedEntities){
+    t=t.split(e).join(namedEntities[e]);
+  }
+  out.value=t;
+}
+
+document.getElementById('btnEncode').addEventListener('click',encode);
+document.getElementById('btnDecode').addEventListener('click',decode);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
+document.getElementById('btnSwap').addEventListener('click',function(){var t=inp.value;inp.value=out.value;out.value=t});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+document.querySelectorAll('input[name=encodeMode]').forEach(function(r){r.addEventListener('change',encode)});
+
+var refs=[['&amp;','&','&lt;','<','&gt;','>','&quot;','"','&apos;','&#39;',"'",'&nbsp;',' '],
+  ['&copy;','©','&reg;','®','&trade;','™','&euro;','€','&pound;','£','&yen;','¥','&cent;','¢'],
+  ['&sect;','§','&deg;','°','&plusmn;','±','&times;','×','&divide;','÷','&micro;','µ','&middot;','·'],
+  ['&bull;','•','&hellip;','…','&larr;','←','&rarr;','→','&uarr;','↑','&darr;','↓','&harr;','↔'],
+  ['&spades;','♠','&clubs;','♣','&hearts;','♥','&diams;','♦','&sum;','∑','&prod;','∏','&radic;','√'],
+  ['&infin;','∞','&asymp;','≈','&ne;','≠','&equiv;','≡','&le;','≤','&ge;','≥','&alpha;','α']];
+var et=document.getElementById('entityTable');
+refs.forEach(function(r){
+  et.innerHTML+='<tr><td class="font-mono">'+r[1]+'</td><td class="font-mono">'+r[0]+'</td><td>'+r[0].slice(1,-1)+'</td><td class="font-mono">'+r[3]+'</td><td class="font-mono">'+r[2]+'</td><td>'+r[2].slice(1,-1)+'</td></tr>';
+});
+</script>
+<script src="sidebar.js"></script>
+</body></html>

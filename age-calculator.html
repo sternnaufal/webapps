@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Age Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Kalkulator usia online. Hitung umur dalam tahun, bulan, hari, jam, menit, dan detik secara real-time.">
+  <meta name="keywords" content="age calculator, kalkulator umur, hitung usia, age counter">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/age-calculator.html">
+  <meta property="og:title" content="Age Calculator">
+  <meta property="og:description" content="Hitung usia secara real-time.">
+  <meta name="twitter:title" content="Age Calculator">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Age Calculator","url":"https://webapps.naufalrakha.my.id/age-calculator.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Age Calculator</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">Age Calculator</h1><p class="text-muted small mb-0">Hitung usia Anda secara detail. Update real-time setiap detik.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<div class="mb-3"><label class="form-label fw-semibold">Tanggal Lahir</label>
+<input type="date" id="birthDate" class="form-control" value="2000-01-01"></div>
+<div class="mb-3"><label class="form-label fw-semibold">Hingga Tanggal</label>
+<select id="modeSelect" class="form-select mb-2"><option value="now">Sekarang (real-time)</option><option value="custom">Tanggal Tertentu</option></select>
+<input type="date" id="customDate" class="form-control" disabled></div>
+<button id="btnCalc" class="btn btn-primary w-100">Hitung Usia</button>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Fakta Menarik</h6>
+<div id="funFacts" class="small"></div></div>
+</div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<div class="row g-3 text-center">
+<div class="col-4"><div class="p-3 rounded" style="background:#eef2ff"><div class="display-5 fw-bold" id="years" style="color:#6366f1">0</div><small class="text-muted">Tahun</small></div></div>
+<div class="col-4"><div class="p-3 rounded" style="background:#f0fdf4"><div class="display-5 fw-bold" id="months" style="color:#16a34a">0</div><small class="text-muted">Bulan</small></div></div>
+<div class="col-4"><div class="p-3 rounded" style="background:#fefce8"><div class="display-5 fw-bold" id="days" style="color:#ca8a04">0</div><small class="text-muted">Hari</small></div></div>
+</div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Detail Usia</h6>
+<div id="ageDetail" class="small"></div></div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var birth=document.getElementById('birthDate'),mode=document.getElementById('modeSelect'),custom=document.getElementById('customDate'),btn=document.getElementById('btnCalc');
+mode.addEventListener('change',function(){custom.disabled=this.value!=='custom';if(this.value==='custom')custom.value=new Date().toISOString().split('T')[0]});
+
+function fmt(n,u){return n+' '+u+(n!==1?'':'')}
+function calc(){
+  var b=new Date(birth.value),e=mode.value==='now'?new Date():new Date(custom.value);
+  if(isNaN(b)){document.getElementById('years').textContent='?';document.getElementById('months').textContent='?';document.getElementById('days').textContent='?';document.getElementById('ageDetail').innerHTML='<span class="text-danger">Tanggal lahir tidak valid</span>';return}
+  var ms=e-b,y=Math.floor(ms/31557600000),m=Math.floor((ms%31557600000)/2592000000),d=Math.floor((ms%2592000000)/86400000);
+  var h=Math.floor((ms%86400000)/3600000),mi=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);
+  document.getElementById('years').textContent=y;document.getElementById('months').textContent=m;document.getElementById('days').textContent=d;
+  document.getElementById('ageDetail').innerHTML='<table class="table table-sm small mb-0"><tr><td>Tahun</td><td class="fw-bold">'+y+'</td></tr><tr><td>Bulan</td><td class="fw-bold">'+(y*12+m)+' bulan</td></tr><tr><td>Minggu</td><td class="fw-bold">'+Math.floor(ms/604800000)+' minggu</td></tr><tr><td>Hari</td><td class="fw-bold">'+Math.floor(ms/86400000)+' hari</td></tr><tr><td>Jam</td><td class="fw-bold">'+Math.floor(ms/3600000)+' jam</td></tr><tr><td>Menit</td><td class="fw-bold">'+Math.floor(ms/60000)+' menit</td></tr><tr><td>Detik</td><td class="fw-bold">'+Math.floor(ms/1000)+' detik</td></tr></table>';
+  var facts=document.getElementById('funFacts');
+  var hr=Math.floor(ms/3600000);
+  facts.innerHTML='<ul class="mb-0" style="line-height:1.8">'+
+    '<li>Anda hidup selama <strong>'+Math.floor(ms/86400000)+' hari</strong></li>'+
+    '<li>Jantung Anda berdetak ~<strong>'+Math.floor(ms/86400000*100000)+' kali</strong></li>'+
+    '<li>Anda tidur ~<strong>'+Math.floor(ms/86400000*8)+' jam</strong></li>'+
+    '<li>Usia dalam jam: <strong>'+hr+' jam</strong></li>'+
+    '<li>Usia dalam menit: <strong>'+Math.floor(ms/60000)+' menit</strong></li>'+
+  '</ul>';
+}
+btn.addEventListener('click',calc);
+if(mode.value==='now'){calc();setInterval(calc,1000)}else{calc()}
+birth.value='2000-01-01';calc();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

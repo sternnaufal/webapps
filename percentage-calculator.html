@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Percentage Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Kalkulator persentase online. Hitung persentase, kenaikan, diskon, dan perbandingan.">
+  <meta name="keywords" content="percentage calculator, kalkulator persen, persentase, diskon, kenaikan">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/percentage-calculator.html">
+  <meta property="og:title" content="Percentage Calculator">
+  <meta property="og:description" content="Kalkulator persentase online dengan berbagai mode.">
+  <meta name="twitter:title" content="Percentage Calculator">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Percentage Calculator","url":"https://webapps.naufalrakha.my.id/percentage-calculator.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Percentage Calc</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">%</div><div><h1 class="h3 mb-0">Percentage Calculator</h1><p class="text-muted small mb-0">Kalkulator persentase dengan 3 mode: hitung persen, cari persentase, dan hitung perubahan.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-8">
+<div class="card shadow-sm border-0 p-3">
+<ul class="nav nav-tabs mb-3" id="pctTabs">
+<li class="nav-item"><button class="nav-link active" data-mode="mode1">X% dari Y</button></li>
+<li class="nav-item"><button class="nav-link" data-mode="mode2">X adalah ?% dari Y</button></li>
+<li class="nav-item"><button class="nav-link" data-mode="mode3">Kenaikan/Penurunan</button></li>
+</ul>
+<div id="mode1" class="tab-pane">
+<div class="row g-2 mb-3"><div class="col-4"><label class="form-label small">Persen (%)</label><input type="number" id="m1Pct" class="form-control" value="20"></div><div class="col-4"><label class="form-label small">Dari</label><input type="number" id="m1Val" class="form-control" value="500000"></div><div class="col-4 d-flex align-items-end"><button class="btn btn-primary w-100" data-calc="m1">Hitung</button></div></div>
+<div id="m1Result" class="p-3 bg-light rounded small"></div>
+</div>
+<div id="mode2" class="tab-pane" style="display:none">
+<div class="row g-2 mb-3"><div class="col-4"><label class="form-label small">Nilai X</label><input type="number" id="m2X" class="form-control" value="75000"></div><div class="col-4"><label class="form-label small">Dari Y</label><input type="number" id="m2Y" class="form-control" value="500000"></div><div class="col-4 d-flex align-items-end"><button class="btn btn-primary w-100" data-calc="m2">Hitung</button></div></div>
+<div id="m2Result" class="p-3 bg-light rounded small"></div>
+</div>
+<div id="mode3" class="tab-pane" style="display:none">
+<div class="row g-2 mb-3"><div class="col-4"><label class="form-label small">Nilai Awal</label><input type="number" id="m3Old" class="form-control" value="500000"></div><div class="col-4"><label class="form-label small">Nilai Akhir</label><input type="number" id="m3New" class="form-control" value="600000"></div><div class="col-4 d-flex align-items-end"><button class="btn btn-primary w-100" data-calc="m3">Hitung</button></div></div>
+<div id="m3Result" class="p-3 bg-light rounded small"></div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Quick Reference</h6>
+<div class="small">
+<div class="d-flex justify-content-between py-1"><span>10%</span><span class="text-muted">1/10</span></div>
+<div class="d-flex justify-content-between py-1"><span>12.5%</span><span class="text-muted">1/8</span></div>
+<div class="d-flex justify-content-between py-1"><span>20%</span><span class="text-muted">1/5</span></div>
+<div class="d-flex justify-content-between py-1"><span>25%</span><span class="text-muted">1/4</span></div>
+<div class="d-flex justify-content-between py-1"><span>33.3%</span><span class="text-muted">1/3</span></div>
+<div class="d-flex justify-content-between py-1"><span>50%</span><span class="text-muted">1/2</span></div>
+<div class="d-flex justify-content-between py-1"><span>66.7%</span><span class="text-muted">2/3</span></div>
+<div class="d-flex justify-content-between py-1"><span>75%</span><span class="text-muted">3/4</span></div>
+<div class="d-flex justify-content-between py-1"><span>100%</span><span class="text-muted">1/1</span></div>
+</div>
+</div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+function fmt(n){return n.toLocaleString('id-ID',{maximumFractionDigits:2,minimumFractionDigits:2})}
+
+document.querySelectorAll('#pctTabs .nav-link').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('#pctTabs .nav-link').forEach(function(t){t.classList.remove('active')});
+    this.classList.add('active');
+    document.querySelectorAll('.tab-pane').forEach(function(p){p.style.display='none'});
+    document.getElementById(this.dataset.mode).style.display='block';
+  });
+});
+
+document.querySelectorAll('[data-calc]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var mode=this.dataset.calc,res=document.getElementById(mode+'Result');
+    if(mode==='m1'){
+      var p=parseFloat(document.getElementById('m1Pct').value)||0,v=parseFloat(document.getElementById('m1Val').value)||0;
+      res.innerHTML='<table class="table table-sm small mb-0"><tr><td>'+fmt(p)+'% dari '+fmt(v)+'</td><td class="fw-bold">'+fmt(v*p/100)+'</td></tr><tr><td>Total</td><td class="fw-bold">'+fmt(v+v*p/100)+'</td></tr><tr><td>Diskon (jika diskon '+fmt(p)+'%)</td><td class="text-danger fw-bold">-'+fmt(v*p/100)+'</td></tr></table>';
+    }else if(mode==='m2'){
+      var x=parseFloat(document.getElementById('m2X').value)||0,y=parseFloat(document.getElementById('m2Y').value)||0;
+      var pct=y?x/y*100:0;
+      res.innerHTML='<table class="table table-sm small mb-0"><tr><td>'+fmt(x)+' adalah</td><td class="fw-bold">'+fmt(pct)+'%</td></tr><tr><td>dari '+fmt(y)+'</td><td></td></tr></table>';
+    }else if(mode==='m3'){
+      var o=parseFloat(document.getElementById('m3Old').value)||0,n=parseFloat(document.getElementById('m3New').value)||0;
+      var diff=n-o,pct=o?diff/o*100:0;
+      res.innerHTML='<table class="table table-sm small mb-0"><tr><td>Perubahan</td><td class="fw-bold'+(diff<0?' text-danger':' text-success')+'">'+(diff>=0?'+':'')+fmt(diff)+'</td></tr><tr><td>Persentase</td><td class="fw-bold'+(pct<0?' text-danger':' text-success')+'">'+(pct>=0?'+':'')+fmt(pct)+'%</td></tr><tr><td>Dari</td><td>'+fmt(o)+' &rarr; '+fmt(n)+'</td></tr></table>';
+    }
+  });
+});
+// Trigger initial calculation
+document.querySelector('[data-calc="m1"]').click();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

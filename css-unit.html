@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CSS Unit Converter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="CSS unit converter online. Konversi px, rem, em, vw, vh, persen, pt, pc, cm, mm, inci.">
+  <meta name="keywords" content="css unit converter, px to rem, px to em, rem to px, css units, responsive design">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/css-unit.html">
+  <meta property="og:title" content="CSS Unit Converter">
+  <meta property="og:description" content="Konversi unit CSS online: px, rem, em, vw, vh, %.">
+  <meta name="twitter:title" content="CSS Unit Converter">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Unit Converter","url":"https://webapps.naufalrakha.my.id/css-unit.html","applicationCategory":"DeveloperApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">CSS Units</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div><h1 class="h3 mb-0">CSS Unit Converter</h1><p class="text-muted small mb-0">Konversi antar unit CSS. Atur basis rem (root) dan viewport untuk hasil akurat.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<div class="mb-3"><label class="form-label fw-semibold">Nilai</label><input type="number" id="inputValue" class="form-control" value="16" step="any"></div>
+<div class="mb-3"><label class="form-label fw-semibold">Dari unit</label>
+<select id="fromUnit" class="form-select">
+<option value="px">px</option><option value="rem" selected>rem</option><option value="em">em</option><option value="vw">vw</option><option value="vh">vh</option><option value="%">%</option><option value="pt">pt</option><option value="pc">pc</option><option value="cm">cm</option><option value="mm">mm</option><option value="in">in</option>
+</select></div>
+<div class="mb-3"><label class="form-label fw-semibold">Ke unit</label>
+<select id="toUnit" class="form-select">
+<option value="px" selected>px</option><option value="rem">rem</option><option value="em">em</option><option value="vw">vw</option><option value="vh">vh</option><option value="%">%</option><option value="pt">pt</option><option value="pc">pc</option><option value="cm">cm</option><option value="mm">mm</option><option value="in">in</option>
+</select></div>
+<hr>
+<div class="row g-2">
+<div class="col-6"><label class="form-label small">Basis rem (px)</label><input type="number" id="baseRem" class="form-control" value="16" step="any"></div>
+<div class="col-6"><label class="form-label small">Viewport width (px)</label><input type="number" id="vpWidth" class="form-control" value="1920" step="any"></div>
+<div class="col-6"><label class="form-label small">Viewport height (px)</label><input type="number" id="vpHeight" class="form-control" value="1080" step="any"></div>
+<div class="col-6"><label class="form-label small">DPI</label><input type="number" id="dpi" class="form-control" value="96" step="any"></div>
+</div>
+</div>
+</div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<h5 class="fw-semibold mb-3">Hasil Konversi</h5>
+<div class="h2 fw-bold mb-3" id="resultValue">1 rem</div>
+<div class="table-responsive"><table class="table table-sm small mb-0">
+<thead><tr><th>Unit</th><th>Nilai</th></tr></thead>
+<tbody id="allResults"></tbody>
+</table></div>
+</div>
+</div>
+</div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inpVal=document.getElementById('inputValue'),fromU=document.getElementById('fromUnit'),toU=document.getElementById('toUnit');
+var baseRem=document.getElementById('baseRem'),vpW=document.getElementById('vpWidth'),vpH=document.getElementById('vpHeight'),dpi=document.getElementById('dpi');
+var resVal=document.getElementById('resultValue'),allRes=document.getElementById('allResults');
+
+function toPx(val,unit){
+  var br=parseFloat(baseRem.value)||16,vw=parseFloat(vpW.value)||1920,vh=parseFloat(vpH.value)||1080,d=parseFloat(dpi.value)||96;
+  switch(unit){
+    case'px':return val;
+    case'rem':case'em':return val*br;
+    case'vw':return val*vw/100;
+    case'vh':return val*vh/100;
+    case'%':return val*vw/100;
+    case'pt':return val*d/72;
+    case'pc':return val*d/6;
+    case'cm':return val*d/2.54;
+    case'mm':return val*d/25.4;
+    case'in':return val*d;
+    default:return val;
+  }
+}
+function fromPx(px,unit){
+  var br=parseFloat(baseRem.value)||16,vw=parseFloat(vpW.value)||1920,vh=parseFloat(vpH.value)||1080,d=parseFloat(dpi.value)||96;
+  switch(unit){
+    case'px':return px;
+    case'rem':case'em':return px/br;
+    case'vw':return px*100/vw;
+    case'vh':return px*100/vh;
+    case'%':return px*100/vw;
+    case'pt':return px*72/d;
+    case'pc':return px*6/d;
+    case'cm':return px*2.54/d;
+    case'mm':return px*25.4/d;
+    case'in':return px/d;
+    default:return px;
+  }
+}
+
+var units=['px','rem','em','vw','vh','%','pt','pc','cm','mm','in'];
+
+function convert(){
+  var val=parseFloat(inpVal.value)||0,fu=fromU.value,tu=toU.value;
+  var px=toPx(val,fu);
+  var result=fromPx(px,tu);
+  resVal.textContent=val+' '+fu+' = '+result.toFixed(4)+' '+tu;
+  allRes.innerHTML='';
+  units.forEach(function(u){
+    var v=fromPx(px,u);
+    allRes.innerHTML+='<tr'+(u===tu?' class="table-active"':'')+'><td>'+u+'</td><td class="font-mono">'+v.toFixed(4)+'</td></tr>';
+  });
+}
+
+[inpVal,fromU,toU,baseRem,vpW,vpH,dpi].forEach(function(el){el.addEventListener('input',convert)});
+convert();
+</script>
+<script src="sidebar.js"></script>
+</body></html>
