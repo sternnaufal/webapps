@@ -21,7 +21,7 @@
 </head>
 <body class="bg-light">
 <div class="container-fluid"><div class="row">
-<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2"></div>
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
 <main class="col-md-9 col-lg-10 p-4">
 <nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button><span class="navbar-brand ms-2">Cron Builder</span></div></nav>
 <header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#ef4444;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h1 class="h3 mb-0">Cron Expression Builder</h1><p class="text-muted small mb-0">Buat cron expression dengan GUI. Copy-paste ke crontab, scheduler, atau GitHub Actions.</p></div></header>
@@ -83,5 +83,6 @@ document.querySelectorAll('.preset').forEach(function(b){b.addEventListener('cli
 document.getElementById('btnCopy').addEventListener('click',function(){var b=this;navigator.clipboard.writeText(inp.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
 
 

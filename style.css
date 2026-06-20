@@ -31,7 +31,7 @@
 }
 
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--surface-soft) !important; color: var(--text); }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--surface-soft); color: var(--text); }
 
 a { transition: color .15s ease; }
 a:hover { color: var(--accent); }
@@ -51,6 +51,7 @@ a:hover { color: var(--accent); }
   padding-top: 4px;
 }
 [data-bs-theme=dark] .sidebar { background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); }
+[data-bs-theme=dark] body.bg-light { background: var(--surface-soft) !important; }
 [data-bs-theme=dark] .bg-white,
 [data-bs-theme=dark] .bg-light { background: var(--surface) !important; }
 [data-bs-theme=dark] .bg-body { background: var(--surface-soft) !important; }
