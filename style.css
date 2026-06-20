@@ -32,6 +32,7 @@
 
 html { scroll-behavior: smooth; }
 body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--surface-soft); color: var(--text); }
+[data-bs-theme=dark] body { background: #000 !important; }
 
 a { transition: color .15s ease; }
 a:hover { color: var(--accent); }
