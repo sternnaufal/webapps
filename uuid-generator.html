@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -23,13 +23,13 @@
   <meta property="og:description" content="Generate UUID/GUID v4 online gratis. UUID generator dengan satu klik, copy ke clipboard.">
   <meta property="og:url" content="https://webapps.naufalrakha.my.id/uuid-generator.html">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://webapps.naufalrakha.my.id/android-chrome-512x512.png">
+  <meta property="og:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="UUID / GUID Generator">
   <meta name="twitter:description" content="Generate UUID/GUID v4 online gratis. UUID generator dengan satu klik, copy ke clipboard.">
-  <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/android-chrome-512x512.png">
+  <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
 </head>
 <body class="bg-light">
 <div class="container-fluid">
@@ -44,7 +44,7 @@
       <nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4">
         <div class="container-fluid">
           <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-            ☰
+            ?
           </button>
           <span class="navbar-brand ms-2">UUID Generator</span>
         </div>
@@ -55,7 +55,7 @@
           <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
           <div>
             <h1 class="h3 mb-0">UUID / GUID Generator</h1>
-            <p class="text-muted small mb-0">Generate UUID v1, v3, v4, v5 — pilih quantity dan format (uppercase / braces).</p>
+            <p class="text-muted small mb-0">Generate UUID v1, v3, v4, v5 � pilih quantity dan format (uppercase / braces).</p>
           </div>
         </div>
       </header>
@@ -64,7 +64,7 @@
         <div class="col-md-4">
           <label for="version" class="form-label">Versi UUID</label>
           <select id="version" class="form-select" required>
-            <option value="v4" selected>v4 (Random) — direkomendasikan</option>
+            <option value="v4" selected>v4 (Random) � direkomendasikan</option>
             <option value="v1">v1 (Time-based)</option>
             <option value="v3">v3 (MD5, namespace+name)</option>
             <option value="v5">v5 (SHA1, namespace+name)</option>
@@ -135,7 +135,7 @@
       <a href="https://webapps.naufalrakha.my.id" target="_blank" class="text-decoration-none text-info" style="font-size:0.75rem;font-weight:600;">WebApps</a>
     </div>
     <p class="mb-0">
-      © <span id="year">2025</span> WebApps · Dibuat dengan <span class="text-danger">❤️</span> oleh
+      � <span id="year">2025</span> WebApps � Dibuat dengan <span class="text-danger">??</span> oleh
       <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
     </p>
   </div>
@@ -175,11 +175,12 @@ function uuidV1() {
 }
 
 function uuidV4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const h = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+  return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`;
 }
 
 function hexToBinary(hex) {
