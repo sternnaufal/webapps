@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Text Repeater</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Text repeater online. Ulangi teks sebanyak N kali dengan separator kustom.">
+  <meta name="keywords" content="text repeater, repeat text, repeat string, teks berulang">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/text-repeater.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Text Repeater","url":"https://webapps.naufalrakha.my.id/text-repeater.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Text Repeater</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;">Aa</div><div><h1 class="h3 mb-0">Text Repeater</h1><p class="text-muted small mb-0">Ulangi teks sebanyak yang Anda mau. Lengkap dengan separator dan prefix/suffix.</p></div></header>
+<div class="row g-4"><div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Teks</label><textarea id="textInput" class="form-control font-mono" rows="3" placeholder="Teks yang akan diulang..." autofocus>Hello!</textarea></div>
+<div class="row g-2 mb-3"><div class="col-4"><label class="form-label small">Jumlah</label><input type="number" id="countInput" class="form-control" value="5" min="1" max="10000"></div>
+<div class="col-8"><label class="form-label small">Separator</label><select id="separator" class="form-select"><option value="\n">Baris baru</option><option value=" ">Spasi</option><option value=",">Koma</option><option value=", ">Koma + spasi</option><option value="">Tanpa separator</option><option value="custom">Kustom...</option></select><input type="text" id="customSep" class="form-control mt-1" style="display:none" placeholder="Separator kustom..."></div></div>
+<button id="btnGenerate" class="btn btn-primary w-100">Generate</button>
+</div></div>
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label fw-semibold mb-0">Output</label><span id="outputStats" class="small text-muted"></span></div>
+<textarea id="outputArea" class="form-control font-mono" rows="10" readonly></textarea>
+<button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
+</div></div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('textInput'),cnt=document.getElementById('countInput'),sep=document.getElementById('separator'),cst=document.getElementById('customSep'),out=document.getElementById('outputArea'),stats=document.getElementById('outputStats');
+sep.addEventListener('change',function(){cst.style.display=this.value==='custom'?'block':'none'});
+document.getElementById('btnGenerate').addEventListener('click',function(){
+  var t=inp.value,n=parseInt(cnt.value)||1,s=sep.value;
+  if(s==='custom')s=cst.value;
+  else if(s==='\\n')s='\n';
+  var result=Array(n).fill(t).join(s);
+  out.value=result;
+  stats.textContent=result.length+' chars, '+n+'x repeat';
+});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+document.getElementById('btnGenerate').click();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>List Sorter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Sort list online. Urutkan daftar teks secara ascending, descending, random, atau by length.">
+  <meta name="keywords" content="list sorter, sort list, urutkan daftar, sort text, alphabetical sorter">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/list-sorter.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"List Sorter","url":"https://webapps.naufalrakha.my.id/list-sorter.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">List Sorter</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><h1 class="h3 mb-0">List Sorter</h1><p class="text-muted small mb-0">Urutkan daftar teks: A-Z, Z-A, acak, by length, hapus duplikat. Satu item per baris.</p></div></header>
+<div class="row g-4"><div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Input (satu item per baris)</label><textarea id="textInput" class="form-control font-mono" rows="8" placeholder="Masukkan daftar, satu per baris..." autofocus>Pisang
+Apel
+Jeruk
+Mangga
+Anggur
+Durian
+Melon
+Nanas</textarea></div>
+<div class="row g-2 mb-3"><div class="col-6"><label class="form-label small">Mode</label>
+<select id="modeSelect" class="form-select"><option value="asc">A-Z (Ascending)</option><option value="desc">Z-A (Descending)</option><option value="length">By Length (Pendek)</option><option value="lengthDesc">By Length (Panjang)</option><option value="random">Acak (Random)</option></select></div>
+<div class="col-6"><label class="form-label small">&nbsp;</label>
+<div><div class="form-check"><input type="checkbox" id="uniqueOnly" class="form-check-input"><label class="form-check-label small" for="uniqueOnly">Hapus duplikat</label></div>
+<div class="form-check"><input type="checkbox" id="ignoreCase" class="form-check-input" checked><label class="form-check-label small" for="ignoreCase">Ignore case</label></div></div></div></div>
+<button id="btnSort" class="btn btn-primary w-100">Urutkan</button>
+</div></div>
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label fw-semibold mb-0">Output</label><span id="stats" class="small text-muted"></span></div>
+<textarea id="outputArea" class="form-control font-mono" rows="8" readonly></textarea>
+<button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
+</div></div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea'),stats=document.getElementById('stats'),unique=document.getElementById('uniqueOnly'),ic=document.getElementById('ignoreCase');
+function sortList(){
+  var lines=inp.value.split('\n'),origCount=lines.length;
+  if(ic.checked){lines=lines.filter(function(l,i,a){return a.findIndex(function(x){return x.toLowerCase()===l.toLowerCase()})===i})}
+  else if(unique.checked)lines=lines.filter(function(l,i,a){return a.indexOf(l)===i});
+  else lines=lines.filter(function(l){return l!==undefined});
+  var m=mode.value;
+  if(m==='asc')lines.sort(function(a,b){var x=a.toLowerCase(),y=b.toLowerCase();return x<y?-1:x>y?1:0});
+  else if(m==='desc')lines.sort(function(a,b){var x=a.toLowerCase(),y=b.toLowerCase();return x<y?1:x>y?-1:0});
+  else if(m==='length')lines.sort(function(a,b){return a.length-b.length});
+  else if(m==='lengthDesc')lines.sort(function(a,b){return b.length-a.length});
+  else if(m==='random')for(var i=lines.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;}
+  out.value=lines.join('\n');
+  stats.textContent=origCount+' item → '+lines.length+' item';
+}
+document.getElementById('btnSort').addEventListener('click',sortList);
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+[inp,mode,unique,ic].forEach(function(el){el.addEventListener('input',sortList);el.addEventListener('change',sortList)});
+sortList();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

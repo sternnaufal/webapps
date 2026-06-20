@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Palindrome Checker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Cek palindrome online. Periksa apakah kata, kalimat, atau angka adalah palindrome.">
+  <meta name="keywords" content="palindrome checker, palindrome check, cek palindrome, palindrome test">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/palindrome-checker.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Palindrome Checker","url":"https://webapps.naufalrakha.my.id/palindrome-checker.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Palindrome Checker</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Palindrome Checker</h1><p class="text-muted small mb-0">Periksa apakah kata, kalimat, atau angka adalah palindrome (dibaca sama dari depan dan belakang).</p></div></header>
+<div class="row g-4"><div class="col-lg-8">
+<div class="card shadow-sm border-0 p-3">
+<textarea id="textInput" class="form-control font-mono mb-3" rows="3" placeholder="Masukkan teks..." autofocus>Kasur ini rusak</textarea>
+<div class="d-flex gap-2 flex-wrap mb-3">
+<button id="btnCheck" class="btn btn-primary">Cek Palindrome</button>
+<button id="btnClear" class="btn btn-outline-danger">Clear</button>
+</div>
+<div class="form-check form-switch mb-3"><input type="checkbox" id="caseSensitive" class="form-check-input"><label class="form-check-label small" for="caseSensitive">Case sensitive (beda huruf besar/kecil dianggap beda)</label></div>
+<div id="resultArea" class="p-4 rounded text-center" style="display:none"><div class="display-3 mb-2" id="resultIcon">?</div><div class="h4 fw-bold" id="resultText"></div><div class="small text-muted" id="resultDetail"></div></div>
+</div></div>
+<div class="col-lg-4">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Contoh Palindrome</h6>
+<div class="small" style="line-height:2">
+<div style="cursor:pointer" class="example">Kasur ini rusak</div>
+<div style="cursor:pointer" class="example">Ibu Ratna antar ubi</div>
+<div style="cursor:pointer" class="example">Kakak</div>
+<div style="cursor:pointer" class="example">Aku suka rajawali, bapak? Apakah jawab? Aku suka rajawali, ibu?</div>
+<div style="cursor:pointer" class="example">12321</div>
+<div style="cursor:pointer" class="example">racecar</div>
+</div></div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('textInput'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),cs=document.getElementById('caseSensitive');
+function check(){
+  var t=inp.value.trim();if(!t){res.style.display='none';return}
+  var clean=cs.checked?t:t.toLowerCase().replace(/[^a-z0-9]/g,'');
+  var rev=clean.split('').reverse().join('');
+  var isPal=clean===rev;
+  res.style.display='block';
+  icon.textContent=isPal?'?':'?';icon.style.color=isPal?'#22c55e':'#ef4444';
+  txt.textContent=isPal?'Palindrome!':'Bukan Palindrome';
+  txt.style.color=isPal?'#22c55e':'#ef4444';
+  det.innerHTML='<span class="text-muted">Setelah difilter: "'+clean+'"<br>Dibalik: "'+rev+'"</span>';
+}
+document.getElementById('btnCheck').addEventListener('click',check);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';res.style.display='none'});
+inp.addEventListener('input',check);cs.addEventListener('change',check);
+document.querySelectorAll('.example').forEach(function(el){
+  el.addEventListener('click',function(){inp.value=this.textContent;check()});
+});
+inp.value='Kasur ini rusak';check();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

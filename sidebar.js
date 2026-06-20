@@ -32,6 +32,11 @@
         { name: 'Markdown Previewer',   url: 'md-preview.html' },
         { name: 'Color Picker',         url: 'color-picker.html' },
         { name: 'Image to Base64',      url: 'image-to-base64.html' },
+        { name: 'Palindrome Checker',   url: 'palindrome-checker.html' },
+        { name: 'Anagram Finder',       url: 'anagram-finder.html' },
+        { name: 'Text Repeater',        url: 'text-repeater.html' },
+        { name: 'Reverse Text',         url: 'reverse-text.html' },
+        { name: 'List Sorter',          url: 'list-sorter.html' },
       ],
     },
     {
@@ -77,6 +82,8 @@
         { name: 'Countdown Timer',    url: 'countdown.html' },
         { name: 'Savings Calculator', url: 'savings-calculator.html' },
         { name: 'Roman Numeral Converter', url: 'roman-numeral.html' },
+        { name: 'Sleep Cycle Calculator', url: 'sleep-cycle.html' },
+        { name: 'Calorie Calculator',     url: 'calorie-calculator.html' },
       ],
     },
   ]

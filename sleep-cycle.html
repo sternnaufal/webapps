@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sleep Cycle Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Sleep cycle calculator online. Hitung waktu tidur optimal berdasarkan siklus 90 menit. Bangun segar tanpa alarm shock.">
+  <meta name="keywords" content="sleep cycle, sleep calculator, kalkulator tidur, sleep cycle calculator, sleep time, optimal sleep">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/sleep-cycle.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Sleep Cycle Calculator","url":"https://webapps.naufalrakha.my.id/sleep-cycle.html","applicationCategory":"HealthApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Sleep Cycle</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div><h1 class="h3 mb-0">Sleep Cycle Calculator</h1><p class="text-muted small mb-0">Hitung waktu tidur optimal berdasarkan siklus tidur 90 menit. Bangun di akhir siklus agar segar.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<ul class="nav nav-tabs mb-3"><li class="nav-item"><button class="nav-link active" id="tabWake" data-mode="wake">Saya mau bangun jam...</button></li><li class="nav-item"><button class="nav-link" id="tabSleep" data-mode="sleep">Saya mau tidur jam...</button></li></ul>
+<div id="wakePane"><label class="form-label fw-semibold">Waktu Bangun</label><input type="time" id="wakeTime" class="form-control" value="06:00">
+<small class="text-muted">Kalkulator akan menyarankan waktu tidur optimal</small></div>
+<div id="sleepPane" style="display:none"><label class="form-label fw-semibold">Waktu Tidur</label><input type="time" id="sleepTime" class="form-control" value="23:00">
+<small class="text-muted">Kalkulator akan menyarankan waktu bangun optimal</small></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Tips Tidur</h6>
+<div class="small" style="line-height:1.7">
+<p class="mb-1">? Siklus tidur rata-rata 90 menit</p>
+<p class="mb-1">? Idealnya tidur 5-6 siklus (7.5-9 jam)</p>
+<p class="mb-1">? Bangun di tengah siklus = masih ngantuk</p>
+<p class="mb-0">? Butuh ~14 menit untuk tertidur</p>
+</div></div>
+</div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Waktu Optimal</h6>
+<div id="results" class="small"></div></div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var wakePane=document.getElementById('wakePane'),sleepPane=document.getElementById('sleepPane'),wakeInp=document.getElementById('wakeTime'),sleepInp=document.getElementById('sleepTime'),res=document.getElementById('results');
+document.getElementById('tabWake').addEventListener('click',function(){wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');document.getElementById('tabSleep').classList.remove('active');calc();});
+document.getElementById('tabSleep').addEventListener('click',function(){wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');document.getElementById('tabWake').classList.remove('active');calc();});
+
+function fmt(t){
+  var h=t.getHours(),m=t.getMinutes();
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+function fmtLong(t){
+  var days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  return days[t.getDay()]+', '+fmt(t);
+}
+
+function calc(){
+  var mode=wakePane.style.display!=='none'?'wake':'sleep',now=new Date();
+  if(mode==='wake'){
+    var wp=wakeInp.value.split(':'),wh=parseInt(wp[0]),wm=parseInt(wp[1]);
+    var wake=new Date(now);wake.setHours(wh,wm,0,0);if(wake<=now)wake.setDate(wake.getDate()+1);
+    var html='<div class="fw-bold mb-3">Jika bangun '+fmt(wake)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Tidur</th><th>Siklus</th><th>Keterangan</th></tr>';
+    for(var c=6;c>=3;c--){
+      var sleep=new Date(wake);sleep.setMinutes(sleep.getMinutes()-c*90-14);
+      var desc=c+' siklus ('+(c*90+14)+' menit)';
+      var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
+      html+='<tr><td class="fw-bold">'+fmt(sleep)+'</td><td>'+desc+'</td><td>'+label+'</td></tr>';
+    }
+    html+='</table><div class="small text-muted mt-2">* Termasuk 14 menit untuk tertidur</div>';
+    res.innerHTML=html;
+  }else{
+    var sp=sleepInp.value.split(':'),sh=parseInt(sp[0]),sm=parseInt(sp[1]);
+    var sleep=new Date(now);sleep.setHours(sh,sm,0,0);
+    var html='<div class="fw-bold mb-3">Jika tidur '+fmt(sleep)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Bangun</th><th>Siklus</th><th>Keterangan</th></tr>';
+    for(var c=3;c<=6;c++){
+      var wake=new Date(sleep);wake.setMinutes(wake.getMinutes()+c*90+14);
+      var desc=c+' siklus ('+(c*90+14)+' menit)';
+      var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
+      html+='<tr><td class="fw-bold">'+fmt(wake)+' ('+(wake<=now?'besok':'hari ini')+')</td><td>'+desc+'</td><td>'+label+'</td></tr>';
+    }
+    html+='</table><div class="small text-muted mt-2">* Termasuk 14 menit untuk tertidur</div>';
+    res.innerHTML=html;
+  }
+}
+[wakeInp,sleepInp].forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc)});
+calc();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

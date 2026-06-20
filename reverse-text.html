@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Reverse Text</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Reverse text online. Balikkan teks, kata, kalimat, atau baris dengan berbagai mode.">
+  <meta name="keywords" content="reverse text, reverse string, balik teks, reverse words, reverse sentences">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/reverse-text.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Reverse Text","url":"https://webapps.naufalrakha.my.id/reverse-text.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Reverse Text</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Reverse Text</h1><p class="text-muted small mb-0">Balikkan teks dengan berbagai mode: balik karakter, kata, kalimat, atau baris.</p></div></header>
+<div class="row g-4"><div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Input</label><textarea id="textInput" class="form-control font-mono" rows="5" placeholder="Masukkan teks..." autofocus>Halo, apa kabar?
+Selamat datang di WebApps!
+Semoga harimu menyenangkan.</textarea></div>
+<div class="mb-3"><label class="form-label fw-semibold">Mode</label>
+<select id="modeSelect" class="form-select"><option value="chars">Balik Karakter</option><option value="words">Balik Kata</option><option value="lines">Balik Baris</option><option value="wordsChars">Balik Kata + Karakter</option></select></div>
+<button id="btnReverse" class="btn btn-primary w-100">Reverse</button>
+</div></div>
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label fw-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
+<textarea id="outputArea" class="form-control font-mono" rows="8" readonly></textarea>
+</div></div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea');
+document.getElementById('btnReverse').addEventListener('click',function(){
+  var t=inp.value,m=mode.value;
+  if(m==='chars')out.value=t.split('').reverse().join('');
+  else if(m==='words')out.value=t.split(/\s+/).reverse().join(' ');
+  else if(m==='lines')out.value=t.split('\n').reverse().join('\n');
+  else if(m==='wordsChars')out.value=t.split(/\s+/).reverse().map(function(w){return w.split('').reverse().join('')}).join(' ');
+});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+document.getElementById('btnReverse').click();
+</script>
+<script src="sidebar.js"></script>
+</body></html>

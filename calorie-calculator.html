@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Calorie Calculator (BMR/TDEE)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Kalkulator kalori online. Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk diet dan fitness.">
+  <meta name="keywords" content="calorie calculator, bmr calculator, tdee calculator, kalkulator kalori, bmr, tdee, diet, fitness">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/calorie-calculator.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Calorie Calculator","url":"https://webapps.naufalrakha.my.id/calorie-calculator.html","applicationCategory":"HealthApplication","operatingSystem":"All"}</script>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">Calorie Calc</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">Calorie Calculator</h1><p class="text-muted small mb-0">Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk kebutuhan kalori harian Anda.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Jenis Kelamin</label><div><div class="form-check form-check-inline"><input type="radio" name="gender" id="genMale" class="form-check-input" checked><label class="form-check-label" for="genMale">Laki-laki</label></div><div class="form-check form-check-inline"><input type="radio" name="gender" id="genFemale" class="form-check-input"><label class="form-check-label" for="genFemale">Perempuan</label></div></div></div>
+<div class="row g-2 mb-3"><div class="col-4"><label class="form-label small">Usia (thn)</label><input type="number" id="ageInput" class="form-control" value="25" min="1" max="120"></div>
+<div class="col-4"><label class="form-label small">Tinggi (cm)</label><input type="number" id="heightInput" class="form-control" value="170" min="50" max="300"></div>
+<div class="col-4"><label class="form-label small">Berat (kg)</label><input type="number" id="weightInput" class="form-control" value="65" min="10" max="500"></div></div>
+<div class="mb-3"><label class="form-label fw-semibold">Level Aktivitas</label>
+<select id="activitySelect" class="form-select">
+<option value="1.2">Sedentary (jarang olahraga)</option>
+<option value="1.375" selected>Light (1-3 hari/minggu)</option>
+<option value="1.55">Moderate (3-5 hari/minggu)</option>
+<option value="1.725">Active (6-7 hari/minggu)</option>
+<option value="1.9">Very Active (atlet/fisik berat)</option>
+</select></div>
+<button id="btnCalc" class="btn btn-primary w-100">Hitung Kebutuhan Kalori</button>
+</div></div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<h6 class="mb-3">Hasil Perhitungan</h6>
+<div class="row g-3"><div class="col-6"><div class="p-3 rounded text-center" style="background:#eef2ff"><small class="text-muted">BMR</small><div class="h3 mb-0 fw-bold" id="bmrResult" style="color:#6366f1">0</div><small>kkal/hari</small></div></div>
+<div class="col-6"><div class="p-3 rounded text-center" style="background:#f0fdf4"><small class="text-muted">TDEE</small><div class="h3 mb-0 fw-bold" id="tdeeResult" style="color:#16a34a">0</div><small>kkal/hari</small></div></div></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Rekomendasi Kalori Harian</h6>
+<div id="recommendations" class="small"></div></div>
+</div></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<footer class="bg-dark text-light py-3"><div class="container text-center small"><p class="mb-0">? <span id="year">2025</span> WebApps ? oleh <a href="https://naufalrakha.my.id" class="text-info">Naufal Rakha Putra</a></p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var age=document.getElementById('ageInput'),height=document.getElementById('heightInput'),weight=document.getElementById('weightInput'),activity=document.getElementById('activitySelect'),bmrEl=document.getElementById('bmrResult'),tdeeEl=document.getElementById('tdeeResult'),recEl=document.getElementById('recommendations');
+function calc(){
+  var a=parseInt(age.value)||0,h=parseFloat(height.value)||0,w=parseFloat(weight.value)||0,act=parseFloat(activity.value);
+  var isMale=document.getElementById('genMale').checked;
+  if(!a||!h||!w){bmrEl.textContent='0';tdeeEl.textContent='0';recEl.innerHTML='';return}
+  var bmr=isMale?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
+  var tdee=bmr*act;
+  bmrEl.textContent=Math.round(bmr);tdeeEl.textContent=Math.round(tdee);
+  var loss05=Math.round(tdee-500),loss1=Math.round(tdee-1000),gain05=Math.round(tdee+500),gain1=Math.round(tdee+1000);
+  recEl.innerHTML='<table class="table table-sm small mb-0">'+
+    '<tr><td>Maintenance (jaga berat)</td><td class="fw-bold">'+Math.round(tdee)+' kkal/hari</td></tr>'+
+    '<tr><td>Turun berat (0.5 kg/minggu)</td><td class="fw-bold text-success">'+loss05+' kkal/hari</td></tr>'+
+    '<tr><td>Turun berat (1 kg/minggu)</td><td class="fw-bold text-success">'+Math.max(loss1,1200)+' kkal/hari</td></tr>'+
+    '<tr><td>Naik berat (0.5 kg/minggu)</td><td class="fw-bold text-danger">'+gain05+' kkal/hari</td></tr>'+
+    '<tr><td>Naik berat (1 kg/minggu)</td><td class="fw-bold text-danger">'+gain1+' kkal/hari</td></tr></table>';
+}
+document.getElementById('btnCalc').addEventListener('click',calc);
+[age,height,weight,activity].forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc)});
+document.querySelectorAll('input[name=gender]').forEach(function(el){el.addEventListener('change',calc)});
+calc();
+</script>
+<script src="sidebar.js"></script>
+</body></html>
