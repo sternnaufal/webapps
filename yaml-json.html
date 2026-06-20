@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>YAML ↔ JSON Converter</title>
@@ -38,6 +38,7 @@
 <div class="d-flex gap-2 mt-2"><button id="btnToJson" class="btn btn-primary">YAML → JSON</button><button id="btnToYaml" class="btn btn-success">JSON → YAML</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div>
 <div class="col-lg-6"><div class="d-flex justify-content-between align-items-center mb-1"><label class="form-label fw-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
 <textarea id="outputArea" class="form-control font-mono" rows="10" readonly></textarea></div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang YAML/JSON Converter</h6><p class="small mb-1" style="line-height:1.6">YAML to JSON converter untuk mengkonversi data antara format YAML dan JSON secara dua arah. Mendukung nested structure, arrays, dan berbagai tipe data. Validasi otomatis mendeteksi error syntax.</p><p class="small mb-0" style="line-height:1.6">Paste data YAML atau JSON, pilih arah konversi, dan hasil langsung muncul. Berguna saat migrasi konfigurasi, bekerja dengan Kubernetes manifests, atau file konfigurasi CI/CD. YAML validator built-in membantu debugging.</p></div>
 </main></div></div>
 <div id="sidebar-mobile"></div>
 <footer class="bg-dark text-light py-3">
@@ -74,3 +75,4 @@ document.getElementById('btnCopy').addEventListener('click',function(){if(!out.v
 </script>
 <script src="sidebar.js"></script>
 </body></html>
+

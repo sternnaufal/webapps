@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Cron Expression Builder</title>
@@ -55,6 +55,7 @@
 <div id="cronDesc" class="mt-2 small text-muted"></div></div></div>
 <div class="col-md-4"><div class="card shadow-sm p-3"><h6 class="mb-3">Legend</h6>
 <table class="table table-sm small mb-0"><tr><td class="text-muted">min</td><td>0-59</td></tr><tr><td class="text-muted">hour</td><td>0-23</td></tr><tr><td class="text-muted">day</td><td>1-31</td></tr><tr><td class="text-muted">month</td><td>1-12</td></tr><tr><td class="text-muted">weekday</td><td>0-7 (0/7=Sun)</td></tr></table></div></div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Cron Expression Builder</h6><p class="small mb-1" style="line-height:1.6">Cron builder adalah generator ekspresi cron untuk penjadwalan task otomatis di server Linux/Unix. Dengan GUI interaktif, Anda bisa memilih menit, jam, hari, bulan, dan hari dalam seminggu tanpa harus hafal sintaks cron. Hasil ekspresi langsung bisa dipakai di crontab.</p><p class="small mb-0" style="line-height:1.6">Cocok untuk sysadmin dan developer yang sering menggunakan cron job untuk backup database, maintenance, script automation, dan scheduled task. Cron expression generator ini mendukung format standar 5-field dan menampilkan penjelasan readable dari ekspresi yang dibuat.</p></div>
 </main></div></div>
     <!-- Sidebar Mobile (Offcanvas) -->
     <div id="sidebar-mobile"></div>
@@ -93,6 +94,9 @@ document.querySelectorAll('.preset').forEach(function(b){b.addEventListener('cli
 document.getElementById('btnCopy').addEventListener('click',function(){var b=this;navigator.clipboard.writeText(inp.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="id">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>RSA Key Generator</title>
@@ -41,6 +41,7 @@
 <div class="mb-3"><label class="form-label fw-semibold">Public Key (SPKI PEM)</label><textarea id="pubKey" class="form-control font-mono" rows="6" readonly></textarea><button class="btn btn-sm btn-outline-secondary mt-1 copy-key" data-target="pubKey">Copy</button></div>
 <div class="mb-3"><label class="form-label fw-semibold">Private Key (PKCS8 PEM)</label><textarea id="privKey" class="form-control font-mono" rows="12" readonly></textarea><button class="btn btn-sm btn-outline-secondary mt-1 copy-key" data-target="privKey">Copy</button></div>
 </div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang RSA Key Generator</h6><p class="small mb-1" style="line-height:1.6">RSA key generator untuk membuat pasangan kunci RSA (public key dan private key) dengan berbagai panjang bit: 512, 1024, 2048, atau 4096 bit. Hasil dalam format PEM yang bisa langsung digunakan untuk enkripsi dan digital signature.</p><p class="small mb-0" style="line-height:1.6">Generator kunci RSA ini menghasilkan key pair di browser tanpa mengirim data ke server. Cocok untuk developer yang membutuhkan SSH key, SSL certificate generation, atau belajar kriptografi. Kunci bisa di-copy atau di-download.</p></div>
 </main></div></div>
     <!-- Sidebar Mobile (Offcanvas) -->
     <div id="sidebar-mobile"></div>
@@ -60,7 +61,7 @@
       <a href="https://webapps.naufalrakha.my.id" target="_blank" class="text-decoration-none text-info" style="font-size:0.75rem;font-weight:600;">WebApps</a>
     </div>
     <p class="mb-0">
-      © <span id="year">2025</span> WebApps · Dibuat dengan <span class="text-danger">??</span> oleh
+      ï¿½ <span id="year">2025</span> WebApps ï¿½ Dibuat dengan <span class="text-danger">??</span> oleh
       <a href="https://naufalrakha.my.id" class="text-decoration-none text-info">Naufal Rakha Putra</a>
     </p>
   <div class="mt-2"><a href="https://saweria.co/naufalrakha" target="_blank" class="btn btn-sm" style="background:#ff6b6b;color:#fff;border-radius:20px;font-size:0.75rem;padding:2px 14px;">&#x2665; Donasi via Saweria</a></div>
@@ -77,6 +78,9 @@ document.getElementById('pubKey').value=ab2pem(pubBuf,'PUBLIC KEY');document.get
 document.querySelectorAll('.copy-key').forEach(function(b){b.addEventListener('click',function(){var id=this.getAttribute('data-target'),text=document.getElementById(id).value;if(!text)return;navigator.clipboard.writeText(text).then(function(){var t=this;this.textContent='Copied!';setTimeout(function(){this.textContent='Copy'}.bind(this),1500)}.bind(this))})});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
+
+
 
 
 

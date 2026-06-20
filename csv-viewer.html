@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>CSV/TSV Viewer</title>
@@ -45,6 +45,7 @@ Rakha,rakha@example.com,User</textarea></div>
 <button id="btnClear" class="btn btn-outline-danger w-100 mt-2">Clear</button>
 </div></div>
 <div id="tableContainer" style="display:none;"><div class="card shadow-sm"><div class="table-responsive"><table id="csvTable" class="table table-sm table-bordered table-striped mb-0"></table></div></div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang CSV Viewer</h6><p class="small mb-1" style="line-height:1.6">CSV viewer online untuk melihat dan menganalisis file CSV langsung di browser. Tampilan tabel yang rapi dengan kolom terpisah, support berbagai delimiter (koma, tab, semicolon), dan bisa handle file besar tanpa perlu upload ke server.</p><p class="small mb-0" style="line-height:1.6">Cukup paste data CSV atau upload file. CSV viewer akan memparsing dan menampilkan dalam bentuk tabel interaktif. Fitur termasuk sorting kolom, dark mode, dan copy data. Berguna untuk data analyst, marketer, dan siapapun yang bekerja dengan spreadsheet.</p></div>
 </main></div></div>
     <!-- Sidebar Mobile (Offcanvas) -->
     <div id="sidebar-mobile"></div>
@@ -78,6 +79,9 @@ function esc(s){var d=document.createElement('div');d.textContent=s;return d.inn
 document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function(){inp.value='';con.style.display='none'});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
+
+
 
 
 
