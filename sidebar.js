@@ -161,8 +161,5 @@
     if (e.target.classList.contains('dark-toggle')) setTheme(document.documentElement.getAttribute('data-bs-theme') !== 'dark')
   })
 
-  var ml = document.createElement('link')
-  ml.rel = 'manifest'; ml.href = 'manifest.json'
-  document.head.appendChild(ml)
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js')
 })()
+

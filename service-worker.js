@@ -1,16 +1,15 @@
-self.addEventListener('install', function (e) {
-  e.waitUntil(
-    caches.open('webapps-v2').then(function (c) {
-      return c.addAll(['/', '/style.css', '/sidebar.js', '/manifest.json']);
-    })
-  );
-  self.skipWaiting();
-});
+self.addEventListener('install', function () {
+  self.skipWaiting()
+})
 self.addEventListener('activate', function (e) {
-  e.waitUntil(clients.claim());
-});
+  e.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.map(function (k) { return caches.delete(k) }))
+    }).then(function () {
+      return self.registration.unregister()
+    })
+  )
+})
 self.addEventListener('fetch', function (e) {
-  e.respondWith(
-    caches.match(e.request).then(function (r) { return r || fetch(e.request); })
-  );
-});
+  e.respondWith(fetch(e.request))
+})
