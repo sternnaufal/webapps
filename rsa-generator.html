@@ -22,7 +22,6 @@
 <body class="bg-light">
 <div class="container-fluid"><div class="row">
 <div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2"></div>
-<div id="sidebar-mobile"></div>
 <main class="col-md-9 col-lg-10 p-4">
 <nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button><span class="navbar-brand ms-2">RSA Generator</span></div></nav>
 <header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><div><h1 class="h3 mb-0">RSA Key Generator</h1><p class="text-muted small mb-0">Generate pasangan kunci RSA 2048/4096-bit langsung di browser. Private key tidak pernah dikirim ke server.</p></div></header>
@@ -34,6 +33,9 @@
 <div class="mb-3"><label class="form-label fw-semibold">Private Key (PKCS8 PEM)</label><textarea id="privKey" class="form-control font-mono" rows="12" readonly></textarea><button class="btn btn-sm btn-outline-secondary mt-1 copy-key" data-target="privKey">Copy</button></div>
 </div>
 </main></div></div>
+    <!-- Sidebar Mobile (Offcanvas) -->
+    <div id="sidebar-mobile"></div>
+
 <!-- Footer -->
 <footer class="bg-dark text-light py-3">
   <div class="container text-center small">
