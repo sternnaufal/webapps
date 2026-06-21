@@ -41,49 +41,36 @@ resp = json.load(urllib.request.urlopen(req))
 access_token = resp['access_token']
 print('OAuth token obtained', file=sys.stderr)
 
-site_url = sys.argv[1] if len(sys.argv) > 1 else ''
+# site_url is like "https://webapps.naufalrakha.my.id"
+# but GSC uses domain property "sc-domain:webapps.naufalrakha.my.id"
+# Map the domain to sc-domain format
+site_url_arg = sys.argv[1] if len(sys.argv) > 1 else ''
 sitemap_url = sys.argv[2] if len(sys.argv) > 2 else ''
-if not site_url or not sitemap_url:
+if not site_url_arg or not sitemap_url:
     print('Usage: submit-sitemap.py <site_url> <sitemap_url>')
     sys.exit(1)
 
-# Try list sites first to verify access
-list_url = 'https://www.googleapis.com/webmasters/v3/sites'
-req_list = urllib.request.Request(list_url)
-req_list.add_header('Authorization', f'Bearer {access_token}')
+# Extract domain from URL like https://webapps.naufalrakha.my.id
+from urllib.parse import urlparse
+parsed = urlparse(site_url_arg)
+domain = parsed.netloc or parsed.path
+gsc_site = f'sc-domain:{domain}'
+
+# Submit sitemap using webmasters v3 API with correct siteUrl format
+gsc_site_enc = urllib.parse.quote(gsc_site, safe='')
+sitemap_enc = urllib.parse.quote(sitemap_url, safe='')
+url = f'https://www.googleapis.com/webmasters/v3/sites/{gsc_site_enc}/sitemaps/{sitemap_enc}'
+
+print(f'Submitting sitemap...', file=sys.stderr)
+req2 = urllib.request.Request(url, data=b'', method='POST')
+req2.add_header('Authorization', f'Bearer {access_token}')
+req2.add_header('Content-Length', '0')
+
 try:
-    resp_list = json.load(urllib.request.urlopen(req_list))
-    sites = [s['siteUrl'] for s in resp_list.get('siteEntry', [])]
-    print(f'GSC sites: {sites}', file=sys.stderr)
+    resp2 = urllib.request.urlopen(req2)
+    print(f'GSC sitemap submit: {resp2.status} {resp2.reason}')
 except urllib.error.HTTPError as e:
-    print(f'List sites error: {e.code} {e.reason}', file=sys.stderr)
-    print(f'Body: {e.read().decode()[:200]}', file=sys.stderr)
-
-# Submit sitemap - two possible endpoints
-for endpoint in [
-    'https://searchconsole.googleapis.com/v1/sitemaps',
-    'https://www.googleapis.com/webmasters/v3/sites/{su}/sitemaps/{fu}'
-]:
-    try:
-        if 'searchconsole' in endpoint:
-            params = urllib.parse.urlencode({'siteUrl': site_url, 'feedpath': sitemap_url})
-            url = f'{endpoint}?{params}'
-        else:
-            su = urllib.parse.quote(site_url, safe='')
-            fu = urllib.parse.quote(sitemap_url, safe='')
-            url = endpoint.format(su=su, fu=fu)
-        
-        print(f'Trying: POST {url}', file=sys.stderr)
-        req2 = urllib.request.Request(url, data=b'', method='POST')
-        req2.add_header('Authorization', f'Bearer {access_token}')
-        req2.add_header('Content-Length', '0')
-        resp2 = urllib.request.urlopen(req2)
-        print(f'Success! Endpoint: {endpoint}', file=sys.stderr)
-        print(f'GSC sitemap submit: {resp2.status}')
-        sys.exit(0)
-    except urllib.error.HTTPError as e:
-        print(f'Endpoint failed: {e.code} {e.reason}', file=sys.stderr)
-        continue
-
-print('All endpoints failed', file=sys.stderr)
-sys.exit(1)
+    print(f'GSC API error: {e.code} {e.reason}', file=sys.stderr)
+    body = e.read().decode()[:300]
+    print(f'Response: {body}', file=sys.stderr)
+    sys.exit(1)
