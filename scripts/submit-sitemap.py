@@ -39,6 +39,7 @@ req = urllib.request.Request(
 )
 resp = json.load(urllib.request.urlopen(req))
 access_token = resp['access_token']
+print('OAuth token obtained', file=sys.stderr)
 
 site_url = sys.argv[1] if len(sys.argv) > 1 else ''
 sitemap_url = sys.argv[2] if len(sys.argv) > 2 else ''
@@ -46,30 +47,43 @@ if not site_url or not sitemap_url:
     print('Usage: submit-sitemap.py <site_url> <sitemap_url>')
     sys.exit(1)
 
-params = urllib.parse.urlencode({'siteUrl': site_url, 'feedpath': sitemap_url})
-url = f'https://searchconsole.googleapis.com/v1/sitemaps?{params}'
-print(f'Submitting: {url}', file=sys.stderr)
-
-req2 = urllib.request.Request(url, data=b'', method='POST')
-req2.add_header('Authorization', f'Bearer {access_token}')
-req2.add_header('Content-Length', '0')
-
+# Try list sites first to verify access
+list_url = 'https://www.googleapis.com/webmasters/v3/sites'
+req_list = urllib.request.Request(list_url)
+req_list.add_header('Authorization', f'Bearer {access_token}')
 try:
-    resp2 = urllib.request.urlopen(req2)
-    print(f'GSC sitemap submit: {resp2.status}')
+    resp_list = json.load(urllib.request.urlopen(req_list))
+    sites = [s['siteUrl'] for s in resp_list.get('siteEntry', [])]
+    print(f'GSC sites: {sites}', file=sys.stderr)
 except urllib.error.HTTPError as e:
-    print(f'GSC API error: {e.code} {e.reason}', file=sys.stderr)
-    body = e.read().decode()
-    print(f'Response: {body}', file=sys.stderr)
+    print(f'List sites error: {e.code} {e.reason}', file=sys.stderr)
+    print(f'Body: {e.read().decode()[:200]}', file=sys.stderr)
 
-# Debug: list accessible sites
-req3 = urllib.request.Request('https://searchconsole.googleapis.com/v1/sites?')
-req3.add_header('Authorization', f'Bearer {access_token}')
-try:
-    resp3 = json.load(urllib.request.urlopen(req3))
-    sites = [s['siteUrl'] for s in resp3.get('siteEntry', [])]
-    print(f'GSC accessible sites: {sites}', file=sys.stderr)
-except Exception as e:
-    print(f'Failed to list sites: {e}', file=sys.stderr)
+# Submit sitemap - two possible endpoints
+for endpoint in [
+    'https://searchconsole.googleapis.com/v1/sitemaps',
+    'https://www.googleapis.com/webmasters/v3/sites/{su}/sitemaps/{fu}'
+]:
+    try:
+        if 'searchconsole' in endpoint:
+            params = urllib.parse.urlencode({'siteUrl': site_url, 'feedpath': sitemap_url})
+            url = f'{endpoint}?{params}'
+        else:
+            su = urllib.parse.quote(site_url, safe='')
+            fu = urllib.parse.quote(sitemap_url, safe='')
+            url = endpoint.format(su=su, fu=fu)
+        
+        print(f'Trying: POST {url}', file=sys.stderr)
+        req2 = urllib.request.Request(url, data=b'', method='POST')
+        req2.add_header('Authorization', f'Bearer {access_token}')
+        req2.add_header('Content-Length', '0')
+        resp2 = urllib.request.urlopen(req2)
+        print(f'Success! Endpoint: {endpoint}', file=sys.stderr)
+        print(f'GSC sitemap submit: {resp2.status}')
+        sys.exit(0)
+    except urllib.error.HTTPError as e:
+        print(f'Endpoint failed: {e.code} {e.reason}', file=sys.stderr)
+        continue
 
-sys.exit(1 if 'resp2' not in dir() or 'status' not in dir(resp2) else 0)
+print('All endpoints failed', file=sys.stderr)
+sys.exit(1)
