@@ -808,6 +808,71 @@
           </div>
         </div>
 
+        <!-- Stopwatch -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">&#9202;</div>
+                <div><h5 class="card-title mb-1">Stopwatch</h5><p class="card-text small text-muted mb-0">Hitung waktu + lap times</p></div>
+              </div>
+              <div class="mt-auto"><a href="stopwatch.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing Speed Test -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#eff6ff;color:#2563eb;">WPM</div>
+                <div><h5 class="card-title mb-1">Typing Speed Test</h5><p class="card-text small text-muted mb-0">Ukur WPM &amp; akurasi</p></div>
+              </div>
+              <div class="mt-auto"><a href="typing-speed-test.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes App -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fef9c3;color:#ca8a04;">&#128221;</div>
+                <div><h5 class="card-title mb-1">Notes App</h5><p class="card-text small text-muted mb-0">Catatan online tersimpan otomatis</p></div>
+              </div>
+              <div class="mt-auto"><a href="notes-app.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Epoch / Unix Timestamp Converter -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#f8fafc;color:#475569;">&#9200;</div>
+                <div><h5 class="card-title mb-1">Epoch Converter</h5><p class="card-text small text-muted mb-0">Unix timestamp ↔ tanggal</p></div>
+              </div>
+              <div class="mt-auto"><a href="epoch-converter.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Random Color Generator -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex gap-3 mb-3">
+                <div class="tool-icon" style="background:#fdf2f8;color:#ec4899;">&#127912;</div>
+                <div><h5 class="card-title mb-1">Random Color Generator</h5><p class="card-text small text-muted mb-0">HEX, RGB, HSL acak + lock</p></div>
+              </div>
+              <div class="mt-auto"><a href="random-color-generator.html" class="btn btn-primary btn-sm w-100">Buka</a></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
@@ -954,7 +1019,8 @@ var catMap = {
   'Countdown Timer':'Utilities','Savings Calculator':'Utilities','Roman Numeral':'Converters',
   'Palindrome Checker':'Text &amp; Media','Anagram Finder':'Text &amp; Media','Text Repeater':'Text &amp; Media','Reverse Text':'Text &amp; Media','List Sorter':'Text &amp; Media',
    'Sleep Cycle':'Utilities','Calorie Calculator':'Utilities',
-   'Random Number Generator':'Generators','Discount Calculator':'Utilities','Number to Words':'Converters','Morse Code Converter':'Text &amp; Media','Dice Roller':'Utilities','Mortgage Calculator':'Utilities'
+   'Random Number Generator':'Generators','Discount Calculator':'Utilities','Number to Words':'Converters','Morse Code Converter':'Text &amp; Media','Dice Roller':'Utilities','Mortgage Calculator':'Utilities',
+   'Stopwatch':'Utilities','Typing Speed Test':'Utilities','Notes App':'Utilities','Epoch Converter':'Developer Tools','Random Color Generator':'Generators'
 };
 cards.forEach(function(col){
   var title = col.querySelector('.card-title');

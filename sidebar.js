@@ -55,6 +55,8 @@
         { name: 'JSON ↔ CSV Converter',  url: 'json-csv.html' },
         { name: 'CSS Unit Converter',    url: 'css-unit.html' },
         { name: 'HTML Entity Encoder/Decoder', url: 'html-entity.html' },
+        { name: 'Random Color Generator', url: 'random-color-generator.html' },
+        { name: 'Epoch / Unix Timestamp Converter', url: 'epoch-converter.html' },
       ],
     },
     {
@@ -70,6 +72,9 @@
       name: 'Utilities',
       tools: [
         { name: 'Timer & Stopwatch',  url: 'timer.html' },
+        { name: 'Stopwatch',           url: 'stopwatch.html' },
+        { name: 'Typing Speed Test',   url: 'typing-speed-test.html' },
+        { name: 'Notes App',           url: 'notes-app.html' },
         { name: 'CSV Viewer',         url: 'csv-viewer.html' },
         { name: 'Contrast Checker',   url: 'contrast-checker.html' },
         { name: 'Screen Recorder',    url: 'screen-recorder.html' },
