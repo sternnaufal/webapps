@@ -28,3 +28,22 @@ jobs:
         run: |
           curl -sS "https://www.bing.com/ping?sitemap=https://webapps.naufalrakha.my.id/sitemap.xml" -o /dev/null -w "Bing: %{http_code}\n"
           echo "Search engines notified"
+
+      - name: Google Auth
+        id: auth
+        if: ${{ secrets.GCP_SA_KEY != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          create_credentials_file: true
+
+      - name: Submit sitemap to Google Search Console
+        if: ${{ secrets.GCP_SA_KEY != '' }}
+        run: |
+          SITEMAP="https://webapps.naufalrakha.my.id/sitemap.xml"
+          SITE_URL="https://webapps.naufalrakha.my.id"
+          curl -sS -X POST \
+            "https://searchconsole.googleapis.com/v1/sitemaps?siteUrl=${SITE_URL}&feedpath=${SITEMAP}" \
+            -H "Authorization: Bearer ${{ steps.auth.outputs.access_token }}" \
+            -H "Content-Length: 0" \
+            -w "\nGSC sitemap submit: %{http_code}\n"
