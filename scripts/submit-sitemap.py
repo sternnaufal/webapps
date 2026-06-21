@@ -50,35 +50,27 @@ from urllib.parse import urlparse
 parsed = urlparse(site_url_arg)
 domain = parsed.netloc or parsed.path
 gsc_site = f'sc-domain:{domain}'
+gsc_site_enc = urllib.parse.quote(gsc_site, safe='')
+sitemap_enc = urllib.parse.quote(sitemap_url, safe='')
 
-endpoints = [
-    f'https://searchconsole.googleapis.com/v1/sitemaps?{urllib.parse.urlencode({"siteUrl": gsc_site, "feedpath": sitemap_url})}',
-    f'https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(gsc_site, safe="")}/sitemaps/{urllib.parse.quote(sitemap_url, safe="")}',
-]
+# Verify sitemap exists in GSC
+list_req = urllib.request.Request(
+    f'https://www.googleapis.com/webmasters/v3/sites/{gsc_site_enc}/sitemaps'
+)
+list_req.add_header('Authorization', f'Bearer {access_token}')
+resp_list = json.load(urllib.request.urlopen(list_req))
+sitemaps = [s['path'] for s in resp_list.get('sitemap', [])]
 
-for url in endpoints:
+if sitemap_url in sitemaps:
+    print(f'GSC: sitemap already registered ({sitemap_url})')
+    # Request re-crawl via deprecated ping (still works)
+    ping_url = f'https://www.google.com/ping?sitemap={urllib.parse.quote(sitemap_url, safe="")}'
     try:
-        print(f'Trying: {url[:120]}...', file=sys.stderr)
-        req2 = urllib.request.Request(url, data=b'', method='POST')
-        req2.add_header('Authorization', f'Bearer {access_token}')
-        req2.add_header('Content-Length', '0')
-        resp2 = urllib.request.urlopen(req2)
-        print(f'GSC sitemap submit: {resp2.status} {resp2.reason}')
-        sys.exit(0)
-    except urllib.error.HTTPError as e:
-        print(f'  Failed: {e.code} {e.reason}', file=sys.stderr)
-        continue
-
-print('All endpoints failed. Trying GET to inspect...', file=sys.stderr)
-# Try GET to see available sitemaps
-try:
-    list_url = f'https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(gsc_site, safe="")}/sitemaps'
-    req3 = urllib.request.Request(list_url)
-    req3.add_header('Authorization', f'Bearer {access_token}')
-    resp3 = json.load(urllib.request.urlopen(req3))
-    print(f'Existing sitemaps: {json.dumps(resp3, indent=2)}', file=sys.stderr)
-except urllib.error.HTTPError as e:
-    print(f'List sitemaps error: {e.code}', file=sys.stderr)
-    print(f'Body: {e.read().decode()[:300]}', file=sys.stderr)
-
-sys.exit(1)
+        ping_resp = urllib.request.urlopen(ping_url)
+        print(f'Google ping: {ping_resp.status} {ping_resp.reason}')
+    except Exception as e:
+        print(f'Google ping failed (non-critical): {e}')
+else:
+    print(f'GSC: sitemap NOT registered yet. Submit manually via GSC web UI.')
+    print(f'Available sitemaps: {sitemaps}')
+    sys.exit(1)
