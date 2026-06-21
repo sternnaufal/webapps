@@ -39,38 +39,46 @@ req = urllib.request.Request(
 )
 resp = json.load(urllib.request.urlopen(req))
 access_token = resp['access_token']
-print('OAuth token obtained', file=sys.stderr)
 
-# site_url is like "https://webapps.naufalrakha.my.id"
-# but GSC uses domain property "sc-domain:webapps.naufalrakha.my.id"
-# Map the domain to sc-domain format
 site_url_arg = sys.argv[1] if len(sys.argv) > 1 else ''
 sitemap_url = sys.argv[2] if len(sys.argv) > 2 else ''
 if not site_url_arg or not sitemap_url:
     print('Usage: submit-sitemap.py <site_url> <sitemap_url>')
     sys.exit(1)
 
-# Extract domain from URL like https://webapps.naufalrakha.my.id
 from urllib.parse import urlparse
 parsed = urlparse(site_url_arg)
 domain = parsed.netloc or parsed.path
 gsc_site = f'sc-domain:{domain}'
 
-# Submit sitemap using webmasters v3 API with correct siteUrl format
-gsc_site_enc = urllib.parse.quote(gsc_site, safe='')
-sitemap_enc = urllib.parse.quote(sitemap_url, safe='')
-url = f'https://www.googleapis.com/webmasters/v3/sites/{gsc_site_enc}/sitemaps/{sitemap_enc}'
+endpoints = [
+    f'https://searchconsole.googleapis.com/v1/sitemaps?{urllib.parse.urlencode({"siteUrl": gsc_site, "feedpath": sitemap_url})}',
+    f'https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(gsc_site, safe="")}/sitemaps/{urllib.parse.quote(sitemap_url, safe="")}',
+]
 
-print(f'Submitting sitemap...', file=sys.stderr)
-req2 = urllib.request.Request(url, data=b'', method='POST')
-req2.add_header('Authorization', f'Bearer {access_token}')
-req2.add_header('Content-Length', '0')
+for url in endpoints:
+    try:
+        print(f'Trying: {url[:120]}...', file=sys.stderr)
+        req2 = urllib.request.Request(url, data=b'', method='POST')
+        req2.add_header('Authorization', f'Bearer {access_token}')
+        req2.add_header('Content-Length', '0')
+        resp2 = urllib.request.urlopen(req2)
+        print(f'GSC sitemap submit: {resp2.status} {resp2.reason}')
+        sys.exit(0)
+    except urllib.error.HTTPError as e:
+        print(f'  Failed: {e.code} {e.reason}', file=sys.stderr)
+        continue
 
+print('All endpoints failed. Trying GET to inspect...', file=sys.stderr)
+# Try GET to see available sitemaps
 try:
-    resp2 = urllib.request.urlopen(req2)
-    print(f'GSC sitemap submit: {resp2.status} {resp2.reason}')
+    list_url = f'https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(gsc_site, safe="")}/sitemaps'
+    req3 = urllib.request.Request(list_url)
+    req3.add_header('Authorization', f'Bearer {access_token}')
+    resp3 = json.load(urllib.request.urlopen(req3))
+    print(f'Existing sitemaps: {json.dumps(resp3, indent=2)}', file=sys.stderr)
 except urllib.error.HTTPError as e:
-    print(f'GSC API error: {e.code} {e.reason}', file=sys.stderr)
-    body = e.read().decode()[:300]
-    print(f'Response: {body}', file=sys.stderr)
-    sys.exit(1)
+    print(f'List sitemaps error: {e.code}', file=sys.stderr)
+    print(f'Body: {e.read().decode()[:300]}', file=sys.stderr)
+
+sys.exit(1)
