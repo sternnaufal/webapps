@@ -24,10 +24,9 @@ jobs:
           EOF
           npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
 
-      - name: Notify Bing (IndexNow)
+      - name: IndexNow
         run: |
-          curl -sS "https://www.bing.com/ping?sitemap=https://webapps.naufalrakha.my.id/sitemap.xml" -o /dev/null -w "Bing: %{http_code}\n"
-          echo "Search engines notified"
+          curl -sS "https://api.indexnow.org/indexnow?url=https://webapps.naufalrakha.my.id/&key=${{ secrets.INDEXNOW_KEY }}" -o /dev/null -w "IndexNow: %{http_code}\n" || echo "IndexNow skipped (no key)"
 
       - name: Submit sitemap to Google Search Console
         env:

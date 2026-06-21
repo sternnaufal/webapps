@@ -62,14 +62,7 @@ resp_list = json.load(urllib.request.urlopen(list_req))
 sitemaps = [s['path'] for s in resp_list.get('sitemap', [])]
 
 if sitemap_url in sitemaps:
-    print(f'GSC: sitemap already registered ({sitemap_url})')
-    # Request re-crawl via deprecated ping (still works)
-    ping_url = f'https://www.google.com/ping?sitemap={urllib.parse.quote(sitemap_url, safe="")}'
-    try:
-        ping_resp = urllib.request.urlopen(ping_url)
-        print(f'Google ping: {ping_resp.status} {ping_resp.reason}')
-    except Exception as e:
-        print(f'Google ping failed (non-critical): {e}')
+    print(f'GSC: sitemap verified ({sitemap_url})')
 else:
     print(f'GSC: sitemap NOT registered yet. Submit manually via GSC web UI.')
     print(f'Available sitemaps: {sitemaps}')
