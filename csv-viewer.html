@@ -27,7 +27,8 @@
       { "@type": "ListItem", "position": 2, "name": "CSV/TSV Viewer", "item": "https://webapps.naufalrakha.my.id/csv-viewer.html" }
     ]
   }
-  </script></head>
+  </script>  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu CSV Viewer?","acceptedAnswer":{"@type":"Answer","text":"CSV viewer online untuk melihat file CSV dalam format tabel rapi. Support berbagai delimiter dan bisa handle file besar tanpa upload ke server."}},{"@type":"Question","name":"Bagaimana cara menggunakan CSV Viewer?","acceptedAnswer":{"@type":"Answer","text":"Paste data CSV atau upload file. Viewer akan mem-parsing dan menampilkan dalam tabel interaktif dengan kolom terpisah dan sorting."}},{"@type":"Question","name":"Apa saja delimiter yang didukung?","acceptedAnswer":{"@type":"Answer","text":"Mendukung koma, tab, semicolon, pipe, dan custom delimiter. CSV viewer otomatis mendeteksi delimiter yang digunakan."}}]}</script>
+
 <body>
 <div class="container-fluid"><div class="row">
 <div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
@@ -79,6 +80,7 @@ function esc(s){var d=document.createElement('div');d.textContent=s;return d.inn
 document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function(){inp.value='';con.style.display='none'});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
 
 
 

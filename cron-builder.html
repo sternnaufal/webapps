@@ -27,7 +27,8 @@
       { "@type": "ListItem", "position": 2, "name": "Cron Expression Builder", "item": "https://webapps.naufalrakha.my.id/cron-builder.html" }
     ]
   }
-  </script></head>
+  </script>  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu Cron?","acceptedAnswer":{"@type":"Answer","text":"Cron adalah penjadwal task di sistem Linux/Unix. Cron builder memudahkan pembuatan ekspresi cron dengan GUI tanpa harus hafal sintaks."}},{"@type":"Question","name":"Bagaimana cara membuat Cron expression?","acceptedAnswer":{"@type":"Answer","text":"Pilih menit, jam, hari, bulan, dan hari dalam minggu melalui dropdown. Cron generator akan menghasilkan ekspresi dan penjelasan readable."}},{"@type":"Question","name":"Apa contoh penggunaan Cron?","acceptedAnswer":{"@type":"Answer","text":"Backup database setiap jam, restart server setiap hari, kirim email report mingguan, atau cleanup log bulanan."}}]}</script>
+
 <body>
 <div class="container-fluid"><div class="row">
 <div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
@@ -94,6 +95,7 @@ document.querySelectorAll('.preset').forEach(function(b){b.addEventListener('cli
 document.getElementById('btnCopy').addEventListener('click',function(){var b=this;navigator.clipboard.writeText(inp.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});</script>
 <script src="sidebar.js"></script>
 </body></html>
+
 
 
 
