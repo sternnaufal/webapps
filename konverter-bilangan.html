@@ -52,7 +52,7 @@
       <nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4">
         <div class="container-fluid">
           <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-            ?
+            ☰
           </button>
           <span class="navbar-brand ms-2">Konverter Bilangan</span>
         </div>
@@ -63,12 +63,12 @@
           <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
           <div>
             <h1 class="h3 mb-0">Konverter Bilangan</h1>
-            <p class="text-muted small mb-0">Desimal ? Hexadesimal ? Biner ? Oktal � real-time, akurat, dukung angka besar (BigInt).</p>
+            <p class="text-muted small mb-0">Desimal → Hexadesimal → Biner → Oktal — real-time, akurat, dukung angka besar (BigInt).</p>
           </div>
         </div>
         <div class="btn-group">
-          <button class="btn btn-outline-secondary" id="btnClear" title="Bersihkan semua">??</button>
-          <button class="btn btn-outline-secondary" id="btnSample" title="Contoh cepat">??</button>
+          <button class="btn btn-outline-secondary" id="btnClear" title="Bersihkan semua">🗑️</button>
+          <button class="btn btn-outline-secondary" id="btnSample" title="Contoh cepat">🎲</button>
         </div>
       </header>
 
@@ -80,11 +80,11 @@
               <h5 class="card-title">Desimal <span class="badge bg-primary">basis 10</span></h5>
               <div class="input-group mb-2">
                 <input id="dec" class="form-control" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
-                <button class="btn btn-outline-secondary" data-copy="dec" title="Salin">??</button>
+                <button class="btn btn-outline-secondary" data-copy="dec" title="Salin">📋</button>
               </div>
-              <div class="small text-muted">Karakter valid: 0�9, opsional tanda minus.</div>
+              <div class="small text-muted">Karakter valid: 0–9, opsional tanda minus.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="decInfo">�</span>
+                <span class="badge bg-secondary" id="decInfo">–</span>
               </div>
               <div class="text-danger small mt-1" id="decErr"></div>
             </div>
@@ -98,15 +98,15 @@
               <h5 class="card-title">Hexadesimal <span class="badge bg-primary">basis 16</span></h5>
               <div class="input-group mb-2">
                 <input id="hex" class="form-control" placeholder="Misal: 1A3F atau -ff" />
-                <button class="btn btn-outline-secondary" data-copy="hex" title="Salin">??</button>
+                <button class="btn btn-outline-secondary" data-copy="hex" title="Salin">📋</button>
               </div>
               <div class="form-check form-switch mb-2">
                 <input class="form-check-input" type="checkbox" id="hexUpper">
                 <label class="form-check-label" for="hexUpper">Uppercase</label>
               </div>
-              <div class="small text-muted">Karakter valid: 0�9, a�f. Gunakan tanda minus untuk negatif.</div>
+              <div class="small text-muted">Karakter valid: 0–9, a–f. Gunakan tanda minus untuk negatif.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="hexInfo">�</span>
+                <span class="badge bg-secondary" id="hexInfo">–</span>
               </div>
               <div class="text-danger small mt-1" id="hexErr"></div>
             </div>
@@ -120,7 +120,7 @@
               <h5 class="card-title">Biner <span class="badge bg-primary">basis 2</span></h5>
               <div class="input-group mb-2">
                 <input id="bin" class="form-control" placeholder="Misal: 101010 atau -1111" />
-                <button class="btn btn-outline-secondary" data-copy="bin" title="Salin">??</button>
+                <button class="btn btn-outline-secondary" data-copy="bin" title="Salin">📋</button>
               </div>
               <div class="form-check form-switch mb-2">
                 <input class="form-check-input" type="checkbox" id="binGroup" checked>
@@ -128,7 +128,7 @@
               </div>
               <div class="small text-muted">Karakter valid: 0 atau 1. Min untuk negatif.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="binInfo">�</span>
+                <span class="badge bg-secondary" id="binInfo">–</span>
               </div>
               <div class="text-danger small mt-1" id="binErr"></div>
             </div>
@@ -142,11 +142,11 @@
               <h5 class="card-title">Oktal <span class="badge bg-primary">basis 8</span></h5>
               <div class="input-group mb-2">
                 <input id="oct" class="form-control" placeholder="Misal: 755 atau -17" />
-                <button class="btn btn-outline-secondary" data-copy="oct" title="Salin">??</button>
+                <button class="btn btn-outline-secondary" data-copy="oct" title="Salin">📋</button>
               </div>
-              <div class="small text-muted">Karakter valid: 0�7. Min untuk negatif.</div>
+              <div class="small text-muted">Karakter valid: 0–7. Min untuk negatif.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="octInfo">�</span>
+                <span class="badge bg-secondary" id="octInfo">–</span>
               </div>
               <div class="text-danger small mt-1" id="octErr"></div>
             </div>
@@ -155,7 +155,7 @@
       </div>
 
       <p class="text-muted small mt-4">
-        ?? Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
+        💡 Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
       </p>
     <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Konverter Bilangan</h6><p class="small mb-1" style="line-height:1.6">Konverter bilangan untuk mengkonversi angka antar sistem bilangan: desimal, biner, oktal, dan heksadesimal. Alat ini sangat berguna untuk mahasiswa teknik informatika, programmer, dan siapapun yang belajar sistem bilangan komputer.</p><p class="small mb-0" style="line-height:1.6">Masukkan angka pada salah satu field, dan semua field lainnya akan terkonversi otomatis. Mendukung bilangan positif dan negatif. Kalkulator bilangan ini juga menampilkan langkah konversi untuk membantu pembelajaran.</p></div>`n</main>
   </div>
@@ -177,7 +177,7 @@
 <div class="row g-3 small">
 <div class="col-md-8">
 <p class="mb-1 fw-semibold">Koleksi WebApps Naufal Rakha</p>
-<p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://koleksi.naufalrakha.my.id" class="text-info">Koleksi Desain</a></p>
+<p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://koleksilama.naufalrakha.my.id" class="text-info">Koleksi Desain</a> | <a href="https://blog.naufalrakha.my.id" class="text-info">Blog</a></p>
 </p>
 </div>
 <div class="col-md-4 text-md-end">
@@ -249,10 +249,10 @@ function setInfo(){
   const hex = el('hex').value.trim();
   const bin = el('bin').value.trim();
   const oct = el('oct').value.trim();
-  el('decInfo').textContent = dec ? `${dec.length} digit` : '�';
-  el('hexInfo').textContent = hex ? `${stripGrouping(hex).length} digit` : '�';
-  el('binInfo').textContent = bin ? `${stripGrouping(bin).replace(/^-/, '').replace(/\s+/g,'').length} bit` : '�';
-  el('octInfo').textContent = oct ? `${stripGrouping(oct).length} digit` : '�';
+  el('decInfo').textContent = dec ? `${dec.length} digit` : '–';
+  el('hexInfo').textContent = hex ? `${stripGrouping(hex).length} digit` : '–';
+  el('binInfo').textContent = bin ? `${stripGrouping(bin).replace(/^-/, '').replace(/\s+/g,'').length} bit` : '–';
+  el('octInfo').textContent = oct ? `${stripGrouping(oct).length} digit` : '–';
 }
 
 function showError(which, msg){ el(which+'Err').textContent = msg || ''; }
@@ -316,8 +316,8 @@ document.querySelectorAll('[data-copy]').forEach(btn=>{
     const id = btn.getAttribute('data-copy');
     const val = el(id).value;
     if (!val) return;
-    try{ await navigator.clipboard.writeText(val); btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); }
-    catch{ btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); }
+    try{ await navigator.clipboard.writeText(val); btn.textContent='✓'; setTimeout(()=>btn.textContent='📋', 900); }
+    catch{ btn.textContent='✗'; setTimeout(()=>btn.textContent='📋', 900); }
   });
 });
 
