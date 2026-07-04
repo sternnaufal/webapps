@@ -189,6 +189,8 @@
   function setTheme(dark) {
     document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'light')
     document.querySelectorAll('.dark-toggle').forEach(function (b) { b.textContent = dark ? '\u2600\uFE0F' : '\uD83C\uDF19' })
+    var ft = document.querySelector('.dark-float')
+    if (ft) ft.innerHTML = dark ? '\u2600\uFE0F' : '\uD83C\uDF19'
     try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch (e) {}
   }
   var saved
@@ -198,6 +200,7 @@
 
   document.addEventListener('click', function (e) {
     if (e.target.classList.contains('dark-toggle')) setTheme(document.documentElement.getAttribute('data-bs-theme') !== 'dark')
+    if (e.target.classList.contains('dark-float')) setTheme(document.documentElement.getAttribute('data-bs-theme') !== 'dark')
   })
 
 })()
