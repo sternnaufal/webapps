@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8"/>
@@ -28,7 +28,7 @@
 <div class="container-fluid"><div class="row">
 <div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
 <main class="col-md-9 col-lg-10 p-4">
-<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button><span class="navbar-brand ms-2">List Sorter</span></div></nav>
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">?</button><span class="navbar-brand ms-2">List Sorter</span></div></nav>
 <header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><h1 class="h3 mb-0">List Sorter</h1><p class="text-muted small mb-0">Urutkan daftar teks: A-Z, Z-A, acak, by length, hapus duplikat. Satu item per baris.</p></div></header>
 <div class="row g-4"><div class="col-lg-6">
 <div class="card shadow-sm border-0 p-3">
@@ -68,7 +68,7 @@ Nanas</textarea></div>
 <div class="row g-3 small">
 <div class="col-md-8">
 <p class="mb-1 fw-semibold">Koleksi WebApps Naufal Rakha</p>
-<p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://koleksilama.naufalrakha.my.id" class="text-info">Koleksi Desain</a> | <a href="https://blog.naufalrakha.my.id" class="text-info">Blog</a></p>
+<p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://blog.naufalrakha.my.id" class="text-info">Blog</a></p>
 </p>
 </div>
 <div class="col-md-4 text-md-end">
@@ -93,7 +93,7 @@ function sortList(){
   else if(m==='lengthDesc')lines.sort(function(a,b){return b.length-a.length});
   else if(m==='random')for(var i=lines.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;}
   out.value=lines.join('\n');
-  stats.textContent=origCount+' item → '+lines.length+' item';
+  stats.textContent=origCount+' item ? '+lines.length+' item';
 }
 document.getElementById('btnSort').addEventListener('click',sortList);
 document.getElementById('btnCopy').addEventListener('click',function(){

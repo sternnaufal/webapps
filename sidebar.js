@@ -103,7 +103,7 @@
     { name: 'Root',   url: 'https://naufalrakha.my.id' },
     { name: 'Digital', url: 'https://digital.naufalrakha.my.id' },
     { name: 'Demo',   url: 'https://demo.naufalrakha.my.id' },
-    { name: 'Koleksi', url: 'https://koleksilama.naufalrakha.my.id' },
+    
     { name: 'WebApps', url: 'https://webapps.naufalrakha.my.id' },
   ]
 
