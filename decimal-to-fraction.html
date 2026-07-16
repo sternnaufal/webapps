@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Decimal to Fraction Converter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Konversi desimal ke pecahan online. Ubah angka desimal menjadi pecahan biasa atau campuran. Akurat dengan continued fraction.">
+  <meta name="keywords" content="decimal to fraction, desimal ke pecahan, fraction converter, decimal converter, pecahan desimal">
+  <link rel="canonical" href="https://webapps.naufalrakha.my.id/decimal-to-fraction.html">
+  <meta property="og:title" content="Decimal to Fraction Converter">
+  <meta property="og:description" content="Konversi desimal ke pecahan online. Akurat & cepat. Hasil sebagai pecahan biasa, campuran, dan langkah-langkah.">
+  <meta property="og:url" content="https://webapps.naufalrakha.my.id/decimal-to-fraction.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://webapps.naufalrakha.my.id/og-image.png">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:site_name" content="WebApps NaufalRakha">
+  <meta property="og:logo" content="https://webapps.naufalrakha.my.id/logo-512.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Decimal to Fraction Converter">
+  <meta name="twitter:description" content="Konversi desimal ke pecahan online. Akurat & cepat.">
+  <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Decimal to Fraction Converter","url":"https://webapps.naufalrakha.my.id/decimal-to-fraction.html","applicationCategory":"UtilityApplication","operatingSystem":"All"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://webapps.naufalrakha.my.id/"},{"@type":"ListItem","position":2,"name":"Decimal to Fraction Converter","item":"https://webapps.naufalrakha.my.id/decimal-to-fraction.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana cara mengubah desimal ke pecahan?","acceptedAnswer":{"@type":"Answer","text":"Masukkan angka desimal (misal 0.75 atau 3.14159), atur toleransi dan penyebut maksimal, klik Konversi. Hasil akan ditampilkan sebagai pecahan biasa dan campuran."}},{"@type":"Question","name":"Apa akurasi konversi ini?","acceptedAnswer":{"@type":"Answer","text":"Menggunakan algoritma continued fraction yang sangat akurat. Nilai toleransi default 1e-9 memastikan ketepatan tinggi."}}]}</script>
+  <style>
+    .frac-output { font-size: 1.8rem; font-weight: 700; text-align: center; padding: 20px; background: var(--surface-soft); border-radius: 12px; margin-bottom: 15px; }
+    .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+    .frac .num { border-bottom: 2px solid currentColor; padding: 0 8px 3px; }
+    .frac .den { padding: 3px 8px 0; }
+    .frac-step { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+<div class="container-fluid"><div class="row">
+<div id="sidebar-desktop" class="d-none d-md-block col-md-3 col-lg-2 ps-0"></div>
+<main class="col-md-9 col-lg-10 p-4">
+<nav class="navbar navbar-dark navbar-tool d-md-none sticky-top mb-4"><div class="container-fluid"><button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">☰</button><span class="navbar-brand ms-2">Decimal &rarr; Fraction</span></div></nav>
+<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#7c3aed;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><text x="2" y="18" font-size="18">½</text></svg></div><div><h1 class="h3 mb-0">Decimal to Fraction Converter</h1><p class="text-muted small mb-0">Ubah angka desimal menjadi pecahan biasa atau campuran dengan akurat.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<div class="row g-2 mb-3">
+<div class="col-md-6"><label class="form-label small fw-semibold">Angka Desimal</label><input type="text" id="decInput" class="form-control form-control-lg" value="0.375" placeholder="Contoh: 0.75, 3.14159, -2.5"></div>
+<div class="col-md-3"><label class="form-label small">Toleransi</label><select id="tolerance" class="form-select"><option value="1e-6">1e-6</option><option value="1e-9" selected>1e-9</option><option value="1e-12">1e-12</option></select></div>
+<div class="col-md-3"><label class="form-label small">Max Penyebut</label><input type="number" id="maxDen" class="form-control" value="1000" min="10" max="100000"></div>
+</div>
+<button id="btnConvert" class="btn btn-primary w-100">Konversi</button>
+</div>
+<div id="fracResult" class="mt-3">
+<div class="frac-output" id="mixedDisplay">0 <span class="frac"><span class="num">3</span><span class="den">8</span></span></div>
+<div class="row g-2">
+<div class="col-md-6"><div class="p-3 rounded small" style="background:var(--surface-soft);"><span class="fw-semibold">Pecahan Biasa:</span> <span id="improperDisplay">3/8</span></div></div>
+<div class="col-md-6"><div class="p-3 rounded small" style="background:var(--surface-soft);"><span class="fw-semibold">Nilai Desimal:</span> <span id="decimalDisplay">0.375</span></div></div>
+</div>
+<div id="stepsDisplay" class="mt-2 p-3 rounded small frac-step" style="background:var(--surface-soft);display:none;"><span class="fw-semibold">Langkah-langkah:</span><br><span id="stepsContent"></span></div>
+<button id="btnToggleSteps" class="btn btn-outline-secondary btn-sm mt-2">Tampilkan Langkah</button>
+</div>
+</div>
+<div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Presets</h6>
+<div class="d-flex gap-2 flex-wrap">
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.3333333333">⅓</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.25">¼</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.6666666667">⅔</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.125">⅛</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="3.1415926535">π (22/7)</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.8333333333">⅚ (0.833)</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="1.414213562">√2 ≈</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.2">⅕</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.1666666667">⅙</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.1">⅒</button>
+</div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Decimal to Fraction Converter</h6><p class="small mb-1" style="line-height:1.6">Konversi desimal ke pecahan menggunakan algoritma continued fraction yang sangat akurat. Masukkan angka desimal seperti 0.375 atau 3.14159 (π), dan alat ini akan menemukan pecahan terdekat dengan toleransi yang bisa diatur.</p><p class="small mb-0" style="line-height:1.6">Berguna untuk matematika, pendidikan, engineering, dan crafting. Hasil ditampilkan sebagai pecahan campuran, pecahan biasa, dan nilai desimal asli. Fitur langkah-langkah menunjukkan proses konversi secara detail.</p></div>
+</main></div></div>
+<div id="sidebar-mobile"></div>
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="konverter-bilangan.html" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="unit-converter.html" class="btn btn-outline-secondary btn-sm rounded-pill">Unit Converter</a><a href="percentage-calculator.html" class="btn btn-outline-secondary btn-sm rounded-pill">Percentage Calc</a><a href="roman-numeral.html" class="btn btn-outline-secondary btn-sm rounded-pill">Roman Numeral</a></div></div>
+<footer class="bg-dark text-light py-4">
+<div class="container"><div class="row g-3 small">
+<div class="col-md-8"><p class="mb-1 fw-semibold">Koleksi WebApps Naufal Rakha</p><p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://blog.naufalrakha.my.id" class="text-info">Blog</a></p></div>
+<div class="col-md-4 text-md-end"><p class="mb-0">&copy; <span id="year">2025</span> Naufal Rakha Putra</p></div>
+</div></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+var decInp=document.getElementById('decInput'),tolInp=document.getElementById('tolerance'),denInp=document.getElementById('maxDen');
+var mixedDisp=document.getElementById('mixedDisplay'),improperDisp=document.getElementById('improperDisplay'),decimalDisp=document.getElementById('decimalDisplay');
+var stepsDisp=document.getElementById('stepsDisplay'),stepsContent=document.getElementById('stepsContent');
+var stepsVisible=false;
+
+function fracHTML(num,den){
+  return '<span class="frac"><span class="num">'+num+'</span><span class="den">'+den+'</span></span>';
+}
+
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t}return a}
+
+function decToFrac(decimal,tol,maxDen){
+  var neg=decimal<0;decimal=Math.abs(decimal);
+  var intPart=Math.floor(decimal),frac=decimal-intPart;
+  if(frac<tol)return{num:neg?-intPart:intPart,den:1,mixed:intPart.toString(),improper:intPart+'/1',steps:['Nilai desimal sudah bilangan bulat']};
+  var num1=0,den1=1,num2=1,den2=0,a,n,d,steps=[];
+  steps.push('Bilangan desimal: '+(neg?'-':'')+decimal);
+  steps.push('Bagian bulat: '+intPart+', pecahan: '+frac.toFixed(10));
+  steps.push('Menggunakan algoritma continued fraction:');
+  var count=0;
+  while(count<100){
+    a=Math.floor(frac);n=a*num2+num1;d=a*den2+den1;
+    steps.push('  Iterasi '+(count+1)+': a='+a+', pecahan='+num2+'/'+den2+' (≈'+(num2/den2).toFixed(8)+')');
+    if(d>maxDen){n=num2;d=den2;steps.push('  Penyebut melebihi batas. Mengembalikan iterasi sebelumnya.');break;}
+    var val=n/d;
+    if(Math.abs(val-(decimal-intPart))<tol){steps.push('  Konvergen! Error: '+Math.abs(val-(decimal-intPart)).toExponential(3));break;}
+    num1=num2;den1=den2;num2=n;den2=d;
+    if(frac===a){steps.push('  Selesai (pecahan berakhir).');break;}
+    frac=1/(frac-a);count++;
+  }
+  n=intPart*d+n;
+  if(neg)n=-n;
+  var g=gcd(Math.abs(n),d);n/=g;d/=g;
+  var improper=n+'/'+d;
+  var mixedPart=Math.floor(Math.abs(n)/d);
+  var rem=Math.abs(n)%d;
+  var mixed=neg?'-':'';
+  if(mixedPart>0&&rem>0)mixed+=mixedPart+' '+rem+'/'+d;
+  else if(mixedPart>0)mixed+=mixedPart;
+  else mixed+=(neg?'-':'')+rem+'/'+d;
+  if(rem===0)mixed=mixedPart.toString();
+  if(neg&&mixedPart===0&&rem>0)mixed='-'+rem+'/'+d;
+  steps.push('Pecahan biasa: '+improper);
+  steps.push('Pecahan campuran: '+mixed);
+  return{num:n,den:d,mixed:mixed,improper:improper,steps:steps};
+}
+
+function convert(){
+  var raw=decInp.value.trim().replace(/,/g,'.');
+  var val=parseFloat(raw);
+  if(isNaN(val)){mixedDisp.innerHTML='<span class="text-danger">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;}
+  var tol=parseFloat(tolInp.value);var maxDen=parseInt(denInp.value)||1000;
+  var result=decToFrac(val,tol,maxDen);
+  if(result.den===1){mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;}
+  else{mixedDisp.innerHTML=result.mixed.replace(/(\d+)\/(\d+)/g,function(m,n,d){return fracHTML(n,d)});improperDisp.textContent=result.improper;}
+  decimalDisp.textContent=val.toString();
+  stepsContent.innerHTML=result.steps.map(function(s){return s+'\n'}).join('<br>');
+  if(stepsVisible)stepsDisp.style.display='block';
+}
+
+document.getElementById('btnConvert').addEventListener('click',convert);
+document.getElementById('btnToggleSteps').addEventListener('click',function(){
+  stepsVisible=!stepsVisible;stepsDisp.style.display=stepsVisible?'block':'none';
+  this.textContent=stepsVisible?'Sembunyikan Langkah':'Tampilkan Langkah';
+});
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+  decInp.value=this.dataset.val;convert();
+})});
+decInp.addEventListener('keydown',function(e){if(e.key==='Enter')convert()});
+convert();
+</script>
+<script src="sidebar.js"></script>
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+<span>Donasi</span></a>
+<style>.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all 0.3s ease;font-family:"Inter",sans-serif}.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}.saweria-float svg{animation:pulse 1.5s ease infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@media (max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}</style>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>
+</body>
+</html>

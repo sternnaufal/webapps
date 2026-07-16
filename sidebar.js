@@ -13,6 +13,8 @@
         { name: 'Diff Checker',         url: 'diff-checker.html' },
         { name: 'SQL Formatter',        url: 'sql-formatter.html' },
         { name: 'YAML/JSON Converter',  url: 'yaml-json.html' },
+        { name: 'Meta Tag Generator',   url: 'meta-tag-generator.html' },
+        { name: 'ASCII Table',          url: 'ascii-table.html' },
       ],
     },
     {
@@ -22,6 +24,7 @@
         { name: 'IP Calculator',         url: 'ip-calculator.html' },
         { name: 'URL Encode/Decode',     url: 'url-encode.html' },
         { name: 'Cron Builder',          url: 'cron-builder.html' },
+        { name: 'MAC Address Generator', url: 'mac-address-generator.html' },
       ],
     },
     {
@@ -57,6 +60,8 @@
         { name: 'HTML Entity Encoder/Decoder', url: 'html-entity.html' },
         { name: 'Random Color Generator', url: 'random-color-generator.html' },
         { name: 'Epoch / Unix Timestamp Converter', url: 'epoch-converter.html' },
+        { name: 'Avatar Generator', url: 'avatar-generator.html' },
+        { name: 'Barcode Generator', url: 'barcode-generator.html' },
       ],
     },
     {
@@ -66,6 +71,7 @@
         { name: 'Unit Converter',     url: 'unit-converter.html' },
         { name: 'Time Converter',     url: 'time-converter.html' },
         { name: 'Date Duration Calculator', url: 'date-calculator.html' },
+        { name: 'Decimal to Fraction',      url: 'decimal-to-fraction.html' },
       ],
     },
     {
