@@ -131,10 +131,6 @@
   }
 
   function sideHTML(suffix) {
-    var siteLinks = sites.map(function (s) {
-      return '<a href="' + s.url + '" target="_blank" class="text-white-50 text-decoration-none" style="font-size:0.65rem;">' + s.name + '</a>'
-    }).join(' <span style="color:#444;">|</span> ')
-
     return [
       '  <div class="sidebar-header">',
       '    <a href="https://webapps.naufalrakha.my.id" class="text-decoration-none text-white fw-bold" style="font-size:0.95rem;">WebApps</a>',
@@ -146,8 +142,6 @@
            makeNav(suffix),
       '  </nav>',
       '  <div class="sidebar-footer">',
-      '    <div class="text-center py-1">' + siteLinks + '</div>',
-      '    <hr class="border-secondary my-1">',
       '    <div class="d-flex justify-content-between align-items-center pt-1">',
       '      <span style="color:rgba(255,255,255,0.4);font-size:0.65rem;">Tema Gelap</span>',
       '      <button class="dark-toggle btn btn-sm" style="line-height:1;font-size:0.85rem;padding:0 6px;color:rgba(255,255,255,0.6);background:transparent;border:none;">&#x1F319;</button>',
