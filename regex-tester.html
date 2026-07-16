@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -36,6 +36,11 @@
   <meta name="twitter:title" content="Regex Tester">
   <meta name="twitter:description" content="Tes regular expression online dengan highlight matches. Regex tester dengan replace dan split.">
   <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:site_name" content="WebApps NaufalRakha">
+  <meta property="og:logo" content="https://webapps.naufalrakha.my.id/logo-512.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,7 +72,7 @@
           <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
           <div>
             <h1 class="h3 mb-0">Regex Tester</h1>
-            <p class="text-muted small mb-0">Uji coba regular expression secara live — match, group, dan replace.</p>
+            <p class="text-muted small mb-0">Uji coba regular expression secara live  match, group, dan replace.</p>
           </div>
         </div>
       </header>
@@ -190,7 +195,7 @@ function update() {
     preview.innerHTML = html;
   } catch (e) {
     preview.textContent = 'Error: ' + e.message;
-    matchCount.textContent = '–';
+    matchCount.textContent = '';
     matchList.innerHTML = '<div class="text-danger p-2">' + escapeHtml(e.message) + '</div>';
   }
 }

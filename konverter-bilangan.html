@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -31,6 +31,11 @@
   <meta name="twitter:title" content="Konverter Bilangan">
   <meta name="twitter:description" content="Konversi bilangan biner, oktal, desimal, heksadesimal online gratis. Alat konversi angka lengkap.">
   <meta name="twitter:image" content="https://webapps.naufalrakha.my.id/apple-touch-icon.png">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:site_name" content="WebApps NaufalRakha">
+  <meta property="og:logo" content="https://webapps.naufalrakha.my.id/logo-512.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,7 +72,7 @@
           <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
           <div>
             <h1 class="h3 mb-0">Konverter Bilangan</h1>
-            <p class="text-muted small mb-0">Desimal ? Hexadesimal ? Biner ? Oktal — real-time, akurat, dukung angka besar (BigInt).</p>
+            <p class="text-muted small mb-0">Desimal ? Hexadesimal ? Biner ? Oktal  real-time, akurat, dukung angka besar (BigInt).</p>
           </div>
         </div>
         <div class="btn-group">
@@ -86,9 +91,9 @@
                 <input id="dec" class="form-control" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
                 <button class="btn btn-outline-secondary" data-copy="dec" title="Salin">??</button>
               </div>
-              <div class="small text-muted">Karakter valid: 0–9, opsional tanda minus.</div>
+              <div class="small text-muted">Karakter valid: 09, opsional tanda minus.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="decInfo">–</span>
+                <span class="badge bg-secondary" id="decInfo"></span>
               </div>
               <div class="text-danger small mt-1" id="decErr"></div>
             </div>
@@ -108,9 +113,9 @@
                 <input class="form-check-input" type="checkbox" id="hexUpper">
                 <label class="form-check-label" for="hexUpper">Uppercase</label>
               </div>
-              <div class="small text-muted">Karakter valid: 0–9, a–f. Gunakan tanda minus untuk negatif.</div>
+              <div class="small text-muted">Karakter valid: 09, af. Gunakan tanda minus untuk negatif.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="hexInfo">–</span>
+                <span class="badge bg-secondary" id="hexInfo"></span>
               </div>
               <div class="text-danger small mt-1" id="hexErr"></div>
             </div>
@@ -132,7 +137,7 @@
               </div>
               <div class="small text-muted">Karakter valid: 0 atau 1. Min untuk negatif.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="binInfo">–</span>
+                <span class="badge bg-secondary" id="binInfo"></span>
               </div>
               <div class="text-danger small mt-1" id="binErr"></div>
             </div>
@@ -148,9 +153,9 @@
                 <input id="oct" class="form-control" placeholder="Misal: 755 atau -17" />
                 <button class="btn btn-outline-secondary" data-copy="oct" title="Salin">??</button>
               </div>
-              <div class="small text-muted">Karakter valid: 0–7. Min untuk negatif.</div>
+              <div class="small text-muted">Karakter valid: 07. Min untuk negatif.</div>
               <div class="mt-2 d-flex justify-content-between">
-                <span class="badge bg-secondary" id="octInfo">–</span>
+                <span class="badge bg-secondary" id="octInfo"></span>
               </div>
               <div class="text-danger small mt-1" id="octErr"></div>
             </div>
@@ -253,10 +258,10 @@ function setInfo(){
   const hex = el('hex').value.trim();
   const bin = el('bin').value.trim();
   const oct = el('oct').value.trim();
-  el('decInfo').textContent = dec ? `${dec.length} digit` : '–';
-  el('hexInfo').textContent = hex ? `${stripGrouping(hex).length} digit` : '–';
-  el('binInfo').textContent = bin ? `${stripGrouping(bin).replace(/^-/, '').replace(/\s+/g,'').length} bit` : '–';
-  el('octInfo').textContent = oct ? `${stripGrouping(oct).length} digit` : '–';
+  el('decInfo').textContent = dec ? `${dec.length} digit` : '';
+  el('hexInfo').textContent = hex ? `${stripGrouping(hex).length} digit` : '';
+  el('binInfo').textContent = bin ? `${stripGrouping(bin).replace(/^-/, '').replace(/\s+/g,'').length} bit` : '';
+  el('octInfo').textContent = oct ? `${stripGrouping(oct).length} digit` : '';
 }
 
 function showError(which, msg){ el(which+'Err').textContent = msg || ''; }
