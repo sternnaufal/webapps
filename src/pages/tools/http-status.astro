@@ -1,0 +1,93 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'HTTP Status Codes';
+const description = 'Referensi HTTP status codes lengkap. 1xx, 2xx, 3xx, 4xx, 5xx beserta penjelasan.';
+const keywords = 'http status codes, http status, error codes, 404, 500, 200, 301';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div><h1 class="h3 mb-0">HTTP Status Codes</h1><p class="text-muted small mb-0">Referensi lengkap kode status HTTP. Cari berdasarkan kode atau deskripsi.</p></div></header>
+<div class="mb-3"><input type="text" id="statusSearch" class="form-control" placeholder="Cari kode atau deskripsi..." style="max-width:400px;"></div>
+<div id="statusList" class="row g-3"></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang HTTP Status Codes</h6><p class="small mb-1" style="line-height:1.6">HTTP status codes reference online yang menampilkan daftar lengkap kode status HTTP beserta penjelasan dan artinya. HTTP status code adalah respons standar server web yang menunjukkan hasil dari permintaan (request) yang dilakukan browser atau klien. Kode ini dikelompokkan dalam lima kategori: 1xx (Informational), 2xx (Success), 3xx (Redirection), 4xx (Client Error), dan 5xx (Server Error).</p><p class="small mb-0" style="line-height:1.6">Database referensi ini mencakup semua kode standar dari 100 hingga 511, termasuk yang jarang digunakan seperti 103 (Early Hints), 418 (I'm a Teapot), 426 (Upgrade Required), 451 (Unavailable For Legal Reasons), dan 511 (Network Authentication Required). Setiap kode dilengkapi dengan penjelasan singkat, kategori, dan contoh penggunaan. Anda dapat mencari kode berdasarkan angka atau nama.</p><p class="small mb-0 mt-2" style="line-height:1.6">HTTP status codes reference sangat berguna bagi web developer, backend engineer, QA tester, dan siapa pun yang bekerja dengan pengembangan web dan API. Memahami arti setiap kode HTTP membantu: debugging masalah website dan API, mengimplementasikan error handling yang tepat, mengoptimalkan SEO (301 redirect, 404 handling), mengkonfigurasi server, dan berkomunikasi efektif dengan tim backend. Referensi ini lengkap dan mudah diakses.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="ip-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">IP Calculator</a><a href="subnetting" class="btn btn-outline-secondary btn-sm rounded-pill">Subnetting</a><a href="cron-builder" class="btn btn-outline-secondary btn-sm rounded-pill">Cron Builder</a><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var statuses=[
+  {code:100,cat:'Informational',label:'Continue',desc:'Server menerima header request, client bisa lanjut kirim body.'},
+  {code:101,cat:'Informational',label:'Switching Protocols',desc:'Server setuju switch protocol sesuai request client.'},
+  {code:200,cat:'Success',label:'OK',desc:'Request berhasil. Response tergantung method yang digunakan.'},
+  {code:201,cat:'Success',label:'Created',desc:'Request berhasil dan resource baru telah dibuat.'},
+  {code:204,cat:'Success',label:'No Content',desc:'Request berhasil tapi tidak ada konten yang dikembalikan.'},
+  {code:301,cat:'Redirection',label:'Moved Permanently',desc:'Resource sudah pindah permanen ke URL baru.'},
+  {code:302,cat:'Redirection',label:'Found',desc:'Resource sementara ada di URL berbeda.'},
+  {code:304,cat:'Redirection',label:'Not Modified',desc:'Resource tidak berubah sejak akses terakhir (cache).'},
+  {code:400,cat:'Client Error',label:'Bad Request',desc:'Server tidak bisa memproses request karena syntax salah.'},
+  {code:401,cat:'Client Error',label:'Unauthorized',desc:'Memerlukan autentikasi.'},
+  {code:403,cat:'Client Error',label:'Forbidden',desc:'Server menolak request, tidak ada akses.'},
+  {code:404,cat:'Client Error',label:'Not Found',desc:'Resource tidak ditemukan di server.'},
+  {code:405,cat:'Client Error',label:'Method Not Allowed',desc:'Method HTTP tidak didukung untuk resource ini.'},
+  {code:408,cat:'Client Error',label:'Request Timeout',desc:'Server timeout menunggu request dari client.'},
+  {code:409,cat:'Client Error',label:'Conflict',desc:'Request bentrok dengan kondisi server saat ini.'},
+  {code:422,cat:'Client Error',label:'Unprocessable Entity',desc:'Request tidak bisa diproses karena semantic error.'},
+  {code:429,cat:'Client Error',label:'Too Many Requests',desc:'Client melebihi batas request (rate limiting).'},
+  {code:500,cat:'Server Error',label:'Internal Server Error',desc:'Server mengalami error internal.'},
+  {code:502,cat:'Server Error',label:'Bad Gateway',desc:'Gateway menerima response invalid dari server upstream.'},
+  {code:503,cat:'Server Error',label:'Service Unavailable',desc:'Server sementara tidak bisa melayani (overload/maintenance).'},
+  {code:504,cat:'Server Error',label:'Gateway Timeout',desc:'Gateway tidak menerima response dari server upstream.'},
+];
+
+var catColors={Informational:'#3b82f6',Success:'#22c55e',Redirection:'#f59e0b','Client Error':'#ef4444','Server Error':'#dc2626'};
+
+function render(q){
+  q=(q||'').toLowerCase();
+  var list=document.getElementById('statusList');list.innerHTML='';
+  statuses.forEach(function(s){
+    if(q&&!String(s.code).includes(q)&&!s.label.toLowerCase().includes(q)&&!s.cat.toLowerCase().includes(q)&&!s.desc.toLowerCase().includes(q))return;
+    var col=document.createElement('div');col.className='col-md-4 col-sm-6';
+    col.innerHTML='<div class="card shadow-sm border-0 h-100 p-3">'+
+      '<div class="d-flex align-items-center gap-2 mb-1"><span class="badge" style="background:'+(catColors[s.cat]||'#6b7280')+'">'+s.code+'</span><span class="fw-semibold small">'+s.label+'</span></div>'+
+      '<div class="small text-muted">'+s.desc+'</div>'+
+      '<div class="mt-1"><span class="badge bg-light text-dark" style="font-size:0.6rem;">'+s.cat+'</span></div></div>';
+    list.appendChild(col);
+  });
+}
+render();
+document.getElementById('statusSearch').addEventListener('input',function(){render(this.value)});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

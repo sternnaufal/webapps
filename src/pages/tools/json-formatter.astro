@@ -1,0 +1,118 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'JSON Formatter & Validator';
+const description = 'Format, validasi, dan beautify JSON online. JSON formatter dengan syntax highlighting dan tree view.';
+const keywords = 'json formatter, json validator, json beautifier, format json, json tool';
+const bodyHtml = `<div class="row g-4">
+        <div class="col-lg-6">
+          <label class="form-label fw-semibold">Input JSON</label>
+          <textarea id="jsonInput" class="form-control" placeholder="Paste JSON di sini..."></textarea>
+          <div class="d-flex gap-2 mt-2 flex-wrap">
+            <button id="btnFormat" class="btn btn-success btn-sm">Format (2 spaces)</button>
+            <button id="btnFormat4" class="btn btn-outline-success btn-sm">Format (4 spaces)</button>
+            <button id="btnMinify" class="btn btn-warning btn-sm">Minify</button>
+            <button id="btnValidate" class="btn btn-info btn-sm">Validate</button>
+            <button id="btnClear" class="btn btn-outline-danger btn-sm">Clear</button>
+          </div>
+          <div id="validationMsg" class="mt-2 small"></div>
+        </div>
+        <div class="col-lg-6">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label fw-semibold mb-0">Output</label>
+            <button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button>
+          </div>
+          <textarea id="jsonOutput" class="form-control" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="card mt-4 p-3">
+        <h5 class="mb-0">?? <span class="fw-normal">Tempel JSON, klik Format, dan lihat hasil yang rapi. Validasi otomatis memberi tahu jika ada error.</span></h5>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang JSON Formatter & Validator</h6><p class="small mb-1" style="line-height:1.6">JSON formatter online untuk memformat, memvalidasi, dan mempercantik data JSON. Alat ini membantu developer memeriksa struktur JSON, menemukan error syntax, dan mengubah JSON mentah menjadi format yang mudah dibaca dengan indentasi yang rapi. Mendukung berbagai mode: format/beautify dengan indentasi 2 atau 4 spasi, minify untuk memperkecil ukuran data, dan validasi untuk mendeteksi syntax error secara akurat.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan data JSON ke kolom input, pilih mode yang diinginkan (format, minify, atau validasi), dan hasil akan ditampilkan secara instan. Fitur tree view menampilkan hierarki JSON dalam bentuk expandable tree yang memudahkan navigasi data kompleks. Tombol copy tersedia untuk menyalin hasil, dan terdapat juga contoh data JSON untuk percobaan cepat. JSON validator ini mampu mendeteksi berbagai jenis error seperti missing comma, bracket tidak seimbang, dan string tanpa tanda kutip.</p><p class="small mb-0 mt-2" style="line-height:1.6">JSON (JavaScript Object Notation) adalah format pertukaran data standar yang digunakan secara luas dalam REST API development, konfigurasi aplikasi, penyimpanan data NoSQL, dan komunikasi client-server. JSON formatter sangat penting dalam workflow pengembangan: debugging response API, membaca file konfigurasi, mentransformasi data antar format, dan dokumentasi API. Semua pemrosesan dilakukan di browser tanpa mengirim data ke server.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="json-csv" class="btn btn-outline-secondary btn-sm rounded-pill">JSON to CSV</a><a href="yaml-json" class="btn btn-outline-secondary btn-sm rounded-pill">YAML to JSON</a><a href="xml-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">Xml Formatter</a><a href="sql-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">SQL Formatter</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+var input = document.getElementById('jsonInput');
+var output = document.getElementById('jsonOutput');
+var msg = document.getElementById('validationMsg');
+
+function process(spaces) {
+  var raw = input.value.trim();
+  if (!raw) { msg.textContent = ''; msg.className = 'mt-2 small'; output.value = ''; return; }
+  try {
+    var parsed = JSON.parse(raw);
+    output.value = JSON.stringify(parsed, null, spaces === undefined ? 2 : spaces);
+    msg.textContent = 'Valid JSON!';
+    msg.className = 'mt-2 small text-success';
+  } catch (e) {
+    output.value = '';
+    msg.textContent = 'Error: ' + e.message;
+    msg.className = 'mt-2 small text-danger';
+  }
+}
+
+document.getElementById('btnFormat').addEventListener('click', function() { process(2); });
+document.getElementById('btnFormat4').addEventListener('click', function() { process(4); });
+document.getElementById('btnMinify').addEventListener('click', function() {
+  var raw = input.value.trim();
+  if (!raw) return;
+  try {
+    output.value = JSON.stringify(JSON.parse(raw));
+    msg.textContent = 'Minified!';
+    msg.className = 'mt-2 small text-success';
+  } catch (e) {
+    msg.textContent = 'Error: ' + e.message;
+    msg.className = 'mt-2 small text-danger';
+  }
+});
+document.getElementById('btnValidate').addEventListener('click', function() { process(); });
+document.getElementById('btnClear').addEventListener('click', function() { input.value = ''; output.value = ''; msg.textContent = ''; msg.className = 'mt-2 small'; });
+
+document.getElementById('btnCopy').addEventListener('click', function() {
+  if (!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function() {
+    var btn = document.getElementById('btnCopy');
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+  });
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

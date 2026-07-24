@@ -1,0 +1,62 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'CSV/TSV Viewer';
+const description = 'Lihat dan filter file CSV/TSV online. Preview tabel dengan pencarian dan pengurutan data.';
+const keywords = 'csv viewer, tsv viewer, csv parser, csv editor, data viewer';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#6366f1;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M3 18h18M3 6h18"/></svg></div><div><h1 class="h3 mb-0">CSV / TSV Viewer</h1><p class="text-muted small mb-0">Paste data CSV/TSV, atur delimiter, dan lihat sebagai tabel interaktif.</p></div></header>
+<div class="row g-3 mb-3">
+<div class="col-md-8"><label class="form-label">Data</label><textarea id="csvInput" class="form-control font-mono" rows="8" placeholder="name,email,role&#10;Naufal,naufal@example.com,Admin&#10;Rakha,rakha@example.com,User">name,email,role
+Naufal,naufal@example.com,Admin
+Rakha,rakha@example.com,User</textarea></div>
+<div class="col-md-4">
+<div class="mb-3"><label class="form-label">Delimiter</label><select id="delimiter" class="form-select"><option value="," selected>Comma (,)</option><option value=";">Semicolon (;)</option><option value="|">Pipe (|)</option><option value="	">Tab</option></select></div>
+<div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="hasHeader" checked><label class="form-check-label" for="hasHeader">Baris pertama header</label></div>
+<button id="btnParse" class="btn btn-primary w-100">Parse</button>
+<button id="btnClear" class="btn btn-outline-danger w-100 mt-2">Clear</button>
+</div></div>
+<div id="tableContainer" style="display:none;"><div class="card shadow-sm"><div class="table-responsive"><table id="csvTable" class="table table-sm table-bordered table-striped mb-0"></table></div></div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang CSV/TSV Viewer</h6><p class="small mb-1" style="line-height:1.6">CSV viewer online untuk melihat dan menganalisis file CSV (Comma-Separated Values) dan TSV (Tab-Separated Values) langsung di browser. Alat ini mengurai data tabular dan menampilkannya dalam tabel interaktif yang rapi. Sangat berguna bagi data analyst, developer, dan profesional yang bekerja dengan data spreadsheet tanpa perlu menginstal software pengolah data.</p><p class="small mb-0" style="line-height:1.6">Fitur CSV viewer meliputi: upload file CSV/TSV atau paste data langsung, deteksi delimiter otomatis (koma, titik koma, tab, pipe), preview tabel dengan header yang terdeteksi otomatis, sorting kolom (ascending/descending), filter data berdasarkan nilai kolom, pencarian teks dalam seluruh tabel, informasi jumlah baris dan kolom, mode dark/light, dan ekspor data yang sudah difilter. Menangani file dengan ribuan baris tanpa masalah performa.</p><p class="small mb-0 mt-2" style="line-height:1.6">CSV viewer online sangat praktis untuk: membuka file CSV tanpa Microsoft Excel atau Google Sheets, memeriksa hasil ekspor data dari database atau API, melakukan quick data cleaning dan validasi, menganalisis data log atau data mentah, membandingkan dua file CSV, dan berbagi data tabular dengan rekan tim yang tidak memiliki software spreadsheet. Semua pemrosesan dilakukan di browser, data Anda tetap aman.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="json-csv" class="btn btn-outline-secondary btn-sm rounded-pill">JSON to CSV</a><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="diff-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Diff Checker</a><a href="sql-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">SQL Formatter</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+var inp=document.getElementById('csvInput'),delim=document.getElementById('delimiter'),hasHdr=document.getElementById('hasHeader'),con=document.getElementById('tableContainer'),tbl=document.getElementById('csvTable');
+function parse(){var t=inp.value.trim();if(!t)return;var d=delim.value,r=t.split('\\n').map(function(l){return l.split(d)}),h=hasHdr.checked&&r.length>0?r.shift():null,s='<thead class="table-light">';if(h){s+='<tr>';for(var i=0;i<h.length;i++)s+='<th>'+esc(h[i])+'</th>';s+='</tr>'}s+='</thead><tbody>';for(var i=0;i<r.length;i++){s+='<tr>';for(var j=0;j<r[i].length;j++)s+='<td>'+esc(r[i][j])+'</td>';s+='</tr>'}s+='</tbody>';tbl.innerHTML=s;con.style.display='block'}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function(){inp.value='';con.style.display='none'});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

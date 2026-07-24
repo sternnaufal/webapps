@@ -1,0 +1,131 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Base64 Encode / Decode';
+const description = 'Encode dan decode Base64 online gratis. Konversi teks ke Base64 dan sebaliknya dengan cepat.';
+const keywords = 'base64, encode, decode, base64 encoder, base64 decoder';
+const bodyHtml = `<!-- Navbar khusus mobile -->
+      
+
+      
+
+      <!-- Form -->
+      <div class="row g-3 mb-4">
+        <div class="col-12">
+          <label for="text" class="form-label">Masukkan Teks</label>
+          <textarea id="text" class="form-control" rows="4" placeholder="Teks untuk encode atau Base64 untuk decode">Hello World! Selamat datang di WebApps Naufalrakha.</textarea>
+        </div>
+        <div class="col-md-6 d-grid">
+          <button type="button" id="encodeBtn" class="btn btn-success">Encode</button>
+        </div>
+        <div class="col-md-6 d-grid">
+          <button type="button" id="decodeBtn" class="btn btn-warning">Decode</button>
+        </div>
+      </div>
+
+      <!-- Hasil -->
+      <div id="results" style="display: none;">
+        <div class="card shadow-sm p-3">
+          <h5 class="mb-3">Hasil</h5>
+          <div id="resultContent"></div>
+          <div class="mt-3">
+            <button type="button" id="copyBtn" class="btn btn-sm btn-outline-secondary">Copy</button>
+          </div>
+        </div>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Base64 Encode / Decode</h6><p class="small mb-1" style="line-height:1.6">Base64 encoder dan decoder online untuk mengkonversi teks biasa menjadi encoding Base64 dan sebaliknya. Base64 adalah skema encoding yang mengubah data biner menjadi format teks ASCII yang aman untuk ditransmisikan melalui media yang hanya mendukung teks, seperti email (MIME), URL, dan data JSON. Alat ini sangat penting bagi web developer, backend engineer, dan siapa pun yang bekerja dengan transmisi data antar sistem.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaannya intuitif: tempelkan teks yang ingin di-encode atau di-decode ke dalam kolom input, lalu pilih operasi yang diinginkan. Hasil encoding atau decoding akan ditampilkan secara instan dan bisa langsung disalin ke clipboard. Base64 converter ini mendukung teks dengan berbagai karakter termasuk Unicode, simbol, dan spasi. Cocok untuk mengirim data biner melalui API, menyematkan gambar sebagai data URI di HTML/CSS, atau menyandikan kredensial untuk HTTP Basic Authentication.</p><p class="small mb-0 mt-2" style="line-height:1.6">Penggunaan umum Base64 encoding meliputi: melampirkan file dalam email (MIME), menyematkan gambar kecil langsung di kode HTML atau CSS (data:image/png;base64,...), menyandikan token autentikasi, merepresentasikan data kriptografi (sertifikat, kunci publik dalam format PEM), dan menyimpan data biner di database yang hanya mendukung teks. Semua proses encoding dan decoding dilakukan sepenuhnya di browser Anda tanpa mengirim data ke server.</p></div>\`n`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a><a href="hash-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Hash Generator</a><a href="image-to-base64" class="btn btn-outline-secondary btn-sm rounded-pill">Image to Base64</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+let currentResult = '';
+
+function encode() {
+  const input = document.getElementById('text').value;
+  if (!input.trim()) {
+    alert('Masukkan teks terlebih dahulu');
+    return;
+  }
+  try {
+    currentResult = btoa(unescape(encodeURIComponent(input)));
+    showResult(\`<p><strong>Encoded:</strong></p><pre class='bg-light p-3 border rounded'>\${escapeHtml(currentResult)}</pre>\`);
+  } catch (e) {
+    alert('Gagal encode: ' + e.message);
+  }
+}
+
+function decode() {
+  const input = document.getElementById('text').value;
+  if (!input.trim()) {
+    alert('Masukkan Base64 terlebih dahulu');
+    return;
+  }
+  try {
+    currentResult = decodeURIComponent(escape(atob(input)));
+    showResult(\`<p><strong>Decoded:</strong></p><pre class='bg-light p-3 border rounded'>\${escapeHtml(currentResult)}</pre>\`);
+  } catch (e) {
+    alert('Input bukan Base64 yang valid!');
+  }
+}
+
+function showResult(html) {
+  document.getElementById('resultContent').innerHTML = html;
+  document.getElementById('results').style.display = 'block';
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(currentResult).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const oldText = btn.textContent;
+    btn.textContent = '? Copied!';
+    setTimeout(() => { btn.textContent = oldText; }, 2000);
+  }).catch(() => {
+    alert('Gagal menyalin');
+  });
+}
+
+document.getElementById('encodeBtn').addEventListener('click', encode);
+document.getElementById('decodeBtn').addEventListener('click', decode);
+document.getElementById('copyBtn').addEventListener('click', copyResult);
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

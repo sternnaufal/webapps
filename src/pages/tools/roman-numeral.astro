@@ -1,0 +1,166 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Roman Numeral Converter';
+const description = 'Konverter angka Romawi online. Ubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.';
+const keywords = 'roman numeral converter, angka romawi, romawi converter, roman to number, number to roman';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">IV</div><div><h1 class="h3 mb-0">Roman Numeral Converter</h1><p class="text-muted small mb-0">Konversi angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<div class="btn-group mb-3 w-100" role="group"><button id="modeToRoman" class="btn btn-primary w-50">Desimal ? Romawi</button><button id="modeToDecimal" class="btn btn-outline-primary w-50">Romawi ? Desimal</button></div>
+<div id="toRomanPane"><label class="form-label fw-semibold">Angka Desimal</label><input type="number" id="decimalInput" class="form-control font-mono" value="2024" min="1" max="3999">
+<button id="btnToRoman" class="btn btn-primary w-100 mt-2">Konversi ke Romawi</button>
+<div id="romanResult" class="mt-3 p-3 bg-light rounded text-center"><div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">MMXXIV</div></div></div>
+<div id="toDecimalPane" style="display:none"><label class="form-label fw-semibold">Angka Romawi</label><input type="text" id="romanInput" class="form-control font-mono" value="MMXXIV" maxlength="20">
+<button id="btnToDecimal" class="btn btn-primary w-100 mt-2">Konversi ke Desimal</button>
+<div id="decimalResult" class="mt-3 p-3 bg-light rounded text-center"><div class="display-5 fw-bold" style="color:#6366f1">2024</div></div></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Tabel Referensi Cepat</h6>
+<div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Romawi</th><th>Desimal</th><th>Romawi</th><th>Desimal</th></tr></thead><tbody>
+<tr><td>I</td><td>1</td><td>XL</td><td>40</td></tr>
+<tr><td>IV</td><td>4</td><td>L</td><td>50</td></tr>
+<tr><td>V</td><td>5</td><td>XC</td><td>90</td></tr>
+<tr><td>IX</td><td>9</td><td>C</td><td>100</td></tr>
+<tr><td>X</td><td>10</td><td>CD</td><td>400</td></tr>
+<tr><td>XIV</td><td>14</td><td>D</td><td>500</td></tr>
+<tr><td>XIX</td><td>19</td><td>CM</td><td>900</td></tr>
+<tr><td>XX</td><td>20</td><td>M</td><td>1000</td></tr>
+</tbody></table></div></div>
+</div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Konversi Cepat</h6>
+<div class="row g-2">
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="1">I</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="4">IV</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="5">V</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="9">IX</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="10">X</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="14">XIV</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="19">XIX</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="20">XX</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="40">XL</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="50">L</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="90">XC</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="100">C</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="400">CD</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="500">D</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="900">CM</button>
+<button class="btn btn-outline-secondary btn-sm col-3" data-val="1000">M</button>
+</div>
+</div>
+<div class="card shadow-sm border-0 p-3 mt-3">
+<h6 class="mb-3">Tahun Romawi Populer</h6>
+<div id="yearList" class="small"></div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Roman numeral converter online untuk mengkonversi angka antara format desimal (Arab) dan Romawi. Angka Romawi menggunakan kombinasi huruf I, V, X, L, C, D, dan M untuk merepresentasikan nilai numerik. Alat ini mendukung konversi dua arah: dari angka desimal ke Romawi dan dari Romawi ke desimal, dengan rentang nilai yang lengkap.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input desimal ke Romawi dengan hasil instan, input Romawi ke desimal dengan validasi aturan penulisan Romawi, dukungan angka Romawi klasik hingga ribuan (M, MM, MMM, dst.), informasi tentang aturan penulisan angka Romawi (subtractive notation: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Roman numeral converter berguna untuk: memahami sistem penomoran kuno yang masih digunakan hingga kini, membaca tahun pada film, acara TV, dan bangunan bersejarah, penomoran bab buku, halaman awal (preamble), dan daftar isi, penomoran raja dan paus (Henry VIII, Paus Yohanes Paulus II), dan pembelajaran sejarah matematika. Konverter ini akurat dan mudah digunakan.</p></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Roman numeral converter online untuk mengkonversi angka antara format desimal (Arab) dan Romawi. Angka Romawi menggunakan kombinasi huruf I, V, X, L, C, D, dan M untuk merepresentasikan nilai numerik. Alat ini mendukung konversi dua arah: dari angka desimal ke Romawi dan dari Romawi ke desimal, dengan rentang nilai yang lengkap.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input desimal ke Romawi dengan hasil instan, input Romawi ke desimal dengan validasi aturan penulisan Romawi, dukungan angka Romawi klasik hingga ribuan (M, MM, MMM, dst.), informasi tentang aturan penulisan angka Romawi (subtractive notation: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Roman numeral converter berguna untuk: memahami sistem penomoran kuno yang masih digunakan hingga kini, membaca tahun pada film, acara TV, dan bangunan bersejarah, penomoran bab buku, halaman awal (preamble), dan daftar isi, penomoran raja dan paus (Henry VIII, Paus Yohanes Paulus II), dan pembelajaran sejarah matematika. Konverter ini akurat dan mudah digunakan.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="konverter-bilangan" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="age-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Age Calculator</a><a href="date-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Date Calculator</a><a href="password-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Password Generator</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+function toRoman(n){
+  if(n<1||n>3999)return '';
+  var vals=[1000,900,500,400,100,90,50,40,10,9,5,4,1],nums=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'],r='';
+  for(var i=0;i<vals.length;i++){while(n>=vals[i]){r+=nums[i];n-=vals[i]}}
+  return r;
+}
+function fromRoman(r){
+  var m={I:1,V:5,X:10,L:50,C:100,D:500,M:1000},total=0;
+  for(var i=0;i<r.length;i++){
+    var cur=m[r[i]]||0,next=m[r[i+1]]||0;
+    if(cur<next){total-=cur}else{total+=cur}
+  }
+  return total;
+}
+
+var mode='roman';
+document.getElementById('modeToRoman').addEventListener('click',function(){
+  mode='roman';this.className='btn btn-primary w-50';
+  document.getElementById('modeToDecimal').className='btn btn-outline-primary w-50';
+  document.getElementById('toRomanPane').style.display='block';
+  document.getElementById('toDecimalPane').style.display='none';
+});
+document.getElementById('modeToDecimal').addEventListener('click',function(){
+  mode='decimal';this.className='btn btn-primary w-50';
+  document.getElementById('modeToRoman').className='btn btn-outline-primary w-50';
+  document.getElementById('toRomanPane').style.display='none';
+  document.getElementById('toDecimalPane').style.display='block';
+});
+
+document.getElementById('btnToRoman').addEventListener('click',function(){
+  var v=parseInt(document.getElementById('decimalInput').value)||0;
+  document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'<span class="text-danger">Invalid</span>')+'</div>';
+});
+document.getElementById('btnToDecimal').addEventListener('click',function(){
+  var v=document.getElementById('romanInput').value.toUpperCase().replace(/[^IVXLCDM]/g,'');
+  document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
+});
+document.getElementById('decimalInput').addEventListener('input',function(){
+  var v=parseInt(this.value)||0;
+  document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'')+'</div>';
+});
+document.getElementById('romanInput').addEventListener('input',function(){
+  var v=this.value.toUpperCase().replace(/[^IVXLCDM]/g,'');
+  document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
+});
+
+document.querySelectorAll('[data-val]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=parseInt(this.dataset.val),r=toRoman(v);
+    if(mode==='roman'){document.getElementById('decimalInput').value=v;document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+r+'</div>'}
+    else{document.getElementById('romanInput').value=r;document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+v+'</div>'}
+  });
+});
+
+var yearsHtml='';
+[1990,2000,2010,2020,2024,2025,2026,2027,2045,2050].forEach(function(y){
+  yearsHtml+='<span class="badge bg-light text-dark me-1 mb-1" style="cursor:pointer" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span> ';
+});
+document.getElementById('yearList').innerHTML=yearsHtml;
+document.querySelectorAll('[data-yr]').forEach(function(el){
+  el.addEventListener('click',function(){
+    var y=parseInt(this.dataset.yr);
+    document.getElementById('decimalInput').value=y;
+    document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+toRoman(y)+'</div>';
+  });
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

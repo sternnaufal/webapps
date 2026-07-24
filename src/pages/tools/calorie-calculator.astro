@@ -1,0 +1,95 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Calorie Calculator (BMR/TDEE)';
+const description = 'Kalkulator kalori online. Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk diet dan fitness.';
+const keywords = 'calorie calculator, bmr calculator, tdee calculator, kalkulator kalori, bmr, tdee, diet, fitness';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">Calorie Calculator</h1><p class="text-muted small mb-0">Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk kebutuhan kalori harian Anda.</p></div></header>
+<div class="row g-4"><div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold">Jenis Kelamin</label><div><div class="form-check form-check-inline"><input type="radio" name="gender" id="genMale" class="form-check-input" checked><label class="form-check-label" for="genMale">Laki-laki</label></div><div class="form-check form-check-inline"><input type="radio" name="gender" id="genFemale" class="form-check-input"><label class="form-check-label" for="genFemale">Perempuan</label></div></div></div>
+<div class="row g-2 mb-3"><div class="col-4"><label class="form-label small">Usia (thn)</label><input type="number" id="ageInput" class="form-control" value="25" min="1" max="120"></div>
+<div class="col-4"><label class="form-label small">Tinggi (cm)</label><input type="number" id="heightInput" class="form-control" value="170" min="50" max="300"></div>
+<div class="col-4"><label class="form-label small">Berat (kg)</label><input type="number" id="weightInput" class="form-control" value="65" min="10" max="500"></div></div>
+<div class="mb-3"><label class="form-label fw-semibold">Level Aktivitas</label>
+<select id="activitySelect" class="form-select">
+<option value="1.2">Sedentary (jarang olahraga)</option>
+<option value="1.375" selected>Light (1-3 hari/minggu)</option>
+<option value="1.55">Moderate (3-5 hari/minggu)</option>
+<option value="1.725">Active (6-7 hari/minggu)</option>
+<option value="1.9">Very Active (atlet/fisik berat)</option>
+</select></div>
+<button id="btnCalc" class="btn btn-primary w-100">Hitung Kebutuhan Kalori</button>
+</div></div>
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3 mb-3">
+<h6 class="mb-3">Hasil Perhitungan</h6>
+<div class="row g-3"><div class="col-6"><div class="p-3 rounded text-center" style="background:#eef2ff"><small class="text-muted">BMR</small><div class="h3 mb-0 fw-bold" id="bmrResult" style="color:#6366f1">0</div><small>kkal/hari</small></div></div>
+<div class="col-6"><div class="p-3 rounded text-center" style="background:#f0fdf4"><small class="text-muted">TDEE</small><div class="h3 mb-0 fw-bold" id="tdeeResult" style="color:#16a34a">0</div><small>kkal/hari</small></div></div></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Rekomendasi Kalori Harian</h6>
+<div id="recommendations" class="small"></div></div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Calorie Calculator (BMR/TDEE)</h6><p class="small mb-1" style="line-height:1.6">Calorie calculator online untuk menghitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure). BMR adalah jumlah kalori minimum yang dibutuhkan tubuh untuk menjalankan fungsi vital saat istirahat (bernafas, detak jantung, suhu tubuh). TDEE adalah total kalori yang dibakar per hari termasuk aktivitas fisik. Alat ini membantu Anda merencanakan asupan kalori untuk menurunkan, menambah, atau mempertahankan berat badan.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: masukkan jenis kelamin, usia, tinggi badan (cm), berat badan (kg), dan tingkat aktivitas fisik (dari tidak aktif hingga sangat aktif). Kalkulator kalori akan menghitung BMR menggunakan formula Harris-Benedict yang telah direvisi, lalu menghitung TDEE berdasarkan faktor aktivitas. Hasil menampilkan kebutuhan kalori harian untuk mempertahankan berat badan, serta rekomendasi kalori untuk menurunkan atau menambah berat badan secara bertahap.</p><p class="small mb-0 mt-2" style="line-height:1.6">Calorie calculator sangat membantu dalam perjalanan kesehatan dan kebugaran: menentukan target kalori untuk diet penurunan berat badan yang sehat (defisit 300-500 kalori/hari), merencanakan asupan untuk bulking/membangun otot (surplus kalori), memahami komposisi tubuh dan metabolisme basal, merencanakan program olahraga berdasarkan level aktivitas, dan mencapai tujuan berat badan ideal secara bertahap dan berkelanjutan. Kalkulator ini akurat dan mudah digunakan.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="bmi-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">BMI Calculator</a><a href="savings-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Savings Calculator</a><a href="percentage-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Percentage Calculator</a><a href="sleep-cycle" class="btn btn-outline-secondary btn-sm rounded-pill">Sleep Cycle</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var age=document.getElementById('ageInput'),height=document.getElementById('heightInput'),weight=document.getElementById('weightInput'),activity=document.getElementById('activitySelect'),bmrEl=document.getElementById('bmrResult'),tdeeEl=document.getElementById('tdeeResult'),recEl=document.getElementById('recommendations');
+function calc(){
+  var a=parseInt(age.value)||0,h=parseFloat(height.value)||0,w=parseFloat(weight.value)||0,act=parseFloat(activity.value);
+  var isMale=document.getElementById('genMale').checked;
+  if(!a||!h||!w){bmrEl.textContent='0';tdeeEl.textContent='0';recEl.innerHTML='';return}
+  var bmr=isMale?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
+  var tdee=bmr*act;
+  bmrEl.textContent=Math.round(bmr);tdeeEl.textContent=Math.round(tdee);
+  var loss05=Math.round(tdee-500),loss1=Math.round(tdee-1000),gain05=Math.round(tdee+500),gain1=Math.round(tdee+1000);
+  recEl.innerHTML='<table class="table table-sm small mb-0">'+
+    '<tr><td>Maintenance (jaga berat)</td><td class="fw-bold">'+Math.round(tdee)+' kkal/hari</td></tr>'+
+    '<tr><td>Turun berat (0.5 kg/minggu)</td><td class="fw-bold text-success">'+loss05+' kkal/hari</td></tr>'+
+    '<tr><td>Turun berat (1 kg/minggu)</td><td class="fw-bold text-success">'+Math.max(loss1,1200)+' kkal/hari</td></tr>'+
+    '<tr><td>Naik berat (0.5 kg/minggu)</td><td class="fw-bold text-danger">'+gain05+' kkal/hari</td></tr>'+
+    '<tr><td>Naik berat (1 kg/minggu)</td><td class="fw-bold text-danger">'+gain1+' kkal/hari</td></tr></table>';
+}
+document.getElementById('btnCalc').addEventListener('click',calc);
+[age,height,weight,activity].forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc)});
+document.querySelectorAll('input[name=gender]').forEach(function(el){el.addEventListener('change',calc)});
+calc();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

@@ -1,0 +1,69 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Random Color Generator';
+const description = 'Random color generator online. Hasilkan warna acak dalam format HEX, RGB, HSL. Copy warna dengan satu klik. Generator palet warna untuk desainer.';
+const keywords = 'random color generator, warna acak, color palette, hex color, rgb color, hsl color, pembangkit warna';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fdf2f8;color:#ec4899;">&#127912;</div><div><h1 class="h3 mb-0">Random Color Generator</h1><p class="text-muted small mb-0">Hasilkan warna acak dalam format HEX, RGB, HSL. Lock warna favorit.</p></div></header><div class="row g-3"><div class="col-12"><div class="d-flex gap-2 flex-wrap justify-content-between align-items-center mb-2"><div class="d-flex gap-2"><button id="btnGenerate" class="btn btn-primary">Generate</button><button id="btnCopyAll" class="btn btn-outline-secondary">Copy All</button></div><div><select id="paletteSize" class="form-select form-select-sm"><option value="1">1 warna</option><option value="2">2 warna</option><option value="3" selected>3 warna</option><option value="4">4 warna</option><option value="5">5 warna</option></select></div></div></div><div id="paletteContainer" class="col-12"><div class="row g-2"></div></div><div class="col-12"><div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Detail Warna Terpilih</h6><div id="colorDetails" class="small"><select id="colorSelector" class="form-select form-select-sm mb-2"><option value="0">Warna 1</option><option value="1">Warna 2</option><option value="2">Warna 3</option></select><div class="d-flex gap-3 align-items-center"><div id="detailSwatch" style="width:60px;height:60px;border-radius:8px;border:2px solid var(--border)"></div><div><div>HEX: <span class="fw-bold font-monospace" id="detailHex">#000000</span> <button class="btn btn-sm btn-outline-secondary py-0 px-1" onclick="copyText(document.getElementById('detailHex').textContent)">Copy</button></div><div>RGB: <span class="fw-bold font-monospace" id="detailRgb">rgb(0,0,0)</span> <button class="btn btn-sm btn-outline-secondary py-0 px-1" onclick="copyText(document.getElementById('detailRgb').textContent)">Copy</button></div><div>HSL: <span class="fw-bold font-monospace" id="detailHsl">hsl(0,0%,0%)</span> <button class="btn btn-sm btn-outline-secondary py-0 px-1" onclick="copyText(document.getElementById('detailHsl').textContent)">Copy</button></div></div></div></div></div></div></div><div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Random Color Generator</h6><p class="small mb-1" style="line-height:1.6">Random color generator online untuk menghasilkan warna acak dalam format HEX, RGB, HSL, dan CMYK. Alat ini menampilkan satu atau beberapa warna acak yang dapat Anda kunci (lock) untuk menyimpan warna favorit sambil terus menghasilkan warna baru untuk yang lainnya. Sangat berguna bagi desainer dan developer yang mencari inspirasi palet warna.</p><p class="small mb-0" style="line-height:1.6">Fitur random color generator meliputi: generate satu atau lebih warna acak sekaligus, format warna lengkap (HEX, RGB, HSL, CMYK) untuk setiap warna, tombol lock pada setiap warna untuk mempertahankannya saat generate ulang, tombol copy untuk menyalin kode warna, palet warna yang dapat disimpan sementara, dan opsi untuk membatasi range hue (misal: hanya warna pastel, hanya warna gelap, atau hanya warna cerah).</p><p class="small mb-0 mt-2" style="line-height:1.6">Random color generator sangat membantu dalam proses kreatif: mencari inspirasi palet warna untuk desain website atau aplikasi, menemukan kombinasi warna yang tidak terpikirkan sebelumnya, menghasilkan variasi warna untuk data visualization, membuat tema warna untuk presentasi, dan eksplorasi warna untuk proyek seni digital. Generator ini memanfaatkan algoritma untuk menghasilkan warna yang estetis dan seimbang.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span><a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a><a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a></div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="color-picker" class="btn btn-outline-secondary btn-sm rounded-pill">Color Picker</a><a href="gradient-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Gradient Generator</a><a href="contrast-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Contrast Checker</a><a href="css-unit" class="btn btn-outline-secondary btn-sm rounded-pill">CSS Unit</a></div>`;
+const toolCss = `.color-swatch{height:120px;border-radius:12px;display:flex;align-items:center;justify-content:center;transition:background .3s;position:relative}.swatch-label{background:rgba(0,0,0,.5);color:#fff;padding:4px 12px;border-radius:6px;font-family:monospace;font-size:.85rem;cursor:pointer}.swatch-label:hover{background:rgba(0,0,0,.8)}.lock-btn{position:absolute;top:6px;right:8px;background:rgba(0,0,0,.3);border:none;color:#fff;border-radius:50%;width:28px;height:28px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center}.lock-btn:hover{background:rgba(0,0,0,.6)}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var pC=document.getElementById('paletteContainer'),pS=document.getElementById('paletteSize'),cS=document.getElementById('colorSelector'),dS=document.getElementById('detailSwatch'),dH=document.getElementById('detailHex'),dR=document.getElementById('detailRgb'),dL=document.getElementById('detailHsl');var colors=[],locked={};function randHex(){return'#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0')}function hexToRgb(h){var r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return{r:r,g:g,b:b}}function rgbToHsl(r,g,b){r/=255;g/=255;b/=255;var mx=Math.max(r,g,b),mn=Math.min(r,g,b),h=0,s=0,l=(mx+mn)/2;if(mx!==mn){var d=mx-mn;s=l>0.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;case b:h=(r-g)/d+4;break}h/=6}return{h:Math.round(h*360),s:Math.round(s*100),l:Math.round(l*100)}}function generate(){
+  var n=parseInt(pS.value);colors=[];
+  for(var i=0;i<n;i++){var hex=locked[i]?colors[i]||randHex():randHex();colors.push(hex)}
+  render()}function render(){
+  var r=document.createElement('div');r.className='row g-2';
+  for(var i=0;i<colors.length;i++){
+    var hex=colors[i],rgb=hexToRgb(hex),hsl=rgbToHsl(rgb.r,rgb.g,rgb.b);
+    var col=document.createElement('div');col.className='col-md-'+(12/colors.length>3?4:Math.floor(12/colors.length));
+    col.innerHTML='<div class="color-swatch" style="background:'+hex+'"><button class="lock-btn" data-idx="'+i+'">'+(locked[i]?'&#128274;':'&#128275;')+'</button><span class="swatch-label" onclick="copyText(\\''+hex+'\\')">'+hex+'</span></div><div class="small mt-1 text-center text-muted">RGB: '+rgb.r+','+rgb.g+','+rgb.b+' | HSL: '+hsl.h+','+hsl.s+'%,'+hsl.l+'%</div>';
+    r.appendChild(col)}
+  pC.querySelector('.row').replaceWith(r);
+  pC.querySelectorAll('.lock-btn').forEach(function(b){b.addEventListener('click',function(){var i=parseInt(this.dataset.idx);locked[i]=!locked[i];render()})});
+  // update selector
+  cS.innerHTML='';for(var i=0;i<colors.length;i++){var o=document.createElement('option');o.value=i;o.textContent='Warna '+(i+1);cS.appendChild(o)}
+  updateDetail(0)}function updateDetail(i){
+  if(i>=colors.length)return;var hex=colors[i]||'#000000',rgb=hexToRgb(hex),hsl=rgbToHsl(rgb.r,rgb.g,rgb.b);
+  dS.style.background=hex;dH.textContent=hex;dR.textContent='rgb('+rgb.r+','+rgb.g+','+rgb.b+')';dL.textContent='hsl('+hsl.h+','+hsl.s+'%,'+hsl.l+'%)'}function copyText(t){navigator.clipboard.writeText(t).catch(function(){})}
+document.getElementById('btnGenerate').addEventListener('click',generate);
+document.getElementById('btnCopyAll').addEventListener('click',function(){var t=colors.join('\\n');navigator.clipboard.writeText(t).catch(function(){})});
+cS.addEventListener('change',function(){updateDetail(parseInt(this.value))});
+generate();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

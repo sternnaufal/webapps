@@ -1,0 +1,43 @@
+---
+import tools from '../data/tools.json';
+
+const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 'index';
+const allTools = tools.categories.flatMap(c => c.tools);
+const sites = [
+  { name: 'Root', url: 'https://naufalrakha.my.id' },
+  { name: 'Digital', url: 'https://digital.naufalrakha.my.id' },
+  { name: 'Demo', url: 'https://demo.naufalrakha.my.id' },
+  { name: 'WebApps', url: 'https://webapps.naufalrakha.my.id' },
+];
+---
+
+<aside class="sidebar vh-100 p-2 d-flex flex-column text-white" style="overflow:auto;position:sticky;top:0;">
+  <div class="sidebar-header mb-2">
+    <a href="/" class="text-decoration-none text-white fw-bold" style="font-size:0.95rem;">WebApps</a>
+  </div>
+  <div class="sidebar-search-wrap mb-2">
+    <input type="text" class="sidebar-search form-control form-control-sm" placeholder="Cari tool..." style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#fff;font-size:.8rem;">
+  </div>
+  <nav class="nav flex-column sidebar-tools flex-grow-1" style="overflow:auto;">
+    {tools.categories.map((cat, i) => (
+      <div class="sidebar-cat mb-2">
+        <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href={`#cat${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'}>
+          <span>{cat.name}</span> <span class="cat-chevron">▼</span>
+        </a>
+        <div class="collapse {i === 0 ? 'show' : ''}" id={`cat${i}`}>
+          {cat.tools.map(t => (
+            <a class={`nav-link text-white ps-3 py-1 small ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`}>
+              {t.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </nav>
+  <div class="sidebar-footer border-top pt-2 mt-auto">
+    <div class="d-flex justify-content-between align-items-center">
+      <span style="color:rgba(255,255,255,0.4);font-size:0.65rem;">Tema Gelap</span>
+      <button class="dark-toggle btn btn-sm" style="line-height:1;font-size:0.85rem;padding:0 6px;color:rgba(255,255,255,0.6);background:transparent;border:none;">🌙</button>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,112 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Decision Maker';
+const description = 'Decision maker online. Acak pilihan, lempar koin, dadu, dan Magic 8 Ball untuk bantu keputusan.';
+const keywords = 'decision maker, random picker, coin flip, dice roller, magic 8 ball, acak pilihan';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.5 2L2 9.5 9.5 17 17 9.5z"/><path d="M9.5 17L17 9.5 22 14.5 14.5 22z"/></svg></div><div><h1 class="h3 mb-0">Decision Maker</h1><p class="text-muted small mb-0">Bantu ambil keputusan: acak pilihan, lempar koin, dadu, Magic 8 Ball, dan ya/tidak.</p></div></header>
+<div class="row g-4">
+<div class="col-md-6">
+<div class="card shadow-sm border-0 p-3 mb-3"><h6 class="mb-3">Random Picker</h6>
+<textarea id="pickerInput" class="form-control font-mono mb-2" rows="4" placeholder="Masukkan pilihan, satu per baris...">Nasi Goreng
+Mie Ayam
+Sate Ayam
+Bakso
+Pizza</textarea>
+<button id="btnPick" class="btn btn-primary w-100">Acak Pilihan!</button>
+<div id="pickResult" class="mt-3 text-center h4 fw-bold" style="color:var(--accent)"></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Ya / Tidak</h6>
+<div class="text-center"><div id="ynResult" class="display-4 fw-bold mb-3" style="color:#6366f1">?</div>
+<button id="btnYN" class="btn btn-primary btn-lg px-5">Jawab!</button></div></div>
+</div>
+<div class="col-md-6">
+<div class="row g-3 mb-3"><div class="col-6">
+<div class="card shadow-sm border-0 p-3 text-center"><h6 class="mb-2">Koin</h6>
+<div id="coinResult" class="display-4 mb-2">?</div>
+<button id="btnCoin" class="btn btn-outline-warning">Lempar!</button></div></div>
+<div class="col-6">
+<div class="card shadow-sm border-0 p-3 text-center"><h6 class="mb-2">Dadu</h6>
+<div id="diceResult" class="display-4 mb-2">?</div>
+<button id="btnDice" class="btn btn-outline-info">Lempar!</button></div></div></div>
+<div class="card shadow-sm border-0 p-3 text-center"><h6 class="mb-3">Magic 8 Ball</h6>
+<div class="eight-ball" id="eightBall"><div class="eight-ball-inner" id="eightText">8</div></div>
+<div id="eightMsg" class="small text-muted mt-2">Klik bola untuk bertanya</div>
+</div></div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Decision Maker</h6><p class="small mb-1" style="line-height:1.6">Decision maker online untuk membantu Anda mengambil keputusan secara acak. Alat ini menyediakan berbagai mode: acak pilihan (memilih satu dari daftar opsi yang Anda masukkan), lempar koin (heads/tails), dadu digital, dan Magic 8 Ball yang memberikan jawaban klasik. Sangat berguna saat Anda ragu atau bingung menentukan pilihan dalam situasi sehari-hari.</p><p class="small mb-0" style="line-height:1.6">Fitur decision maker meliputi: mode Pilihan Acak -- masukkan daftar pilihan (pisahkan dengan baris baru) dan alat akan memilih satu secara acak; mode Koin -- lempar koin virtual dengan animasi; mode Magic 8 Ball -- ajukan pertanyaan ya/tidak dan dapatkan jawaban acak dari 20 jawaban klasik (Yes, No, Ask again later, dll.); dan riwayat keputusan yang telah dibuat. Tampilan animasi yang menarik membuat penggunaan lebih menyenangkan.</p><p class="small mb-0 mt-2" style="line-height:1.6">Decision maker online berguna untuk: memutuskan tempat makan atau tujuan liburan, memilih film atau acara TV untuk ditonton, menentukan game yang akan dimainkan, memecah kebuntuan saat tidak bisa memutuskan hal kecil, ice breaking dalam acara kelompok, dan menambah elemen kejutan dalam pengambilan keputusan. Ingatlah untuk tetap menggunakan pertimbangan logis untuk keputusan penting dan serius.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="list-sorter" class="btn btn-outline-secondary btn-sm rounded-pill">List Sorter</a><a href="password-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Password Generator</a><a href="anagram-finder" class="btn btn-outline-secondary btn-sm rounded-pill">Anagram Finder</a><a href="lorem-ipsum" class="btn btn-outline-secondary btn-sm rounded-pill">Lorem Ipsum</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+document.getElementById('btnPick').addEventListener('click',function(){
+  var lines=document.getElementById('pickerInput').value.split('\\n').filter(function(l){return l.trim()});
+  if(!lines.length){document.getElementById('pickResult').textContent='Masukkan pilihan dulu!';return}
+  document.getElementById('pickResult').textContent=lines[Math.floor(Math.random()*lines.length)];
+});
+document.getElementById('btnYN').addEventListener('click',function(){
+  var answers=['Ya!','Tidak.','Mungkin','Coba lagi nanti','Pasti!','Jangan dulu','Terserah kamu','Iya sih','Kayaknya nggak deh','100% Ya!','No way!','Kenapa nggak?'];
+  var el=document.getElementById('ynResult');el.textContent=answers[Math.floor(Math.random()*answers.length)];
+  el.style.transform='scale(1.2)';setTimeout(function(){el.style.transform='scale(1)'},200);
+});
+var coinFaces=['?','?'];
+document.getElementById('btnCoin').addEventListener('click',function(){
+  document.getElementById('coinResult').textContent=coinFaces[Math.floor(Math.random()*2)];
+});
+var dice=[1,2,3,4,5,6];
+document.getElementById('btnDice').addEventListener('click',function(){
+  var el=document.getElementById('diceResult');el.textContent=dice[Math.floor(Math.random()*6)];
+  el.style.transform='rotate(360deg)';setTimeout(function(){el.style.transform='rotate(0)'},300);
+});
+var eightAnswers=['It is certain','It is decidedly so','Without a doubt','Yes definitely','You may rely on it','As I see it, yes','Most likely','Outlook good','Yes','Signs point to yes','Reply hazy try again','Ask again later','Better not tell you now','Cannot predict now','Concentrate and ask again','Don\\'t count on it','My reply is no','My sources say no','Outlook not so good','Very doubtful'];
+document.getElementById('eightBall').addEventListener('click',function(){
+  var el=document.getElementById('eightText'),msg=document.getElementById('eightMsg');
+  el.textContent='?';msg.textContent='...';
+  var ball=this;ball.classList.add('shake');
+  setTimeout(function(){
+    el.textContent=Math.floor(Math.random()*20+1);
+    ball.classList.remove('shake');
+  },300);
+  setTimeout(function(){
+    var answer=eightAnswers[Math.floor(Math.random()*eightAnswers.length)];
+    el.textContent='';msg.textContent=answer;
+    el.innerHTML='<span style="font-size:0.7rem;padding:4px">'+answer+'</span>';
+  },600);
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

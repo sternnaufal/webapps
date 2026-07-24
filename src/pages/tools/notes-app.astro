@@ -1,0 +1,45 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Notes App';
+const description = 'Notes app online untuk mencatat ide dan daftar tugas. Catatan disimpan otomatis di browser (localStorage).';
+const keywords = 'notes app, catatan online, sticky notes, todo notes, pencatat digital';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef9c3;color:#ca8a04;">&#128221;</div><div><h1 class="h3 mb-0">Notes App</h1><p class="text-muted small mb-0">Buat, edit, dan hapus catatan. Tersimpan otomatis di browser.</p></div></header><div class="row g-4"><div class="col-lg-4"><div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Buat Catatan Baru</h6><input type="text" id="noteTitle" class="form-control mb-2" placeholder="Judul catatan..."><textarea id="noteContent" class="form-control mb-2" rows="4" placeholder="Isi catatan..."></textarea><button id="btnSave" class="btn btn-primary w-100">Simpan</button></div></div><div class="col-lg-8"><div class="d-flex justify-content-between align-items-center mb-2"><h6 class="mb-0">Catatan Saya</h6><button id="btnExport" class="btn btn-outline-secondary btn-sm">Export</button></div><div id="noteList" class="row g-2"><p class="text-muted small">Belum ada catatan</p></div></div></div><div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Notes App</h6><p class="small mb-1" style="line-height:1.6">Notes app online untuk menulis dan menyimpan catatan langsung di browser. Aplikasi catatan ini menggunakan localStorage untuk menyimpan catatan Anda secara otomatis, sehingga catatan tetap tersimpan meskipun halaman ditutup atau browser di-refresh. Sangat berguna untuk mencatat ide cepat, to-do list, pengingat, dan informasi penting tanpa perlu login atau registrasi.</p><p class="small mb-0" style="line-height:1.6">Fitur notes app meliputi: membuat catatan baru dengan judul dan konten, mengedit catatan yang ada, menghapus catatan, mencari catatan berdasarkan kata kunci, markdown support untuk format teks, tombol simpan otomatis, jumlah karakter dan kata, serta timestamp kapan catatan terakhir diedit. Antarmuka yang bersih dan minimalis memudahkan fokus pada menulis.</p><p class="small mb-0 mt-2" style="line-height:1.6">Notes app online ini cocok untuk: mencatat ide kreatif yang muncul tiba-tiba, membuat daftar belanja atau to-do list, menyimpan kutipan inspiratif, menulis jurnal harian, mencatat poin penting dari meeting atau kuliah, dan mengumpulkan referensi. Karena data disimpan di browser, privasi catatan Anda terjaga. Disarankan untuk backup catatan penting secara berkala.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span><a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a><a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a></div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="decision-maker" class="btn btn-outline-secondary btn-sm rounded-pill">Decision Maker</a><a href="char-counter" class="btn btn-outline-secondary btn-sm rounded-pill">Char Counter</a><a href="list-sorter" class="btn btn-outline-secondary btn-sm rounded-pill">List Sorter</a><a href="lorem-ipsum" class="btn btn-outline-secondary btn-sm rounded-pill">Lorem Ipsum</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var nT=document.getElementById('noteTitle'),nC=document.getElementById('noteContent'),bS=document.getElementById('btnSave'),nL=document.getElementById('noteList'),notes=[];try{var saved=localStorage.getItem('notes');if(saved)notes=JSON.parse(saved)}catch(e){}var editingId=null;function render(){if(notes.length===0){nL.innerHTML='<p class="text-muted small">Belum ada catatan</p>';return}nL.innerHTML=notes.map(function(n){return'<div class="col-12"><div class="card shadow-sm border-0 p-2"><div class="d-flex justify-content-between align-items-start"><div style="flex:1"><h6 class="mb-1" style="cursor:pointer" onclick="editNote(\\''+n.id+'\\')">'+n.title+'</h6><p class="small text-muted mb-0" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(n.content.substring(0,80)||'(kosong)')+'</p></div><div class="d-flex gap-1 ms-2"><button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="delNote(\\''+n.id+'\\')">&#10005;</button></div></div><div class="small text-muted" style="font-size:0.65rem">'+new Date(n.created).toLocaleString('id-ID')+'</div></div></div>'}).join('')}function saveNote(){var title=nT.value.trim()||'Tanpa Judul',content=nC.value.trim();if(!content){alert('Isi catatan tidak boleh kosong');return}if(editingId){var idx=notes.findIndex(function(n){return n.id===editingId});if(idx>=0){notes[idx].title=title;notes[idx].content=content;notes[idx].updated=Date.now()}editingId=null}else notes.push({id:Date.now().toString(),title:title,content:content,created:Date.now()});localStorage.setItem('notes',JSON.stringify(notes));nT.value='';nC.value='';bS.textContent='Simpan';render()}function editNote(id){var n=notes.find(function(n){return n.id===id});if(!n)return;nT.value=n.title;nC.value=n.content;editingId=id;bS.textContent='Update';nT.focus()}function delNote(id){if(!confirm('Hapus catatan ini?'))return;notes=notes.filter(function(n){return n.id!==id});localStorage.setItem('notes',JSON.stringify(notes));render()}bS.addEventListener('click',saveNote);document.getElementById('btnExport').addEventListener('click',function(){var txt=notes.map(function(n){returnn.title+'\\n'+n.content+'\\n---'}).join('\\n\\n');navigator.clipboard.writeText(txt).catch(function(){})});render();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

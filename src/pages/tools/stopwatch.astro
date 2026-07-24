@@ -1,0 +1,49 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Stopwatch';
+const description = 'Stopwatch online dengan fitur lap times. Hitung waktu dengan akurat, catat split time, dan export hasil.';
+const keywords = 'stopwatch, online stopwatch, timer, lap timer, count up, pengukur waktu';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">&#9202;</div><div><h1 class="h3 mb-0">Stopwatch</h1><p class="text-muted small mb-0">Hitung waktu dengan akurat. Catat lap times dan export hasil.</p></div></header><div class="row g-4"><div class="col-lg-7"><div class="card shadow-sm border-0 p-4 text-center"><div class="sw-time" id="display">00:00:00.00</div><div class="d-flex gap-2 justify-content-center mt-4"><button id="btnStart" class="btn btn-success px-4">Mulai</button><button id="btnLap" class="btn btn-primary px-4" disabled>Lap</button><button id="btnStop" class="btn btn-warning px-4" disabled>Stop</button><button id="btnReset" class="btn btn-outline-danger px-4">Reset</button></div></div><div class="card shadow-sm border-0 p-3 mt-3"><div class="d-flex justify-content-between align-items-center mb-2"><h6 class="mb-0">Lap Times</h6><button id="btnCopyLaps" class="btn btn-outline-secondary btn-sm">Copy</button></div><div id="lapList" style="max-height:250px;overflow-y:auto"><small class="text-muted">Belum ada lap</small></div></div></div><div class="col-lg-5"><div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Ringkasan</h6><table class="table table-sm small mb-0"><tr><td>Total Waktu</td><td class="text-end fw-bold" id="totalTimeDisplay">00:00:00.00</td></tr><tr><td>Jumlah Lap</td><td class="text-end" id="lapCountDisplay">0</td></tr><tr><td>Lap Tercepat</td><td class="text-end text-success" id="fastLap">-</td></tr><tr><td>Lap Terlambat</td><td class="text-end text-danger" id="slowLap">-</td></tr><tr><td>Rata-rata Lap</td><td class="text-end" id="avgLap">-</td></tr></table></div></div></div><div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Stopwatch</h6><p class="small mb-1" style="line-height:1.6">Stopwatch online untuk mengukur waktu dengan presisi tinggi. Alat ini menampilkan waktu dalam format jam:menit:detik.milidetik dengan tombol Start, Stop/Lap, dan Reset. Fitur lap times memungkinkan Anda mencatat waktu putaran atau interval tertentu tanpa menghentikan stopwatch utama. Sangat berguna untuk olahraga, eksperimen laboratorium, dan pengukuran waktu presisi.</p><p class="small mb-0" style="line-height:1.6">Fitur stopwatch meliputi: tampilan waktu digital besar yang mudah dibaca, tombol Start/Pause untuk mengontrol waktu, tombol Lap untuk mencatat waktu saat ini tanpa menghentikan stopwatch, daftar lap times dengan timestamp dan selisih antar lap, tombol Reset untuk mengatur ulang, mode fullscreen untuk tampilan yang lebih besar, dan riwayat sesi yang tersimpan. Presisi waktu hingga 10 milidetik untuk pengukuran yang akurat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Stopwatch online sangat praktis untuk berbagai kebutuhan: mengukur waktu lari, renang, atau latihan olahraga lainnya, timing kecepatan membaca atau mengetik, mengukur durasi eksperimen sains, timing presentasi atau pidato, mengukur waktu siklus proses produksi, dan berbagai keperluan lain yang membutuhkan pengukuran waktu akurat. Tidak perlu aplikasi terpisah -- cukup buka browser dan gunakan.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span><a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a><a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a></div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="timer" class="btn btn-outline-secondary btn-sm rounded-pill">Timer</a><a href="countdown" class="btn btn-outline-secondary btn-sm rounded-pill">Countdown</a><a href="pomodoro" class="btn btn-outline-secondary btn-sm rounded-pill">Pomodoro</a><a href="world-clock" class="btn btn-outline-secondary btn-sm rounded-pill">World Clock</a></div>`;
+const toolCss = `.sw-time{font-size:3.5rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2;letter-spacing:2px}@media(max-width:576px){.sw-time{font-size:2.5rem}}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var d=document.getElementById('display'),bS=document.getElementById('btnStart'),bL=document.getElementById('btnLap'),bSt=document.getElementById('btnStop'),bR=document.getElementById('btnReset'),lL=document.getElementById('lapList'),tTD=document.getElementById('totalTimeDisplay'),lCD=document.getElementById('lapCountDisplay'),fL=document.getElementById('fastLap'),sL=document.getElementById('slowLap'),aL=document.getElementById('avgLap'),lH=[];var st=0,run=0,intv=null;function fmt(t){var h=Math.floor(t/3600000),m=Math.floor((t%3600000)/60000),s=Math.floor((t%60000)/1000),cs=Math.floor(t%1000/10);return(h+'').padStart(2,'0')+':'+(m+'').padStart(2,'0')+':'+(s+'').padStart(2,'0')+'.'+(cs+'').padStart(2,'0')}function upd(){var n=Date.now()-st+run;d.textContent=fmt(n);tTD.textContent=fmt(n)}function start(){if(intv)return;st=Date.now();intv=setInterval(upd,30);bS.disabled=true;bL.disabled=false;bSt.disabled=false}function stop(){clearInterval(intv);intv=null;run+=Date.now()-st;bS.disabled=false;bL.disabled=true;bSt.disabled=true}function reset(){clearInterval(intv);intv=null;st=0;run=0;d.textContent='00:00:00.00';tTD.textContent='00:00:00.00';lH=[];lL.innerHTML='<small class="text-muted">Belum ada lap</small>';lCD.textContent='0';fL.textContent='-';sL.textContent='-';aL.textContent='-';bS.disabled=false;bL.disabled=true;bSt.disabled=true}function lap(){if(!intv)return;var n=Date.now()-st+run;lH.push(n);lL.innerHTML=lH.map(function(t,i){return'<div class="d-flex justify-content-between small py-1 border-bottom"><span>Lap '+(i+1)+'</span><span class="fw-bold">'+fmt(t)+'</span></div>'}).join('');lCD.textContent=lH.length;var mn=Math.min.apply(null,lH),mx=Math.max.apply(null,lH),av=lH.reduce(function(a,b){return a+b},0)/lH.length;fL.textContent=fmt(mn);sL.textContent=fmt(mx);aL.textContent=fmt(av)}document.getElementById('btnCopyLaps').addEventListener('click',function(){var t=lH.map(function(t,i){return'Lap '+(i+1)+': '+fmt(t)}).join('\\n');navigator.clipboard.writeText(t).catch(function(){})});bS.addEventListener('click',start);bL.addEventListener('click',lap);bSt.addEventListener('click',stop);bR.addEventListener('click',reset);
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

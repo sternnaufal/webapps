@@ -1,0 +1,162 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Regex Tester';
+const description = 'Tes regular expression online dengan highlight matches. Regex tester dengan replace dan split.';
+const keywords = 'regex tester, regular expression, regex online, regex test, regex tool';
+const bodyHtml = `<div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label for="regexPattern" class="form-label">Pattern</label>
+          <div class="input-group">
+            <span class="input-group-text">/</span>
+            <input type="text" id="regexPattern" class="form-control font-monospace" placeholder="[a-z]+" value="\\b\\w{4,}\\b">
+            <span class="input-group-text">/</span>
+            <input type="text" id="regexFlags" class="form-control font-monospace" placeholder="gmi" value="gm" style="max-width: 80px;">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Replace with</label>
+          <input type="text" id="replaceText" class="form-control font-monospace" placeholder="(opsional)">
+        </div>
+        <div class="col-md-3 d-flex align-items-end gap-2">
+          <button id="btnReplace" class="btn btn-warning">Replace</button>
+          <button id="btnClear" class="btn btn-outline-danger">Clear</button>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <label for="testArea" class="form-label">Test String</label>
+          <textarea id="testArea" class="form-control" placeholder="Masukkan teks untuk diuji...">The quick brown fox jumps over the lazy dog. Contact: support@example.com or call 555-1234.</textarea>
+          <div id="highlightedPreview" class="border rounded p-3 mt-2 bg-white" style="min-height: 80px; white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;"></div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header fw-semibold">Match Results</div>
+            <div class="card-body p-2">
+              <div id="matchCount" class="small mb-2 text-muted">0 matches</div>
+              <div id="matchList" style="max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.8rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Regex Tester</h6><p class="small mb-1" style="line-height:1.6">Regex tester online untuk menguji dan memvalidasi regular expression secara real-time. Alat ini membantu developer menulis, menguji, dan menyempurnakan pola regex sebelum digunakan dalam kode. Mendukung berbagai flag seperti global (g), case-insensitive (i), multiline (m), dan single-line (s). Fitur live match highlighting menampilkan hasil pencocokan secara langsung saat Anda mengetik pola regex.</p><p class="small mb-0" style="line-height:1.6">Terdapat tiga mode operasi: match untuk menemukan semua kecocokan pola dalam teks, replace untuk mengganti teks yang cocok dengan string baru, dan split untuk memotong teks berdasarkan pola regex. Regex tester ini juga menampilkan detail setiap match termasuk posisi awal dan akhir dalam teks. Cocok untuk pengujian pola validasi input form, ekstraksi data dari teks tidak terstruktur, parsing log file, dan transformasi teks berbasis pola.</p><p class="small mb-0 mt-2" style="line-height:1.6">Regular expression adalah alat yang sangat powerful untuk pemrosesan teks. Dengan regex tester ini Anda bisa: memvalidasi format email, nomor telepon, atau URL; mengekstrak data dari file HTML atau log; melakukan search and replace berbasis pola; memisahkan teks berdasarkan delimiter kompleks; dan menguji pola sebelum deploy ke production. Proses pengujian regex dilakukan sepenuhnya di browser, sehingga data teks Anda tetap privat dan aman.</p></div>\`n`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="diff-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Diff Checker</a><a href="csv-viewer" class="btn btn-outline-secondary btn-sm rounded-pill">CSV Viewer</a><a href="sql-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">SQL Formatter</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+var pattern = document.getElementById('regexPattern');
+var flags = document.getElementById('regexFlags');
+var testArea = document.getElementById('testArea');
+var preview = document.getElementById('highlightedPreview');
+var matchCount = document.getElementById('matchCount');
+var matchList = document.getElementById('matchList');
+var replaceText = document.getElementById('replaceText');
+
+function update() {
+  try {
+    var re = new RegExp(pattern.value, flags.value);
+    var text = testArea.value;
+    var matches = [];
+    var m;
+    var safety = 0;
+    while ((m = re.exec(text)) !== null) {
+      matches.push({ index: m.index, text: m[0], groups: m.slice(1) });
+      if (!re.global) break;
+      if (m.index === re.lastIndex) re.lastIndex++;
+      if (++safety > 50000) { matches.push({ text: '(truncated at 50k matches)', index: -1, groups: [] }); break; }
+    }
+
+    if (matches.length === 0) {
+      preview.textContent = text;
+      matchCount.textContent = '0 matches';
+      matchList.innerHTML = '<div class="text-muted p-2">No matches</div>';
+      return;
+    }
+
+    matchCount.textContent = matches.length + (matches.length === 1 ? ' match' : ' matches');
+    var listHtml = '';
+    matches.forEach(function(mt, i) {
+      var groups = mt.groups.length > 0 ? ' groups: [' + mt.groups.join(', ') + ']' : '';
+      listHtml += '<div class="border-bottom py-1 px-1"><span class="badge bg-secondary me-1">' + (i + 1) + '</span> <span class="text-success">"' + escapeHtml(mt.text) + '"</span> <span class="text-muted">@' + mt.index + '</span>' + groups + '</div>';
+    });
+    matchList.innerHTML = listHtml;
+
+    var html = '';
+    var lastIdx = 0;
+    matches.forEach(function(mt) {
+      html += escapeHtml(text.slice(lastIdx, mt.index));
+      html += '<span class="bg-warning bg-opacity-25 border border-warning rounded px-1">' + escapeHtml(mt.text) + '</span>';
+      lastIdx = mt.index + mt.text.length;
+    });
+    html += escapeHtml(text.slice(lastIdx));
+    preview.innerHTML = html;
+  } catch (e) {
+    preview.textContent = 'Error: ' + e.message;
+    matchCount.textContent = '';
+    matchList.innerHTML = '<div class="text-danger p-2">' + escapeHtml(e.message) + '</div>';
+  }
+}
+
+function escapeHtml(s) {
+  var div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+function doReplace() {
+  try {
+    var re = new RegExp(pattern.value, flags.value);
+    var replacement = replaceText.value;
+    testArea.value = testArea.value.replace(re, replacement);
+    update();
+  } catch (e) {
+    alert('Regex error: ' + e.message);
+  }
+}
+
+pattern.addEventListener('input', update);
+flags.addEventListener('input', update);
+testArea.addEventListener('input', update);
+document.getElementById('btnReplace').addEventListener('click', doReplace);
+document.getElementById('btnClear').addEventListener('click', function() { testArea.value = ''; update(); });
+
+update();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

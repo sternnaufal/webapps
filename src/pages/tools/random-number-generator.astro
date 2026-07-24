@@ -1,0 +1,99 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Random Number Generator';
+const description = 'Random number generator online. Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat. Generator nomor acak untuk undian, giveaway, togel, dan eksperimen.';
+const keywords = 'random number generator, angka acak, generator nomor, random generator, undian acak, number randomizer';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef3c7;color:#d97706;">#</div><div><h1 class="h3 mb-0">Random Number Generator</h1><p class="text-muted small mb-0">Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat.</p></div></header>
+<div class="row g-4"><div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<div class="row g-3">
+<div class="col-6"><label class="form-label small fw-semibold">Min</label><input type="number" id="minVal" class="form-control" value="1"></div>
+<div class="col-6"><label class="form-label small fw-semibold">Max</label><input type="number" id="maxVal" class="form-control" value="100"></div>
+</div>
+<div class="row g-3 mt-1">
+<div class="col-6"><label class="form-label small fw-semibold">Jumlah</label><input type="number" id="countVal" class="form-control" value="1" min="1" max="1000"></div>
+<div class="col-6 d-flex align-items-end pb-2"><div class="form-check"><input type="checkbox" id="uniqueOnly" class="form-check-input" checked><label class="form-check-label small" for="uniqueOnly">Unik (tanpa duplikat)</label></div></div>
+</div>
+<div class="d-flex gap-2 mt-2">
+<button id="btnGenerate" class="btn btn-primary">Generate</button>
+<button id="btnCopy" class="btn btn-outline-secondary">Copy</button>
+</div>
+</div>
+<div id="resultArea" class="card shadow-sm border-0 p-3 mt-3">
+<div class="d-flex gap-2 flex-wrap" id="numDisplay"><span class="num-badge">?</span></div>
+</div>
+</div>
+<div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Quick Presets</h6>
+<div class="d-flex gap-2 flex-wrap">
+<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="6">Dadu (1-6)</button>
+<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="10">1-10</button>
+<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="50">1-50</button>
+<button class="btn btn-outline-primary btn-sm preset" data-min="0" data-max="1">Coin (0-1)</button>
+<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="12">1-12</button>
+<button class="btn btn-outline-primary btn-sm preset" data-min="100" data-max="999">100-999</button>
+</div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Random Number Generator</h6><p class="small mb-1" style="line-height:1.6">Random number generator online untuk menghasilkan angka acak dalam rentang tertentu. Alat ini memungkinkan Anda menentukan batas bawah dan batas atas, serta jumlah angka acak yang ingin dihasilkan. Berguna untuk berbagai keperluan: undian berhadiah, pemilihan sampel acak, pengacakan urutan, game, dan aplikasi statistik.</p><p class="small mb-0" style="line-height:1.6">Fitur random number generator meliputi: input nilai minimum dan maksimum, jumlah angka yang dihasilkan (1-100), opsi untuk mengizinkan angka duplikat atau tidak, pengurutan hasil (ascending/descending/unsorted), tampilan hasil dalam format daftar atau dipisah koma, tombol generate ulang, dan tombol copy. Animasi atau efek visual saat angka di-generate menambah pengalaman interaktif.</p><p class="small mb-0 mt-2" style="line-height:1.6">Number randomizer ini sangat praktis untuk: mengadakan giveaway atau undian berhadiah di media sosial, menentukan pemenang lomba atau kontes, memilih nomor lotere atau undian, menghasilkan angka acak untuk eksperimen statistik, membuat variasi data untuk testing, mengacak urutan peserta presentasi, dan memilih soal ujian secara acak. Generator angka acak ini gratis dan mudah digunakan.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="dice-roller" class="btn btn-outline-secondary btn-sm rounded-pill">Dice Roller</a><a href="decision-maker" class="btn btn-outline-secondary btn-sm rounded-pill">Decision Maker</a><a href="password-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Password Generator</a><a href="uuid-generator" class="btn btn-outline-secondary btn-sm rounded-pill">UUID Generator</a></div>`;
+const toolCss = `.num-badge{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:8px;background:var(--surface-soft);font-weight:700;font-size:1.1rem;margin:4px}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var minInp=document.getElementById('minVal'),maxInp=document.getElementById('maxVal'),cntInp=document.getElementById('countVal'),uniq=document.getElementById('uniqueOnly'),disp=document.getElementById('numDisplay');
+function generate(){
+  var min=parseInt(minInp.value)||0,max=parseInt(maxInp.value)||100,cnt=parseInt(cntInp.value)||1,arr=[];
+  if(!uniq.checked) for(var i=0;i<cnt;i++) arr.push(Math.floor(Math.random()*(max-min+1))+min);
+  else{var range=max-min+1;if(cnt>range){disp.innerHTML='<span class="text-danger">Jumlah melebihi rentang angka yang tersedia</span>';return}var pool=[];for(var i=min;i<=max;i++)pool.push(i);for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t}arr=pool.slice(0,cnt)}
+  disp.innerHTML=arr.map(function(n){return'<span class="num-badge">'+n+'</span>'}).join('');
+}
+document.getElementById('btnGenerate').addEventListener('click',generate);
+document.getElementById('btnCopy').addEventListener('click',function(){
+  var txt=disp.textContent.replace(/\\s+/g,', ');navigator.clipboard.writeText(txt).catch(function(){});
+});
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+  minInp.value=this.dataset.min;maxInp.value=this.dataset.max;cntInp.value=1;generate();
+})});
+generate();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

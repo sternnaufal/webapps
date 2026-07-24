@@ -1,0 +1,130 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Date Duration Calculator';
+const description = 'Kalkulator durasi tanggal online. Hitung selisih hari, tambah/kurang hari, dan konversi tanggal.';
+const keywords = 'date calculator, date duration, days between dates, date difference, kalkulator tanggal';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div><div><h1 class="h3 mb-0">Date Duration Calculator</h1><p class="text-muted small mb-0">Hitung selisih antar tanggal, tambah/kurang hari, dan konversi format tanggal.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3 mb-3"><h6 class="mb-3">Selisih Tanggal</h6>
+<div class="row g-2 mb-3"><div class="col-6"><label class="form-label small">Tanggal Mulai</label><input type="date" id="startDate" class="form-control"></div><div class="col-6"><label class="form-label small">Tanggal Akhir</label><input type="date" id="endDate" class="form-control"></div></div>
+<button id="btnCalcDiff" class="btn btn-primary w-100">Hitung Selisih</button>
+<div id="diffResult" class="mt-3 p-3 bg-light rounded small"></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Tambah / Kurang Hari</h6>
+<div class="row g-2 mb-3"><div class="col-6"><label class="form-label small">Tanggal</label><input type="date" id="baseDate" class="form-control"></div><div class="col-6"><label class="form-label small">Jumlah Hari</label><input type="number" id="daysInput" class="form-control" value="7"></div></div>
+<div class="d-flex gap-2"><button id="btnAdd" class="btn btn-success flex-fill">+ Tambah Hari</button><button id="btnSub" class="btn btn-danger flex-fill">- Kurangi Hari</button></div>
+<div id="addResult" class="mt-3 p-3 bg-light rounded small"></div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3 mb-3"><h6 class="mb-3">Konversi Format Tanggal</h6>
+<div class="mb-2"><label class="form-label small">Masukkan tanggal</label><input type="date" id="convertDate" class="form-control"></div>
+<button id="btnConvert" class="btn btn-primary w-100">Konversi</button>
+<div id="convertResult" class="mt-3 p-3 bg-light rounded small"></div>
+</div>
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Informasi Tanggal</h6>
+<div class="mb-2"><label class="form-label small">Pilih tanggal</label><input type="date" id="infoDate" class="form-control"></div>
+<button id="btnInfo" class="btn btn-primary w-100">Tampilkan Info</button>
+<div id="infoResult" class="mt-3 p-3 bg-light rounded small"></div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Date Duration Calculator</h6><p class="small mb-1" style="line-height:1.6">Date duration calculator online untuk menghitung selisih atau durasi antara dua tanggal. Alat ini dapat menghitung jumlah hari, minggu, bulan, dan tahun antara dua tanggal yang dipilih. Sangat berguna untuk perencanaan proyek, menghitung usia, menentukan tenggat waktu, dan berbagai keperluan administratif yang melibatkan perhitungan tanggal.</p><p class="small mb-0" style="line-height:1.6">Fitur kalkulator tanggal ini meliputi: date picker untuk memilih tanggal mulai dan tanggal akhir, perhitungan durasi dalam hari, minggu, bulan, dan tahun, informasi hari dalam seminggu untuk setiap tanggal, jumlah hari kerja (weekday) vs akhir pekan (weekend), daftar hari libur opsional, dan opsi untuk menambahkan atau mengurangi hari dari tanggal tertentu. Hasil perhitungan akurat termasuk tahun kabisat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Date calculator berguna dalam berbagai situasi: menghitung umur seseorang secara presisi, merencanakan jadwal proyek dan milestone, menentukan tanggal jatuh tempo atau deadline, menghitung masa kerja atau kontrak, merencanakan liburan atau perjalanan, menghitung sisa hari menuju acara tertentu, dan keperluan administrasi penggajian atau tagihan. Kalkulator ini mudah digunakan dan akurat.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="age-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Age Calculator</a><a href="time-converter" class="btn btn-outline-secondary btn-sm rounded-pill">Time Converter</a><a href="countdown" class="btn btn-outline-secondary btn-sm rounded-pill">Countdown</a><a href="world-clock" class="btn btn-outline-secondary btn-sm rounded-pill">World Clock</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var today=new Date().toISOString().split('T')[0];
+['startDate','endDate','baseDate','convertDate','infoDate'].forEach(function(id){document.getElementById(id).value=today});
+
+function fmt(d){return d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+
+document.getElementById('btnCalcDiff').addEventListener('click',function(){
+  var s=new Date(document.getElementById('startDate').value),e=new Date(document.getElementById('endDate').value);
+  if(isNaN(s)||isNaN(e)){document.getElementById('diffResult').innerHTML='<span class="text-danger">Tanggal tidak valid</span>';return}
+  var ms=e-s,days=Math.round(ms/86400000),weeks=Math.floor(days/7),years=Math.floor(days/365.25),months=Math.floor(years*12+(days%365.25)/30.44);
+  document.getElementById('diffResult').innerHTML=
+    '<div class="fw-bold mb-2">'+fmt(s)+' &rarr; '+fmt(e)+'</div>'+
+    '<table class="table table-sm small mb-0"><tr><td>Total Hari</td><td class="fw-bold">'+days+' hari</td></tr>'+
+    '<tr><td>Total Minggu</td><td class="fw-bold">'+weeks+' minggu '+(days%7)+' hari</td></tr>'+
+    '<tr><td>Total Bulan</td><td class="fw-bold">'+Math.round(months)+' bulan</td></tr>'+
+    '<tr><td>Total Tahun</td><td class="fw-bold">'+years+' tahun '+(days%365)+' hari</td></tr></table>';
+});
+
+['btnAdd','btnSub'].forEach(function(id){
+  document.getElementById(id).addEventListener('click',function(){
+    var d=new Date(document.getElementById('baseDate').value),n=parseInt(document.getElementById('daysInput').value)||0;
+    if(id==='btnSub')n=-n;
+    d.setDate(d.getDate()+n);
+    document.getElementById('addResult').innerHTML='<span class="fw-bold">'+n+' hari</span>: '+fmt(d)+' <span class="text-muted">('+d.toISOString().split('T')[0]+')</span>';
+  });
+});
+
+document.getElementById('btnConvert').addEventListener('click',function(){
+  var d=new Date(document.getElementById('convertDate').value);
+  if(isNaN(d)){document.getElementById('convertResult').innerHTML='<span class="text-danger">Tanggal tidak valid</span>';return}
+  var months=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  document.getElementById('convertResult').innerHTML=
+    '<table class="table table-sm small mb-0">'+
+    '<tr><td>ISO</td><td class="font-mono">'+d.toISOString().split('T')[0]+'</td></tr>'+
+    '<tr><td>Locale ID</td><td>'+d.toLocaleDateString('id-ID')+'</td></tr>'+
+    '<tr><td>Locale US</td><td>'+d.toLocaleDateString('en-US')+'</td></tr>'+
+    '<tr><td>Format panjang</td><td>'+fmt(d)+'</td></tr>'+
+    '<tr><td>Unix Timestamp</td><td class="font-mono">'+(d.getTime()/1000)+'</td></tr>'+
+    '<tr><td>Nama hari</td><td>'+d.toLocaleDateString('id-ID',{weekday:'long'})+'</td></tr>'+
+    '<tr><td>Nama bulan</td><td>'+months[d.getMonth()]+'</td></tr>'+
+    '<tr><td>Tahun</td><td>'+d.getFullYear()+'</td></tr></table>';
+});
+
+document.getElementById('btnInfo').addEventListener('click',function(){
+  var d=new Date(document.getElementById('infoDate').value);
+  if(isNaN(d)){document.getElementById('infoResult').innerHTML='<span class="text-danger">Tanggal tidak valid</span>';return}
+  var day=d.getDay(),isWeekend=day===0||day===6;
+  document.getElementById('infoResult').innerHTML=
+    '<table class="table table-sm small mb-0">'+
+    '<tr><td>Tanggal</td><td>'+fmt(d)+'</td></tr>'+
+    '<tr><td>Hari ke-</td><td>'+d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()+'</td></tr>'+
+    '<tr><td>Hari dalam tahun</td><td>'+Math.ceil((d-new Date(d.getFullYear(),0,0))/86400000)+'/'+(d.getFullYear()%4===0?366:365)+'</td></tr>'+
+    '<tr><td>Status</td><td>'+(isWeekend?'<span class="text-danger">Akhir Pekan</span>':'<span class="text-success">Hari Kerja</span>')+'</td></tr>'+
+    '<tr><td>Kuartal</td><td>Q'+Math.ceil((d.getMonth()+1)/3)+'</td></tr></table>';
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

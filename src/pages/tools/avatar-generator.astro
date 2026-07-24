@@ -1,0 +1,285 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Avatar Generator';
+const description = 'Buat avatar random online gratis. Generator avatar unik dari inisial, ikon, atau emoji. Download PNG siap pakai.';
+const keywords = 'avatar generator, random avatar, profile picture maker, avatar maker, profile pic generator';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#22c55e;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div><div><h1 class="h3 mb-0">Avatar Generator</h1><p class="text-muted small mb-0">Buat avatar random dari inisial, emoji, atau ikon. Download PNG, siap buat profile picture.</p></div></header>
+
+<div class="row g-4">
+<div class="col-lg-4">
+<div class="card shadow-sm border-0 p-3 text-center">
+<canvas id="avatarPreview" class="avatar-canvas" width="440" height="440"></canvas>
+<h5 id="avatarLabel" class="mt-3 mb-0">Avatar</h5>
+<p id="avatarSub" class="text-muted small">Klik Generate atau pilih style</p>
+<button id="btnGenerate" class="btn btn-primary w-100 mt-2">Generate Avatar</button>
+<button id="btnDownload" class="btn btn-outline-secondary w-100 mt-2">Download PNG</button>
+</div>
+</div>
+
+<div class="col-lg-8">
+<div class="row g-3">
+<div class="col-12"><div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Pilih Style Avatar</h6>
+<div class="d-flex gap-2 flex-wrap" id="styleOptions">
+<div class="avatar-option active" data-style="initials"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Inisial</div></div>
+<div class="avatar-option" data-style="emoji"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Emoji</div></div>
+<div class="avatar-option" data-style="geometric"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Geometric</div></div>
+<div class="avatar-option" data-style="gradient"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Gradient</div></div>
+</div>
+</div></div>
+
+<div class="col-12"><div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Custom</h6>
+<div class="row g-2">
+<div class="col-md-6"><label class="form-label small">Teks / Inisial</label><input id="avatarText" class="form-control form-control-sm" placeholder="Kosongi biar random"></div>
+<div class="col-md-3"><label class="form-label small">Warna</label><input id="avatarColor" type="color" class="form-control form-control-color form-control-sm" value="#6366f1"></div>
+<div class="col-md-3"><label class="form-label small">Background</label><input id="avatarBg" type="color" class="form-control form-control-color form-control-sm" value="#eef2ff"></div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Avatar Generator</h6><p class="small mb-1" style="line-height:1.6">Avatar generator online untuk membuat profile picture atau avatar unik secara instan. Pilih dari berbagai style: inisial (tampilan teks huruf pertama), emoji (avatar ikon lucu), geometric (bentuk geometris acak), atau gradient (gradasi warna halus). Setiap avatar bisa di-download sebagai file PNG transparan dengan resolusi 220x220px yang siap digunakan untuk profile picture sosial media, forum, game, atau kebutuhan branding.</p><p class="small mb-0" style="line-height:1.6">Avatar generator sangat berguna untuk: membuat profile picture unik tanpa foto asli, menyembunyikan identitas di forum atau grup, membuat avatar sementara untuk akun baru, mendapatkan identitas visual di berbagai platform, atau sekadar eksplorasi desain avatar minimalis. Semua avatar diproses langsung di browser tanpa server.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="random-color-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Random Color</a><a href="qr-generator" class="btn btn-outline-secondary btn-sm rounded-pill">QR Generator</a><a href="gradient-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Gradient</a><a href="color-picker" class="btn btn-outline-secondary btn-sm rounded-pill">Color Picker</a></div>`;
+const toolCss = `
+    .avatar-canvas { width: 220px; height: 220px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,.1); margin: 0 auto; display: block; }
+    .avatar-option { cursor: pointer; border: 2px solid transparent; border-radius: 12px; padding: 4px; transition: all .15s; }
+    .avatar-option:hover { border-color: var(--accent); }
+    .avatar-option.active { border-color: var(--accent); background: var(--accent-soft); }
+    .avatar-option canvas { border-radius: 8px; display: block; }
+  `;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+var canvas = document.getElementById('avatarPreview');
+var ctx = canvas.getContext('2d');
+var currentStyle = 'initials';
+var currentText = '';
+var currentColor = '#6366f1';
+var currentBg = '#eef2ff';
+
+var emojis = ['😀','😎','🤖','👾','🦊','🐱','🐶','🦄','🐸','🌈','🔥','⭐','💎','🎮','🛸','🧠','🎯','🚀','💡','🎨'];
+var shapes = ['circle','square','triangle','diamond','hexagon'];
+
+function randItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function randColor() { return '#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'); }
+function randBetween(min,max) { return Math.floor(Math.random()*(max-min+1))+min; }
+
+function drawAvatar(style, text, color, bg) {
+  ctx.clearRect(0, 0, 440, 440);
+
+  // Background
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, 440, 440, 32);
+  ctx.fill();
+
+  ctx.save();
+
+  switch(style) {
+    case 'initials':
+      var t = text || '?';
+      ctx.fillStyle = color;
+      ctx.font = 'bold 180px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(t.charAt(0).toUpperCase(), 220, 225);
+      break;
+
+    case 'emoji':
+      var em = text || randItem(emojis);
+      ctx.font = '200px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(em, 220, 230);
+      break;
+
+    case 'geometric':
+      var type = randItem(shapes);
+      ctx.fillStyle = color;
+      ctx.save();
+      ctx.translate(220, 220);
+      var s = 140;
+      switch(type) {
+        case 'circle':
+          ctx.beginPath(); ctx.arc(0, 0, s, 0, Math.PI*2); ctx.fill(); break;
+        case 'square':
+          ctx.fillRect(-s, -s, s*2, s*2); break;
+        case 'triangle':
+          ctx.beginPath(); ctx.moveTo(0,-s); ctx.lineTo(s,s); ctx.lineTo(-s,s); ctx.closePath(); ctx.fill(); break;
+        case 'diamond':
+          ctx.beginPath(); ctx.moveTo(0,-s); ctx.lineTo(s,0); ctx.lineTo(0,s); ctx.lineTo(-s,0); ctx.closePath(); ctx.fill(); break;
+        case 'hexagon':
+          ctx.beginPath();
+          for(var i=0;i<6;i++){var a=i*Math.PI/3-Math.PI/2;ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s);}
+          ctx.closePath(); ctx.fill(); break;
+      }
+      ctx.restore();
+      // Inner detail
+      ctx.fillStyle = bg;
+      ctx.beginPath();
+      ctx.arc(170, 170, 35, 0, Math.PI*2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(270, 270, 25, 0, Math.PI*2);
+      ctx.fill();
+      break;
+
+    case 'gradient':
+      var grad = ctx.createLinearGradient(0, 0, 440, 440);
+      grad.addColorStop(0, color);
+      grad.addColorStop(0.5, bg);
+      grad.addColorStop(1, color);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(20, 20, 400, 400, 32);
+      ctx.fill();
+      // Overlay shape
+      ctx.globalAlpha = 0.15;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(220, 220, 160, 0, Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
+      break;
+  }
+
+  ctx.restore();
+  document.getElementById('avatarLabel').textContent = style.charAt(0).toUpperCase() + style.slice(1) + ' Avatar';
+  document.getElementById('avatarSub').textContent = 'Ukuran: 220x220px | Klik Generate buat ganti';
+}
+
+// Generate function
+function generate() {
+  currentColor = document.getElementById('avatarColor').value;
+  currentBg = document.getElementById('avatarBg').value;
+  var txt = document.getElementById('avatarText').value.trim();
+
+  switch(currentStyle) {
+    case 'initials':
+      if (!txt) {
+        var initials = '';
+        var cons = 'BCDFGHJKLMNPQRSTVWXYZ';
+        for(var i=0;i<randBetween(1,2);i++) initials += randItem(cons);
+        txt = initials;
+      }
+      drawAvatar('initials', txt, currentColor, currentBg);
+      break;
+    case 'emoji':
+      if (!txt) txt = randItem(emojis);
+      drawAvatar('emoji', txt, currentColor, currentBg);
+      break;
+    case 'geometric':
+      drawAvatar('geometric', '', currentColor, currentBg);
+      break;
+    case 'gradient':
+      drawAvatar('gradient', '', currentColor, currentBg);
+      break;
+  }
+}
+
+// Style thumbnails
+function renderThumbs() {
+  document.querySelectorAll('.style-preview').forEach(function(c) {
+    var parent = c.closest('.avatar-option');
+    var style = parent.dataset.style;
+    var tc = c.getContext('2d');
+    tc.fillStyle = '#f1f5f9';
+    tc.beginPath(); tc.roundRect(0, 0, 64, 64, 8); tc.fill();
+
+    switch(style) {
+      case 'initials':
+        tc.fillStyle = '#6366f1';
+        tc.font = 'bold 36px Inter, sans-serif';
+        tc.textAlign = 'center'; tc.textBaseline = 'middle';
+        tc.fillText('A', 32, 33); break;
+      case 'emoji':
+        tc.font = '40px sans-serif';
+        tc.textAlign = 'center'; tc.textBaseline = 'middle';
+        tc.fillText('😎', 32, 34); break;
+      case 'geometric':
+        tc.fillStyle = '#22c55e';
+        tc.beginPath(); tc.moveTo(32,6); tc.lineTo(58,42); tc.lineTo(6,42); tc.closePath(); tc.fill(); break;
+      case 'gradient':
+        var g = tc.createLinearGradient(0,0,64,64);
+        g.addColorStop(0,'#6366f1'); g.addColorStop(1,'#22c55e');
+        tc.fillStyle = g; tc.beginPath(); tc.roundRect(4,4,56,56,12); tc.fill(); break;
+    }
+  });
+}
+
+// Style picker
+document.querySelectorAll('.avatar-option').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('.avatar-option').forEach(function(o) { o.classList.remove('active'); });
+    el.classList.add('active');
+    currentStyle = el.dataset.style;
+    generate();
+  });
+});
+
+document.getElementById('btnGenerate').addEventListener('click', generate);
+
+document.getElementById('btnDownload').addEventListener('click', function() {
+  var link = document.createElement('a');
+  link.download = 'avatar-' + Date.now() + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+// Color inputs auto regenerate
+document.getElementById('avatarColor').addEventListener('input', generate);
+document.getElementById('avatarBg').addEventListener('input', generate);
+document.getElementById('avatarText').addEventListener('input', generate);
+
+renderThumbs();
+generate();
+
+function showToast(message) {
+  var t = document.createElement('div');
+  t.className = 'toast align-items-center text-bg-light border p-2';
+  t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
+  t.innerHTML = '<div class="d-flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close"></button></div>';
+  document.body.appendChild(t);
+  t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
+  setTimeout(function() { t.remove(); }, 2500);
+}
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

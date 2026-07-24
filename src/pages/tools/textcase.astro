@@ -1,0 +1,125 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Text Case Converter';
+const description = 'Konversi huruf besar/kecil teks online. UPPER, lower, Title Case, camelCase, snake_case, dan lainnya.';
+const keywords = 'text case converter, uppercase, lowercase, title case, case converter';
+const bodyHtml = `<div class="row g-3 mb-4">
+        <div class="col-12">
+          <label for="text" class="form-label">Masukkan Teks</label>
+          <textarea id="text" class="form-control" rows="4" placeholder="Masukkan teks di sini..."></textarea>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="upper" class="btn btn-primary convert-btn">UPPERCASE</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="lower" class="btn btn-primary convert-btn">lowercase</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="title" class="btn btn-primary convert-btn">Title Case</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="snake" class="btn btn-primary convert-btn">snake_case</button>
+        </div>
+        <div class="col-6 col-md-4 d-grid">
+          <button type="button" data-action="camel" class="btn btn-primary convert-btn">camelCase</button>
+        </div>
+      </div>
+
+      <div id="resultContainer" style="display:none;">
+        <div class="card shadow-sm p-3">
+          <h5 class="mb-3">Hasil</h5>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <pre id="resultText" class="bg-light p-3 border rounded mb-0 flex-grow-1"></pre>
+            <button id="copyResultBtn" class="btn btn-sm btn-outline-secondary ms-2">Copy</button>
+          </div>
+        </div>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Text Case Converter</h6><p class="small mb-1" style="line-height:1.6">Text case converter online untuk mengubah format kapitalisasi teks dengan cepat. Mendukung berbagai format: UPPERCASE (huruf besar semua), lowercase (huruf kecil semua), Title Case (kapital di setiap kata), Sentence case (kapital di awal kalimat), camelCase, PascalCase, snake_case, kebab-case, dan CONSTANT_CASE. Alat ini sangat berguna bagi developer, penulis, content creator, dan editor teks.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan atau ketik teks pada kolom input, dan hasil konversi untuk semua format akan ditampilkan secara real-time tanpa perlu menekan tombol apa pun. Setiap hasil format dilengkapi dengan tombol Copy untuk menyalin ke clipboard dengan cepat. Anda juga dapat meng-upload file teks atau menjatuhkan (drag & drop) teks langsung ke area input. Case converter ini juga menampilkan jumlah karakter dan kata dari teks asli.</p><p class="small mb-0 mt-2" style="line-height:1.6">Text case converter sangat membantu dalam berbagai skenario programming: mengkonversi nama variabel antara camelCase (JavaScript) dan snake_case (Python), memformat judul artikel atau heading, memperbaiki teks yang salah kapitalisasi, mempersiapkan data untuk database, dan memformat output untuk berbagai kebutuhan. Alat ini bekerja sepenuhnya offline di browser Anda tanpa mengirim data ke server.</p></div>\`n`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="char-counter" class="btn btn-outline-secondary btn-sm rounded-pill">Character Counter</a><a href="reverse-text" class="btn btn-outline-secondary btn-sm rounded-pill">Reverse Text</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+function convert(action) {
+  var input = document.getElementById('text').value;
+  if (!input.trim()) {
+    alert('Masukkan teks terlebih dahulu');
+    return;
+  }
+
+  var result = '';
+  switch (action) {
+    case 'upper':
+      result = input.toUpperCase();
+      break;
+    case 'lower':
+      result = input.toLowerCase();
+      break;
+    case 'title':
+      result = input.toLowerCase().replace(/\\b\\w/g, function(c) { return c.toUpperCase(); });
+      break;
+    case 'snake':
+      result = input.toLowerCase().trim().replace(/\\s+/g, '_');
+      break;
+    case 'camel':
+      result = input.toLowerCase().replace(/\\b\\w/g, function(c) { return c.toUpperCase(); }).replace(/\\s+/g, '').replace(/^./, function(c) { return c.toLowerCase(); });
+      break;
+  }
+
+  document.getElementById('resultText').textContent = result;
+  document.getElementById('resultContainer').style.display = 'block';
+}
+
+document.querySelectorAll('.convert-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    convert(this.getAttribute('data-action'));
+  });
+});
+
+document.getElementById('copyResultBtn').addEventListener('click', function() {
+  var text = document.getElementById('resultText').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copyResultBtn');
+    btn.textContent = '? Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

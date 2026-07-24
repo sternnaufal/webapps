@@ -1,0 +1,98 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Discount Calculator';
+const description = 'Kalkulator diskon online. Hitung harga setelah diskon, jumlah diskon, dan hemat. Menghitung persentase diskon dengan cepat dan akurat.';
+const keywords = 'discount calculator, kalkulator diskon, hitung diskon, persen diskon, harga setelah diskon';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;">%</div><div><h1 class="h3 mb-0">Discount Calculator</h1><p class="text-muted small mb-0">Hitung harga setelah diskon, jumlah diskon, dan total penghematan.</p></div></header>
+<div class="row g-4"><div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<div class="mb-3"><label class="form-label fw-semibold small">Harga Asli (Rp)</label><input type="number" id="originalPrice" class="form-control" value="100000" min="0"></div>
+<div class="row g-3 mb-3">
+<div class="col-6"><label class="form-label small">Diskon 1 (%)</label><input type="number" id="disc1" class="form-control" value="20" min="0" max="100"></div>
+<div class="col-6"><label class="form-label small">Diskon 2 (%)</label><input type="number" id="disc2" class="form-control" value="0" min="0" max="100"></div>
+</div>
+<button id="btnCalc" class="btn btn-primary w-100">Hitung Diskon</button>
+</div>
+<div class="card shadow-sm border-0 p-3 mt-3">
+<table class="table table-sm mb-0">
+<tr><td class="text-muted">Harga Asli</td><td class="text-end fw-bold" id="originalDisplay">Rp 100.000</td></tr>
+<tr><td class="text-muted">Diskon 1</td><td class="text-end text-danger" id="discount1Display">-Rp 20.000</td></tr>
+<tr id="disc2Row" style="display:none"><td class="text-muted">Diskon 2</td><td class="text-end text-danger" id="discount2Display">-Rp 0</td></tr>
+<tr><td class="text-muted">Total Diskon</td><td class="text-end text-danger fw-bold" id="totalDiscountDisplay">-Rp 20.000</td></tr>
+<tr class="table-active"><td class="fw-bold">Harga Akhir</td><td class="text-end fw-bold text-success fs-5" id="finalPriceDisplay">Rp 80.000</td></tr>
+<tr><td class="text-muted">Hemat</td><td class="text-end text-success" id="savedDisplay">Rp 20.000</td></tr>
+</table>
+</div></div>
+<div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Preset Diskon</h6>
+<div class="d-flex gap-2 flex-wrap">
+<button class="btn btn-outline-danger btn-sm preset" data-d1="10">10%</button>
+<button class="btn btn-outline-danger btn-sm preset" data-d1="20">20%</button>
+<button class="btn btn-outline-danger btn-sm preset" data-d1="30">30%</button>
+<button class="btn btn-outline-danger btn-sm preset" data-d1="50">50%</button>
+<button class="btn btn-outline-danger btn-sm preset" data-d1="70">70%</button>
+<button class="btn btn-outline-danger btn-sm preset" data-d1="10" data-d2="10">10+10%</button>
+</div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Discount Calculator</h6><p class="small mb-1" style="line-height:1.6">Discount calculator online untuk menghitung harga setelah diskon dan jumlah uang yang dihemat. Alat ini membantu Anda dengan cepat mengetahui berapa yang harus dibayar setelah diskon diterapkan, baik diskon tunggal maupun diskon bertingkat (ganda). Sangat berguna saat berbelanja, baik online maupun offline, untuk membandingkan penawaran dan menentukan keputusan pembelian.</p><p class="small mb-0" style="line-height:1.6">Fitur discount calculator meliputi: input harga asli dan persentase diskon, perhitungan jumlah diskon (hemat) dan harga final, dukungan untuk diskon bertingkat (diskon pertama + diskon kedua dari harga setelah diskon pertama), kalkulasi harga setelah pajak (PPN), perbandingan beberapa skenario diskon, riwayat perhitungan, dan tombol copy hasil. Hasil perhitungan ditampilkan secara real-time.</p><p class="small mb-0 mt-2" style="line-height:1.6">Calculator diskon ini sangat praktis untuk: berbelanja di mall atau marketplace online (Shopee, Tokopedia, Lazada dengan voucher dan cashback), membandingkan penawaran buy 1 get 1 vs diskon persentase, menghitung penghematan saat belanja dalam jumlah besar, merencanakan anggaran belanja, dan membantu pemilik toko menentukan strategi diskon. Kalkulator ini akurat dan gratis digunakan.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="percentage-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Percentage Calculator</a><a href="tip-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Tip Calculator</a><a href="savings-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Savings Calculator</a><a href="calorie-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Calorie Calculator</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var ori=document.getElementById('originalPrice'),d1=document.getElementById('disc1'),d2=document.getElementById('disc2'),d2r=document.getElementById('disc2Row');
+function fmt(x){return'Rp '+x.toLocaleString('id-ID')}
+function calc(){
+  var o=parseFloat(ori.value)||0,a=parseFloat(d1.value)||0,b=parseFloat(d2.value)||0;
+  var ad=o*a/100,bd=(o-ad)*b/100,td=ad+bd,fp=o-td;
+  document.getElementById('originalDisplay').textContent=fmt(o);
+  document.getElementById('discount1Display').textContent='-'+fmt(ad);
+  d2r.style.display=b>0?'':'none';
+  document.getElementById('discount2Display').textContent='-'+fmt(bd);
+  document.getElementById('totalDiscountDisplay').textContent='-'+fmt(td);
+  document.getElementById('finalPriceDisplay').textContent=fmt(fp);
+  document.getElementById('savedDisplay').textContent=fmt(td);
+}
+document.getElementById('btnCalc').addEventListener('click',calc);
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+  d1.value=this.dataset.d1||0;d2.value=this.dataset.d2||0;calc();
+})});
+calc();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

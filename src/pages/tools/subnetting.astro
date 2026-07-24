@@ -1,0 +1,219 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Subnetting Calculator';
+const description = 'Hitung subnet mask, network address, broadcast address, host range, dan tabel subnetting CIDR online.';
+const keywords = 'subnetting calculator, subnet calculator, cidr, network, subnet mask';
+const bodyHtml = `<form id="subnetForm" class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label for="ip" class="form-label">IP Address</label>
+          <input type="text" id="ip" class="form-control" placeholder="192.168.10.0" required>
+        </div>
+        <div class="col-md-4">
+          <label for="prefix" class="form-label">Prefix Awal</label>
+          <select id="prefix" class="form-select" required>
+            <option value="">/ Prefix</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="newprefix" class="form-label">Prefix Baru</label>
+          <select id="newprefix" class="form-select" required>
+            <option value="">/ Prefix</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">Hitung</button>
+        </div>
+      </form>
+
+      <div id="results"></div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Subnetting Calculator</h6><p class="small mb-1" style="line-height:1.6">Kalkulator subnetting online untuk menghitung network address, broadcast address, subnet mask, wildcard mask, CIDR notation, dan host range dari sebuah jaringan IP. Alat ini dirancang khusus untuk network engineer, administrator jaringan, mahasiswa teknik informatika, dan profesional IT yang perlu melakukan perhitungan subnetting secara cepat dan akurat. Kalkulator ini mendukung perhitungan IPv4 subnetting dengan berbagai prefix length dari /1 hingga /32.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaannya sangat sederhana: masukkan alamat IP network, pilih prefix awal subnet, lalu tentukan prefix baru yang diinginkan untuk pemotongan subnet. Hasil perhitungan akan menampilkan informasi lengkap termasuk kelas IP (A, B, atau C), subnet mask dalam format desimal, wildcard mask, alamat network dan broadcast, first dan last host yang valid, serta jumlah total host yang tersedia. Kalkulator VLSM ini juga menampilkan tabel lengkap berisi semua subnet hasil pemotongan beserta detail masing-masing.</p><p class="small mb-0 mt-2" style="line-height:1.6">Fitur unggulan dari network calculator ini adalah kemampuannya menampilkan tabel subnetting lengkap hingga ribuan subnet (dibatasi 4096 subnet untuk performa). Setiap baris tabel menampilkan nomor subnet, alamat network dengan prefix, first host, last host, broadcast address, jumlah host per subnet, dan notasi CIDR. Ini sangat membantu untuk perencanaan jaringan, pembagian IP address dalam organisasi, dan persiapan sertifikasi jaringan seperti CCNA. Semua komputasi dilakukan di sisi klien tanpa koneksi internet.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="ip-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">IP Calculator</a><a href="konverter-bilangan" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="http-status" class="btn btn-outline-secondary btn-sm rounded-pill">HTTP Status</a><a href="cron-builder" class="btn btn-outline-secondary btn-sm rounded-pill">Cron Builder</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+function ip2long(ip) {
+  return ip.split('.').reduce(function(acc, oct) {
+    return (acc << 8) + parseInt(oct, 10);
+  }, 0) >>> 0;
+}
+
+function long2ip(long) {
+  return [
+    (long >>> 24) & 0xFF,
+    (long >>> 16) & 0xFF,
+    (long >>> 8) & 0xFF,
+    long & 0xFF
+  ].join('.');
+}
+
+function getIPClass(firstOctet) {
+  if (firstOctet >= 1 && firstOctet <= 126) return { name: 'A', defaultPrefix: 8 };
+  if (firstOctet >= 128 && firstOctet <= 191) return { name: 'B', defaultPrefix: 16 };
+  if (firstOctet >= 192 && firstOctet <= 223) return { name: 'C', defaultPrefix: 24 };
+  if (firstOctet >= 224 && firstOctet <= 239) return { name: 'D (Multicast)', defaultPrefix: null };
+  return { name: 'E (Experimental)', defaultPrefix: null };
+}
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function calculate(e) {
+  e.preventDefault();
+
+  var ip = document.getElementById('ip').value.trim();
+  var prefix = parseInt(document.getElementById('prefix').value, 10);
+  var newprefix = parseInt(document.getElementById('newprefix').value, 10);
+
+  if (!ip || !prefix || !newprefix) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Lengkapi semua field.</div>';
+    return;
+  }
+
+  var ipPattern = /^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$/;
+  var match = ip.match(ipPattern);
+  if (!match) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">IP tidak valid.</div>';
+    return;
+  }
+
+  for (var i = 1; i <= 4; i++) {
+    var oct = parseInt(match[i], 10);
+    if (oct < 0 || oct > 255) {
+      document.getElementById('results').innerHTML = '<div class="alert alert-danger">IP tidak valid.</div>';
+      return;
+    }
+  }
+
+  if (prefix < 1 || prefix > 32 || newprefix < prefix || newprefix > 32) {
+    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Prefix tidak valid. Pastikan prefix baru &ge; prefix awal.</div>';
+    return;
+  }
+
+  var ipLong = ip2long(ip);
+  var mask = (-1 << (32 - prefix)) >>> 0;
+  var network = ipLong & mask;
+  var broadcast = (network | (~mask >>> 0)) >>> 0;
+
+  var firstHost = (prefix < 31) ? long2ip(network + 1) : 'N/A';
+  var lastHost = (prefix < 31) ? long2ip(broadcast - 1) : 'N/A';
+  var totalHosts = (prefix === 32) ? 1 : Math.max(0, Math.pow(2, 32 - prefix) - 2);
+
+  var firstOctet = parseInt(match[1], 10);
+  var ipClass = getIPClass(firstOctet);
+
+  var subnetMask = long2ip(mask);
+  var wildcard = long2ip((~mask) >>> 0);
+
+  var html = '<div class="card shadow-sm p-3 mb-4">';
+  html += '<h5 class="mb-3">Subnet Asal</h5>';
+  html += '<ul class="list-unstyled">';
+  html += '<li><strong>IP Address:</strong> ' + escapeHtml(ip) + '/' + prefix + '</li>';
+  html += '<li><strong>Kelas:</strong> ' + ipClass.name + '</li>';
+  if (ipClass.defaultPrefix) {
+    var defMask = (-1 << (32 - ipClass.defaultPrefix)) >>> 0;
+    html += '<li><strong>Default Mask:</strong> /' + ipClass.defaultPrefix + ' (' + long2ip(defMask) + ')</li>';
+  }
+  html += '<li><strong>Subnet Mask:</strong> ' + subnetMask + '</li>';
+  html += '<li><strong>Wildcard Mask:</strong> ' + wildcard + '</li>';
+  html += '<li><strong>Network Address:</strong> ' + long2ip(network) + '</li>';
+  html += '<li><strong>Broadcast Address:</strong> ' + long2ip(broadcast) + '</li>';
+  html += '<li><strong>First Host:</strong> ' + firstHost + '</li>';
+  html += '<li><strong>Last Host:</strong> ' + lastHost + '</li>';
+  html += '<li><strong>Jumlah Host:</strong> ' + totalHosts + '</li>';
+  html += '</ul></div>';
+
+  var subnetCount = Math.pow(2, newprefix - prefix);
+  var step = Math.pow(2, 32 - newprefix);
+  var maxSubnets = 4096;
+
+  if (subnetCount > maxSubnets) {
+    html += '<div class="alert alert-warning">Jumlah subnet (' + subnetCount + ') terlalu besar. Maksimal hanya ' + maxSubnets + ' subnet ditampilkan.</div>';
+  } else {
+    html += '<div class="card shadow-sm p-3">';
+    html += '<h5 class="mb-3">Hasil Pemotongan (' + subnetCount + ' subnet)</h5>';
+    html += '<div class="table-responsive">';
+    html += '<table class="table table-bordered table-sm">';
+    html += '<thead><tr><th>#</th><th>Network</th><th>First Host</th><th>Last Host</th><th>Broadcast</th><th>Hosts</th><th>CIDR</th></tr></thead><tbody>';
+
+    for (var i = 0; i < subnetCount; i++) {
+      var subNet = network + (i * step);
+      var subBroadcast = subNet + step - 1;
+      var subFirst = (newprefix < 31) ? long2ip(subNet + 1) : 'N/A';
+      var subLast = (newprefix < 31) ? long2ip(subBroadcast - 1) : 'N/A';
+      var subHosts = (newprefix === 32) ? 1 : Math.max(0, Math.pow(2, 32 - newprefix) - 2);
+
+      html += '<tr>';
+      html += '<td>' + (i + 1) + '</td>';
+      html += '<td>' + long2ip(subNet) + '/' + newprefix + '</td>';
+      html += '<td>' + subFirst + '</td>';
+      html += '<td>' + subLast + '</td>';
+      html += '<td>' + long2ip(subBroadcast) + '</td>';
+      html += '<td>' + subHosts + '</td>';
+      html += '<td>/' + newprefix + '</td>';
+      html += '</tr>';
+    }
+
+    html += '</tbody></table></div></div>';
+  }
+
+  document.getElementById('results').innerHTML = html;
+}
+
+(function init() {
+  var prefixSelect = document.getElementById('prefix');
+  var newprefixSelect = document.getElementById('newprefix');
+  for (var i = 1; i <= 32; i++) {
+    var opt1 = document.createElement('option');
+    opt1.value = i;
+    opt1.textContent = '/' + i;
+    prefixSelect.appendChild(opt1);
+
+    var opt2 = document.createElement('option');
+    opt2.value = i;
+    opt2.textContent = '/' + i;
+    newprefixSelect.appendChild(opt2);
+  }
+  document.getElementById('subnetForm').addEventListener('submit', calculate);
+})();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

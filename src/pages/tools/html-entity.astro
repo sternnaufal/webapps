@@ -1,0 +1,137 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'HTML Entity Encoder/Decoder';
+const description = 'Encode dan decode HTML entities online. Konversi &lt; &gt; &amp; &quot; ke entity HTML.';
+const keywords = 'html entity encoder, html entity decoder, html escape, html unescape, special characters';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">&amp;</div><div><h1 class="h3 mb-0">HTML Entity Encoder / Decoder</h1><p class="text-muted small mb-0">Encode atau decode karakter khusus HTML seperti &lt;, &gt;, &amp;, &quot; menjadi entity HTML.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-6"><label class="form-label fw-semibold">Input</label>
+<textarea id="inputArea" class="form-control font-mono" rows="8" placeholder="Paste teks..." autofocus>&lt;div class="container"&gt;
+  &lt;h1&gt;Hello &amp; Welcome!&lt;/h1&gt;
+  &lt;p&gt;Harga: Rp 50.000 &amp; diskon 20%&lt;/p&gt;
+&lt;/div&gt;</textarea>
+<div class="d-flex gap-2 mt-2 flex-wrap">
+<button id="btnEncode" class="btn btn-primary">Encode</button>
+<button id="btnDecode" class="btn btn-success">Decode</button>
+<button id="btnClear" class="btn btn-outline-danger">Clear</button>
+<button id="btnSwap" class="btn btn-outline-secondary">Swap Input ? Output</button>
+</div></div>
+<div class="col-lg-6"><div class="d-flex justify-content-between align-items-center mb-1"><label class="form-label fw-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
+<textarea id="outputArea" class="form-control font-mono" rows="8" readonly></textarea>
+<div class="mt-2">
+<div class="form-check form-check-inline"><input type="radio" name="encodeMode" id="modeNamed" class="form-check-input" checked><label class="form-check-label small" for="modeNamed">Named (&amp;nbsp;)</label></div>
+<div class="form-check form-check-inline"><input type="radio" name="encodeMode" id="modeNumeric" class="form-check-input"><label class="form-check-label small" for="modeNumeric">Numeric (&amp;#160;)</label></div>
+<div class="form-check form-check-inline"><input type="radio" name="encodeMode" id="modeHex" class="form-check-input"><label class="form-check-label small" for="modeHex">Hex (&amp;#xA0;)</label></div>
+</div></div></div>
+<div class="row mt-4"><div class="col-12">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Referensi Cepat HTML Entities</h6>
+<div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Karakter</th><th>Entity</th><th>Deskripsi</th><th>Karakter</th><th>Entity</th><th>Deskripsi</th></tr></thead><tbody id="entityTable"></tbody></table></div></div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang HTML Entity Encoder/Decoder</h6><p class="small mb-1" style="line-height:1.6">HTML entity encoder dan decoder online untuk mengkonversi karakter khusus menjadi HTML entities dan sebaliknya. HTML entities digunakan untuk menampilkan karakter yang memiliki makna khusus dalam HTML (seperti <, >, &) atau karakter yang tidak tersedia di keyboard. Encoding ini memastikan teks ditampilkan dengan benar di browser tanpa mengganggu struktur HTML.</p><p class="small mb-0" style="line-height:1.6">Fitur encoder/decoder ini meliputi: encode teks biasa ke HTML entities (termasuk karakter spesial, Unicode, dan emoji), decode HTML entities kembali ke teks asli, dukungan untuk named entities (&amp;, &lt;, &gt;, &quot;, &apos;) dan numeric entities (&#34;), mode encode semua karakter atau hanya yang berbahaya untuk XSS, dan tombol copy untuk menyalin hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">HTML entity converter sangat penting untuk: mencegah Cross-Site Scripting (XSS) dengan mengencode input pengguna, menampilkan kode contoh atau snippet di halaman web tanpa dieksekusi, menulis konten yang mengandung karakter HTML spesial, mengirim data melalui form tanpa merusak markup, dan memastikan kompatibilitas karakter dengan berbagai encoding halaman. Alat ini bekerja sepenuhnya di browser.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a><a href="base64-coded" class="btn btn-outline-secondary btn-sm rounded-pill">Base64 Encoder</a><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="textcase" class="btn btn-outline-secondary btn-sm rounded-pill">Text Case Converter</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
+
+var namedEntities={
+  '&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&nbsp;':'\\xa0','&copy;':'','&reg;':'','&trade;':'','&euro;':'','&pound;':'','&yen;':'','&cent;':'','&sect;':'','&deg;':'','&plusmn;':'','&times;':'','&divide;':'','&micro;':'','&middot;':'','&bull;':'','&hellip;':'','&prime;':''','&Prime;':'?','&larr;':'?','&rarr;':'?','&uarr;':'?','&darr;':'?','&harr;':'?','&spades;':'?','&clubs;':'?','&hearts;':'?','&diams;':'?','&there4;':'?','&permil;':'','&sum;':'?','&prod;':'?','&radic;':'v','&infin;':'8','&int;':'?','&asymp;':'','&ne;':'?','&equiv;':'=','&le;':'=','&ge;':'=','&nabla;':'?','&alpha;':'a','&beta;':'','&gamma;':'?','&delta;':'d','&pi;':'p','&omega;':'?',
+};
+var namedToChar={};for(var k in namedEntities)namedToChar[namedEntities[k]]=k;
+
+function getMode(){return document.querySelector('input[name=encodeMode]:checked').id}
+
+function encode(){
+  var t=inp.value,mode=getMode();
+  var r='';
+  for(var i=0;i<t.length;i++){
+    var c=t[i],code=t.charCodeAt(i);
+    if(c==='&'){r+='&amp;';continue}
+    if(c==='<'){r+='&lt;';continue}
+    if(c==='>'){r+='&gt;';continue}
+    if(c==='"'){r+='&quot;';continue}
+    if(c==="'"){r+='&apos;';continue}
+    if(code>127||code<32){
+      if(mode==='modeNamed'&&namedToChar[c]){r+=namedToChar[c];continue}
+      if(mode==='modeNumeric'){r+='&#'+code+';';continue}
+      if(mode==='modeHex'){r+='&#x'+code.toString(16).toUpperCase()+';';continue}
+    }
+    r+=c;
+  }
+  out.value=r;
+}
+
+function decode(){
+  var t=inp.value;
+  t=t.replace(/&amp;/g,'&');
+  t=t.replace(/&lt;/g,'<');
+  t=t.replace(/&gt;/g,'>');
+  t=t.replace(/&quot;/g,'"');
+  t=t.replace(/&apos;/g,"'");
+  t=t.replace(/&#x([0-9a-fA-F]+);/g,function(m,h){return String.fromCodePoint(parseInt(h,16))});
+  t=t.replace(/&#(\\d+);/g,function(m,d){return String.fromCodePoint(parseInt(d))});
+  for(var e in namedEntities){
+    t=t.split(e).join(namedEntities[e]);
+  }
+  out.value=t;
+}
+
+document.getElementById('btnEncode').addEventListener('click',encode);
+document.getElementById('btnDecode').addEventListener('click',decode);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
+document.getElementById('btnSwap').addEventListener('click',function(){var t=inp.value;inp.value=out.value;out.value=t});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+document.querySelectorAll('input[name=encodeMode]').forEach(function(r){r.addEventListener('change',encode)});
+
+var refs=[['&amp;','&','&lt;','<','&gt;','>','&quot;','"','&apos;','&#39;',"'",'&nbsp;',' '],
+  ['&copy;','','&reg;','','&trade;','','&euro;','','&pound;','','&yen;','','&cent;',''],
+  ['&sect;','','&deg;','','&plusmn;','','&times;','','&divide;','','&micro;','','&middot;',''],
+  ['&bull;','','&hellip;','','&larr;','?','&rarr;','?','&uarr;','?','&darr;','?','&harr;','?'],
+  ['&spades;','?','&clubs;','?','&hearts;','?','&diams;','?','&sum;','?','&prod;','?','&radic;','v'],
+  ['&infin;','8','&asymp;','','&ne;','?','&equiv;','=','&le;','=','&ge;','=','&alpha;','a']];
+var et=document.getElementById('entityTable');
+refs.forEach(function(r){
+  et.innerHTML+='<tr><td class="font-mono">'+r[1]+'</td><td class="font-mono">'+r[0]+'</td><td>'+r[0].slice(1,-1)+'</td><td class="font-mono">'+r[3]+'</td><td class="font-mono">'+r[2]+'</td><td>'+r[2].slice(1,-1)+'</td></tr>';
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

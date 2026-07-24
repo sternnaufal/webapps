@@ -1,0 +1,45 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'HTML Minifier';
+const description = 'HTML Minifier online. Minify dan beautify HTML code. Kompres HTML untuk performa website lebih cepat.';
+const keywords = 'html minifier, html minify, html beautifier, html formatter, html compressor, minify html online';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">&lt;/&gt;</div><div><h1 class="h3 mb-0">HTML Minifier</h1><p class="text-muted small mb-0">Minify dan beautify HTML code untuk performa web lebih baik.</p></div></header><div class="row g-4"><div class="col-lg-6"><div class="card shadow-sm border-0 p-3"><label class="form-label fw-semibold small">Input HTML</label><textarea id="inputHtml" class="form-control font-mono" rows="12" placeholder="Tempel HTML di sini...">&lt;html&gt; &lt;head&gt; &lt;title&gt;    Hello&lt;/title&gt; &lt;/head&gt; &lt;body&gt;    &lt;h1&gt;Hello World&lt;/h1&gt; &lt;/body&gt; &lt;/html&gt;</textarea><div class="d-flex gap-2 mt-2"><button id="btnMinify" class="btn btn-primary">Minify</button><button id="btnBeautify" class="btn btn-outline-primary">Beautify</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div></div><div class="col-lg-6"><div class="card shadow-sm border-0 p-3"><div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label fw-semibold small mb-0">Output</label><div class="small text-muted" id="sizeInfo">Ukuran: 0 byte</div></div><textarea id="outputHtml" class="form-control font-mono" rows="12" placeholder="Hasil..." readonly></textarea><button id="btnCopy" class="btn btn-outline-secondary btn-sm mt-2">Copy</button></div></div></div><div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang HTML Minifier</h6><p class="small mb-1" style="line-height:1.6">HTML minifier online untuk memperkecil ukuran file HTML dengan menghapus karakter yang tidak perlu tanpa mengubah fungsionalitas. Minification menghapus spasi berlebih, komentar, baris kosong, dan whitespace yang hanya berfungsi untuk readability. Hasilnya adalah file HTML yang lebih ringan, sehingga mempercepat waktu muat halaman dan menghemat bandwidth.</p><p class="small mb-0" style="line-height:1.6">Fitur HTML minifier meliputi: input HTML langsung atau upload file, opsi untuk menghapus komentar HTML, menghapus whitespace berlebih, menghapus atribut type default pada script dan style, menghapus trailing slash pada elemen void, dan opsi untuk mempertahankan kondisional IE comments. Hasil minifikasi ditampilkan dengan perbandingan ukuran sebelum dan sesudah serta persentase penghematan.</p><p class="small mb-0 mt-2" style="line-height:1.6">HTML minifier sangat berguna untuk: mengoptimalkan kecepatan website dengan mengurangi ukuran file, mempersiapkan file HTML untuk production deployment, menghemat bandwidth hosting, meningkatkan skor PageSpeed Insights dan Lighthouse, mengurangi waktu muat halaman untuk pengguna mobile, dan mengoptimalkan halaman landing page atau email template. Minifikasi adalah praktik standar dalam web performance optimization.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span><a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a><a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a></div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="sql-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">SQL Formatter</a><a href="css-unit" class="btn btn-outline-secondary btn-sm rounded-pill">CSS Unit</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var iH=document.getElementById('inputHtml'),oH=document.getElementById('outputHtml'),sI=document.getElementById('sizeInfo');function minify(){var t=iH.value;t=t.replace(/<!--[\\s\\S]*?-->/g,'').replace(/>\\s+</g,'><').replace(/\\s+/g,' ').replace(/\\s+([\\w\\-]+=)/g,' $1').trim();oH.value=t;updateSize()}function beautify(){var t=iH.value,depth=0,out='';t=t.replace(/>\\s+</g,'><').replace(/<!--[\\s\\S]*?-->/g,'');for(var i=0;i<t.length;i++){var c=t[i];if(c==='<'){if(t[i+1]=='/')depth--;for(var j=0;j<depth;j++)out+='  ';out+=c;if(t[i+1]!=='/'){var ci=i+1;while(ci<t.length&&t[ci]!==' '&&t[ci]!=='>')ci++;var tag=t.substring(i+1,ci).toLowerCase();if(tag!=='br'&&tag!=='hr'&&tag!=='img'&&tag!=='input'&&tag!=='meta'&&tag!=='link'&&tag!=='area'&&tag!=='base'&&tag!=='col'&&tag!=='embed'&&tag!=='source'&&tag!=='track'&&tag!=='wbr'){if(t[i+1]!=='/')depth++}}}else if(c==='>'){out+=c;if(i+1<t.length&&t[i+1]==='<')out+='\\n'}else out+=c}oH.value=out;updateSize()}function updateSize(){var bytes=new Blob([oH.value]).size;sI.textContent='Ukuran: '+bytes.toLocaleString()+' byte'+(bytes>0?' (sebelum: '+new Blob([iH.value]).size.toLocaleString()+' byte)':'')}document.getElementById('btnMinify').addEventListener('click',minify);document.getElementById('btnBeautify').addEventListener('click',beautify);document.getElementById('btnClear').addEventListener('click',function(){iH.value='';oH.value='';sI.textContent='Ukuran: 0 byte'});document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(oH.value).catch(function(){})});minify();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

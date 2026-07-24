@@ -1,0 +1,217 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import ToolCard from '../components/ToolCard.astro';
+import tools from '../data/tools.json';
+
+const allTools = tools.categories.flatMap(c => c.tools);
+
+---
+
+<ToolLayout
+  title="WebApps Naufal Rakha - 40+ Online Developer Tools"
+  description="Koleksi 40+ online tools gratis untuk developer: password generator, hash generator, QR code, subnetting calculator, JSON formatter, dan banyak lagi. Tanpa install, langsung di browser."
+  keywords="web tools, online tools, developer tools, web apps, password generator, hash generator, qr code, json formatter, subnetting, 무료 도구"
+>
+  <div class="container-fluid">
+    <!-- Hero -->
+    <header class="mb-4">
+      <div class="d-flex align-items-center gap-3 mb-2">
+        <img src="/favicon-48x48.png" alt="logo" width="40" height="40" class="rounded" />
+        <div>
+          <h1 class="h2 mb-0">WebApps Naufal Rakha</h1>
+          <p class="text-muted mb-0 small">40+ online tools gratis untuk developer, designer, dan pengguna umum</p>
+        </div>
+      </div>
+      
+      <!-- Search -->
+      <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </span>
+            <input type="search" id="toolSearch" class="form-control border-start-0" placeholder="Cari tool... (contoh: password, hash, json, qr)" aria-label="Cari tool" style="border-radius:0 .5rem .5rem 0;">
+          </div>
+          <div class="form-text text-center mt-1">
+            <span id="toolCount">{allTools.length} tools</span> tersedia &nbsp;|&nbsp; Tekan <kbd>/</kbd> untuk fokus ke pencarian
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tool Grid -->
+    <div class="row g-4" id="toolGrid">
+      {tools.categories.map(cat => (
+        <div class="col-12" data-category={cat.name}>
+          <h3 class="h5 fw-bold text-secondary mb-3" style="border-bottom:2px solid var(--accent);padding-bottom:.25rem;">{cat.icon} {cat.name}</h3>
+          <div class="row g-4">
+            {cat.tools.map(t => (
+              <ToolCard tool={t} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- No results message -->
+    <div id="noResults" class="text-center py-5" style="display:none;">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-muted mb-3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <h4 class="text-muted">Tidak ada tool yang cocok</h4>
+      <p class="text-muted small">Coba kata kunci lain atau hapus filter pencarian</p>
+    </div>
+  </div>
+
+  <!-- Pinned Tools (hidden by default, filled by JS) -->
+  <div id="pinnedSection" class="mb-4" style="display:none;">
+    <h3 class="h5 fw-bold text-secondary mb-3">⭐ Pinned Tools</h3>
+    <div class="row g-4" id="pinnedGrid"></div>
+  </div>
+</ToolLayout>
+
+<script is:inline>
+  // Search filter logic
+  const searchInput = document.getElementById('toolSearch');
+  const toolGrid = document.getElementById('toolGrid');
+  const toolCount = document.getElementById('toolCount');
+  const noResults = document.getElementById('noResults');
+  const pinnedSection = document.getElementById('pinnedSection');
+  const pinnedGrid = document.getElementById('pinnedGrid');
+  const allCards = Array.from(document.querySelectorAll('#toolGrid .tool-card'));
+  
+  // Pinned tools from localStorage
+  const getPinned = () => JSON.parse(localStorage.getItem('pinnedTools') || '[]');
+  const setPinned = (arr) => localStorage.setItem('pinnedTools', JSON.stringify(arr));
+  
+  function updatePinnedDisplay() {
+    const pinned = getPinned();
+    if (pinned.length === 0) {
+      pinnedSection.style.display = 'none';
+      return;
+    }
+    pinnedSection.style.display = 'block';
+    pinnedGrid.innerHTML = '';
+    pinned.forEach(slug => {
+      const card = allCards.find(c => c.dataset.slug === slug);
+      if (card) {
+        const clone = card.cloneNode(true);
+        // Add unpin button
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2';
+        btn.innerHTML = '×';
+        btn.title = 'Unpin';
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const newPinned = getPinned().filter(s => s !== slug);
+          setPinned(newPinned);
+          updatePinnedDisplay();
+        };
+        clone.style.position = 'relative';
+        clone.appendChild(btn);
+        pinnedGrid.appendChild(clone);
+      }
+    });
+  }
+  
+  function updateToolCount(visible) {
+    toolCount.textContent = visible + ' tools';
+  }
+  
+  let searchTimer = null;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      const q = this.value.toLowerCase().trim();
+      let visible = 0;
+      
+      allCards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        const match = !q || text.includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      
+      // Show/hide categories
+      document.querySelectorAll('[data-category]').forEach(cat => {
+        const cards = cat.querySelectorAll('.tool-card:not([style*="display: none"])');
+        cat.style.display = cards.length > 0 ? '' : 'none';
+      });
+      
+      updateToolCount(visible);
+      noResults.style.display = visible === 0 && q ? 'block' : 'none';
+    }, 150);
+  });
+  
+  // Keyboard shortcut: / to focus search
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+  
+  // Pin click handler
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pin-btn')) {
+      e.stopPropagation();
+      const slug = e.target.dataset.slug;
+      const pinned = getPinned();
+      if (pinned.includes(slug)) {
+        setPinned(pinned.filter(s => s !== slug));
+        e.target.textContent = '☆';
+        e.target.classList.remove('pinned');
+      } else {
+        pinned.push(slug);
+        setPinned(pinned);
+        e.target.textContent = '★';
+        e.target.classList.add('pinned');
+      }
+      updatePinnedDisplay();
+    }
+  });
+  
+  // Initialize
+  updatePinnedDisplay();
+</script>
+
+<style is:inline>
+  .tool-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: transform .15s ease, box-shadow .15s ease;
+    height: 100%;
+    background: var(--surface);
+  }
+  .tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  }
+  .tool-card .card-body { padding: 1rem; }
+  .tool-card .tool-icon { width: 44px; height: 44px; border-radius: 10px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; }
+  .tool-card h5 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .tool-card .card-text { font-size: 0.8rem; line-height: 1.4; }
+  .tool-card .pin-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    line-height: 1;
+    background: rgba(0,0,0,.04);
+    border: none;
+    color: #666;
+    opacity: 0.6;
+    transition: all .15s;
+  }
+  .tool-card .pin-btn:hover {
+    opacity: 1;
+    background: rgba(0,0,0,.08);
+    color: var(--accent);
+  }
+  .tool-card .pin-btn.pinned { color: #f59e0b; opacity: 1; }
+  .category-badge { font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+</style>

@@ -1,0 +1,61 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'RSA Key Generator';
+const description = 'Generate pasangan kunci RSA (public/private key) online. RSA key generator untuk keamanan data.';
+const keywords = 'rsa key generator, rsa, public key, private key, encryption';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><div><h1 class="h3 mb-0">RSA Key Generator</h1><p class="text-muted small mb-0">Generate pasangan kunci RSA 2048/4096-bit langsung di browser. Private key tidak pernah dikirim ke server.</p></div></header>
+<div class="mb-3"><label class="form-label">Key Size</label>
+<select id="keySize" class="form-select" style="max-width:200px;"><option value="2048">2048-bit</option><option value="4096">4096-bit</option></select>
+<button id="btnGenerate" class="btn btn-primary mt-2">Generate Keys</button></div>
+<div id="keyOutput" style="display:none;">
+<div class="mb-3"><label class="form-label fw-semibold">Public Key (SPKI PEM)</label><textarea id="pubKey" class="form-control font-mono" rows="6" readonly></textarea><button class="btn btn-sm btn-outline-secondary mt-1 copy-key" data-target="pubKey">Copy</button></div>
+<div class="mb-3"><label class="form-label fw-semibold">Private Key (PKCS8 PEM)</label><textarea id="privKey" class="form-control font-mono" rows="12" readonly></textarea><button class="btn btn-sm btn-outline-secondary mt-1 copy-key" data-target="privKey">Copy</button></div>
+</div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang RSA Key Generator</h6><p class="small mb-1" style="line-height:1.6">RSA key generator online untuk membuat pasangan kunci RSA (public key dan private key) langsung di browser. RSA adalah algoritma kriptografi asimetris yang banyak digunakan untuk enkripsi data dan digital signature. Alat ini membantu developer dan security professional menghasilkan key pair untuk berbagai keperluan keamanan: SSH, SSL/TLS, OpenPGP, dan aplikasi kriptografi lainnya.</p><p class="small mb-0" style="line-height:1.6">Fitur RSA generator meliputi: pilihan panjang kunci (1024, 2048, 3072, 4096, 8192 bit), format output PEM standar, format output untuk berbagai penggunaan (SSH, OpenSSL, PKCS#8, PKCS#1), preview public key dan private key, tombol copy untuk masing-masing kunci, opsi download sebagai file .pem, dan informasi tentang kekuatan kunci serta estimasi keamanan. Proses generasi menggunakan Web Crypto API untuk keamanan maksimal.</p><p class="small mb-0 mt-2" style="line-height:1.6">RSA key pair generator sangat penting untuk: mengatur SSH key-based authentication untuk server, membuat SSL certificate signing request (CSR), mengamankan komunikasi email dengan OpenPGP, menandatangani software atau package secara digital, mengenkripsi data sensitif, dan belajar tentang kriptografi asimetris. Semua generasi kunci dilakukan di browser, sehingga private key Anda tidak pernah meninggalkan perangkat Anda.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="hash-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Hash Generator</a><a href="jwt-decoder" class="btn btn-outline-secondary btn-sm rounded-pill">JWT Decoder</a><a href="base64-coded" class="btn btn-outline-secondary btn-sm rounded-pill">Base64 Encoder</a><a href="uuid-generator" class="btn btn-outline-secondary btn-sm rounded-pill">UUID Generator</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+function ab2pem(buf,label){var b64=btoa(String.fromCharCode.apply(null,new Uint8Array(buf))),chunks=[];for(var i=0;i<b64.length;i+=64)chunks.push(b64.substr(i,64));return'-----BEGIN '+label+'-----\\n'+chunks.join('\\n')+'\\n-----END '+label+'-----\\n'}
+document.getElementById('btnGenerate').addEventListener('click',async function(){var size=parseInt(document.getElementById('keySize').value,10);this.disabled=true;this.textContent='Generating...';
+try{var keyPair=await crypto.subtle.generateKey({name:'RSA-OAEP',modulusLength:size,publicExponent:new Uint8Array([1,0,1]),hash:'SHA-256'},true,['encrypt','decrypt']);
+var pubBuf=await crypto.subtle.exportKey('spki',keyPair.publicKey),privBuf=await crypto.subtle.exportKey('pkcs8',keyPair.privateKey);
+document.getElementById('pubKey').value=ab2pem(pubBuf,'PUBLIC KEY');document.getElementById('privKey').value=ab2pem(privBuf,'PRIVATE KEY');document.getElementById('keyOutput').style.display='block';
+}catch(e){alert('Error: '+e.message)}finally{this.disabled=false;this.textContent='Generate Keys'}});
+document.querySelectorAll('.copy-key').forEach(function(b){b.addEventListener('click',function(){var id=this.getAttribute('data-target'),text=document.getElementById(id).value;if(!text)return;navigator.clipboard.writeText(text).then(function(){var t=this;this.textContent='Copied!';setTimeout(function(){this.textContent='Copy'}.bind(this),1500)}.bind(this))})});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

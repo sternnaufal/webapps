@@ -1,0 +1,159 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Meta Tag Generator';
+const description = 'Generate meta tags SEO untuk website. Generator meta description, Open Graph, Twitter Card, dan meta viewport. Copy paste langsung.';
+const keywords = 'meta tag generator, SEO meta tags, og generator, meta description generator';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#6366f1;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div><h1 class="h3 mb-0">Meta Tag Generator</h1><p class="text-muted small mb-0">Generate meta tags SEO, Open Graph & Twitter Card. Tinggal isi, copy paste.</p></div></header>
+
+<div class="row g-4">
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<h6 class="mb-3">Basic SEO</h6>
+<div class="mb-2"><label class="form-label small">Page Title</label><input id="mt-title" class="form-control form-control-sm" placeholder="Judul halaman"></div>
+<div class="mb-2"><label class="form-label small">Meta Description</label><textarea id="mt-desc" class="form-control form-control-sm" rows="2" placeholder="Deskripsi halaman, max 160 karakter"></textarea></div>
+<div class="mb-2"><label class="form-label small">Keywords (pisah koma)</label><input id="mt-keywords" class="form-control form-control-sm" placeholder="keyword1, keyword2"></div>
+
+<h6 class="mt-4 mb-3">Open Graph</h6>
+<div class="mb-2"><label class="form-label small">OG Title</label><input id="og-title" class="form-control form-control-sm" placeholder="Kosongi biar pake Page Title"></div>
+<div class="mb-2"><label class="form-label small">OG Description</label><textarea id="og-desc" class="form-control form-control-sm" rows="2" placeholder="Kosongi biar pake Meta Description"></textarea></div>
+<div class="mb-2"><label class="form-label small">OG Image URL</label><input id="og-image" class="form-control form-control-sm" placeholder="https://example.com/image.png"></div>
+<div class="mb-2"><label class="form-label small">OG URL</label><input id="og-url" class="form-control form-control-sm" placeholder="https://example.com/page"></div>
+
+<h6 class="mt-4 mb-3">Twitter Card</h6>
+<div class="mb-2"><label class="form-label small">Twitter Title</label><input id="tw-title" class="form-control form-control-sm" placeholder="Kosongi biar pake OG Title"></div>
+<div class="mb-2"><label class="form-label small">Twitter Description</label><textarea id="tw-desc" class="form-control form-control-sm" rows="2" placeholder="Kosongi biar pake OG Description"></textarea></div>
+
+<h6 class="mt-4 mb-3">Lainnya</h6>
+<div class="mb-2"><label class="form-label small">Canonical URL</label><input id="mt-canonical" class="form-control form-control-sm" placeholder="https://example.com/page"></div>
+<div class="form-check mb-2"><input type="checkbox" id="mt-robots" class="form-check-input" checked><label class="form-check-label small" for="mt-robots">Index, follow</label></div>
+<div class="mb-2"><label class="form-label small">Site Name</label><input id="og-sitename" class="form-control form-control-sm" placeholder="Nama situs"></div>
+
+<button id="btnGenerate" class="btn btn-primary w-100 mt-2">Generate</button>
+</div>
+</div>
+
+<div class="col-lg-6">
+<div class="card shadow-sm border-0 p-3">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h6 class="mb-0">Output HTML</h6>
+<button id="btnCopy" class="btn btn-sm btn-outline-secondary rounded-pill">Copy All</button>
+</div>
+<div id="output" class="mtg-output">&lt;!-- Isi form di sebelah kiri, lalu klik Generate --&gt;</div>
+</div>
+</div>
+</div>
+
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Meta Tag Generator</h6><p class="small mb-1" style="line-height:1.6">Meta tag generator online untuk membuat meta tag SEO lengkap: meta description, keywords, robots, Open Graph (og:title, og:description, og:image, og:url, og:type, og:locale, og:site_name), Twitter Card (twitter:card, twitter:title, twitter:description, twitter:image), canonical URL, viewport, dan favicon. Cukup isi form, langsung dapet kode HTML siap copy paste ke website.</p><p class="small mb-0" style="line-height:1.6">Alat ini sangat berguna untuk web developer, SEO specialist, content writer, dan blogger yang ingin memastikan setiap halaman website memiliki meta tag lengkap untuk performa SEO dan social sharing optimal. Meta tag yang baik membantu Google memahami konten halaman dan meningkatkan click-through rate di hasil pencarian serta tampilan preview saat dibagikan di media sosial.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="html-preview" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Preview</a><a href="regex-tester" class="btn btn-outline-secondary btn-sm rounded-pill">Regex Tester</a><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="slug-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Slug Generator</a></div>`;
+const toolCss = `
+    .mtg-output { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; background: var(--surface-soft); padding: 1rem; border-radius: 8px; min-height: 200px; }
+  `;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function esc(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+document.getElementById('btnGenerate').addEventListener('click', function() {
+  var title = esc(document.getElementById('mt-title').value.trim());
+  var desc = esc(document.getElementById('mt-desc').value.trim());
+  var keywords = esc(document.getElementById('mt-keywords').value.trim());
+  var ogTitle = esc(document.getElementById('og-title').value.trim()) || title;
+  var ogDesc = esc(document.getElementById('og-desc').value.trim()) || desc;
+  var ogImage = esc(document.getElementById('og-image').value.trim());
+  var ogUrl = esc(document.getElementById('og-url').value.trim());
+  var ogSitename = esc(document.getElementById('og-sitename').value.trim());
+  var twTitle = esc(document.getElementById('tw-title').value.trim()) || ogTitle;
+  var twDesc = esc(document.getElementById('tw-desc').value.trim()) || ogDesc;
+  var canonical = esc(document.getElementById('mt-canonical').value.trim());
+  var robots = document.getElementById('mt-robots').checked ? 'index, follow' : 'noindex, nofollow';
+
+  var lines = [];
+
+  lines.push('&lt;meta charset="UTF-8" /&gt;');
+  lines.push('&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;');
+  if (title) lines.push('&lt;title&gt;' + title + '&lt;/title&gt;');
+  if (desc) lines.push('&lt;meta name="description" content="' + desc + '" /&gt;');
+  if (keywords) lines.push('&lt;meta name="keywords" content="' + keywords + '" /&gt;');
+  lines.push('&lt;meta name="robots" content="' + robots + '" /&gt;');
+  if (canonical) lines.push('&lt;link rel="canonical" href="' + canonical + '" /&gt;');
+  lines.push('');
+
+  // OG
+  lines.push('&lt;!-- Open Graph --&gt;');
+  if (ogTitle) lines.push('&lt;meta property="og:title" content="' + ogTitle + '" /&gt;');
+  if (ogDesc) lines.push('&lt;meta property="og:description" content="' + ogDesc + '" /&gt;');
+  if (ogUrl) lines.push('&lt;meta property="og:url" content="' + ogUrl + '" /&gt;');
+  lines.push('&lt;meta property="og:type" content="website" /&gt;');
+  if (ogImage) lines.push('&lt;meta property="og:image" content="' + ogImage + '" /&gt;');
+  lines.push('&lt;meta property="og:locale" content="id_ID" /&gt;');
+  if (ogSitename) lines.push('&lt;meta property="og:site_name" content="' + ogSitename + '" /&gt;');
+  if (ogImage) {
+    lines.push('&lt;meta property="og:image:width" content="1200" /&gt;');
+    lines.push('&lt;meta property="og:image:height" content="630" /&gt;');
+  }
+  lines.push('');
+
+  // Twitter
+  lines.push('&lt;!-- Twitter Card --&gt;');
+  lines.push('&lt;meta name="twitter:card" content="summary_large_image" /&gt;');
+  if (twTitle) lines.push('&lt;meta name="twitter:title" content="' + twTitle + '" /&gt;');
+  if (twDesc) lines.push('&lt;meta name="twitter:description" content="' + twDesc + '" /&gt;');
+  if (ogImage) lines.push('&lt;meta name="twitter:image" content="' + ogImage + '" /&gt;');
+
+  document.getElementById('output').innerHTML = lines.join('\\n');
+});
+
+document.getElementById('btnCopy').addEventListener('click', function() {
+  var text = document.getElementById('output').innerText;
+  navigator.clipboard.writeText(text).then(function() { showToast('Copied to clipboard', 'success'); });
+});
+
+function showToast(message) {
+  var t = document.createElement('div');
+  t.className = 'toast align-items-center text-bg-light border p-2';
+  t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
+  t.innerHTML = '<div class="d-flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close"></button></div>';
+  document.body.appendChild(t);
+  t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
+  setTimeout(function() { t.remove(); }, 2500);
+}
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

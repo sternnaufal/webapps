@@ -1,0 +1,126 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Image to Base64';
+const description = 'Konversi gambar ke Base64 online. Upload gambar dan dapatkan Base64 string untuk CSS/HTML.';
+const keywords = 'image to base64, base64 image, convert image, img to base64';
+const bodyHtml = `<div class="row g-4">
+        <div class="col-lg-5">
+          <div class="drop-zone" id="dropZone">
+            <div class="mb-2">
+              <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="mb-1 fw-semibold">Drag & drop gambar di sini</p>
+            <p class="text-muted small mb-3">atau</p>
+            <label class="btn btn-primary btn-sm">
+              Pilih File
+              <input type="file" id="fileInput" accept="image/*" hidden>
+            </label>
+            <p class="text-muted small mt-2 mb-0">Format: PNG, JPG, GIF, WebP, SVG</p>
+          </div>
+          <div id="info" class="small text-muted mt-2"></div>
+        </div>
+        <div class="col-lg-7">
+          <div id="preview" class="mb-2"></div>
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label fw-semibold mb-0">Base64 Data URI</label>
+            <div>
+              <button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button>
+              <button id="btnClear" class="btn btn-sm btn-outline-danger ms-1">Clear</button>
+            </div>
+          </div>
+          <textarea id="outputText" class="form-control" readonly placeholder="Hasil Base64 akan muncul di sini..."></textarea>
+        </div>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Image to Base64</h6><p class="small mb-1" style="line-height:1.6">Image to Base64 converter online untuk mengubah file gambar menjadi string Base64. Alat ini memungkinkan Anda drag & drop gambar atau memilih file dari komputer, lalu menampilkan hasil encoding Base64 yang siap digunakan sebagai data URI untuk disematkan langsung di HTML, CSS, atau JavaScript. Mendukung berbagai format gambar: PNG, JPG/JPEG, GIF, SVG, WebP, dan BMP.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: seret (drag) file gambar ke area yang disediakan atau klik untuk memilih file. Hasil encoding Base64 akan ditampilkan secara instan lengkap dengan data URI prefix (data:image/png;base64,...). Anda bisa menyalin hasil ke clipboard, melihat preview gambar, dan melihat informasi file seperti ukuran asli dan ukuran hasil encoding. Terdapat juga opsi untuk mengatur kualitas kompresi JPEG.</p><p class="small mb-0 mt-2" style="line-height:1.6">Image to Base64 converter sangat berguna untuk: menyematkan gambar kecil langsung di kode HTML atau CSS untuk mengurangi jumlah HTTP request, membuat email signature dengan logo, menyimpan gambar di database yang hanya mendukung teks, mengirim gambar melalui API dalam format JSON, dan membuat standalone HTML file yang mengandung semua asset dalam satu file. Proses encoding 100% client-side.</p></div>\`n`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="base64-coded" class="btn btn-outline-secondary btn-sm rounded-pill">Base64 Encoder</a><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a><a href="hash-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Hash Generator</a><a href="qr-generator" class="btn btn-outline-secondary btn-sm rounded-pill">QR Generator</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+var dropZone = document.getElementById('dropZone');
+var fileInput = document.getElementById('fileInput');
+var preview = document.getElementById('preview');
+var output = document.getElementById('outputText');
+var info = document.getElementById('info');
+
+function handleFile(file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    alert('File harus berupa gambar');
+    return;
+  }
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUri = e.target.result;
+    output.value = dataUri;
+    preview.innerHTML = '<img src="' + dataUri + '" alt="preview">';
+    var sizeKB = (file.size / 1024).toFixed(1);
+    var base64Len = dataUri.length;
+    info.textContent = file.name + ' | ' + sizeKB + ' KB | Base64: ' + base64Len + ' chars';
+  };
+  reader.readAsDataURL(file);
+}
+
+dropZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+dropZone.addEventListener('drop', function(e) {
+  e.preventDefault();
+  this.classList.remove('dragover');
+  if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+});
+dropZone.addEventListener('click', function() { fileInput.click(); });
+fileInput.addEventListener('change', function() { if (this.files.length > 0) handleFile(this.files[0]); });
+
+document.getElementById('btnCopy').addEventListener('click', function() {
+  if (!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function() {
+    var btn = document.getElementById('btnCopy');
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+  });
+});
+document.getElementById('btnClear').addEventListener('click', function() {
+  output.value = '';
+  preview.innerHTML = '';
+  info.textContent = '';
+  fileInput.value = '';
+});
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

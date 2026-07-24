@@ -1,0 +1,165 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Decimal to Fraction Converter';
+const description = 'Konversi desimal ke pecahan online. Ubah angka desimal menjadi pecahan biasa atau campuran. Akurat dengan continued fraction.';
+const keywords = 'decimal to fraction, desimal ke pecahan, fraction converter, decimal converter, pecahan desimal';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#7c3aed;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><text x="2" y="18" font-size="18">½</text></svg></div><div><h1 class="h3 mb-0">Decimal to Fraction Converter</h1><p class="text-muted small mb-0">Ubah angka desimal menjadi pecahan biasa atau campuran dengan akurat.</p></div></header>
+<div class="row g-4">
+<div class="col-lg-7">
+<div class="card shadow-sm border-0 p-3">
+<div class="row g-2 mb-3">
+<div class="col-md-6"><label class="form-label small fw-semibold">Angka Desimal</label><input type="text" id="decInput" class="form-control form-control-lg" value="0.375" placeholder="Contoh: 0.75, 3.14159, -2.5"></div>
+<div class="col-md-3"><label class="form-label small">Toleransi</label><select id="tolerance" class="form-select"><option value="1e-6">1e-6</option><option value="1e-9" selected>1e-9</option><option value="1e-12">1e-12</option></select></div>
+<div class="col-md-3"><label class="form-label small">Max Penyebut</label><input type="number" id="maxDen" class="form-control" value="1000" min="10" max="100000"></div>
+</div>
+<button id="btnConvert" class="btn btn-primary w-100">Konversi</button>
+</div>
+<div id="fracResult" class="mt-3">
+<div class="frac-output" id="mixedDisplay">0 <span class="frac"><span class="num">3</span><span class="den">8</span></span></div>
+<div class="row g-2">
+<div class="col-md-6"><div class="p-3 rounded small" style="background:var(--surface-soft);"><span class="fw-semibold">Pecahan Biasa:</span> <span id="improperDisplay">3/8</span></div></div>
+<div class="col-md-6"><div class="p-3 rounded small" style="background:var(--surface-soft);"><span class="fw-semibold">Nilai Desimal:</span> <span id="decimalDisplay">0.375</span></div></div>
+</div>
+<div id="stepsDisplay" class="mt-2 p-3 rounded small frac-step" style="background:var(--surface-soft);display:none;"><span class="fw-semibold">Langkah-langkah:</span><br><span id="stepsContent"></span></div>
+<button id="btnToggleSteps" class="btn btn-outline-secondary btn-sm mt-2">Tampilkan Langkah</button>
+</div>
+</div>
+<div class="col-lg-5">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Presets</h6>
+<div class="d-flex gap-2 flex-wrap">
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.3333333333">⅓</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.25">¼</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.6666666667">⅔</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.125">⅛</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="3.1415926535">π (22/7)</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.8333333333">⅚ (0.833)</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="1.414213562">√2 ≈</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.2">⅕</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.1666666667">⅙</button>
+<button class="btn btn-outline-primary btn-sm preset" data-val="0.1">⅒</button>
+</div>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Decimal to Fraction Converter</h6><p class="small mb-1" style="line-height:1.6">Konversi desimal ke pecahan menggunakan algoritma continued fraction yang sangat akurat. Masukkan angka desimal seperti 0.375 atau 3.14159 (π), dan alat ini akan menemukan pecahan terdekat dengan toleransi yang bisa diatur.</p><p class="small mb-0" style="line-height:1.6">Berguna untuk matematika, pendidikan, engineering, dan crafting. Hasil ditampilkan sebagai pecahan campuran, pecahan biasa, dan nilai desimal asli. Fitur langkah-langkah menunjukkan proses konversi secara detail.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="konverter-bilangan" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="unit-converter" class="btn btn-outline-secondary btn-sm rounded-pill">Unit Converter</a><a href="percentage-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Percentage Calc</a><a href="roman-numeral" class="btn btn-outline-secondary btn-sm rounded-pill">Roman Numeral</a></div>`;
+const toolCss = `
+    .frac-output { font-size: 1.8rem; font-weight: 700; text-align: center; padding: 20px; background: var(--surface-soft); border-radius: 12px; margin-bottom: 15px; }
+    .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+    .frac .num { border-bottom: 2px solid currentColor; padding: 0 8px 3px; }
+    .frac .den { padding: 3px 8px 0; }
+    .frac-step { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; }
+  `;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var decInp=document.getElementById('decInput'),tolInp=document.getElementById('tolerance'),denInp=document.getElementById('maxDen');
+var mixedDisp=document.getElementById('mixedDisplay'),improperDisp=document.getElementById('improperDisplay'),decimalDisp=document.getElementById('decimalDisplay');
+var stepsDisp=document.getElementById('stepsDisplay'),stepsContent=document.getElementById('stepsContent');
+var stepsVisible=false;
+
+function fracHTML(num,den){
+  return '<span class="frac"><span class="num">'+num+'</span><span class="den">'+den+'</span></span>';
+}
+
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t}return a}
+
+function decToFrac(decimal,tol,maxDen){
+  var neg=decimal<0;decimal=Math.abs(decimal);
+  var intPart=Math.floor(decimal),frac=decimal-intPart;
+  if(frac<tol)return{num:neg?-intPart:intPart,den:1,mixed:intPart.toString(),improper:intPart+'/1',steps:['Nilai desimal sudah bilangan bulat']};
+  var num1=0,den1=1,num2=1,den2=0,a,n,d,steps=[];
+  steps.push('Bilangan desimal: '+(neg?'-':'')+decimal);
+  steps.push('Bagian bulat: '+intPart+', pecahan: '+frac.toFixed(10));
+  steps.push('Menggunakan algoritma continued fraction:');
+  var count=0;
+  while(count<100){
+    a=Math.floor(frac);n=a*num2+num1;d=a*den2+den1;
+    steps.push('  Iterasi '+(count+1)+': a='+a+', pecahan='+num2+'/'+den2+' (≈'+(num2/den2).toFixed(8)+')');
+    if(d>maxDen){n=num2;d=den2;steps.push('  Penyebut melebihi batas. Mengembalikan iterasi sebelumnya.');break;}
+    var val=n/d;
+    if(Math.abs(val-(decimal-intPart))<tol){steps.push('  Konvergen! Error: '+Math.abs(val-(decimal-intPart)).toExponential(3));break;}
+    num1=num2;den1=den2;num2=n;den2=d;
+    if(frac===a){steps.push('  Selesai (pecahan berakhir).');break;}
+    frac=1/(frac-a);count++;
+  }
+  n=intPart*d+n;
+  if(neg)n=-n;
+  var g=gcd(Math.abs(n),d);n/=g;d/=g;
+  var improper=n+'/'+d;
+  var mixedPart=Math.floor(Math.abs(n)/d);
+  var rem=Math.abs(n)%d;
+  var mixed=neg?'-':'';
+  if(mixedPart>0&&rem>0)mixed+=mixedPart+' '+rem+'/'+d;
+  else if(mixedPart>0)mixed+=mixedPart;
+  else mixed+=(neg?'-':'')+rem+'/'+d;
+  if(rem===0)mixed=mixedPart.toString();
+  if(neg&&mixedPart===0&&rem>0)mixed='-'+rem+'/'+d;
+  steps.push('Pecahan biasa: '+improper);
+  steps.push('Pecahan campuran: '+mixed);
+  return{num:n,den:d,mixed:mixed,improper:improper,steps:steps};
+}
+
+function convert(){
+  var raw=decInp.value.trim().replace(/,/g,'.');
+  var val=parseFloat(raw);
+  if(isNaN(val)){mixedDisp.innerHTML='<span class="text-danger">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;}
+  var tol=parseFloat(tolInp.value);var maxDen=parseInt(denInp.value)||1000;
+  var result=decToFrac(val,tol,maxDen);
+  if(result.den===1){mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;}
+  else{mixedDisp.innerHTML=result.mixed.replace(/(\\d+)\\/(\\d+)/g,function(m,n,d){return fracHTML(n,d)});improperDisp.textContent=result.improper;}
+  decimalDisp.textContent=val.toString();
+  stepsContent.innerHTML=result.steps.map(function(s){return s+'\\n'}).join('<br>');
+  if(stepsVisible)stepsDisp.style.display='block';
+}
+
+document.getElementById('btnConvert').addEventListener('click',convert);
+document.getElementById('btnToggleSteps').addEventListener('click',function(){
+  stepsVisible=!stepsVisible;stepsDisp.style.display=stepsVisible?'block':'none';
+  this.textContent=stepsVisible?'Sembunyikan Langkah':'Tampilkan Langkah';
+});
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+  decInp.value=this.dataset.val;convert();
+})});
+decInp.addEventListener('keydown',function(e){if(e.key==='Enter')convert()});
+convert();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

@@ -1,0 +1,170 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'ASCII Table';
+const description = 'Tabel ASCII lengkap 0-127 (0x00-0x7F). Lihat kode desimal, heksadesimal, biner, dan karakter. Cocok untuk programmer dan pelajar.';
+const keywords = 'ascii table, tabel ascii, ascii codes, ascii chart, kode ascii, character codes';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#8b5cf6;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><polyline points="9 12 11 14 15 10"/></svg></div><div><h1 class="h3 mb-0">ASCII Table</h1><p class="text-muted small mb-0">Tabel kode ASCII lengkap 0&ndash;127. Desimal, heksadesimal, biner, dan karakter.</p></div></header>
+
+<div class="row g-3 mb-4">
+<div class="col-md-8">
+<input type="text" id="asciiSearch" class="form-control" placeholder="Cari kode atau karakter (misal: A, 65, 0x41, null, space, CR)..." autofocus>
+</div>
+<div class="col-md-4 d-flex gap-2 align-items-center">
+<select id="filterCat" class="form-select">
+<option value="all">Semua</option>
+<option value="control">Control (0-31, 127)</option>
+<option value="print">Printable (32-126)</option>
+</select>
+<span class="small text-muted" id="rowCount">128 / 128</span>
+</div>
+</div>
+
+<div class="card shadow-sm border-0" style="max-height: 600px; overflow-y: auto;">
+<table class="table table-sm table-bordered ascii-table mb-0">
+<thead>
+<tr><th>Desimal</th><th>Hex</th><th>Biner</th><th>Karakter</th><th>Keterangan</th></tr>
+</thead>
+<tbody id="asciiBody"></tbody>
+</table>
+</div>
+
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang ASCII Table</h6><p class="small mb-1" style="line-height:1.6">ASCII (American Standard Code for Information Interchange) adalah standar encoding karakter yang digunakan dalam komputer dan perangkat komunikasi. Tabel ASCII mencakup 128 karakter (0-127) yang terdiri dari karakter kontrol (0-31 dan 127) seperti NULL, SOH, STX, CR, LF, BEL, dan karakter cetak (32-126) seperti huruf, angka, tanda baca, dan simbol.</p><p class="small mb-0" style="line-height:1.6">Alat ini sangat berguna untuk programmer, network engineer, dan pelajar yang perlu mencari kode ASCII dengan cepat. Fitur pencarian memungkinkan Anda mencari berdasarkan nilai desimal, heksadesimal, nama karakter, atau simbol. Karakter kontrol ditandai warna merah, karakter cetak hijau, untuk memudahkan identifikasi.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="base64-coded" class="btn btn-outline-secondary btn-sm rounded-pill">Base64</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a><a href="textcase" class="btn btn-outline-secondary btn-sm rounded-pill">Text Case</a><a href="char-counter" class="btn btn-outline-secondary btn-sm rounded-pill">Char Counter</a></div>`;
+const toolCss = `
+    .ascii-table { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 0.8rem; }
+    .ascii-table th { position: sticky; top: 0; background: var(--surface-soft); z-index: 1; }
+    .ascii-table td, .ascii-table th { padding: 4px 10px; text-align: center; vertical-align: middle; }
+    .ascii-table tbody tr:hover { background: rgba(99,102,241,.08); }
+    td.ctrl { color: #ef4444; font-weight: 600; }
+    td.print { color: #22c55e; font-weight: 600; }
+    td.ext { color: #6366f1; font-weight: 600; }
+  `;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+var ctrlNames = [
+  'NUL','SOH','STX','ETX','EOT','ENQ','ACK','BEL','BS','HT','LF','VT','FF','CR','SO','SI',
+  'DLE','DC1','DC2','DC3','DC4','NAK','SYN','ETB','CAN','EM','SUB','ESC','FS','GS','RS','US'
+];
+
+function asciiChar(i) {
+  if (i === 32) return 'SP';
+  if (i === 127) return 'DEL';
+  if (i >= 33 && i <= 126) return String.fromCharCode(i);
+  return ctrlNames[i] || '';
+}
+
+function asciiDesc(i) {
+  var descs = {
+    0:'Null byte', 1:'Start of Heading', 2:'Start of Text', 3:'End of Text',
+    4:'End of Transmission', 5:'Enquiry', 6:'Acknowledgment', 7:'Bell',
+    8:'Backspace', 9:'Horizontal Tab', 10:'Line Feed', 11:'Vertical Tab',
+    12:'Form Feed', 13:'Carriage Return', 14:'Shift Out', 15:'Shift In',
+    16:'Data Link Escape', 17:'Device Control 1', 18:'Device Control 2', 19:'Device Control 3',
+    20:'Device Control 4', 21:'Negative Ack', 22:'Synchronous Idle', 23:'End of Trans. Block',
+    24:'Cancel', 25:'End of Medium', 26:'Substitute', 27:'Escape',
+    28:'File Separator', 29:'Group Separator', 30:'Record Separator', 31:'Unit Separator',
+    32:'Spasi', 127:'Delete'
+  };
+  return descs[i] || '';
+}
+
+function buildRow(i) {
+  var ch = asciiChar(i);
+  var desc = asciiDesc(i);
+  var isCtrl = i < 32 || i === 127;
+  var isPrint = i >= 32 && i <= 126;
+  var cls = isCtrl ? 'ctrl' : (isPrint ? 'print' : '');
+  var display = i === 32 ? '\\u2423' : (i === 127 ? '\\u2421' : ch);
+  return '<tr data-dec="' + i + '" data-hex="0x' + i.toString(16).toUpperCase().padStart(2,'0') + '" data-char="' + ch + '" data-desc="' + desc + '" data-cat="' + (isCtrl?'control':'print') + '">' +
+    '<td>' + i + '</td>' +
+    '<td>0x' + i.toString(16).toUpperCase().padStart(2,'0') + '</td>' +
+    '<td>' + i.toString(2).padStart(8,'0') + '</td>' +
+    '<td class="' + cls + '">' + display + '</td>' +
+    '<td class="small text-muted">' + (desc || '&mdash;') + '</td></tr>';
+}
+
+var allRows = [];
+for (var i = 0; i < 128; i++) allRows.push(buildRow(i));
+
+function render(rows) {
+  document.getElementById('asciiBody').innerHTML = rows.join('');
+  document.getElementById('rowCount').textContent = rows.length + ' / 128';
+}
+
+render(allRows);
+
+var searchTimer;
+document.getElementById('asciiSearch').addEventListener('input', function() {
+  clearTimeout(searchTimer);
+  var self = this;
+  searchTimer = setTimeout(function() {
+    var q = self.value.toLowerCase().trim();
+    var cat = document.getElementById('filterCat').value;
+    var filtered = allRows.filter(function(r) {
+      var el = document.createElement('tr');
+      el.innerHTML = r;
+      if (cat !== 'all' && el.dataset.cat !== cat) return false;
+      if (!q) return true;
+      return el.dataset.dec.indexOf(q) === 0 ||
+             el.dataset.hex.toLowerCase().indexOf(q) !== -1 ||
+             el.dataset.char.toLowerCase().indexOf(q) !== -1 ||
+             el.dataset.desc.toLowerCase().indexOf(q) !== -1;
+    });
+    render(filtered);
+  }, 150);
+});
+
+document.getElementById('filterCat').addEventListener('change', function() {
+  document.getElementById('asciiSearch').dispatchEvent(new Event('input'));
+});
+
+function showToast(message) {
+  var t = document.createElement('div');
+  t.className = 'toast align-items-center text-bg-light border p-2';
+  t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
+  t.innerHTML = '<div class="d-flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close"></button></div>';
+  document.body.appendChild(t);
+  t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
+  setTimeout(function() { t.remove(); }, 2500);
+}
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

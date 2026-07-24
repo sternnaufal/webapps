@@ -1,0 +1,111 @@
+{
+  "categories": [
+    {
+      "name": "Developer Tools",
+      "icon": "&#x1F4BB;",
+      "tools": [
+        { "slug": "hash-generator", "name": "Hash Generator", "desc": "Buat hash MD5, SHA-1, SHA-256, SHA-512 dan lainnya dari teks atau file" },
+        { "slug": "uuid-generator", "name": "UUID/GUID Generator", "desc": "Hasilkan UUID/GUID v4 acak untuk berbagai kebutuhan pengembangan" },
+        { "slug": "base64-coded", "name": "Base64 Encode/Decode", "desc": "Encode dan decode data ke/dari format Base64" },
+        { "slug": "json-formatter", "name": "JSON Formatter", "desc": "Format, validasi, dan prettify data JSON dengan mudah" },
+        { "slug": "regex-tester", "name": "Regex Tester", "desc": "Uji coba regular expression secara real-time dengan highlighting" },
+        { "slug": "diff-checker", "name": "Diff Checker", "desc": "Bandingkan dua teks dan lihat perbedaannya secara detail" },
+        { "slug": "sql-formatter", "name": "SQL Formatter", "desc": "Format query SQL agar lebih rapi dan mudah dibaca" },
+        { "slug": "yaml-json", "name": "YAML/JSON Converter", "desc": "Konversi data antara format YAML dan JSON" },
+        { "slug": "meta-tag-generator", "name": "Meta Tag Generator", "desc": "Generate meta tag HTML untuk SEO website" },
+        { "slug": "ascii-table", "name": "ASCII Table", "desc": "Lihat tabel lengkap karakter ASCII dan kode hex/desimalnya" }
+      ]
+    },
+    {
+      "name": "Network & URL",
+      "icon": "&#x1F310;",
+      "tools": [
+        { "slug": "subnetting", "name": "Kalkulator Subnetting", "desc": "Hitung subnet mask, network address, dan host range dengan mudah" },
+        { "slug": "ip-calculator", "name": "IP Calculator", "desc": "Kalkulator alamat IP, subnet, CIDR, dan informasi jaringan" },
+        { "slug": "url-encode", "name": "URL Encode/Decode", "desc": "Encode dan decode URL untuk web development" },
+        { "slug": "cron-builder", "name": "Cron Builder", "desc": "Buat dan visualisasikan ekspresi cron dengan antarmuka visual" },
+        { "slug": "mac-address-generator", "name": "MAC Address Generator", "desc": "Generate alamat MAC acak untuk berbagai keperluan" }
+      ]
+    },
+    {
+      "name": "Text & Media",
+      "icon": "&#x1F3A8;",
+      "tools": [
+        { "slug": "textcase", "name": "Text Case Converter", "desc": "Konversi teks ke uppercase, lowercase, title case, dan lainnya" },
+        { "slug": "lorem-ipsum", "name": "Lorem Ipsum", "desc": "Generate teks Lorem Ipsum untuk placeholder desain" },
+        { "slug": "md-preview", "name": "Markdown Previewer", "desc": "Tulis Markdown dan lihat preview HTML secara real-time" },
+        { "slug": "color-picker", "name": "Color Picker", "desc": "Pilih warna dengan visual picker, dapatkan kode HEX, RGB, HSL" },
+        { "slug": "image-to-base64", "name": "Image to Base64", "desc": "Konversi gambar ke string Base64 untuk embed di HTML/CSS" },
+        { "slug": "palindrome-checker", "name": "Palindrome Checker", "desc": "Cek apakah sebuah kata atau kalimat adalah palindrome" },
+        { "slug": "anagram-finder", "name": "Anagram Finder", "desc": "Temukan anagram dari kata yang kamu masukkan" },
+        { "slug": "text-repeater", "name": "Text Repeater", "desc": "Ulangi teks sebanyak yang kamu mau dengan mudah" },
+        { "slug": "reverse-text", "name": "Reverse Text", "desc": "Balikkan urutan teks, kata, atau karakter" },
+        { "slug": "list-sorter", "name": "List Sorter", "desc": "Urutkan daftar teks secara ascending atau descending" },
+        { "slug": "morse-code-converter", "name": "Morse Code Converter", "desc": "Konversi teks ke kode Morse dan sebaliknya" }
+      ]
+    },
+    {
+      "name": "Generators",
+      "icon": "&#x2699;&#xFE0F;",
+      "tools": [
+        { "slug": "password-generator", "name": "Password Generator", "desc": "Buat password kuat dan acak dengan berbagai opsi karakter" },
+        { "slug": "qr-generator", "name": "QR Code Generator", "desc": "Generate QR Code dari teks atau URL secara instan" },
+        { "slug": "rsa-generator", "name": "RSA Key Generator", "desc": "Generate pasangan kunci RSA untuk enkripsi dan keamanan" },
+        { "slug": "gradient-generator", "name": "CSS Gradient Generator", "desc": "Buat gradien CSS keren dengan editor visual interaktif" },
+        { "slug": "random-number-generator", "name": "Random Number Generator", "desc": "Hasilkan angka acak dalam rentang tertentu" },
+        { "slug": "jwt-decoder", "name": "JWT Decoder", "desc": "Decode dan inspect token JWT tanpa verifikasi" },
+        { "slug": "html-preview", "name": "HTML Live Preview", "desc": "Tulis HTML dan lihat hasilnya secara real-time" },
+        { "slug": "http-status", "name": "HTTP Status Codes", "desc": "Referensi lengkap kode status HTTP dan penjelasannya" },
+        { "slug": "char-counter", "name": "Character Counter", "desc": "Hitung jumlah karakter, kata, kalimat, dan paragraf" },
+        { "slug": "json-csv", "name": "JSON ↔ CSV Converter", "desc": "Konversi data antara format JSON dan CSV" },
+        { "slug": "css-unit", "name": "CSS Unit Converter", "desc": "Konversi satuan CSS (px, em, rem, %, vw, vh) dengan mudah" },
+        { "slug": "html-entity", "name": "HTML Entity Encoder/Decoder", "desc": "Encode/decode HTML entity untuk teks aman di web" },
+        { "slug": "random-color-generator", "name": "Random Color Generator", "desc": "Dapatkan warna acak dengan kode HEX dan RGB setiap kali" },
+        { "slug": "epoch-converter", "name": "Epoch / Unix Timestamp Converter", "desc": "Konversi antara Unix timestamp dan tanggal/waktu" },
+        { "slug": "avatar-generator", "name": "Avatar Generator", "desc": "Buat avatar unik secara acak dengan berbagai gaya" },
+        { "slug": "barcode-generator", "name": "Barcode Generator", "desc": "Generate barcode dari teks atau angka dengan berbagai format" }
+      ]
+    },
+    {
+      "name": "Converters",
+      "icon": "&#x1F504;",
+      "tools": [
+        { "slug": "konverter-bilangan", "name": "Konverter Bilangan", "desc": "Konversi bilangan desimal, biner, oktal, dan heksadesimal" },
+        { "slug": "unit-converter", "name": "Unit Converter", "desc": "Konversi satuan panjang, berat, suhu, volume, dan lainnya" },
+        { "slug": "time-converter", "name": "Time Converter", "desc": "Konversi zona waktu dan format waktu dengan mudah" },
+        { "slug": "date-calculator", "name": "Date Duration Calculator", "desc": "Hitung selisih antara dua tanggal dalam hari, bulan, tahun" },
+        { "slug": "decimal-to-fraction", "name": "Decimal to Fraction", "desc": "Konversi angka desimal ke pecahan dengan langkah detail" }
+      ]
+    },
+    {
+      "name": "Utilities",
+      "icon": "&#x1F527;",
+      "tools": [
+        { "slug": "timer", "name": "Timer & Stopwatch", "desc": "Timer dan stopwatch digital untuk berbagai keperluan" },
+        { "slug": "stopwatch", "name": "Stopwatch", "desc": "Stopwatch sederhana dengan fitur lap time" },
+        { "slug": "typing-speed-test", "name": "Typing Speed Test", "desc": "Uji kecepatan mengetik dalam WPM dan KPM" },
+        { "slug": "notes-app", "name": "Notes App", "desc": "Catat ide dengan aplikasi notes simpel berbasis browser" },
+        { "slug": "csv-viewer", "name": "CSV Viewer", "desc": "Lihat dan analisis file CSV dalam tabel interaktif" },
+        { "slug": "contrast-checker", "name": "Contrast Checker", "desc": "Cek rasio kontras antara dua warna untuk aksesibilitas" },
+        { "slug": "screen-recorder", "name": "Screen Recorder", "desc": "Rekam layar browser langsung dari aplikasi web" },
+        { "slug": "world-clock", "name": "World Clock", "desc": "Lihat waktu dari berbagai zona waktu di seluruh dunia" },
+        { "slug": "password-strength", "name": "Password Strength", "desc": "Cek kekuatan password dan dapatkan saran perbaikan" },
+        { "slug": "bmi-calculator", "name": "BMI Calculator", "desc": "Hitung Indeks Massa Tubuh dan kategori berat badan" },
+        { "slug": "tip-calculator", "name": "Tip Calculator", "desc": "Hitung tip dan tagihan dengan mudah" },
+        { "slug": "decision-maker", "name": "Decision Maker", "desc": "Bantu ambil keputusan dengan acak dari pilihan yang ada" },
+        { "slug": "age-calculator", "name": "Age Calculator", "desc": "Hitung umur dalam tahun, bulan, hari, jam, menit, detik" },
+        { "slug": "percentage-calculator", "name": "Percentage Calculator", "desc": "Hitung persentase, kenaikan, dan penurunan dengan cepat" },
+        { "slug": "pomodoro", "name": "Pomodoro Timer", "desc": "Timer teknik Pomodoro untuk meningkatkan produktivitas" },
+        { "slug": "countdown", "name": "Countdown Timer", "desc": "Countdown timer untuk hitung mundur acara penting" },
+        { "slug": "savings-calculator", "name": "Savings Calculator", "desc": "Hitung target tabungan dan simulasi investasi" },
+        { "slug": "number-to-words", "name": "Number to Words", "desc": "Ubah angka menjadi tulisan/terbilang dalam Bahasa Indonesia" },
+        { "slug": "roman-numeral", "name": "Roman Numeral Converter", "desc": "Konversi antara angka Romawi dan angka biasa" },
+        { "slug": "sleep-cycle", "name": "Sleep Cycle Calculator", "desc": "Hitung waktu tidur optimal berdasarkan siklus tidur" },
+        { "slug": "calorie-calculator", "name": "Calorie Calculator", "desc": "Hitung kebutuhan kalori harian berdasarkan aktivitas" },
+        { "slug": "discount-calculator", "name": "Discount Calculator", "desc": "Hitung harga setelah diskon dengan mudah" },
+        { "slug": "mortgage-calculator", "name": "Mortgage Calculator", "desc": "Hitung cicilan KPR dan simulasi pembiayaan rumah" },
+        { "slug": "dice-roller", "name": "Dice Roller", "desc": "Lempar dadu virtual dengan berbagai jumlah dan sisi" }
+      ]
+    }
+  ]
+}

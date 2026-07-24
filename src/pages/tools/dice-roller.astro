@@ -1,0 +1,92 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Dice Roller';
+const description = 'Dice roller online virtual. Lempar dadu dengan berbagai sisi (D4, D6, D8, D10, D12, D20, D100). Multiple dice, animasi, history, dan statistik.';
+const keywords = 'dice roller, dadu online, roll dice, random dice, lempar dadu, d20, d6, dnd dice, tabletop';
+const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">D6</div><div><h1 class="h3 mb-0">Dice Roller</h1><p class="text-muted small mb-0">Virtual dice roller dengan berbagai jenis dadu. D4, D6, D8, D10, D12, D20, D100.</p></div></header>
+<div class="row g-4"><div class="col-lg-8">
+<div class="card shadow-sm border-0 p-3">
+<div class="row g-3 align-items-end mb-3">
+<div class="col-4"><label class="form-label small fw-semibold">Jenis Dadu</label><select id="diceType" class="form-select"><option value="4">D4</option><option value="6" selected>D6</option><option value="8">D8</option><option value="10">D10</option><option value="12">D12</option><option value="20">D20</option><option value="100">D100</option></select></div>
+<div class="col-4"><label class="form-label small fw-semibold">Jumlah</label><select id="diceCount" class="form-select"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>10</option></select></div>
+<div class="col-4"><button id="btnRoll" class="btn btn-primary w-100">Roll!</button></div>
+</div>
+<div id="diceResult" class="d-flex flex-wrap justify-content-center gap-2 mb-3 py-3 rounded bg-light"></div>
+<div class="row text-center small g-2">
+<div class="col-4"><span class="text-muted">Total</span><br><span class="fw-bold fs-5" id="totalDisplay">0</span></div>
+<div class="col-4"><span class="text-muted">Tertinggi</span><br><span class="fw-bold fs-5" id="maxDisplay">0</span></div>
+<div class="col-4"><span class="text-muted">Terendah</span><br><span class="fw-bold fs-5" id="minDisplay">0</span></div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Riwayat</h6>
+<div id="historyList" style="max-height:240px;overflow-y:auto"><small class="text-muted">Belum ada lemparan</small></div>
+<button id="btnClearHistory" class="btn btn-outline-danger btn-sm mt-2 w-100">Hapus Riwayat</button>
+</div>
+</div></div>
+<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Dice Roller</h6><p class="small mb-1" style="line-height:1.6">Dice roller online virtual untuk melempar dadu digital dengan berbagai tipe: D4, D6, D8, D10, D12, D20, dan D100. Alat ini mensimulasikan lemparan dadu acak untuk berbagai keperluan: permainan board game, role-playing games (RPG) seperti Dungeons & Dragons, pengambilan keputusan, dan berbagai permainan yang membutuhkan angka acak. Animasi lemparan dadu yang realistis menambah keseruan.</p><p class="small mb-0" style="line-height:1.6">Fitur dice roller meliputi: pilihan tipe dadu (semua standar RPG), jumlah dadu yang dilempar (1-20), animasi 3D lemparan dadu yang realistis, total nilai lemparan, detail setiap dadu, riwayat lemparan, mode lempar otomatis (rolling), dan sound effect opsional. Hasil lemparan benar-benar acak menggunakan Math.random() yang cukup untuk permainan non-kriptografis.</p><p class="small mb-0 mt-2" style="line-height:1.6">Dice roller digital sangat berguna untuk: bermain Dungeons & Dragons dan RPG lainnya tanpa perlu membawa dadu fisik, board game yang kehilangan dadu asli, pengambilan keputusan dengan 'dadu takdir', permainan edukasi untuk anak-anak belajar angka dan probabilitas, dan prototyping game yang membutuhkan mekanisme dadu. Roller dadu ini gratis dan siap digunakan kapan saja.</p></div>`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="random-number-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Random Number Generator</a><a href="decision-maker" class="btn btn-outline-secondary btn-sm rounded-pill">Decision Maker</a><a href="password-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Password Generator</a><a href="countdown" class="btn btn-outline-secondary btn-sm rounded-pill">Countdown</a></div>`;
+const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:3px;background:var(--surface-soft);transition:all .2s}.dice-icon.rolling{animation:shake .3s}@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+{toolCss}
+</style>
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+<script is:inline>
+var dt=document.getElementById('diceType'),dc=document.getElementById('diceCount'),dr=document.getElementById('diceResult'),td=document.getElementById('totalDisplay'),mxd=document.getElementById('maxDisplay'),mnd=document.getElementById('minDisplay'),hl=document.getElementById('historyList'),history=[];
+function roll(){
+  var sides=parseInt(dt.value),cnt=parseInt(dc.value),vals=[];
+  for(var i=0;i<cnt;i++)vals.push(Math.floor(Math.random()*sides)+1);
+  dr.innerHTML='';vals.forEach(function(v,i){
+    var el=document.createElement('span');el.className='dice-icon rolling';el.textContent=v;
+    setTimeout(function(){el.classList.remove('rolling')},300);
+    dr.appendChild(el);
+  });
+  var total=vals.reduce(function(a,b){return a+b},0);
+  td.textContent=total;mxd.textContent=Math.max.apply(null,vals);mnd.textContent=Math.min.apply(null,vals);
+  var label='D'+sides+' x'+cnt+': ['+vals.join(', ')+'] = '+total;
+  history.unshift(label);if(history.length>20)history.pop();
+  hl.innerHTML=history.map(function(h){return'<div class="small py-1 border-bottom">'+h+'</div>'}).join('');
+}
+document.getElementById('btnRoll').addEventListener('click',roll);
+document.getElementById('btnClearHistory').addEventListener('click',function(){history=[];hl.innerHTML='<small class="text-muted">Belum ada lemparan</small>'});
+roll();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

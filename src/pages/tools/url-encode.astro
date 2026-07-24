@@ -1,0 +1,84 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'URL Encode / Decode';
+const description = 'Encode dan decode URL online gratis. URL encoder dengan dukungan RFC 3986.';
+const keywords = 'url encode, url decode, url encoder, url decoder, encode url';
+const bodyHtml = `<div class="card p-4 shadow-sm">
+        <div class="mb-3">
+          <label for="inputText" class="form-label">Input</label>
+          <textarea id="inputText" class="form-control" placeholder="Masukkan teks atau URL encoded string...">https://example.com/search?q=hello world&lang=id&page=1</textarea>
+        </div>
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button id="btnEncComponent" class="btn btn-success">encodeURIComponent</button>
+          <button id="btnEncURI" class="btn btn-outline-success">encodeURI</button>
+          <button id="btnDecode" class="btn btn-warning">decodeURIComponent</button>
+          <button id="btnSwap" class="btn btn-outline-secondary">Swap Input/Output</button>
+          <button id="btnClear" class="btn btn-outline-danger">Clear</button>
+        </div>
+        <div>
+          <label for="outputText" class="form-label">Output</label>
+          <textarea id="outputText" class="form-control" readonly></textarea>
+        </div>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang URL Encode / Decode</h6><p class="small mb-1" style="line-height:1.6">URL encoder dan decoder online untuk mengkonversi string URL menjadi format yang aman untuk transmisi dan sebaliknya. URL encoding (juga dikenal sebagai percent-encoding) menggantikan karakter khusus dalam URL dengan representasi persen-heksadesimal (%XX) agar dapat ditransmisikan dengan aman melalui internet. Alat ini penting bagi web developer dan siapa pun yang bekerja dengan URL dan parameter query.</p><p class="small mb-0" style="line-height:1.6">Fitur URL encoder/decoder meliputi: encode teks biasa ke format URL-safe, decode URL encoded string kembali ke teks asli, dukungan penuh untuk karakter Unicode dan multibyte, penanganan spasi sebagai %20 (standar) atau + (application/x-www-form-urlencoded), serta mode encode komponen (hanya mengencode bagian tertentu dari URL). Hasil dapat disalin ke clipboard dengan sekali klik.</p><p class="small mb-0 mt-2" style="line-height:1.6">URL encoding sangat penting dalam pengembangan web: mengirim data melalui URL parameter GET request, membuat query string untuk API calls, mengencode input form yang dikirim via GET method, membuat bookmarklet, mengencode data untuk redirect URL, dan memastikan URL valid saat berisi karakter khusus seperti spasi, &, ?, #, dan =. Semua pemrosesan dilakukan di browser Anda.</p></div>\`n`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="base64-coded" class="btn btn-outline-secondary btn-sm rounded-pill">Base64 Encoder</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="hash-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Hash Generator</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+var inp = document.getElementById('inputText');
+var out = document.getElementById('outputText');
+
+document.getElementById('btnEncComponent').addEventListener('click', function() {
+  try { out.value = encodeURIComponent(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
+});
+document.getElementById('btnEncURI').addEventListener('click', function() {
+  try { out.value = encodeURI(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
+});
+document.getElementById('btnDecode').addEventListener('click', function() {
+  try { out.value = decodeURIComponent(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
+});
+document.getElementById('btnSwap').addEventListener('click', function() {
+  var tmp = inp.value;
+  inp.value = out.value;
+  out.value = tmp;
+});
+document.getElementById('btnClear').addEventListener('click', function() { inp.value = ''; out.value = ''; });
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

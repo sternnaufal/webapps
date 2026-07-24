@@ -1,0 +1,65 @@
+---
+interface Tool {
+  slug: string;
+  name: string;
+  desc: string;
+}
+const { tool } = Astro.props as { tool: Tool };
+
+// Color mapping by category (will be applied by CSS classes)
+const colorMap: Record<string, string> = {
+  'hash-generator': '#ef4444',
+  'uuid-generator': '#8b5cf6',
+  'base64-coded': '#06b6d4',
+  'json-formatter': '#f59e0b',
+  'regex-tester': '#10b981',
+  'diff-checker': '#6366f1',
+  'sql-formatter': '#3b82f6',
+  'yaml-json': '#f97316',
+  'meta-tag-generator': '#ec4899',
+  'ascii-table': '#14b8a6',
+  'subnetting': '#0ea5e9',
+  'ip-calculator': '#64748b',
+  'url-encode': '#8b5cf6',
+  'cron-builder': '#a855f7',
+  'mac-address-generator': '#6366f1',
+  'textcase': '#f43f5e',
+  'lorem-ipsum': '#64748b',
+  'md-preview': '#059669',
+  'color-picker': '#e11d48',
+  'image-to-base64': '#0ea5e9',
+  'password-generator': '#10b981',
+  'qr-generator': '#6366f1',
+  'rsa-generator': '#f43f5e',
+  'gradient-generator': '#8b5cf6',
+  'random-number-generator': '#f59e0b',
+  'jwt-decoder': '#ec4899',
+  'html-preview': '#059669',
+  'http-status': '#3b82f6',
+  'timer': '#ef4444',
+  'stopwatch': '#f97316',
+  'typing-speed-test': '#6366f1',
+  'notes-app': '#f59e0b',
+  'bmi-calculator': '#059669',
+  'default': '#6366f1',
+};
+
+const bgColor = colorMap[tool.slug] || colorMap.default;
+---
+
+<a href={`/tools/${tool.slug}`} class="col-md-6 col-lg-4 text-decoration-none tool-card card position-relative" data-slug={tool.slug}>
+  <button class="pin-btn" data-slug={tool.slug} title="Pin tool ini">☆</button>
+  <div class="card-body d-flex gap-3 align-items-start">
+    <div class="tool-icon flex-shrink-0" style={`background:${bgColor}15;color:${bgColor}`}>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <div class="min-w-0">
+      <h5 class="card-title fw-semibold text-dark mb-1">{tool.name}</h5>
+      <p class="card-text text-secondary mb-0">{tool.desc}</p>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,239 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Color Picker';
+const description = 'Pilih warna dan konversi HEX, RGB, HSL secara online. Color picker gratis dengan preview warna.';
+const keywords = 'color picker, color converter, hex to rgb, rgb to hex, web color';
+const bodyHtml = `<header class="mb-4 d-flex align-items-center gap-3">
+        <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
+        <div>
+          <h1 class="h3 mb-0">?? Color Picker</h1>
+          <p class="text-muted small mb-0">Pilih atau masukkan warna, semua format akan otomatis sinkron.</p>
+        </div>
+      </header>
+
+      <div class="card p-4 shadow">
+        <div id="previewBox" class="preview-box mb-3">Preview</div>
+
+        <div class="text-center mb-3">
+          <input type="color" id="colorInput" value="#3498db"
+                 class="form-control form-control-color"
+                 style="width: 120px; height: 120px;">
+        </div>
+
+        <div class="mb-3">
+          <label for="alphaRange" class="form-label">Transparansi (Alpha)</label>
+          <input type="range" class="form-range" min="0" max="1" step="0.01" id="alphaRange" value="1">
+        </div>
+
+        <div class="row text-center">
+          <div class="col-md-3 mb-3">
+            <h6>HEX</h6>
+            <input type="text" id="hexValue" class="form-control copyable">
+          </div>
+          <div class="col-md-3 mb-3">
+            <h6>RGB</h6>
+            <input type="text" id="rgbValue" class="form-control copyable">
+          </div>
+          <div class="col-md-3 mb-3">
+            <h6>HSL</h6>
+            <input type="text" id="hslValue" class="form-control copyable">
+          </div>
+          <div class="col-md-3 mb-3">
+            <h6>CMYK</h6>
+            <input type="text" id="cmykValue" class="form-control copyable">
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-secondary" id="btnRandom">?? Random</button>
+          <button class="btn btn-success" id="btnSave">?? Save</button>
+        </div>
+
+        <div class="mt-4">
+          <h6>Saved Colors</h6>
+          <div id="savedColors" class="d-flex gap-2 flex-wrap saved-colors"></div>
+        </div>
+      </div>
+    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Color Picker</h6><p class="small mb-1" style="line-height:1.6">Color picker online lengkap dengan dukungan format warna HEX, RGB, HSL, dan CMYK. Alat ini membantu desainer grafis, web developer, dan siapa pun yang bekerja dengan warna untuk memilih, mengkonversi, dan mendapatkan kode warna secara presisi. Cukup klik pada color wheel atau masukkan nilai warna pada salah satu format, dan semua format lainnya akan terkonversi secara otomatis secara real-time.</p><p class="small mb-0" style="line-height:1.6">Fitur unggulan color picker ini meliputi: color wheel interaktif dengan 360 derajat hue, slider saturation dan lightness, input numerik presisi untuk setiap format, riwayat warna yang telah dipilih, dan palet warna yang sudah jadi. Setiap warna yang dipilih dapat disalin ke clipboard dalam format yang diinginkan. Mendukung juga pemilihan warna dari layar melalui input color native browser.</p><p class="small mb-0 mt-2" style="line-height:1.6">Konversi warna antar format sangat penting dalam workflow desain: desainer web menggunakan HEX dan RGB untuk CSS, desainer cetak menggunakan CMYK, dan desainer UI sering bekerja dengan HSL untuk kemudahan readability dan adjustability. Color picker ini juga menampilkan preview warna dalam bentuk swatch besar, kode HEX lengkap dengan hash, nilai RGB desimal, dan persentase CMYK. Cocok digunakan untuk desain website, pembuatan konten visual, ilustrasi digital, dan pengembangan aplikasi.</p></div>\`n`;
+const extraHtml = `
+<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
+<span class="small text-muted me-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+</div>
+<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="gradient-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Gradient Generator</a><a href="contrast-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Contrast Checker</a><a href="css-unit" class="btn btn-outline-secondary btn-sm rounded-pill">CSS Unit Converter</a><a href="image-to-base64" class="btn btn-outline-secondary btn-sm rounded-pill">Image to Base64</a></div>`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<Fragment set:html={bodyHtml} />
+<Fragment set:html={extraHtml} />
+
+</ToolLayout>
+
+<style is:inline>
+.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
+.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
+.saweria-float svg { animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+</style>
+
+<script is:inline>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script is:inline>
+function hexToRgb(hex) {
+  hex = hex.replace(/^#/, '');
+  if (hex.length === 3) hex = hex.split('').map(function(c) { return c + c; }).join('');
+  var bigint = parseInt(hex, 16);
+  return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+}
+
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(function(x) { return x.toString(16).padStart(2, '0'); }).join('').toUpperCase();
+}
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+  if (max === min) { h = s = 0; }
+  else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function rgbToCmyk(r, g, b) {
+  var c = 1 - r/255, m = 1 - g/255, y = 1 - b/255;
+  var k = Math.min(c, m, y);
+  if (k === 1) return [0, 0, 0, 100];
+  return [
+    Math.round(((c - k) / (1 - k)) * 100),
+    Math.round(((m - k) / (1 - k)) * 100),
+    Math.round(((y - k) / (1 - k)) * 100),
+    Math.round(k * 100)
+  ];
+}
+
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100; h /= 360;
+  var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  var p = 2 * l - q;
+  function f(t) { if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1/6) return p + (q - p) * 6 * t; if (t < 1/2) return q; if (t < 2/3) return p + (q - p) * (2/3 - t) * 6; return p; }
+  return [Math.round(f(h + 1/3) * 255), Math.round(f(h) * 255), Math.round(f(h - 1/3) * 255)];
+}
+
+function updateValues(from) {
+  if (from === undefined) from = 'picker';
+  var hex, r, g, b, h, s, l, c, m, y, k;
+  var alpha = parseFloat(document.getElementById('alphaRange').value);
+
+  if (from === 'hex') {
+    hex = document.getElementById('hexValue').value;
+    if (!/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(hex)) return;
+    var rgb = hexToRgb(hex);
+    r = rgb[0]; g = rgb[1]; b = rgb[2];
+  } else if (from === 'rgb') {
+    var match = document.getElementById('rgbValue').value.match(/\\d+/g);
+    if (!match) return;
+    r = Number(match[0]); g = Number(match[1]); b = Number(match[2]);
+    hex = rgbToHex(r, g, b);
+  } else if (from === 'hsl') {
+    var match = document.getElementById('hslValue').value.match(/\\d+/g);
+    if (!match) return;
+    h = Number(match[0]); s = Number(match[1]); l = Number(match[2]);
+    var rgb2 = hslToRgb(h, s, l);
+    r = rgb2[0]; g = rgb2[1]; b = rgb2[2];
+    hex = rgbToHex(r, g, b);
+  } else {
+    hex = document.getElementById('colorInput').value;
+    var rgb = hexToRgb(hex);
+    r = rgb[0]; g = rgb[1]; b = rgb[2];
+  }
+
+  var hsl = rgbToHsl(r, g, b);
+  h = hsl[0]; s = hsl[1]; l = hsl[2];
+  var cmyk = rgbToCmyk(r, g, b);
+  c = cmyk[0]; m = cmyk[1]; y = cmyk[2]; k = cmyk[3];
+
+  document.getElementById('hexValue').value = hex;
+  document.getElementById('rgbValue').value = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  document.getElementById('hslValue').value = 'hsl(' + h + ',' + s + '%,' + l + '%)';
+  document.getElementById('cmykValue').value = 'cmyk(' + c + '%,' + m + '%,' + y + '%,' + k + '%)';
+
+  var preview = document.getElementById('previewBox');
+  preview.style.background = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  preview.style.color = (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000' : '#fff';
+  preview.textContent = hex + ' (' + alpha + ')';
+
+  document.getElementById('colorInput').value = hex;
+}
+
+function copyOnClick(e) {
+  navigator.clipboard.writeText(e.target.value);
+  e.target.classList.add('border-success');
+  setTimeout(function() { e.target.classList.remove('border-success'); }, 500);
+}
+
+function randomColor() {
+  var rand = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+  document.getElementById('colorInput').value = rand;
+  updateValues();
+}
+
+function saveColor() {
+  var hex = document.getElementById('hexValue').value;
+  var saved = JSON.parse(localStorage.getItem('savedColors') || '[]');
+  if (!saved.includes(hex)) saved.push(hex);
+  localStorage.setItem('savedColors', JSON.stringify(saved));
+  renderSaved();
+}
+
+function renderSaved() {
+  var saved = JSON.parse(localStorage.getItem('savedColors') || '[]');
+  var container = document.getElementById('savedColors');
+  container.innerHTML = '';
+  saved.forEach(function(hex) {
+    var box = document.createElement('div');
+    box.style.background = hex;
+    box.title = hex;
+    box.onclick = function() { document.getElementById('hexValue').value = hex; updateValues('hex'); };
+    container.appendChild(box);
+  });
+}
+
+document.getElementById('colorInput').addEventListener('input', function() { updateValues(); });
+document.getElementById('alphaRange').addEventListener('input', function() { updateValues(); });
+document.getElementById('hexValue').addEventListener('input', function() { updateValues('hex'); });
+document.getElementById('rgbValue').addEventListener('input', function() { updateValues('rgb'); });
+document.getElementById('hslValue').addEventListener('input', function() { updateValues('hsl'); });
+document.querySelectorAll('.copyable').forEach(function(el) { el.addEventListener('click', copyOnClick); });
+document.getElementById('btnRandom').addEventListener('click', randomColor);
+document.getElementById('btnSave').addEventListener('click', saveColor);
+
+updateValues();
+renderSaved();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>
