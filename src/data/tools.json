@@ -13,7 +13,10 @@
         { "slug": "sql-formatter", "name": "SQL Formatter", "desc": "Format query SQL agar lebih rapi dan mudah dibaca" },
         { "slug": "yaml-json", "name": "YAML/JSON Converter", "desc": "Konversi data antara format YAML dan JSON" },
         { "slug": "meta-tag-generator", "name": "Meta Tag Generator", "desc": "Generate meta tag HTML untuk SEO website" },
-        { "slug": "ascii-table", "name": "ASCII Table", "desc": "Lihat tabel lengkap karakter ASCII dan kode hex/desimalnya" }
+        { "slug": "ascii-table", "name": "ASCII Table", "desc": "Lihat tabel lengkap karakter ASCII dan kode hex/desimalnya" },
+        { "slug": "json-to-typescript", "name": "JSON to TypeScript", "desc": "Konversi JSON ke TypeScript Interface otomatis dengan 1 klik" },
+        { "slug": "json-schema-generator", "name": "JSON Schema Generator", "desc": "Generate JSON Schema dari data JSON untuk validasi API" },
+        { "slug": "css-minifier", "name": "CSS Minifier / Beautifier", "desc": "Minify atau beautify CSS kode untuk produksi atau development" }
       ]
     },
     {
@@ -24,7 +27,8 @@
         { "slug": "ip-calculator", "name": "IP Calculator", "desc": "Kalkulator alamat IP, subnet, CIDR, dan informasi jaringan" },
         { "slug": "url-encode", "name": "URL Encode/Decode", "desc": "Encode dan decode URL untuk web development" },
         { "slug": "cron-builder", "name": "Cron Builder", "desc": "Buat dan visualisasikan ekspresi cron dengan antarmuka visual" },
-        { "slug": "mac-address-generator", "name": "MAC Address Generator", "desc": "Generate alamat MAC acak untuk berbagai keperluan" }
+        { "slug": "mac-address-generator", "name": "MAC Address Generator", "desc": "Generate alamat MAC acak untuk berbagai keperluan" },
+        { "slug": "user-agent-parser", "name": "User Agent Parser", "desc": "Parse dan analisis User Agent string untuk deteksi browser dan device" }
       ]
     },
     {
@@ -41,7 +45,10 @@
         { "slug": "text-repeater", "name": "Text Repeater", "desc": "Ulangi teks sebanyak yang kamu mau dengan mudah" },
         { "slug": "reverse-text", "name": "Reverse Text", "desc": "Balikkan urutan teks, kata, atau karakter" },
         { "slug": "list-sorter", "name": "List Sorter", "desc": "Urutkan daftar teks secara ascending atau descending" },
-        { "slug": "morse-code-converter", "name": "Morse Code Converter", "desc": "Konversi teks ke kode Morse dan sebaliknya" }
+        { "slug": "morse-code-converter", "name": "Morse Code Converter", "desc": "Konversi teks ke kode Morse dan sebaliknya" },
+        { "slug": "markdown-to-html", "name": "Markdown to HTML", "desc": "Konversi Markdown ke HTML secara instan dengan preview real-time" },
+        { "slug": "word-frequency", "name": "Word Frequency Counter", "desc": "Hitung frekuensi kata dalam teks untuk analisis SEO dan konten" },
+        { "slug": "color-converter", "name": "Color Format Converter", "desc": "Konversi warna antara HEX, RGB, HSL, dan CMYK dengan color picker" }
       ]
     },
     {
@@ -63,7 +70,9 @@
         { "slug": "random-color-generator", "name": "Random Color Generator", "desc": "Dapatkan warna acak dengan kode HEX dan RGB setiap kali" },
         { "slug": "epoch-converter", "name": "Epoch / Unix Timestamp Converter", "desc": "Konversi antara Unix timestamp dan tanggal/waktu" },
         { "slug": "avatar-generator", "name": "Avatar Generator", "desc": "Buat avatar unik secara acak dengan berbagai gaya" },
-        { "slug": "barcode-generator", "name": "Barcode Generator", "desc": "Generate barcode dari teks atau angka dengan berbagai format" }
+        { "slug": "barcode-generator", "name": "Barcode Generator", "desc": "Generate barcode dari teks atau angka dengan berbagai format" },
+        { "slug": "password-memorable", "name": "Memorable Password", "desc": "Buat password kuat yang mudah diingat dari kata-kata acak" },
+        { "slug": "email-validator", "name": "Email Validator", "desc": "Validasi format email sesuai standar RFC 5322" }
       ]
     },
     {
@@ -104,7 +113,8 @@
         { "slug": "calorie-calculator", "name": "Calorie Calculator", "desc": "Hitung kebutuhan kalori harian berdasarkan aktivitas" },
         { "slug": "discount-calculator", "name": "Discount Calculator", "desc": "Hitung harga setelah diskon dengan mudah" },
         { "slug": "mortgage-calculator", "name": "Mortgage Calculator", "desc": "Hitung cicilan KPR dan simulasi pembiayaan rumah" },
-        { "slug": "dice-roller", "name": "Dice Roller", "desc": "Lempar dadu virtual dengan berbagai jumlah dan sisi" }
+        { "slug": "dice-roller", "name": "Dice Roller", "desc": "Lempar dadu virtual dengan berbagai jumlah dan sisi" },
+        { "slug": "image-resizer", "name": "Image Resizer", "desc": "Resize dan kompres gambar langsung di browser tanpa upload" }
       ]
     }
   ]

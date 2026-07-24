@@ -1,0 +1,32 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'JSON Schema Generator';
+const desc = 'Generate JSON Schema dari data JSON. Buat schema validasi API, database, dan form otomatis.';
+const keywords = 'json schema generator, generate schema, api schema, json validation, schema from json';
+const bodyHtml = '<div class="row g-4">\n  <div class="col-12"><div class="d-flex gap-2 flex-wrap">\n    <button id="jsgBtn" class="btn btn-warning">Generate Schema</button>\n    <button id="jsgCopy" class="btn btn-outline-secondary">Copy</button>\n    <div class="form-check form-switch d-flex align-items-center ms-auto"><input class="form-check-input" type="checkbox" id="jsgStrict"><label class="form-check-label small" for="jsgStrict">Strict (required)</label></div>\n  </div></div>\n  <div class="col-md-6"><label class="form-label fw-semibold">JSON Input</label><textarea id="jsgIn" class="form-control font-mono" rows="16" placeholder=\'{"name":"John","age":30}\'></textarea></div>\n  <div class="col-md-6"><label class="form-label fw-semibold">JSON Schema</label><textarea id="jsgOut" class="form-control font-mono" rows="16" readonly></textarea></div>\n</div>';
+---
+
+<ToolLayout title={title} description={desc} keywords={keywords}>
+<Fragment set:html={bodyHtml} />
+</ToolLayout>
+
+<style is:inline>
+.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
+.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
+.saweria-float svg{animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
+</style>
+
+<script is:inline>
+document.getElementById("jsgBtn").onclick=jsg;document.getElementById("jsgCopy").onclick=()=>navigator.clipboard.writeText(document.getElementById("jsgOut").value);document.getElementById("jsgIn").oninput=jsg;document.getElementById("jsgStrict").onchange=jsg;
+function jsg(){const i=document.getElementById("jsgIn").value.trim();const s=document.getElementById("jsgStrict").checked;const o=document.getElementById("jsgOut");if(!i){o.value="";return}try{const obj=JSON.parse(i);const schema=jsgBuild(obj,s);o.value=JSON.stringify(schema,null,2);o.style.color="inherit"}catch(e){o.value="// Error: "+e.message;o.style.color="#dc3545"}}
+function jsgBuild(val,strict){const type=Array.isArray(val)?"array":typeof val;const t={type};if(val===null){t.type="null";return t}if(type==="object"&&!Array.isArray(val)){t.properties={};t.additionalProperties=false;const req=[];Object.entries(val).forEach(([k,v])=>{t.properties[k]=jsgBuild(v,strict);if(strict)req.push(k)});if(req.length)t.required=req}else if(type==="array"){t.items=val.length>0?jsgBuild(val[0],strict):{}}else if(type==="string"){if(/^\d{4}-\d{2}-\d{2}/.test(val))t.format="date"}return t}jsg();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

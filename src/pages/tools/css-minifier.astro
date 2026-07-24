@@ -1,0 +1,34 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'CSS Minifier / Beautifier';
+const desc = 'Minify atau beautify CSS kode. Kompres CSS untuk produksi, atau format/tulis rapi untuk development.';
+const keywords = 'css minifier, css beautifier, css formatter, minify css, format css, css compression';
+const bodyHtml = '<div class="row g-4">\n  <div class="col-12"><div class="d-flex gap-2 flex-wrap">\n    <button id="cssMin" class="btn btn-warning">Minify</button>\n    <button id="cssBeaut" class="btn btn-outline-primary">Beautify</button>\n    <button id="cssCopy" class="btn btn-outline-secondary">Copy</button>\n    <button id="cssClear" class="btn btn-outline-secondary">Clear</button>\n    <span id="cssStats" class="ms-auto small text-muted d-flex align-items-center">---</span>\n  </div></div>\n  <div class="col-md-6"><label class="form-label fw-semibold">Input</label><textarea id="cssIn" class="form-control font-mono" rows="16" placeholder="Tempel CSS di sini...">body { background: #fff; color: #333; font-family: system-ui; margin: 0; padding: 2rem; }</textarea></div>\n  <div class="col-md-6"><label class="form-label fw-semibold">Output</label><textarea id="cssOut" class="form-control font-mono" rows="16" readonly></textarea></div>\n</div>';
+---
+
+<ToolLayout title={title} description={desc} keywords={keywords}>
+<Fragment set:html={bodyHtml} />
+</ToolLayout>
+
+<style is:inline>
+.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
+.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
+.saweria-float svg{animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
+</style>
+
+<script is:inline>
+document.getElementById("cssMin").onclick=()=>{const i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,"").replace(/\s+/g," ").replace(/\s*{\s*/g,"{").replace(/\s*}\s*/g,"}").replace(/;}/g,"}").replace(/\s*:\s*/g,":").replace(/\s*;\s*/g,";").replace(/\s*,\s*/g,",").trim();document.getElementById("cssOut").value=o;cssStats(i,o)};
+document.getElementById("cssBeaut").onclick=()=>{let i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,m=>m+"\n").replace(/\s+/g," ").replace(/{/g," {\n  ").replace(/;/g,";\n  ").replace(/}/g,"\n}\n").replace(/,\s*/g,", ").replace(/:\s*/g,": ").replace(/^\s+|\s+$/gm,"").replace(/\n{3,}/g,"\n\n").trim();document.getElementById("cssOut").value=o;cssStats(i,o)};
+document.getElementById("cssCopy").onclick=()=>navigator.clipboard.writeText(document.getElementById("cssOut").value);
+document.getElementById("cssClear").onclick=()=>{document.getElementById("cssIn").value="";document.getElementById("cssOut").value="";document.getElementById("cssStats").textContent="---"};
+function cssStats(i,o){const ib=new TextEncoder().encode(i).length,ob=new TextEncoder().encode(o).length;const saved=((ib-ob)/ib*100).toFixed(1);document.getElementById("cssStats").innerHTML=ib+" B &rarr; "+ob+" B ("+saved+"%)"}
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

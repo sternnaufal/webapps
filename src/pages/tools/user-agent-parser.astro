@@ -1,0 +1,35 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'User Agent Parser';
+const desc = 'Parse dan analisis User Agent string. Deteksi browser, versi, engine, OS, device, dan kategori.';
+const keywords = 'user agent parser, browser detection, ua parser, parse user agent, browser info';
+const bodyHtml = '<div class="row g-4">\n  <div class="col-12">\n    <textarea id="uaIn" class="form-control font-mono" rows="3" placeholder="Tempel User Agent string..."></textarea>\n    <div class="d-flex gap-2 mt-2 flex-wrap">\n      <button id="uaBtn" class="btn btn-warning">Parse</button>\n      <button id="uaMy" class="btn btn-outline-secondary">User Agent Saya</button>\n      <button id="uaClear" class="btn btn-outline-secondary">Clear</button>\n    </div>\n  </div>\n  <div class="col-md-6">\n    <div class="card p-3 small">\n      <h6 class="fw-semibold mb-2">Browser & OS</h6>\n      <table class="table table-sm mb-0"><tbody>\n        <tr><td class="text-muted">Browser</td><td id="uaBr" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">Version</td><td id="uaVer" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">Engine</td><td id="uaEng" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">OS</td><td id="uaOS" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">Device</td><td id="uaDev" class="fw-semibold">---</td></tr>\n      </tbody></table>\n    </div>\n  </div>\n  <div class="col-md-6">\n    <div class="card p-3 small">\n      <h6 class="fw-semibold mb-2">Kategori</h6>\n      <table class="table table-sm mb-0"><tbody>\n        <tr><td class="text-muted">Mobile</td><td id="uaMob" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">Desktop</td><td id="uaDesk" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">Tablet</td><td id="uaTab" class="fw-semibold">---</td></tr>\n        <tr><td class="text-muted">Bot/Crawler</td><td id="uaBot" class="fw-semibold">---</td></tr>\n      </tbody></table>\n    </div>\n  </div>\n</div>';
+---
+
+<ToolLayout title={title} description={desc} keywords={keywords}>
+<Fragment set:html={bodyHtml} />
+</ToolLayout>
+
+<style is:inline>
+.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
+.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
+.saweria-float svg{animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
+</style>
+
+<script is:inline>
+function uaParse(u){const r={};r.br="Unknown";r.ver=r.eng=r.os=r.dev="";r.mob=/Mobile|Android|iPhone|iPod|BlackBerry|IEMobile/i.test(u);r.tab=/Tablet|iPad|Android(?!.*Mobile)|Silk/i.test(u);r.desk=!r.mob&&!r.tab;r.bot=/bot|crawl|spider|scraper|curl|wget|googlebot|bingbot|facebook|twitter|whatsapp/i.test(u);if(/Edg\//i.test(u)){r.br="Edge";r.ver=(u.match(/Edg\/([\d.]+)/)||[])[1]||"";r.eng="Blink"}else if(/Firefox\//i.test(u)){r.br="Firefox";r.ver=(u.match(/Firefox\/([\d.]+)/)||[])[1]||"";r.eng="Gecko"}else if(/Chrome\//i.test(u)){r.br="Chrome";r.ver=(u.match(/Chrome\/([\d.]+)/)||[])[1]||"";r.eng="Blink"}else if(/Safari\//i.test(u)&&!/Chrome/i.test(u)){r.br="Safari";r.ver=(u.match(/Version\/([\d.]+)/)||[])[1]||"";r.eng="WebKit"}else if(/Trident|MSIE/i.test(u)){r.br="IE";r.ver=(u.match(/(?:MSIE |rv:)([\d.]+)/)||[])[1]||"";r.eng="Trident"}if(/Windows NT 10/i.test(u))r.os="Windows 10/11";else if(/Windows NT 6\.3/i.test(u))r.os="Windows 8.1";else if(/Windows/i.test(u))r.os="Windows";else if(/Mac OS X/i.test(u)){r.os="macOS";r.fver=(u.match(/Mac OS X ([\d_]+)/)||[])[1]?.replace(/_/g,".")||""}else if(/Android/i.test(u)){r.os="Android";r.fver=(u.match(/Android ([\d.]+)/)||[])[1]||""}else if(/iPhone|iPad/i.test(u)){r.os="iOS";r.fver=(u.match(/OS ([\d_]+)/)||[])[1]?.replace(/_/g,".")||""}else if(/Linux/i.test(u))r.os="Linux";else if(/CrOS/i.test(u))r.os="ChromeOS";if(r.mob&&/iPhone/i.test(u))r.dev="iPhone";else if(r.mob&&/Android/i.test(u))r.dev="Android Phone";else if(r.tab&&/iPad/i.test(u))r.dev="iPad";else if(r.tab)r.dev="Tablet";else r.dev=r.mob?"Phone":"Desktop/Laptop";return r}
+function uaShow(r){document.getElementById("uaBr").textContent=r.br;document.getElementById("uaVer").textContent=r.ver||"---";document.getElementById("uaEng").textContent=r.eng||"---";document.getElementById("uaOS").textContent=r.os||"---";document.getElementById("uaDev").textContent=r.dev||"---";const ok="#10b981",no="#6b7280",warn="#ef4444";document.getElementById("uaMob").textContent=r.mob?"Yes":"No";document.getElementById("uaMob").style.color=r.mob?ok:no;document.getElementById("uaDesk").textContent=r.desk?"Yes":"No";document.getElementById("uaDesk").style.color=r.desk?ok:no;document.getElementById("uaTab").textContent=r.tab?"Yes":"No";document.getElementById("uaTab").style.color=r.tab?ok:no;document.getElementById("uaBot").textContent=r.bot?"Yes":"No";document.getElementById("uaBot").style.color=r.bot?warn:no}
+document.getElementById("uaBtn").onclick=()=>{const ua=document.getElementById("uaIn").value.trim();if(ua)uaShow(uaParse(ua))};
+document.getElementById("uaMy").onclick=()=>{document.getElementById("uaIn").value=navigator.userAgent;uaShow(uaParse(navigator.userAgent))};
+document.getElementById("uaClear").onclick=()=>{document.getElementById("uaIn").value="";["uaBr","uaVer","uaEng","uaOS","uaDev","uaMob","uaDesk","uaTab","uaBot"].forEach(id=>{document.getElementById(id).textContent="---";document.getElementById(id).style.color=""})};
+document.getElementById("uaMy").click();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

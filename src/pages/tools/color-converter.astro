@@ -1,0 +1,37 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Color Format Converter';
+const desc = 'Konversi warna antara format HEX, RGB, RGBA, HSL, HSLA, dan CMYK. Color picker visual.';
+const keywords = 'color converter, hex to rgb, rgb to hsl, color picker, konversi warna, cmyk';
+const bodyHtml = '<div class="row g-4">\n  <div class="col-md-6">\n    <div class="card p-3 mb-3"><label class="form-label fw-semibold">Color Picker</label><input type="color" id="ccPick" class="form-control form-control-color w-100" value="#6366f1" style="height:50px"></div>\n    <div class="card p-3"><label class="form-label fw-semibold">Manual Input</label><input type="text" id="ccIn" class="form-control font-mono" value="#6366f1" placeholder="#ff0000 / rgb(255,0,0) / hsl(0,100%,50%)"><div class="form-text">HEX, RGB, atau HSL</div></div>\n  </div>\n  <div class="col-md-6">\n    <div class="card p-3">\n      <div class="d-flex align-items-center gap-3 mb-3"><div id="ccPrev" style="width:60px;height:60px;border-radius:12px;background:#6366f1;border:2px solid #e9ecef"></div><div><h6 class="mb-0">Preview</h6><span id="ccHexLabel" class="small text-muted">#6366f1</span></div></div>\n      <table class="table table-sm small mb-0"><tbody>\n        <tr><td>HEX</td><td id="ccHex" class="fw-semibold font-mono">#6366f1</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccHex\')">Copy</button></td></tr>\n        <tr><td>RGB</td><td id="ccRgb" class="fw-semibold font-mono">rgb(99,102,241)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccRgb\')">Copy</button></td></tr>\n        <tr><td>RGBA</td><td id="ccRgba" class="fw-semibold font-mono">rgba(99,102,241,1)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccRgba\')">Copy</button></td></tr>\n        <tr><td>HSL</td><td id="ccHsl" class="fw-semibold font-mono">hsl(239,83%,67%)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccHsl\')">Copy</button></td></tr>\n        <tr><td>CMYK</td><td id="ccCmyk" class="fw-semibold font-mono">cmyk(59,58,0,5)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccCmyk\')">Copy</button></td></tr>\n      </tbody></table>\n    </div>\n  </div>\n</div>';
+---
+
+<ToolLayout title={title} description={desc} keywords={keywords}>
+<Fragment set:html={bodyHtml} />
+</ToolLayout>
+
+<style is:inline>
+.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
+.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
+.saweria-float svg{animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
+</style>
+
+<script is:inline>
+function ccCopy(id){navigator.clipboard.writeText(document.getElementById(id).textContent);}
+function ccHex2Rgb(h){const r=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);return r?[parseInt(r[1],16),parseInt(r[2],16),parseInt(r[3],16)]:null}
+function ccRgb2Hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h=(mx+mn)/2,s=(mx+mn)/2,l=(mx+mn)/2;if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break}}return[Math.round(h*360),Math.round(s*100),Math.round(l*100)]}
+function ccRgb2Cmyk(r,g,b){const c=1-(r/255),m=1-(g/255),y=1-(b/255),k=Math.min(c,m,y);return[Math.round((c-k)/(1-k)*100)||0,Math.round((m-k)/(1-k)*100)||0,Math.round((y-k)/(1-k)*100)||0,Math.round(k*100)]}
+function ccParse(s){s=s.trim().toLowerCase();let r,g,b;if(s.startsWith("#")){const x=ccHex2Rgb(s);if(x)[r,g,b]=x}else if(s.startsWith("rgb")){const m=s.match(/\d+/g);if(m&&m.length>=3)[r,g,b]=m.slice(0,3).map(Number)}else if(s.startsWith("hsl")){const m=s.match(/\d+/g);if(m&&m.length>=3){const[h2,s2,l2]=m.slice(0,3).map(Number);const S=s2/100,L=l2/100,C=(1-Math.abs(2*L-1))*S,X=C*(1-Math.abs((h2/60)%2-1)),m2=L-C/2;let r1=0,g1=0,b1=0;if(h2<60)[r1,g1,b1]=[C,X,0];else if(h2<120)[r1,g1,b1]=[X,C,0];else if(h2<180)[r1,g1,b1]=[0,C,X];else if(h2<240)[r1,g1,b1]=[0,X,C];else if(h2<300)[r1,g1,b1]=[X,0,C];else[r1,g1,b1]=[C,0,X];[r,g,b]=[Math.round((r1+m2)*255),Math.round((g1+m2)*255),Math.round((b1+m2)*255)]}}return[r,g,b]}
+function ccUpd(r,g,b){if(r===undefined)return;const hex="#"+[r,g,b].map(x=>x.toString(16).padStart(2,"0")).join("");const[h,s,l]=ccRgb2Hsl(r,g,b);const[c,my,y,k]=ccRgb2Cmyk(r,g,b);document.getElementById("ccPrev").style.background=hex;document.getElementById("ccHexLabel").textContent=hex;document.getElementById("ccHex").textContent=hex;document.getElementById("ccRgb").textContent="rgb("+r+","+g+","+b+")";document.getElementById("ccRgba").textContent="rgba("+r+","+g+","+b+",1)";document.getElementById("ccHsl").textContent="hsl("+h+","+s+"%,"+l+"%)";document.getElementById("ccCmyk").textContent="cmyk("+c+","+my+","+y+","+k+")"}
+document.getElementById("ccPick").oninput=function(){document.getElementById("ccIn").value=this.value;const x=ccHex2Rgb(this.value);if(x)ccUpd(...x)};
+document.getElementById("ccIn").oninput=function(){const x=ccParse(this.value);if(x[0]!==undefined){document.getElementById("ccPick").value="#"+[x[0],x[1],x[2]].map(v=>v.toString(16).padStart(2,"0")).join("");ccUpd(...x)}};const _r=ccHex2Rgb("#6366f1");if(_r)ccUpd(..._r);
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

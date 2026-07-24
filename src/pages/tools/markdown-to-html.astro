@@ -1,0 +1,33 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+
+const title = 'Markdown to HTML Converter';
+const desc = 'Konversi Markdown ke HTML secara instan. Editor dengan preview real-time dan copy HTML output.';
+const keywords = 'markdown to html, md to html, markdown converter, md converter, html generator';
+const bodyHtml = '<div class="row g-4">\n  <div class="col-12"><div class="d-flex gap-2 flex-wrap">\n    <button id="mhBtn" class="btn btn-warning">Convert</button>\n    <button id="mhCopy" class="btn btn-outline-secondary">Copy HTML</button>\n    <div class="form-check form-switch d-flex align-items-center ms-auto"><input class="form-check-input" type="checkbox" id="mhAuto" checked><label class="form-check-label small" for="mhAuto">Auto</label></div>\n  </div></div>\n  <div class="col-md-6"><label class="form-label fw-semibold">Markdown</label><textarea id="mhIn" class="form-control font-mono" rows="16" placeholder="Tulis Markdown..."># Hello World\n\nThis is **Markdown** to **HTML**.\n\n## Features\n- Bold, *Italic*\n- [Links](https://example.com)\n- Code \\`inline\\`\n\n> Blockquote</textarea></div>\n  <div class="col-md-6"><label class="form-label fw-semibold">HTML Output</label><textarea id="mhOut" class="form-control font-mono" rows="16" readonly></textarea></div>\n  <div class="col-12"><label class="form-label fw-semibold">Preview</label><div id="mhPrev" class="card p-4 border"></div></div>\n</div>';
+---
+
+<ToolLayout title={title} description={desc} keywords={keywords}>
+<Fragment set:html={bodyHtml} />
+</ToolLayout>
+
+<style is:inline>
+.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
+.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
+.saweria-float svg{animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
+</style>
+
+<script is:inline>
+function md2html(md){let h=md.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");h=h.replace(/^##### (.+)$/gm,"<h5>$1</h5>").replace(/^#### (.+)$/gm,"<h4>$1</h4>").replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");h=h.replace(/^---$/gm,"<hr>");h=h.replace(/^> (.+)$/gm,"<blockquote>$1</blockquote>");h=h.replace(/\`\`\`([\s\S]*?)\`\`\`/g,"<pre><code>$1</code></pre>");h=h.replace(/\`([^\`]+)\`/g,"<code>$1</code>");h=h.replace(/\*\*\*(.+?)\*\*\*/g,"<strong><em>$1</em></strong>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");h=h.replace(/~~(.+?)~~/g,"<del>$1</del>");h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');h=h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" style="max-width:100%">');h=h.replace(/^\* (.+)$/gm,"<li>$1</li>").replace(/^- (.+)$/gm,"<li>$1</li>");h=h.replace(/^\d+\. (.+)$/gm,"<li>$1</li>");return h}
+function mh(){const md=document.getElementById("mhIn").value;const h=md2html(md);document.getElementById("mhOut").value=h;document.getElementById("mhPrev").innerHTML=h}
+document.getElementById("mhBtn").onclick=mh;document.getElementById("mhCopy").onclick=()=>navigator.clipboard.writeText(document.getElementById("mhOut").value);
+document.getElementById("mhIn").oninput=function(){if(document.getElementById("mhAuto").checked)mh()};mh();
+</script>
+
+<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  <span>Donasi</span>
+</a>
+<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>
