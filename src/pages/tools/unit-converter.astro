@@ -166,7 +166,7 @@ function convert() {
     result = baseVal / u[to];
   }
 
-  resultDisplay.textContent = val + ' ' + from + ' = ' + result.toPrecision(10).replace(/\\.?0+$/, '') + ' ' + to;
+  resultDisplay.textContent = val + ' ' + from + ' = ' + result.toPrecision(10).replace(/\.?0+$/, '') + ' ' + to;
 }
 
 category.addEventListener('change', function() { populateUnits(this.value); });

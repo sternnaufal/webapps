@@ -2,7 +2,7 @@
   "categories": [
     {
       "name": "Developer Tools",
-      "icon": "&#x1F4BB;",
+      "icon": "💻",
       "tools": [
         { "slug": "hash-generator", "name": "Hash Generator", "desc": "Buat hash MD5, SHA-1, SHA-256, SHA-512 dan lainnya dari teks atau file" },
         { "slug": "uuid-generator", "name": "UUID/GUID Generator", "desc": "Hasilkan UUID/GUID v4 acak untuk berbagai kebutuhan pengembangan" },
@@ -21,7 +21,7 @@
     },
     {
       "name": "Network & URL",
-      "icon": "&#x1F310;",
+      "icon": "🌐",
       "tools": [
         { "slug": "subnetting", "name": "Kalkulator Subnetting", "desc": "Hitung subnet mask, network address, dan host range dengan mudah" },
         { "slug": "ip-calculator", "name": "IP Calculator", "desc": "Kalkulator alamat IP, subnet, CIDR, dan informasi jaringan" },
@@ -33,7 +33,7 @@
     },
     {
       "name": "Text & Media",
-      "icon": "&#x1F3A8;",
+      "icon": "🎨",
       "tools": [
         { "slug": "textcase", "name": "Text Case Converter", "desc": "Konversi teks ke uppercase, lowercase, title case, dan lainnya" },
         { "slug": "lorem-ipsum", "name": "Lorem Ipsum", "desc": "Generate teks Lorem Ipsum untuk placeholder desain" },
@@ -53,7 +53,7 @@
     },
     {
       "name": "Generators",
-      "icon": "&#x2699;&#xFE0F;",
+      "icon": "⚙️",
       "tools": [
         { "slug": "password-generator", "name": "Password Generator", "desc": "Buat password kuat dan acak dengan berbagai opsi karakter" },
         { "slug": "qr-generator", "name": "QR Code Generator", "desc": "Generate QR Code dari teks atau URL secara instan" },
@@ -77,7 +77,7 @@
     },
     {
       "name": "Converters",
-      "icon": "&#x1F504;",
+      "icon": "🔄",
       "tools": [
         { "slug": "konverter-bilangan", "name": "Konverter Bilangan", "desc": "Konversi bilangan desimal, biner, oktal, dan heksadesimal" },
         { "slug": "unit-converter", "name": "Unit Converter", "desc": "Konversi satuan panjang, berat, suhu, volume, dan lainnya" },
@@ -88,7 +88,7 @@
     },
     {
       "name": "Utilities",
-      "icon": "&#x1F527;",
+      "icon": "🔧",
       "tools": [
         { "slug": "timer", "name": "Timer & Stopwatch", "desc": "Timer dan stopwatch digital untuk berbagai keperluan" },
         { "slug": "stopwatch", "name": "Stopwatch", "desc": "Stopwatch sederhana dengan fitur lap time" },

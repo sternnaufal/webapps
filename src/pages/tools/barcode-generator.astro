@@ -132,12 +132,12 @@ function getOptions(){
 
 function validateInput(val,fmt){
   if(!val){return 'Nilai tidak boleh kosong';}
-  if(fmt==='EAN13'||fmt==='EAN13'){if(!/^\\d{12,13}$/.test(val))return 'EAN-13 harus 12-13 digit angka'}
-  if(fmt==='EAN8'){if(!/^\\d{7,8}$/.test(val))return 'EAN-8 harus 7-8 digit angka'}
-  if(fmt==='UPC'){if(!/^\\d{11,12}$/.test(val))return 'UPC-A harus 11-12 digit angka'}
-  if(fmt==='UPCE'){if(!/^\\d{7,8}$/.test(val))return 'UPC-E harus 7-8 digit angka'}
-  if(fmt==='ITF14'){if(!/^\\d{13,14}$/.test(val))return 'ITF-14 harus 13-14 digit angka'}
-  if(fmt==='pharmacode'){if(!/^\\d+$/.test(val))return 'Pharmacode hanya menerima angka'}
+  if(fmt==='EAN13'||fmt==='EAN13'){if(!/^\d{12,13}$/.test(val))return 'EAN-13 harus 12-13 digit angka'}
+  if(fmt==='EAN8'){if(!/^\d{7,8}$/.test(val))return 'EAN-8 harus 7-8 digit angka'}
+  if(fmt==='UPC'){if(!/^\d{11,12}$/.test(val))return 'UPC-A harus 11-12 digit angka'}
+  if(fmt==='UPCE'){if(!/^\d{7,8}$/.test(val))return 'UPC-E harus 7-8 digit angka'}
+  if(fmt==='ITF14'){if(!/^\d{13,14}$/.test(val))return 'ITF-14 harus 13-14 digit angka'}
+  if(fmt==='pharmacode'){if(!/^\d+$/.test(val))return 'Pharmacode hanya menerima angka'}
   return null;
 }
 

@@ -151,12 +151,12 @@ function updateValues(from) {
     var rgb = hexToRgb(hex);
     r = rgb[0]; g = rgb[1]; b = rgb[2];
   } else if (from === 'rgb') {
-    var match = document.getElementById('rgbValue').value.match(/\\d+/g);
+    var match = document.getElementById('rgbValue').value.match(/\d+/g);
     if (!match) return;
     r = Number(match[0]); g = Number(match[1]); b = Number(match[2]);
     hex = rgbToHex(r, g, b);
   } else if (from === 'hsl') {
-    var match = document.getElementById('hslValue').value.match(/\\d+/g);
+    var match = document.getElementById('hslValue').value.match(/\d+/g);
     if (!match) return;
     h = Number(match[0]); s = Number(match[1]); l = Number(match[2]);
     var rgb2 = hslToRgb(h, s, l);

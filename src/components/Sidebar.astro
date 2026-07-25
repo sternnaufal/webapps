@@ -2,31 +2,31 @@
 import tools from '../data/tools.json';
 
 const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 'index';
-const allTools = tools.categories.flatMap(c => c.tools);
-const sites = [
-  { name: 'Root', url: 'https://naufalrakha.my.id' },
-  { name: 'Digital', url: 'https://digital.naufalrakha.my.id' },
-  { name: 'Demo', url: 'https://demo.naufalrakha.my.id' },
-  { name: 'WebApps', url: 'https://webapps.naufalrakha.my.id' },
-];
 ---
 
-<aside class="sidebar vh-100 p-2 d-flex flex-column text-white" style="overflow:auto;position:sticky;top:0;">
-  <div class="sidebar-header mb-2">
-    <a href="/" class="text-decoration-none text-white fw-bold" style="font-size:0.95rem;">WebApps</a>
+<aside class="sidebar vh-100 d-flex flex-column text-white" style="overflow:hidden;position:sticky;top:0;background:#1a1a2e;border-right:1px solid rgba(255,255,255,.08);width:260px;flex-shrink:0;">
+  <div class="sidebar-header p-3 border-bottom" style="border-color:rgba(255,255,255,.08);">
+    <a href="/" class="text-decoration-none text-white fw-bold d-flex align-items-center gap-2">
+      <span style="font-size:1.5rem;">🚀</span>
+      <span style="font-size:0.95rem;">WebApps</span>
+    </a>
   </div>
-  <div class="sidebar-search-wrap mb-2">
+  
+  <div class="sidebar-search-wrap px-3 mb-2">
     <input type="text" class="sidebar-search form-control form-control-sm" placeholder="Cari tool..." style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#fff;font-size:.8rem;">
   </div>
-  <nav class="nav flex-column sidebar-tools flex-grow-1" style="overflow:auto;">
+  
+  <nav class="nav flex-column sidebar-tools flex-grow-1" style="overflow:auto;padding:0 2px;">
     {tools.categories.map((cat, i) => (
-      <div class="sidebar-cat mb-2">
-        <a class="nav-link text-white sidebar-cat-header d-flex justify-content-between align-items-center py-1" data-bs-toggle="collapse" href={`#cat${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'}>
-          <span>{cat.name}</span> <span class="cat-chevron">▼</span>
+      <div class="sidebar-cat mb-1">
+        <a class="nav-link text-white sidebar-cat-header d-flex align-items-center gap-2 py-2 px-2 rounded" data-bs-toggle="collapse" href={`#cat${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'} style="background:rgba(255,255,255,.03);border-radius:6px;transition:background .15s;">
+          <span style="font-size:1.1rem;">{cat.icon}</span>
+          <span class="fw-medium" style="font-size:.85rem;">{cat.name}</span>
+          <span class="cat-chevron ms-auto" style="font-size:.7rem;transition:transform .2s;">▼</span>
         </a>
-        <div class="collapse {i === 0 ? 'show' : ''}" id={`cat${i}`}>
+        <div class="collapse {i === 0 ? 'show' : ''}" id={`cat${i}`} style="animation:fadeIn .2s ease;">
           {cat.tools.map(t => (
-            <a class={`nav-link text-white ps-3 py-1 small ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`}>
+            <a class={`nav-link text-white ps-4 py-1.5 small rounded ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`} style="background:rgba(255,255,255,.02);margin:0 2px 2px 2px;transition:all .1s;">
               {t.name}
             </a>
           ))}
@@ -34,10 +34,24 @@ const sites = [
       </div>
     ))}
   </nav>
-  <div class="sidebar-footer border-top pt-2 mt-auto">
+  
+  <div class="sidebar-footer border-top pt-2 pb-3 px-3 mt-auto" style="border-color:rgba(255,255,255,.08);">
     <div class="d-flex justify-content-between align-items-center">
       <span style="color:rgba(255,255,255,0.4);font-size:0.65rem;">Tema Gelap</span>
-      <button class="dark-toggle btn btn-sm" style="line-height:1;font-size:0.85rem;padding:0 6px;color:rgba(255,255,255,0.6);background:transparent;border:none;">🌙</button>
+      <button class="dark-toggle btn btn-sm p-0" style="width:32px;height:32px;line-height:1;font-size:1rem;color:rgba(255,255,255,0.6);background:rgba(255,255,255,.08);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;">🌙</button>
     </div>
   </div>
 </aside>
+
+<style>
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  .sidebar-cat-header:hover { background: rgba(99,102,241,.15) !important; }
+  .sidebar-cat-header .cat-chevron { transform: rotate(-90deg); }
+  .sidebar-cat-header[aria-expanded="true"] .cat-chevron { transform: rotate(0deg); }
+  .nav-link.active { background: rgba(99,102,241,.25) !important; font-weight: 600; }
+  .nav-link:not(.active):hover { background: rgba(255,255,255,.06) !important; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
+</style>
