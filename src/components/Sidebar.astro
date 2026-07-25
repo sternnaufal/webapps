@@ -4,54 +4,57 @@ import tools from '../data/tools.json';
 const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 'index';
 ---
 
-<aside class="sidebar vh-100 d-flex flex-column text-white" style="overflow:hidden;position:sticky;top:0;background:#1a1a2e;border-right:1px solid rgba(255,255,255,.08);width:260px;flex-shrink:0;">
-  <div class="sidebar-header p-3 border-bottom" style="border-color:rgba(255,255,255,.08);">
-    <a href="/" class="text-decoration-none text-white fw-bold d-flex align-items-center gap-2">
-      <span style="font-size:1.5rem;">🚀</span>
-      <span style="font-size:0.95rem;">WebApps</span>
-    </a>
+<aside class="sidebar d-flex flex-column text-white" style="background:var(--gradient-dark);width:260px;flex-shrink:0;overflow:hidden;position:sticky;top:0;max-height:100vh;">
+  <!-- Header -->
+  <div class="d-flex align-items-center gap-2 px-3 py-3" style="border-bottom:1px solid rgba(255,255,255,.08)">
+    <span style="font-size:1.3rem;">🚀</span>
+    <div>
+      <a href="/" class="text-white text-decoration-none fw-bold" style="font-size:.95rem">WebApps</a>
+      <div style="font-size:.65rem;color:rgba(255,255,255,.4)">{tools.categories.flatMap(c => c.tools).length} tools</div>
+    </div>
   </div>
-  
-  <div class="sidebar-search-wrap px-3 mb-2">
-    <input type="text" class="sidebar-search form-control form-control-sm" placeholder="Cari tool..." style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#fff;font-size:.8rem;">
+
+  <!-- Search -->
+  <div class="px-3 py-2">
+    <input type="text" class="sidebar-search form-control form-control-sm" placeholder="Cari tool..." style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.78rem;border-radius:6px;">
   </div>
-  
-  <nav class="nav flex-column sidebar-tools flex-grow-1" style="overflow:auto;padding:0 2px;">
+
+  <!-- Categories -->
+  <nav class="flex-grow-1" style="overflow-y:auto;overflow-x:hidden;padding:0 6px">
     {tools.categories.map((cat, i) => (
-      <div class="sidebar-cat mb-1">
-        <a class="nav-link text-white sidebar-cat-header d-flex align-items-center gap-2 py-2 px-2 rounded" data-bs-toggle="collapse" href={`#cat${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'} style="background:rgba(255,255,255,.03);border-radius:6px;transition:background .15s;">
-          <span style="font-size:1.1rem;">{cat.icon}</span>
-          <span class="fw-medium" style="font-size:.85rem;">{cat.name}</span>
-          <span class="cat-chevron ms-auto" style="font-size:.7rem;transition:transform .2s;">▼</span>
+      <div class="mb-1">
+        <a class="d-flex align-items-center gap-2 px-2 py-1.5 rounded text-decoration-none text-white cat-header" data-bs-toggle="collapse" href={`#sc${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'} style="font-size:.78rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:rgba(255,255,255,.5) !important;transition:all .15s;">
+          <span style="font-size:.9rem">{cat.icon}</span>
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{cat.name}</span>
+          <span class="cat-arrow" style="font-size:.55rem;transition:transform .2s">▶</span>
         </a>
-        <div class="collapse {i === 0 ? 'show' : ''}" id={`cat${i}`} style="animation:fadeIn .2s ease;">
+        <div class="collapse {i === 0 ? 'show' : ''}" id={`sc${i}`}>
           {cat.tools.map(t => (
-            <a class={`nav-link text-white ps-4 py-1.5 small rounded ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`} style="background:rgba(255,255,255,.02);margin:0 2px 2px 2px;transition:all .1s;">
-              {t.name}
+            <a class={`d-flex align-items-center gap-2 px-2 py-1.5 rounded text-decoration-none text-white tool-link ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`} style="font-size:.8rem;margin:1px 2px;transition:all .12s;color:rgba(255,255,255,.7) !important;">
+              <span class="tool-link-icon" style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600;border-radius:5px;background:rgba(255,255,255,.06);flex-shrink:0;">{t.icon}</span>
+              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{t.name}</span>
             </a>
           ))}
         </div>
       </div>
     ))}
   </nav>
-  
-  <div class="sidebar-footer border-top pt-2 pb-3 px-3 mt-auto" style="border-color:rgba(255,255,255,.08);">
-    <div class="d-flex justify-content-between align-items-center">
-      <span style="color:rgba(255,255,255,0.4);font-size:0.65rem;">Tema Gelap</span>
-      <button class="dark-toggle btn btn-sm p-0" style="width:32px;height:32px;line-height:1;font-size:1rem;color:rgba(255,255,255,0.6);background:rgba(255,255,255,.08);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;">🌙</button>
-    </div>
+
+  <!-- Footer -->
+  <div class="d-flex align-items-center justify-content-between px-3 py-2" style="border-top:1px solid rgba(255,255,255,.08)">
+    <span style="color:rgba(255,255,255,.3);font-size:.6rem;">🌙 Dark mode</span>
+    <button class="dark-toggle" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">🌙</button>
   </div>
 </aside>
 
 <style>
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-  .sidebar-cat-header:hover { background: rgba(99,102,241,.15) !important; }
-  .sidebar-cat-header .cat-chevron { transform: rotate(-90deg); }
-  .sidebar-cat-header[aria-expanded="true"] .cat-chevron { transform: rotate(0deg); }
-  .nav-link.active { background: rgba(99,102,241,.25) !important; font-weight: 600; }
-  .nav-link:not(.active):hover { background: rgba(255,255,255,.06) !important; }
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
+  .cat-header { transition: all .15s; }
+  .cat-header:hover { background: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.8) !important; }
+  .cat-header[aria-expanded="true"] .cat-arrow { transform: rotate(90deg); }
+  .tool-link:hover { background: rgba(255,255,255,.08) !important; color: #fff !important; }
+  .tool-link.active { background: rgba(99,102,241,.25) !important; color: #fff !important; }
+  .tool-link.active .tool-link-icon { background: var(--accent) !important; color: #fff !important; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 2px; }
+  .sidebar-search:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 2px rgba(99,102,241,.2); }
 </style>
