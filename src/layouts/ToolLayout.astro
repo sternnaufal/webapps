@@ -24,7 +24,7 @@ const keyw = keywords || 'web tools, online tools, developer tools';
 const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url: Astro.url.pathname }];
 ---
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id" data-theme="naufal" id="htmlTag">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,16 +108,15 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
     }
     document.getElementById('mobileToggle')?.addEventListener('click', toggleMobile);
 
-    // Theme toggle
+    // Theme toggle - use custom themes
     const stored = localStorage.getItem('theme');
-    if (stored) document.documentElement.setAttribute('data-theme', stored);
+    const html = document.getElementById('htmlTag');
+    if (stored === 'naufal-dark') { html.setAttribute('data-theme', 'naufal-dark'); document.getElementById('themeToggle')?.setAttribute('checked', ''); }
     document.getElementById('themeToggle')?.addEventListener('change', function() {
-      const theme = this.checked ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
+      const theme = this.checked ? 'naufal-dark' : 'naufal';
+      html.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
     });
-    // Restore checkbox state
-    if (localStorage.getItem('theme') === 'dark') document.getElementById('themeToggle')?.setAttribute('checked', '');
 
     // Keyboard shortcut: Escape closes mobile
     document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMobile(); });
