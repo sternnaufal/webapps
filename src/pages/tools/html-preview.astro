@@ -4,14 +4,14 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'HTML Live Preview';
 const description = 'Live HTML preview online. Tulis HTML, CSS, JS dan lihat hasilnya secara real-time.';
 const keywords = 'html preview, live html editor, html css js playground';
-const bodyHtml = `<div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom bg-light">
+const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg-light">
   <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;width:28px;height:28px;font-size:0.7rem;">&lt;/&gt;</div>
-  <h1 class="h6 mb-0 fw-bold">HTML Live Preview</h1>
-  <span class="badge bg-success ms-auto">Real-time</span>
-  <button id="btnRun" class="btn btn-sm btn-primary d-md-none">Run</button>
+  <h1 class="h6 mb-0 font-bold">HTML Live Preview</h1>
+  <span class="badge bg-success ml-auto">Real-time</span>
+  <button id="btnRun" class="btn btn-sm btn-primary d-mhidden">Run</button>
 </div>
-<div class="row g-0 flex-grow-1"><div class="col-md-6 border-end">
-<textarea id="htmlInput" class="form-control h-100 border-0 p-3 font-mono" placeholder="&lt;h1&gt;Hello World&lt;/h1&gt;">&lt;!DOCTYPE html&gt;
+<div class="row gap-0 flex-1"><div class="md:w-1/2 w-full border-end">
+<textarea id="htmlInput" class="input input-bordered w-full h-full border-0 p-3 font-mono" placeholder="&lt;h1&gt;Hello World&lt;/h1&gt;">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;&lt;style&gt;
   body { font-family: system-ui; padding: 2rem; background: #f8fafc; }
@@ -26,8 +26,8 @@ const bodyHtml = `<div class="d-flex align-items-center gap-2 px-3 py-2 border-b
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
-</div><div class="col-md-6 p-0"><iframe id="preview" srcdoc=" "></iframe></div></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang HTML Live Preview</h6><p class="small mb-1" style="line-height:1.6">HTML live preview online untuk menulis kode HTML, CSS, dan JavaScript serta melihat hasil rendering secara real-time. Alat ini menampilkan editor kode di sisi kiri dan preview halaman yang sudah di-render di sisi kanan (atau atas-bawah di perangkat mobile). Sangat berguna untuk prototyping cepat, belajar coding, dan menguji cuplikan kode tanpa perlu setup lingkungan development.</p><p class="small mb-0" style="line-height:1.6">Fitur HTML preview meliputi: editor dengan syntax highlighting untuk HTML, CSS, dan JavaScript; live preview yang diperbarui secara otomatis saat Anda mengetik; dukungan untuk eksternal library via CDN (dengan menambahkan tag link atau script di HTML); mode layar penuh untuk preview; dan tombol untuk menyalin atau mendownload kode. Error JavaScript akan ditampilkan di console area.</p><p class="small mb-0 mt-2" style="line-height:1.6">HTML live preview sangat berguna untuk: belajar HTML, CSS, dan JavaScript secara interaktif, prototyping ide desain dengan cepat, menguji komponen UI sebelum diintegrasikan ke proyek utama, debugging cuplikan kode, membuat demo untuk dibagikan ke rekan tim atau klien, dan mengajar coding dengan demonstrasi langsung. Semua rendering dilakukan di browser tanpa perlu server.</p></div>`;
+</div><div class="md:w-1/2 w-full p-0"><iframe id="preview" srcdoc=" "></iframe></div></div>
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang HTML Live Preview</h6><p class="small mb-1" style="line-height:1.6">HTML live preview online untuk menulis kode HTML, CSS, dan JavaScript serta melihat hasil rendering secara real-time. Alat ini menampilkan editor kode di sisi kiri dan preview halaman yang sudah di-render di sisi kanan (atau atas-bawah di perangkat mobile). Sangat berguna untuk prototyping cepat, belajar coding, dan menguji cuplikan kode tanpa perlu setup lingkungan development.</p><p class="small mb-0" style="line-height:1.6">Fitur HTML preview meliputi: editor dengan syntax highlighting untuk HTML, CSS, dan JavaScript; live preview yang diperbarui secara otomatis saat Anda mengetik; dukungan untuk eksternal library via CDN (dengan menambahkan tag link atau script di HTML); mode layar penuh untuk preview; dan tombol untuk menyalin atau mendownload kode. Error JavaScript akan ditampilkan di console area.</p><p class="small mb-0 mt-2" style="line-height:1.6">HTML live preview sangat berguna untuk: belajar HTML, CSS, dan JavaScript secara interaktif, prototyping ide desain dengan cepat, menguji komponen UI sebelum diintegrasikan ke proyek utama, debugging cuplikan kode, membuat demo untuk dibagikan ke rekan tim atau klien, dan mengajar coding dengan demonstrasi langsung. Semua rendering dilakukan di browser tanpa perlu server.</p></div>`;
 const extraHtml = ``;
 ---
 

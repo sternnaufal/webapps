@@ -4,11 +4,11 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'JSON Formatter & Validator';
 const description = 'Format, validasi, dan beautify JSON online. JSON formatter dengan syntax highlighting dan tree view.';
 const keywords = 'json formatter, json validator, json beautifier, format json, json tool';
-const bodyHtml = `<div class="row g-4">
+const bodyHtml = `<div class="flex flex-wrap gap-4">
         <div class="col-lg-6">
-          <label class="form-label fw-semibold">Input JSON</label>
-          <textarea id="jsonInput" class="form-control" placeholder="Paste JSON di sini..."></textarea>
-          <div class="d-flex gap-2 mt-2 flex-wrap">
+          <label class="label-text font-semibold">Input JSON</label>
+          <textarea id="jsonInput" class="input input-bordered w-full" placeholder="Paste JSON di sini..."></textarea>
+          <div class="flex gap-2 mt-2 flex-wrap">
             <button id="btnFormat" class="btn btn-success btn-sm">Format (2 spaces)</button>
             <button id="btnFormat4" class="btn btn-outline-success btn-sm">Format (4 spaces)</button>
             <button id="btnMinify" class="btn btn-warning btn-sm">Minify</button>
@@ -18,27 +18,27 @@ const bodyHtml = `<div class="row g-4">
           <div id="validationMsg" class="mt-2 small"></div>
         </div>
         <div class="col-lg-6">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <label class="form-label fw-semibold mb-0">Output</label>
+          <div class="flex justify-between items-center mb-1">
+            <label class="label-text font-semibold mb-0">Output</label>
             <button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button>
           </div>
-          <textarea id="jsonOutput" class="form-control" readonly></textarea>
+          <textarea id="jsonOutput" class="input input-bordered w-full" readonly></textarea>
         </div>
       </div>
 
       <div class="card mt-4 p-3">
         <h5 class="mb-0">?? <span class="fw-normal">Tempel JSON, klik Format, dan lihat hasil yang rapi. Validasi otomatis memberi tahu jika ada error.</span></h5>
       </div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang JSON Formatter & Validator</h6><p class="small mb-1" style="line-height:1.6">JSON formatter online untuk memformat, memvalidasi, dan mempercantik data JSON. Alat ini membantu developer memeriksa struktur JSON, menemukan error syntax, dan mengubah JSON mentah menjadi format yang mudah dibaca dengan indentasi yang rapi. Mendukung berbagai mode: format/beautify dengan indentasi 2 atau 4 spasi, minify untuk memperkecil ukuran data, dan validasi untuk mendeteksi syntax error secara akurat.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan data JSON ke kolom input, pilih mode yang diinginkan (format, minify, atau validasi), dan hasil akan ditampilkan secara instan. Fitur tree view menampilkan hierarki JSON dalam bentuk expandable tree yang memudahkan navigasi data kompleks. Tombol copy tersedia untuk menyalin hasil, dan terdapat juga contoh data JSON untuk percobaan cepat. JSON validator ini mampu mendeteksi berbagai jenis error seperti missing comma, bracket tidak seimbang, dan string tanpa tanda kutip.</p><p class="small mb-0 mt-2" style="line-height:1.6">JSON (JavaScript Object Notation) adalah format pertukaran data standar yang digunakan secara luas dalam REST API development, konfigurasi aplikasi, penyimpanan data NoSQL, dan komunikasi client-server. JSON formatter sangat penting dalam workflow pengembangan: debugging response API, membaca file konfigurasi, mentransformasi data antar format, dan dokumentasi API. Semua pemrosesan dilakukan di browser tanpa mengirim data ke server.</p></div>`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang JSON Formatter & Validator</h6><p class="small mb-1" style="line-height:1.6">JSON formatter online untuk memformat, memvalidasi, dan mempercantik data JSON. Alat ini membantu developer memeriksa struktur JSON, menemukan error syntax, dan mengubah JSON mentah menjadi format yang mudah dibaca dengan indentasi yang rapi. Mendukung berbagai mode: format/beautify dengan indentasi 2 atau 4 spasi, minify untuk memperkecil ukuran data, dan validasi untuk mendeteksi syntax error secara akurat.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan data JSON ke kolom input, pilih mode yang diinginkan (format, minify, atau validasi), dan hasil akan ditampilkan secara instan. Fitur tree view menampilkan hierarki JSON dalam bentuk expandable tree yang memudahkan navigasi data kompleks. Tombol copy tersedia untuk menyalin hasil, dan terdapat juga contoh data JSON untuk percobaan cepat. JSON validator ini mampu mendeteksi berbagai jenis error seperti missing comma, bracket tidak seimbang, dan string tanpa tanda kutip.</p><p class="small mb-0 mt-2" style="line-height:1.6">JSON (JavaScript Object Notation) adalah format pertukaran data standar yang digunakan secara luas dalam REST API development, konfigurasi aplikasi, penyimpanan data NoSQL, dan komunikasi client-server. JSON formatter sangat penting dalam workflow pengembangan: debugging response API, membaca file konfigurasi, mentransformasi data antar format, dan dokumentasi API. Semua pemrosesan dilakukan di browser tanpa mengirim data ke server.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="json-csv" class="btn btn-outline-secondary btn-sm rounded-pill">JSON to CSV</a><a href="yaml-json" class="btn btn-outline-secondary btn-sm rounded-pill">YAML to JSON</a><a href="xml-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">Xml Formatter</a><a href="sql-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">SQL Formatter</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="json-csv" class="btn btn-outline btn-sm rounded-full">JSON to CSV</a><a href="yaml-json" class="btn btn-outline btn-sm rounded-full">YAML to JSON</a><a href="xml-formatter" class="btn btn-outline btn-sm rounded-full">Xml Formatter</a><a href="sql-formatter" class="btn btn-outline btn-sm rounded-full">SQL Formatter</a></div>`;
 ---
 
 <ToolLayout
@@ -80,7 +80,7 @@ function process(spaces) {
   } catch (e) {
     output.value = '';
     msg.textContent = 'Error: ' + e.message;
-    msg.className = 'mt-2 small text-danger';
+    msg.className = 'mt-2 small text-error';
   }
 }
 
@@ -95,7 +95,7 @@ document.getElementById('btnMinify').addEventListener('click', function() {
     msg.className = 'mt-2 small text-success';
   } catch (e) {
     msg.textContent = 'Error: ' + e.message;
-    msg.className = 'mt-2 small text-danger';
+    msg.className = 'mt-2 small text-error';
   }
 });
 document.getElementById('btnValidate').addEventListener('click', function() { process(); });

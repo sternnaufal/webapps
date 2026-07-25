@@ -4,28 +4,28 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Morse Code Converter';
 const description = 'Morse code converter online. Ubah teks ke kode Morse dan sebaliknya. Lengkap dengan alfabet Morse, audio, dan copy hasil.';
 const keywords = 'morse code converter, kode morse, text to morse, morse translator, sandi morse, sandi';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#7c3aed;">-.--</div><div><h1 class="h3 mb-0">Morse Code Converter</h1><p class="text-muted small mb-0">Ubah teks ke kode Morse dan sebaliknya secara instan.</p></div></header>
-<div class="row g-4"><div class="col-lg-8">
-<div class="card shadow-sm border-0 p-3"><ul class="nav nav-tabs nav-justified mb-3" id="modeTab"><li class="nav-item"><button class="nav-link active" id="tabText" data-mode="text">Teks ke Morse</button></li><li class="nav-item"><button class="nav-link" id="tabMorse" data-mode="morse">Morse ke Teks</button></li></ul>
-<div class="mb-3"><textarea id="inputText" class="form-control font-mono" rows="3" placeholder="Masukkan teks...">SOS</textarea></div>
-<div class="d-flex gap-2 mb-3"><button id="btnConvert" class="btn btn-primary">Convert</button><button id="btnCopy" class="btn btn-outline-secondary">Copy</button><button id="btnPlay" class="btn btn-outline-secondary">Play Audio</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div>
-<div class="p-3 rounded bg-light"><div class="small fw-semibold mb-2">Hasil:</div><div id="outputText" class="font-monospace" style="font-size:1.1rem;line-height:1.8;word-break:break-all">... --- ...</div></div>
-<div id="visualMorse" class="mt-3 d-flex flex-wrap align-items-center"></div>
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#7c3aed;">-.--</div><div><h1 class="h3 mb-0">Morse Code Converter</h1><p class="opacity-60 small mb-0">Ubah teks ke kode Morse dan sebaliknya secara instan.</p></div></header>
+<div class="flex flex-wrap gap-4"><div class="col-lg-8">
+<div class="card card-bordered bg-base-100 p-3"><ul class="nav nav-tabs nav-justified mb-3" id="modeTab"><li class="nav-item"><button class="nav-link active" id="tabText" data-mode="text">Teks ke Morse</button></li><li class="nav-item"><button class="nav-link" id="tabMorse" data-mode="morse">Morse ke Teks</button></li></ul>
+<div class="mb-3"><textarea id="inputText" class="input input-bordered w-full font-mono" rows="3" placeholder="Masukkan teks...">SOS</textarea></div>
+<div class="flex gap-2 mb-3"><button id="btnConvert" class="btn btn-primary">Convert</button><button id="btnCopy" class="btn btn-outline">Copy</button><button id="btnPlay" class="btn btn-outline">Play Audio</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div>
+<div class="p-3 rounded bg-light"><div class="small font-semibold mb-2">Hasil:</div><div id="outputText" class="font-monospace" style="font-size:1.1rem;line-height:1.8;word-break:break-all">... --- ...</div></div>
+<div id="visualMorse" class="mt-3 flex flex-wrap items-center"></div>
 </div></div>
-<div class="col-lg-4">
-<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Referensi Morse</h6>
+<div class="col-lgap-4">
+<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Referensi Morse</h6>
 <div class="small" id="morseRef" style="line-height:2;column-count:2">Memuat...</div>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Morse Code Converter</h6><p class="small mb-1" style="line-height:1.6">Morse code converter online untuk mengkonversi teks biasa ke kode Morse dan sebaliknya. Morse code adalah sistem representasi huruf, angka, dan tanda baca menggunakan sinyal titik (.) dan garis (-) yang diciptakan oleh Samuel Morse. Alat ini mendukung konversi dua arah dengan dukungan penuh untuk huruf A-Z, angka 0-9, dan tanda baca umum.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: teks ke Morse (encode) dan Morse ke teks (decode), audio playback kode Morse dengan kecepatan dapat diatur (lambat, sedang, cepat), visual blinking indicator yang menyala sesuai ketukan Morse, tampilan kode Morse dengan format yang rapi (setiap huruf dipisah spasi, setiap kata dipisah garis miring), dan tombol copy untuk menyalin hasil konversi.</p><p class="small mb-0 mt-2" style="line-height:1.6">Morse code converter berguna untuk: belajar dan berlatih kode Morse, berkomunikasi menggunakan sinyal Morse dalam situasi darurat, teka-teki dan game edukasi, memahami sejarah telekomunikasi, dan eksperimen dengan encoding data. Meskipun sudah jarang digunakan untuk komunikasi sehari-hari, Morse code tetap menjadi keterampilan yang diakui secara internasional dan digunakan dalam radio amatir.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Morse Code Converter</h6><p class="small mb-1" style="line-height:1.6">Morse code converter online untuk mengkonversi teks biasa ke kode Morse dan sebaliknya. Morse code adalah sistem representasi huruf, angka, dan tanda baca menggunakan sinyal titik (.) dan garis (-) yang diciptakan oleh Samuel Morse. Alat ini mendukung konversi dua arah dengan dukungan penuh untuk huruf A-Z, angka 0-9, dan tanda baca umum.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: teks ke Morse (encode) dan Morse ke teks (decode), audio playback kode Morse dengan kecepatan dapat diatur (lambat, sedang, cepat), visual blinking indicator yang menyala sesuai ketukan Morse, tampilan kode Morse dengan format yang rapi (setiap huruf dipisah spasi, setiap kata dipisah garis miring), dan tombol copy untuk menyalin hasil konversi.</p><p class="small mb-0 mt-2" style="line-height:1.6">Morse code converter berguna untuk: belajar dan berlatih kode Morse, berkomunikasi menggunakan sinyal Morse dalam situasi darurat, teka-teki dan game edukasi, memahami sejarah telekomunikasi, dan eksperimen dengan encoding data. Meskipun sudah jarang digunakan untuk komunikasi sehari-hari, Morse code tetap menjadi keterampilan yang diakui secara internasional dan digunakan dalam radio amatir.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center"><span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="textcase" class="btn btn-outline-secondary btn-sm rounded-pill">Text Case</a><a href="reverse-text" class="btn btn-outline-secondary btn-sm rounded-pill">Reverse Text</a><a href="palindrome-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Palindrome Checker</a><a href="anagram-finder" class="btn btn-outline-secondary btn-sm rounded-pill">Anagram Finder</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="textcase" class="btn btn-outline btn-sm rounded-full">Text Case</a><a href="reverse-text" class="btn btn-outline btn-sm rounded-full">Reverse Text</a><a href="palindrome-checker" class="btn btn-outline btn-sm rounded-full">Palindrome Checker</a><a href="anagram-finder" class="btn btn-outline btn-sm rounded-full">Anagram Finder</a></div>`;
 const toolCss = `.morse-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--text);margin:0 4px}.morse-dash{display:inline-block;width:32px;height:12px;border-radius:6px;background:var(--text);margin:0 4px}.morse-char{display:inline-block;margin:0 6px;vertical-align:middle}.morse-space{display:inline-block;width:16px}`;
 ---
 
@@ -126,9 +126,9 @@ function playBeep(ctx,t,dur){
 inp.addEventListener('input',convert);
 var examples=['SOS','HELLO WORLD','LAMPUNG','INDONESIA','123'];
 var exDiv=document.createElement('div');exDiv.className='mt-2';
-exDiv.innerHTML='<small class="text-muted">Contoh: </small>';
+exDiv.innerHTML='<small class="opacity-60">Contoh: </small>';
 for(var i=0;i<examples.length;i++){(function(e){
-  var a=document.createElement('a');a.href='#';a.className='small me-2';a.textContent=e;
+  var a=document.createElement('a');a.href='#';a.className='small mr-2';a.textContent=e;
   a.addEventListener('click',function(ev){ev.preventDefault();inp.value=e;mode='text';document.getElementById('tabText').click();convert()});
   exDiv.appendChild(a);
 })(examples[i])}

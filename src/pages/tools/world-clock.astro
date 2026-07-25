@@ -4,49 +4,49 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'World Clock';
 const description = 'World clock online. Lihat waktu saat ini di berbagai zona waktu dunia. WIB, WITA, WIT, UTC, dan lainnya.';
 const keywords = 'world clock, timezone converter, waktu dunia, zona waktu, WIB, WITA, WIT';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">World Clock</h1><p class="text-muted small mb-0">Lihat waktu saat ini di berbagai zona waktu. Update real-time.</p></div></header>
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">World Clock</h1><p class="opacity-60 small mb-0">Lihat waktu saat ini di berbagai zona waktu. Update real-time.</p></div></header>
 
-<div class="row g-4" id="clockGrid">
+<div class="flex flex-wrap gap-4" id="clockGrid">
 </div>
 
-<div class="card shadow-sm border-0 p-3 mt-4">
-  <div class="row g-2 align-items-end">
-    <div class="col-md-4">
-      <label class="form-label fw-semibold small">Nama Kota/Zona</label>
-      <input type="text" id="newName" class="form-control" placeholder="Contoh: Tokyo" list="tzSuggest">
+<div class="card card-bordered bg-base-100 p-3 mt-4">
+  <div class="row gap-2 align-items-end">
+    <div class="md:w-1/3 w-full">
+      <label class="label-text font-semibold small">Nama Kota/Zona</label>
+      <input type="text" id="newName" class="input input-bordered w-full" placeholder="Contoh: Tokyo" list="tzSuggest">
       <datalist id="tzSuggest">
         <option value="Tokyo"><option value="London"><option value="New York"><option value="Dubai"><option value="Singapore"><option value="Sydney"><option value="Paris"><option value="Seoul"><option value="Mumbai"><option value="Moscow">
       </datalist>
     </div>
-    <div class="col-md-3">
-      <label class="form-label fw-semibold small">Timezone (IANA)</label>
-      <input type="text" id="newTz" class="form-control font-mono" placeholder="Asia/Tokyo" list="tzList">
+    <div class="md:w-1/4 w-full">
+      <label class="label-text font-semibold small">Timezone (IANA)</label>
+      <input type="text" id="newTz" class="input input-bordered w-full font-mono" placeholder="Asia/Tokyo" list="tzList">
       <datalist id="tzList">
         <option value="Asia/Jakarta"><option value="Asia/Makassar"><option value="Asia/Jayapura"><option value="Asia/Tokyo"><option value="Asia/Singapore"><option value="Asia/Shanghai"><option value="Asia/Dubai"><option value="Asia/Kolkata"><option value="Europe/London"><option value="Europe/Paris"><option value="Europe/Moscow"><option value="America/New_York"><option value="America/Chicago"><option value="America/Denver"><option value="America/Los_Angeles"><option value="Australia/Sydney"><option value="Pacific/Auckland"><option value="UTC">
       </datalist>
     </div>
-    <div class="col-md-3 col-6">
-      <label class="form-label fw-semibold small">Offset UTC</label>
-      <select id="newOffset" class="form-select">
+    <div class="md:w-1/4 w-full col-6">
+      <label class="label-text font-semibold small">Offset UTC</label>
+      <select id="newOffset" class="select select-bordered w-full">
         <option value="-12">UTC-12</option><option value="-11">UTC-11</option><option value="-10">UTC-10</option><option value="-9">UTC-9</option><option value="-8">UTC-8</option><option value="-7">UTC-7</option><option value="-6">UTC-6</option><option value="-5">UTC-5</option><option value="-4">UTC-4</option><option value="-3">UTC-3</option><option value="-2">UTC-2</option><option value="-1">UTC-1</option><option value="0" selected>UTC+0</option><option value="1">UTC+1</option><option value="2">UTC+2</option><option value="3">UTC+3</option><option value="4">UTC+4</option><option value="5">UTC+5</option><option value="6">UTC+6</option><option value="7">UTC+7</option><option value="8">UTC+8</option><option value="9">UTC+9</option><option value="10">UTC+10</option><option value="11">UTC+11</option><option value="12">UTC+12</option>
       </select>
     </div>
     <div class="col-md-2 col-6">
-      <label class="form-label fw-semibold small">&nbsp;</label>
-      <button id="btnAdd" class="btn btn-primary w-100">Tambah</button>
+      <label class="label-text font-semibold small">&nbsp;</label>
+      <button id="btnAdd" class="btn btn-primary w-full">Tambah</button>
     </div>
   </div>
 </div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang World Clock</h6><p class="small mb-1" style="line-height:1.6">World clock online untuk menampilkan waktu saat ini dari berbagai zona waktu di seluruh dunia secara real-time. Alat ini menampilkan jam digital untuk kota-kota besar di berbagai benua: Asia (Jakarta, Tokyo, Shanghai, Dubai), Eropa (London, Paris, Berlin, Moskow), Amerika (New York, Los Angeles, Chicago), Australia (Sydney), dan Afrika. Sangat berguna untuk koordinasi meeting internasional, perjalanan, dan komunikasi global.</p><p class="small mb-0" style="line-height:1.6">Setiap zona waktu menampilkan informasi lengkap: nama kota, waktu saat ini (jam:menit:detik), perbedaan waktu relatif terhadap WIB (UTC+7), dan status siang/malam dengan indikator visual. World clock ini juga dilengkapi fitur pencarian kota dan konversi waktu antar zona waktu. Anda bisa menambahkan kota favorit ke daftar yang selalu tampil di atas.</p><p class="small mb-0 mt-2" style="line-height:1.6">World clock sangat membantu dalam berbagai situasi: merencanakan meeting online dengan tim lintas negara, menelepon keluarga atau relasi di luar negeri pada jam yang tepat, merencanakan perjalanan internasional, mengikuti event global seperti webinar atau conference, dan bekerja sebagai freelancer atau remote worker dengan klien dari berbagai negara. Semua data waktu dihitung berdasarkan waktu sistem komputer Anda.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang World Clock</h6><p class="small mb-1" style="line-height:1.6">World clock online untuk menampilkan waktu saat ini dari berbagai zona waktu di seluruh dunia secara real-time. Alat ini menampilkan jam digital untuk kota-kota besar di berbagai benua: Asia (Jakarta, Tokyo, Shanghai, Dubai), Eropa (London, Paris, Berlin, Moskow), Amerika (New York, Los Angeles, Chicago), Australia (Sydney), dan Afrika. Sangat berguna untuk koordinasi meeting internasional, perjalanan, dan komunikasi global.</p><p class="small mb-0" style="line-height:1.6">Setiap zona waktu menampilkan informasi lengkap: nama kota, waktu saat ini (jam:menit:detik), perbedaan waktu relatif terhadap WIB (UTC+7), dan status siang/malam dengan indikator visual. World clock ini juga dilengkapi fitur pencarian kota dan konversi waktu antar zona waktu. Anda bisa menambahkan kota favorit ke daftar yang selalu tampil di atas.</p><p class="small mb-0 mt-2" style="line-height:1.6">World clock sangat membantu dalam berbagai situasi: merencanakan meeting online dengan tim lintas negara, menelepon keluarga atau relasi di luar negeri pada jam yang tepat, merencanakan perjalanan internasional, mengikuti event global seperti webinar atau conference, dan bekerja sebagai freelancer atau remote worker dengan klien dari berbagai negara. Semua data waktu dihitung berdasarkan waktu sistem komputer Anda.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="time-converter" class="btn btn-outline-secondary btn-sm rounded-pill">Time Converter</a><a href="date-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Date Calculator</a><a href="countdown" class="btn btn-outline-secondary btn-sm rounded-pill">Countdown</a><a href="sleep-cycle" class="btn btn-outline-secondary btn-sm rounded-pill">Sleep Cycle</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="time-converter" class="btn btn-outline btn-sm rounded-full">Time Converter</a><a href="date-calculator" class="btn btn-outline btn-sm rounded-full">Date Calculator</a><a href="countdown" class="btn btn-outline btn-sm rounded-full">Countdown</a><a href="sleep-cycle" class="btn btn-outline btn-sm rounded-full">Sleep Cycle</a></div>`;
 ---
 
 <ToolLayout
@@ -108,12 +108,12 @@ function formatDate(offset){
 function render(){
   var g=document.getElementById('clockGrid');g.innerHTML='';
   clocks.forEach(function(c,i){
-    var col=document.createElement('div');col.className='col-md-3 col-sm-6';
-    col.innerHTML='<div class="card shadow-sm border-0 h-100"><div class="card-body text-center d-flex flex-column justify-content-center" style="min-height:140px">'+
-      '<div class="fw-bold small text-muted mb-1">'+c.name+'</div>'+
-      '<div class="display-6 fw-semibold mb-0" style="font-size:1.8rem;letter-spacing:1px">'+formatTime(c.offset)+'</div>'+
-      '<div class="small text-muted mt-1">'+formatDate(c.offset)+'</div>'+
-      '<div class="small text-muted">UTC'+(c.offset>=0?'+':'')+c.offset+'</div>'+
+    var col=document.createElement('div');col.className='md:w-1/4 w-full sm:w-1/2 w-full';
+    col.innerHTML='<div class="card shadow-sm border-0 h-full"><div class="card-body text-center flex flex-column justify-center" style="min-height:140px">'+
+      '<div class="font-bold text-sm opacity-60 mb-1">'+c.name+'</div>'+
+      '<div class="text-2xl font-bold font-semibold mb-0" style="font-size:1.8rem;letter-spacing:1px">'+formatTime(c.offset)+'</div>'+
+      '<div class="text-sm opacity-60 mt-1">'+formatDate(c.offset)+'</div>'+
+      '<div class="text-sm opacity-60">UTC'+(c.offset>=0?'+':'')+c.offset+'</div>'+
       '<button class="btn btn-sm btn-outline-danger mt-2 remove-btn" data-idx="'+i+'" style="font-size:0.7rem">Hapus</button>'+
     '</div></div>';
     g.appendChild(col);

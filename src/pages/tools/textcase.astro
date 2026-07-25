@@ -4,47 +4,47 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Text Case Converter';
 const description = 'Konversi huruf besar/kecil teks online. UPPER, lower, Title Case, camelCase, snake_case, dan lainnya.';
 const keywords = 'text case converter, uppercase, lowercase, title case, case converter';
-const bodyHtml = `<div class="row g-3 mb-4">
-        <div class="col-12">
-          <label for="text" class="form-label">Masukkan Teks</label>
-          <textarea id="text" class="form-control" rows="4" placeholder="Masukkan teks di sini..."></textarea>
+const bodyHtml = `<div class="flex flex-wrap gap-3 mb-4">
+        <div class="w-full">
+          <label for="text" class="label-text">Masukkan Teks</label>
+          <textarea id="text" class="input input-bordered w-full" rows="4" placeholder="Masukkan teks di sini..."></textarea>
         </div>
-        <div class="col-6 col-md-4 d-grid">
+        <div class="col-6 md:w-1/3 w-full d-grid">
           <button type="button" data-action="upper" class="btn btn-primary convert-btn">UPPERCASE</button>
         </div>
-        <div class="col-6 col-md-4 d-grid">
+        <div class="col-6 md:w-1/3 w-full d-grid">
           <button type="button" data-action="lower" class="btn btn-primary convert-btn">lowercase</button>
         </div>
-        <div class="col-6 col-md-4 d-grid">
+        <div class="col-6 md:w-1/3 w-full d-grid">
           <button type="button" data-action="title" class="btn btn-primary convert-btn">Title Case</button>
         </div>
-        <div class="col-6 col-md-4 d-grid">
+        <div class="col-6 md:w-1/3 w-full d-grid">
           <button type="button" data-action="snake" class="btn btn-primary convert-btn">snake_case</button>
         </div>
-        <div class="col-6 col-md-4 d-grid">
+        <div class="col-6 md:w-1/3 w-full d-grid">
           <button type="button" data-action="camel" class="btn btn-primary convert-btn">camelCase</button>
         </div>
       </div>
 
       <div id="resultContainer" style="display:none;">
-        <div class="card shadow-sm p-3">
+        <div class="card card-bordered bg-base-100 p-3">
           <h5 class="mb-3">Hasil</h5>
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <pre id="resultText" class="bg-light p-3 border rounded mb-0 flex-grow-1"></pre>
-            <button id="copyResultBtn" class="btn btn-sm btn-outline-secondary ms-2">Copy</button>
+          <div class="flex justify-between items-center mb-2">
+            <pre id="resultText" class="bg-light p-3 border rounded mb-0 flex-1"></pre>
+            <button id="copyResultBtn" class="btn btn-sm btn-outline-secondary ml-2">Copy</button>
           </div>
         </div>
       </div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Text Case Converter</h6><p class="small mb-1" style="line-height:1.6">Text case converter online untuk mengubah format kapitalisasi teks dengan cepat. Mendukung berbagai format: UPPERCASE (huruf besar semua), lowercase (huruf kecil semua), Title Case (kapital di setiap kata), Sentence case (kapital di awal kalimat), camelCase, PascalCase, snake_case, kebab-case, dan CONSTANT_CASE. Alat ini sangat berguna bagi developer, penulis, content creator, dan editor teks.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan atau ketik teks pada kolom input, dan hasil konversi untuk semua format akan ditampilkan secara real-time tanpa perlu menekan tombol apa pun. Setiap hasil format dilengkapi dengan tombol Copy untuk menyalin ke clipboard dengan cepat. Anda juga dapat meng-upload file teks atau menjatuhkan (drag & drop) teks langsung ke area input. Case converter ini juga menampilkan jumlah karakter dan kata dari teks asli.</p><p class="small mb-0 mt-2" style="line-height:1.6">Text case converter sangat membantu dalam berbagai skenario programming: mengkonversi nama variabel antara camelCase (JavaScript) dan snake_case (Python), memformat judul artikel atau heading, memperbaiki teks yang salah kapitalisasi, mempersiapkan data untuk database, dan memformat output untuk berbagai kebutuhan. Alat ini bekerja sepenuhnya offline di browser Anda tanpa mengirim data ke server.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Text Case Converter</h6><p class="small mb-1" style="line-height:1.6">Text case converter online untuk mengubah format kapitalisasi teks dengan cepat. Mendukung berbagai format: UPPERCASE (huruf besar semua), lowercase (huruf kecil semua), Title Case (kapital di setiap kata), Sentence case (kapital di awal kalimat), camelCase, PascalCase, snake_case, kebab-case, dan CONSTANT_CASE. Alat ini sangat berguna bagi developer, penulis, content creator, dan editor teks.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan atau ketik teks pada kolom input, dan hasil konversi untuk semua format akan ditampilkan secara real-time tanpa perlu menekan tombol apa pun. Setiap hasil format dilengkapi dengan tombol Copy untuk menyalin ke clipboard dengan cepat. Anda juga dapat meng-upload file teks atau menjatuhkan (drag & drop) teks langsung ke area input. Case converter ini juga menampilkan jumlah karakter dan kata dari teks asli.</p><p class="small mb-0 mt-2" style="line-height:1.6">Text case converter sangat membantu dalam berbagai skenario programming: mengkonversi nama variabel antara camelCase (JavaScript) dan snake_case (Python), memformat judul artikel atau heading, memperbaiki teks yang salah kapitalisasi, mempersiapkan data untuk database, dan memformat output untuk berbagai kebutuhan. Alat ini bekerja sepenuhnya offline di browser Anda tanpa mengirim data ke server.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="char-counter" class="btn btn-outline-secondary btn-sm rounded-pill">Character Counter</a><a href="reverse-text" class="btn btn-outline-secondary btn-sm rounded-pill">Reverse Text</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="char-counter" class="btn btn-outline btn-sm rounded-full">Character Counter</a><a href="reverse-text" class="btn btn-outline btn-sm rounded-full">Reverse Text</a><a href="html-entity" class="btn btn-outline btn-sm rounded-full">HTML Entity</a><a href="url-encode" class="btn btn-outline btn-sm rounded-full">URL Encoder</a></div>`;
 ---
 
 <ToolLayout

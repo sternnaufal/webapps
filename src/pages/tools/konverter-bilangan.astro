@@ -9,101 +9,101 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
 
       
 
-      <div class="row g-4">
+      <div class="flex flex-wrap gap-4">
         <!-- Desimal -->
-        <div class="col-md-6">
-          <div class="card shadow-sm h-100">
+        <div class="md:w-1/2 w-full">
+          <div class="card shadow-sm h-full">
             <div class="card-body">
               <h5 class="card-title">Desimal <span class="badge bg-primary">basis 10</span></h5>
               <div class="input-group mb-2">
-                <input id="dec" class="form-control" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
-                <button class="btn btn-outline-secondary" data-copy="dec" title="Salin">??</button>
+                <input id="dec" class="input input-bordered w-full" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
+                <button class="btn btn-outline" data-copy="dec" title="Salin">??</button>
               </div>
-              <div class="small text-muted">Karakter valid: 09, opsional tanda minus.</div>
-              <div class="mt-2 d-flex justify-content-between">
+              <div class="text-sm opacity-60">Karakter valid: 09, opsional tanda minus.</div>
+              <div class="mt-2 flex justify-between">
                 <span class="badge bg-secondary" id="decInfo"></span>
               </div>
-              <div class="text-danger small mt-1" id="decErr"></div>
+              <div class="text-error small mt-1" id="decErr"></div>
             </div>
           </div>
         </div>
 
         <!-- Hex -->
-        <div class="col-md-6">
-          <div class="card shadow-sm h-100">
+        <div class="md:w-1/2 w-full">
+          <div class="card shadow-sm h-full">
             <div class="card-body">
               <h5 class="card-title">Hexadesimal <span class="badge bg-primary">basis 16</span></h5>
               <div class="input-group mb-2">
-                <input id="hex" class="form-control" placeholder="Misal: 1A3F atau -ff" />
-                <button class="btn btn-outline-secondary" data-copy="hex" title="Salin">??</button>
+                <input id="hex" class="input input-bordered w-full" placeholder="Misal: 1A3F atau -ff" />
+                <button class="btn btn-outline" data-copy="hex" title="Salin">??</button>
               </div>
-              <div class="form-check form-switch mb-2">
-                <input class="form-check-input" type="checkbox" id="hexUpper">
-                <label class="form-check-label" for="hexUpper">Uppercase</label>
+              <div class="flex items-center gap-2 form-switch mb-2">
+                <input class="checkbox" type="checkbox" id="hexUpper">
+                <label class="flex items-center gap-2-label" for="hexUpper">Uppercase</label>
               </div>
-              <div class="small text-muted">Karakter valid: 09, af. Gunakan tanda minus untuk negatif.</div>
-              <div class="mt-2 d-flex justify-content-between">
+              <div class="text-sm opacity-60">Karakter valid: 09, af. Gunakan tanda minus untuk negatif.</div>
+              <div class="mt-2 flex justify-between">
                 <span class="badge bg-secondary" id="hexInfo"></span>
               </div>
-              <div class="text-danger small mt-1" id="hexErr"></div>
+              <div class="text-error small mt-1" id="hexErr"></div>
             </div>
           </div>
         </div>
 
         <!-- Biner -->
-        <div class="col-md-6">
-          <div class="card shadow-sm h-100">
+        <div class="md:w-1/2 w-full">
+          <div class="card shadow-sm h-full">
             <div class="card-body">
               <h5 class="card-title">Biner <span class="badge bg-primary">basis 2</span></h5>
               <div class="input-group mb-2">
-                <input id="bin" class="form-control" placeholder="Misal: 101010 atau -1111" />
-                <button class="btn btn-outline-secondary" data-copy="bin" title="Salin">??</button>
+                <input id="bin" class="input input-bordered w-full" placeholder="Misal: 101010 atau -1111" />
+                <button class="btn btn-outline" data-copy="bin" title="Salin">??</button>
               </div>
-              <div class="form-check form-switch mb-2">
-                <input class="form-check-input" type="checkbox" id="binGroup" checked>
-                <label class="form-check-label" for="binGroup">Kelompok 4-bit</label>
+              <div class="flex items-center gap-2 form-switch mb-2">
+                <input class="checkbox" type="checkbox" id="binGroup" checked>
+                <label class="flex items-center gap-2-label" for="binGroup">Kelompok 4-bit</label>
               </div>
-              <div class="small text-muted">Karakter valid: 0 atau 1. Min untuk negatif.</div>
-              <div class="mt-2 d-flex justify-content-between">
+              <div class="text-sm opacity-60">Karakter valid: 0 atau 1. Min untuk negatif.</div>
+              <div class="mt-2 flex justify-between">
                 <span class="badge bg-secondary" id="binInfo"></span>
               </div>
-              <div class="text-danger small mt-1" id="binErr"></div>
+              <div class="text-error small mt-1" id="binErr"></div>
             </div>
           </div>
         </div>
 
         <!-- Oktal -->
-        <div class="col-md-6">
-          <div class="card shadow-sm h-100">
+        <div class="md:w-1/2 w-full">
+          <div class="card shadow-sm h-full">
             <div class="card-body">
               <h5 class="card-title">Oktal <span class="badge bg-primary">basis 8</span></h5>
               <div class="input-group mb-2">
-                <input id="oct" class="form-control" placeholder="Misal: 755 atau -17" />
-                <button class="btn btn-outline-secondary" data-copy="oct" title="Salin">??</button>
+                <input id="oct" class="input input-bordered w-full" placeholder="Misal: 755 atau -17" />
+                <button class="btn btn-outline" data-copy="oct" title="Salin">??</button>
               </div>
-              <div class="small text-muted">Karakter valid: 07. Min untuk negatif.</div>
-              <div class="mt-2 d-flex justify-content-between">
+              <div class="text-sm opacity-60">Karakter valid: 07. Min untuk negatif.</div>
+              <div class="mt-2 flex justify-between">
                 <span class="badge bg-secondary" id="octInfo"></span>
               </div>
-              <div class="text-danger small mt-1" id="octErr"></div>
+              <div class="text-error small mt-1" id="octErr"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <p class="text-muted small mt-4">
+      <p class="opacity-60 small mt-4">
         ?? Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
       </p>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Konverter Bilangan</h6><p class="small mb-1" style="line-height:1.6">Konverter bilangan online untuk mengkonversi angka antar empat sistem bilangan sekaligus: desimal (basis 10), biner (basis 2), oktal (basis 8), dan heksadesimal (basis 16). Alat ini sangat berguna bagi mahasiswa teknik informatika, programmer, network engineer, dan siapa pun yang sedang mempelajari sistem bilangan komputer. Cukup masukkan angka pada salah satu field input, dan semua field lainnya akan terkonversi secara otomatis secara real-time tanpa perlu menekan tombol apa pun.</p><p class="small mb-0" style="line-height:1.6">Kalkulator bilangan ini mendukung bilangan positif dan negatif dengan presisi tinggi menggunakan BigInt, sehingga dapat menangani angka besar tanpa batasan. Fitur tambahan termasuk pengelompokan 4-bit pada bilangan biner untuk memudahkan pembacaan, opsi huruf besar/kecil pada output heksadesimal, serta informasi jumlah digit atau bit dari setiap bilangan yang dimasukkan. Setiap field juga dilengkapi tombol salin untuk menyalin hasil konversi dengan cepat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Konversi bilangan memiliki banyak kegunaan praktis dalam dunia teknologi: membaca dan menulis alamat IPv4 dan IPv6, memahami representasi data dalam memori komputer, melakukan debugging pada level bit, menyelesaikan soal-soal mata kuliah arsitektur komputer dan jaringan, serta bekerja dengan permission file di sistem Linux (755, 644, dll.) yang menggunakan notasi oktal. Semua proses konversi dilakukan sepenuhnya di browser Anda tanpa mengirim data ke server mana pun, sehingga privasi data Anda tetap terjaga.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Konverter Bilangan</h6><p class="small mb-1" style="line-height:1.6">Konverter bilangan online untuk mengkonversi angka antar empat sistem bilangan sekaligus: desimal (basis 10), biner (basis 2), oktal (basis 8), dan heksadesimal (basis 16). Alat ini sangat berguna bagi mahasiswa teknik informatika, programmer, network engineer, dan siapa pun yang sedang mempelajari sistem bilangan komputer. Cukup masukkan angka pada salah satu field input, dan semua field lainnya akan terkonversi secara otomatis secara real-time tanpa perlu menekan tombol apa pun.</p><p class="small mb-0" style="line-height:1.6">Kalkulator bilangan ini mendukung bilangan positif dan negatif dengan presisi tinggi menggunakan BigInt, sehingga dapat menangani angka besar tanpa batasan. Fitur tambahan termasuk pengelompokan 4-bit pada bilangan biner untuk memudahkan pembacaan, opsi huruf besar/kecil pada output heksadesimal, serta informasi jumlah digit atau bit dari setiap bilangan yang dimasukkan. Setiap field juga dilengkapi tombol salin untuk menyalin hasil konversi dengan cepat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Konversi bilangan memiliki banyak kegunaan praktis dalam dunia teknologi: membaca dan menulis alamat IPv4 dan IPv6, memahami representasi data dalam memori komputer, melakukan debugging pada level bit, menyelesaikan soal-soal mata kuliah arsitektur komputer dan jaringan, serta bekerja dengan permission file di sistem Linux (755, 644, dll.) yang menggunakan notasi oktal. Semua proses konversi dilakukan sepenuhnya di browser Anda tanpa mengirim data ke server mana pun, sehingga privasi data Anda tetap terjaga.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="roman-numeral" class="btn btn-outline-secondary btn-sm rounded-pill">Roman Numeral</a><a href="unit-converter" class="btn btn-outline-secondary btn-sm rounded-pill">Unit Converter</a><a href="ip-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">IP Calculator</a><a href="subnetting" class="btn btn-outline-secondary btn-sm rounded-pill">Subnetting</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="roman-numeral" class="btn btn-outline btn-sm rounded-full">Roman Numeral</a><a href="unit-converter" class="btn btn-outline btn-sm rounded-full">Unit Converter</a><a href="ip-calculator" class="btn btn-outline btn-sm rounded-full">IP Calculator</a><a href="subnetting" class="btn btn-outline btn-sm rounded-full">Subnetting</a></div>`;
 ---
 
 <ToolLayout

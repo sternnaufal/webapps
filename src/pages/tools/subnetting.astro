@@ -4,39 +4,39 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Subnetting Calculator';
 const description = 'Hitung subnet mask, network address, broadcast address, host range, dan tabel subnetting CIDR online.';
 const keywords = 'subnetting calculator, subnet calculator, cidr, network, subnet mask';
-const bodyHtml = `<form id="subnetForm" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label for="ip" class="form-label">IP Address</label>
-          <input type="text" id="ip" class="form-control" placeholder="192.168.10.0" required>
+const bodyHtml = `<form id="subnetForm" class="flex flex-wrap gap-3 mb-4">
+        <div class="md:w-1/3 w-full">
+          <label for="ip" class="label-text">IP Address</label>
+          <input type="text" id="ip" class="input input-bordered w-full" placeholder="192.168.10.0" required>
         </div>
-        <div class="col-md-4">
-          <label for="prefix" class="form-label">Prefix Awal</label>
-          <select id="prefix" class="form-select" required>
+        <div class="md:w-1/3 w-full">
+          <label for="prefix" class="label-text">Prefix Awal</label>
+          <select id="prefix" class="select select-bordered w-full" required>
             <option value="">/ Prefix</option>
           </select>
         </div>
-        <div class="col-md-4">
-          <label for="newprefix" class="form-label">Prefix Baru</label>
-          <select id="newprefix" class="form-select" required>
+        <div class="md:w-1/3 w-full">
+          <label for="newprefix" class="label-text">Prefix Baru</label>
+          <select id="newprefix" class="select select-bordered w-full" required>
             <option value="">/ Prefix</option>
           </select>
         </div>
-        <div class="col-12">
+        <div class="w-full">
           <button type="submit" class="btn btn-success">Hitung</button>
         </div>
       </form>
 
       <div id="results"></div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Subnetting Calculator</h6><p class="small mb-1" style="line-height:1.6">Kalkulator subnetting online untuk menghitung network address, broadcast address, subnet mask, wildcard mask, CIDR notation, dan host range dari sebuah jaringan IP. Alat ini dirancang khusus untuk network engineer, administrator jaringan, mahasiswa teknik informatika, dan profesional IT yang perlu melakukan perhitungan subnetting secara cepat dan akurat. Kalkulator ini mendukung perhitungan IPv4 subnetting dengan berbagai prefix length dari /1 hingga /32.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaannya sangat sederhana: masukkan alamat IP network, pilih prefix awal subnet, lalu tentukan prefix baru yang diinginkan untuk pemotongan subnet. Hasil perhitungan akan menampilkan informasi lengkap termasuk kelas IP (A, B, atau C), subnet mask dalam format desimal, wildcard mask, alamat network dan broadcast, first dan last host yang valid, serta jumlah total host yang tersedia. Kalkulator VLSM ini juga menampilkan tabel lengkap berisi semua subnet hasil pemotongan beserta detail masing-masing.</p><p class="small mb-0 mt-2" style="line-height:1.6">Fitur unggulan dari network calculator ini adalah kemampuannya menampilkan tabel subnetting lengkap hingga ribuan subnet (dibatasi 4096 subnet untuk performa). Setiap baris tabel menampilkan nomor subnet, alamat network dengan prefix, first host, last host, broadcast address, jumlah host per subnet, dan notasi CIDR. Ini sangat membantu untuk perencanaan jaringan, pembagian IP address dalam organisasi, dan persiapan sertifikasi jaringan seperti CCNA. Semua komputasi dilakukan di sisi klien tanpa koneksi internet.</p></div>`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Subnetting Calculator</h6><p class="small mb-1" style="line-height:1.6">Kalkulator subnetting online untuk menghitung network address, broadcast address, subnet mask, wildcard mask, CIDR notation, dan host range dari sebuah jaringan IP. Alat ini dirancang khusus untuk network engineer, administrator jaringan, mahasiswa teknik informatika, dan profesional IT yang perlu melakukan perhitungan subnetting secara cepat dan akurat. Kalkulator ini mendukung perhitungan IPv4 subnetting dengan berbagai prefix length dari /1 hingga /32.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaannya sangat sederhana: masukkan alamat IP network, pilih prefix awal subnet, lalu tentukan prefix baru yang diinginkan untuk pemotongan subnet. Hasil perhitungan akan menampilkan informasi lengkap termasuk kelas IP (A, B, atau C), subnet mask dalam format desimal, wildcard mask, alamat network dan broadcast, first dan last host yang valid, serta jumlah total host yang tersedia. Kalkulator VLSM ini juga menampilkan tabel lengkap berisi semua subnet hasil pemotongan beserta detail masing-masing.</p><p class="small mb-0 mt-2" style="line-height:1.6">Fitur unggulan dari network calculator ini adalah kemampuannya menampilkan tabel subnetting lengkap hingga ribuan subnet (dibatasi 4096 subnet untuk performa). Setiap baris tabel menampilkan nomor subnet, alamat network dengan prefix, first host, last host, broadcast address, jumlah host per subnet, dan notasi CIDR. Ini sangat membantu untuk perencanaan jaringan, pembagian IP address dalam organisasi, dan persiapan sertifikasi jaringan seperti CCNA. Semua komputasi dilakukan di sisi klien tanpa koneksi internet.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="ip-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">IP Calculator</a><a href="konverter-bilangan" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="http-status" class="btn btn-outline-secondary btn-sm rounded-pill">HTTP Status</a><a href="cron-builder" class="btn btn-outline-secondary btn-sm rounded-pill">Cron Builder</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="ip-calculator" class="btn btn-outline btn-sm rounded-full">IP Calculator</a><a href="konverter-bilangan" class="btn btn-outline btn-sm rounded-full">Konverter Bilangan</a><a href="http-status" class="btn btn-outline btn-sm rounded-full">HTTP Status</a><a href="cron-builder" class="btn btn-outline btn-sm rounded-full">Cron Builder</a></div>`;
 ---
 
 <ToolLayout
@@ -100,27 +100,27 @@ function calculate(e) {
   var newprefix = parseInt(document.getElementById('newprefix').value, 10);
 
   if (!ip || !prefix || !newprefix) {
-    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Lengkapi semua field.</div>';
+    document.getElementById('results').innerHTML = '<div class="alert alert-error">Lengkapi semua field.</div>';
     return;
   }
 
   var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
   var match = ip.match(ipPattern);
   if (!match) {
-    document.getElementById('results').innerHTML = '<div class="alert alert-danger">IP tidak valid.</div>';
+    document.getElementById('results').innerHTML = '<div class="alert alert-error">IP tidak valid.</div>';
     return;
   }
 
   for (var i = 1; i <= 4; i++) {
     var oct = parseInt(match[i], 10);
     if (oct < 0 || oct > 255) {
-      document.getElementById('results').innerHTML = '<div class="alert alert-danger">IP tidak valid.</div>';
+      document.getElementById('results').innerHTML = '<div class="alert alert-error">IP tidak valid.</div>';
       return;
     }
   }
 
   if (prefix < 1 || prefix > 32 || newprefix < prefix || newprefix > 32) {
-    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Prefix tidak valid. Pastikan prefix baru &ge; prefix awal.</div>';
+    document.getElementById('results').innerHTML = '<div class="alert alert-error">Prefix tidak valid. Pastikan prefix baru &ge; prefix awal.</div>';
     return;
   }
 
@@ -139,9 +139,9 @@ function calculate(e) {
   var subnetMask = long2ip(mask);
   var wildcard = long2ip((~mask) >>> 0);
 
-  var html = '<div class="card shadow-sm p-3 mb-4">';
+  var html = '<div class="card card-bordered bg-base-100 p-3 mb-4">';
   html += '<h5 class="mb-3">Subnet Asal</h5>';
-  html += '<ul class="list-unstyled">';
+  html += '<ul class="list-none">';
   html += '<li><strong>IP Address:</strong> ' + escapeHtml(ip) + '/' + prefix + '</li>';
   html += '<li><strong>Kelas:</strong> ' + ipClass.name + '</li>';
   if (ipClass.defaultPrefix) {
@@ -164,9 +164,9 @@ function calculate(e) {
   if (subnetCount > maxSubnets) {
     html += '<div class="alert alert-warning">Jumlah subnet (' + subnetCount + ') terlalu besar. Maksimal hanya ' + maxSubnets + ' subnet ditampilkan.</div>';
   } else {
-    html += '<div class="card shadow-sm p-3">';
+    html += '<div class="card card-bordered bg-base-100 p-3">';
     html += '<h5 class="mb-3">Hasil Pemotongan (' + subnetCount + ' subnet)</h5>';
-    html += '<div class="table-responsive">';
+    html += '<div class="overflow-x-auto">';
     html += '<table class="table table-bordered table-sm">';
     html += '<thead><tr><th>#</th><th>Network</th><th>First Host</th><th>Last Host</th><th>Broadcast</th><th>Hosts</th><th>CIDR</th></tr></thead><tbody>';
 

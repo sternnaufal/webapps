@@ -4,16 +4,16 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Anagram Finder';
 const description = 'Cek anagram online. Periksa apakah dua kata atau kalimat adalah anagram.';
 const keywords = 'anagram checker, anagram finder, cek anagram, word game, anagram';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Aa</div><div><h1 class="h3 mb-0">Anagram Finder</h1><p class="text-muted small mb-0">Periksa apakah dua kata/kalimat adalah anagram. Anagram adalah kata yang memiliki huruf yang sama jika disusun ulang.</p></div></header>
-<div class="row g-4"><div class="col-lg-6">
-<div class="card shadow-sm border-0 p-3">
-<div class="mb-3"><label class="form-label fw-semibold">Teks 1</label><textarea id="text1" class="form-control font-mono" rows="2" placeholder="Masukkan teks pertama..." autofocus>listen</textarea></div>
-<div class="mb-3"><label class="form-label fw-semibold">Teks 2</label><textarea id="text2" class="form-control font-mono" rows="2" placeholder="Masukkan teks kedua...">silent</textarea></div>
-<button id="btnCheck" class="btn btn-primary w-100">Cek Anagram</button>
-<div id="resultArea" class="mt-3 p-4 rounded text-center" style="display:none"><div class="display-3 mb-2" id="resultIcon">?</div><div class="h4 fw-bold" id="resultText"></div><div id="resultDetail" class="small text-muted"></div></div>
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Aa</div><div><h1 class="h3 mb-0">Anagram Finder</h1><p class="opacity-60 small mb-0">Periksa apakah dua kata/kalimat adalah anagram. Anagram adalah kata yang memiliki huruf yang sama jika disusun ulang.</p></div></header>
+<div class="flex flex-wrap gap-4"><div class="col-lg-6">
+<div class="card card-bordered bg-base-100 p-3">
+<div class="mb-3"><label class="label-text font-semibold">Teks 1</label><textarea id="text1" class="input input-bordered w-full font-mono" rows="2" placeholder="Masukkan teks pertama..." autofocus>listen</textarea></div>
+<div class="mb-3"><label class="label-text font-semibold">Teks 2</label><textarea id="text2" class="input input-bordered w-full font-mono" rows="2" placeholder="Masukkan teks kedua...">silent</textarea></div>
+<button id="btnCheck" class="btn btn-primary w-full">Cek Anagram</button>
+<div id="resultArea" class="mt-3 p-4 rounded text-center" style="display:none"><div class="display-3 mb-2" id="resultIcon">?</div><div class="h4 font-bold" id="resultText"></div><div id="resultDetail" class="text-sm opacity-60"></div></div>
 </div></div>
 <div class="col-lg-6">
-<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Contoh Anagram</h6>
+<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Anagram</h6>
 <div class="small" style="line-height:2.2">
 <div style="cursor:pointer" class="example" data-a="listen" data-b="silent">listen ? silent</div>
 <div style="cursor:pointer" class="example" data-a="earth" data-b="heart">earth ? heart</div>
@@ -22,19 +22,19 @@ const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div clas
 <div style="cursor:pointer" class="example" data-a="elvis" data-b="lives">elvis ? lives</div>
 <div style="cursor:pointer" class="example" data-a="tea" data-b="eat">tea ? eat</div>
 </div></div>
-<div class="card shadow-sm border-0 p-3 mt-3"><h6 class="mb-3">Huruf Sama</h6>
+<div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-3">Huruf Sama</h6>
 <div id="letterCompare" class="small"></div></div>
 </div></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Anagram Finder</h6><p class="small mb-1" style="line-height:1.6">Anagram finder online untuk memeriksa apakah dua kata atau frasa merupakan anagram satu sama lain. Anagram adalah kata atau frasa yang dibentuk dengan mengatur ulang huruf-huruf dari kata atau frasa lain, menggunakan semua huruf asli tepat satu kali (misalnya 'dengar' dan 'garden', 'listen' dan 'silent'). Alat ini mengabaikan spasi, kapitalisasi, dan tanda baca.</p><p class="small mb-0" style="line-height:1.6">Fitur anagram finder meliputi: input dua teks untuk diperbandingkan, hasil instan 'Anagram' atau 'Bukan Anagram', analisis detail frekuensi huruf dari kedua teks, visualisasi huruf yang cocok dan tidak cocok, mode ignore/consider spaces dan case, riwayat pengecekan, dan contoh anagram bahasa Indonesia dan Inggris. Alat ini juga menampilkan jumlah huruf dari masing-masing teks.</p><p class="small mb-0 mt-2" style="line-height:1.6">Anagram finder berguna untuk: pembelajaran kosakata dan ejaan, teka-teki dan permainan kata (Scrabble, Word Cookies), menguji kreativitas verbal, membantu menyelesaikan teka-teki silang, dan pengembangan aplikasi game kata. Cocok digunakan oleh pelajar, guru bahasa, dan penggemar permainan kata. Semua pemrosesan dilakukan di browser tanpa perlu koneksi internet.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Anagram Finder</h6><p class="small mb-1" style="line-height:1.6">Anagram finder online untuk memeriksa apakah dua kata atau frasa merupakan anagram satu sama lain. Anagram adalah kata atau frasa yang dibentuk dengan mengatur ulang huruf-huruf dari kata atau frasa lain, menggunakan semua huruf asli tepat satu kali (misalnya 'dengar' dan 'garden', 'listen' dan 'silent'). Alat ini mengabaikan spasi, kapitalisasi, dan tanda baca.</p><p class="small mb-0" style="line-height:1.6">Fitur anagram finder meliputi: input dua teks untuk diperbandingkan, hasil instan 'Anagram' atau 'Bukan Anagram', analisis detail frekuensi huruf dari kedua teks, visualisasi huruf yang cocok dan tidak cocok, mode ignore/consider spaces dan case, riwayat pengecekan, dan contoh anagram bahasa Indonesia dan Inggris. Alat ini juga menampilkan jumlah huruf dari masing-masing teks.</p><p class="small mb-0 mt-2" style="line-height:1.6">Anagram finder berguna untuk: pembelajaran kosakata dan ejaan, teka-teki dan permainan kata (Scrabble, Word Cookies), menguji kreativitas verbal, membantu menyelesaikan teka-teki silang, dan pengembangan aplikasi game kata. Cocok digunakan oleh pelajar, guru bahasa, dan penggemar permainan kata. Semua pemrosesan dilakukan di browser tanpa perlu koneksi internet.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="palindrome-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Palindrome Checker</a><a href="reverse-text" class="btn btn-outline-secondary btn-sm rounded-pill">Reverse Text</a><a href="text-repeater" class="btn btn-outline-secondary btn-sm rounded-pill">Text Repeater</a><a href="list-sorter" class="btn btn-outline-secondary btn-sm rounded-pill">List Sorter</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="palindrome-checker" class="btn btn-outline btn-sm rounded-full">Palindrome Checker</a><a href="reverse-text" class="btn btn-outline btn-sm rounded-full">Reverse Text</a><a href="text-repeater" class="btn btn-outline btn-sm rounded-full">Text Repeater</a><a href="list-sorter" class="btn btn-outline btn-sm rounded-full">List Sorter</a></div>`;
 ---
 
 <ToolLayout
@@ -73,7 +73,7 @@ function check(){
   txt.style.color=isAna?'#22c55e':'#ef4444';
   det.innerHTML='<span>Teks 1: "'+a+'"<br>Teks 2: "'+b+'"</span>';
   var sortedA=a.split('').sort().join(', '),sortedB=b.split('').sort().join(', ');
-  lc.innerHTML='<div class="fw-bold mb-1">Perbandingan huruf:</div><table class="table table-sm small mb-0"><tr><td>'+t1.value.trim()+'</td><td class="font-mono">['+sortedA+']</td></tr><tr><td>'+t2.value.trim()+'</td><td class="font-mono">['+sortedB+']</td></tr></table>';
+  lc.innerHTML='<div class="font-bold mb-1">Perbandingan huruf:</div><table class="table table-sm small mb-0"><tr><td>'+t1.value.trim()+'</td><td class="font-mono">['+sortedA+']</td></tr><tr><td>'+t2.value.trim()+'</td><td class="font-mono">['+sortedB+']</td></tr></table>';
 }
 document.getElementById('btnCheck').addEventListener('click',check);
 t1.addEventListener('input',check);t2.addEventListener('input',check);

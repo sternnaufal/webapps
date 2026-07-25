@@ -4,19 +4,19 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Number to Words';
 const description = 'Konversi angka ke huruf (terbilang) Bahasa Indonesia. Ubah angka menjadi teks terbilang untuk kwitansi, cek, dokumen resmi.';
 const keywords = 'number to words, angka ke huruf, terbilang, konversi angka, angka ke kata, spell number';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">Aa</div><div><h1 class="h3 mb-0">Number to Words</h1><p class="text-muted small mb-0">Konversi angka ke huruf (terbilang) Bahasa Indonesia.</p></div></header>
-<div class="row g-4"><div class="col-lg-8">
-<div class="card shadow-sm border-0 p-3">
-<div class="mb-3"><label class="form-label fw-semibold small">Masukkan Angka</label>
-<div class="input-group"><input type="text" id="numInput" class="form-control" value="1234567" placeholder="Masukkan angka..."><button id="btnCopy" class="btn btn-outline-secondary">Copy</button></div></div>
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">Aa</div><div><h1 class="h3 mb-0">Number to Words</h1><p class="opacity-60 small mb-0">Konversi angka ke huruf (terbilang) Bahasa Indonesia.</p></div></header>
+<div class="flex flex-wrap gap-4"><div class="col-lg-8">
+<div class="card card-bordered bg-base-100 p-3">
+<div class="mb-3"><label class="label-text font-semibold small">Masukkan Angka</label>
+<div class="input-group"><input type="text" id="numInput" class="input input-bordered w-full" value="1234567" placeholder="Masukkan angka..."><button id="btnCopy" class="btn btn-outline">Copy</button></div></div>
 <div id="resultArea" class="word-result">
 <span id="wordResult">satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh</span>
 </div>
-<div class="mt-3 small text-muted" id="numInfo"></div>
+<div class="mt-3 text-sm opacity-60" id="numInfo"></div>
 </div></div>
-<div class="col-lg-4">
-<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Contoh Angka</h6>
-<div class="d-flex flex-wrap gap-2">
+<div class="col-lgap-4">
+<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Angka</h6>
+<div class="flex flex-wrap gap-2">
 <button class="btn btn-outline-primary btn-sm sampel" data-n="2024">2024</button>
 <button class="btn btn-outline-primary btn-sm sampel" data-n="50000">50.000</button>
 <button class="btn btn-outline-primary btn-sm sampel" data-n="1000000">1.000.000</button>
@@ -26,15 +26,15 @@ const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div clas
 </div>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Number to Words</h6><p class="small mb-1" style="line-height:1.6">Number to words converter online untuk mengkonversi angka menjadi terbilang dalam bahasa Indonesia. Alat ini mengubah angka numerik (seperti 1.234.567) menjadi representasi kata-kata (satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh). Sangat berguna untuk membuat kwitansi, faktur, cek, dokumen legal, laporan keuangan, dan berbagai dokumen resmi yang memerlukan penulisan angka dalam bentuk kata.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input angka dengan format bebas (bisa menggunakan titik atau koma sebagai pemisah), konversi instan ke terbilang bahasa Indonesia yang baku sesuai EYD, dukungan untuk angka dari 0 hingga triliunan, penanganan angka desimal (koma, misal: 1.250,50 menjadi 'seribu dua ratus lima puluh koma lima puluh'), huruf kapital otomatis di awal kalimat, opsi format 'rupiah' (menambahkan 'rupiah' di belakang), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Number to words converter sangat berguna dalam administrasi perkantoran dan bisnis: menulis nominal cek dengan benar, membuat faktur dan invoice, menyusun laporan keuangan, mengisi kwitansi pembayaran, dokumen perjanjian dan kontrak, surat resmi yang mencantumkan nominal uang, dan edukasi matematika untuk anak-anak belajar membaca angka. Konverter ini akurat dan mengikuti kaidah bahasa Indonesia yang benar.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Number to Words</h6><p class="small mb-1" style="line-height:1.6">Number to words converter online untuk mengkonversi angka menjadi terbilang dalam bahasa Indonesia. Alat ini mengubah angka numerik (seperti 1.234.567) menjadi representasi kata-kata (satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh). Sangat berguna untuk membuat kwitansi, faktur, cek, dokumen legal, laporan keuangan, dan berbagai dokumen resmi yang memerlukan penulisan angka dalam bentuk kata.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input angka dengan format bebas (bisa menggunakan titik atau koma sebagai pemisah), konversi instan ke terbilang bahasa Indonesia yang baku sesuai EYD, dukungan untuk angka dari 0 hingga triliunan, penanganan angka desimal (koma, misal: 1.250,50 menjadi 'seribu dua ratus lima puluh koma lima puluh'), huruf kapital otomatis di awal kalimat, opsi format 'rupiah' (menambahkan 'rupiah' di belakang), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Number to words converter sangat berguna dalam administrasi perkantoran dan bisnis: menulis nominal cek dengan benar, membuat faktur dan invoice, menyusun laporan keuangan, mengisi kwitansi pembayaran, dokumen perjanjian dan kontrak, surat resmi yang mencantumkan nominal uang, dan edukasi matematika untuk anak-anak belajar membaca angka. Konverter ini akurat dan mengikuti kaidah bahasa Indonesia yang benar.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center"><span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center"><span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="konverter-bilangan" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="roman-numeral" class="btn btn-outline-secondary btn-sm rounded-pill">Roman Numeral</a><a href="unit-converter" class="btn btn-outline-secondary btn-sm rounded-pill">Unit Converter</a><a href="textcase" class="btn btn-outline-secondary btn-sm rounded-pill">Text Case</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="konverter-bilangan" class="btn btn-outline btn-sm rounded-full">Konverter Bilangan</a><a href="roman-numeral" class="btn btn-outline btn-sm rounded-full">Roman Numeral</a><a href="unit-converter" class="btn btn-outline btn-sm rounded-full">Unit Converter</a><a href="textcase" class="btn btn-outline btn-sm rounded-full">Text Case</a></div>`;
 const toolCss = `.word-result{font-size:1.15rem;font-weight:600;line-height:1.7;padding:1rem;border-radius:8px;background:var(--surface-soft)}`;
 ---
 
@@ -75,7 +75,7 @@ function terbilang(n){
   while(n>0){var g=n%1000;if(g>0){var s='';
     if(g>=100){var h=Math.floor(g/100);s+=(h===1?'seratus':sat[h]+' ratus')+' ';g%=100}
     if(g>=20){s+=puluh[Math.floor(g/10)]+' ';g%=10}
-    if(g>=1){if(g<10)s+=sat[g]+' ';else s+=belas[g-10]+' '}
+    if(g>=1){if(g<10)s+=sat[g]+' ';else s+=belas[gap-10]+' '}
     if(i===1&&Math.floor(n/1000)%1000===1&&n<2000)s='seribu ';else r=s+ribuan[i]+' '+r
   }n=Math.floor(n/1000);i++}
   return r.trim();

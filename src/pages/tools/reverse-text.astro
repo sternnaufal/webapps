@@ -4,31 +4,31 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Reverse Text';
 const description = 'Reverse text online. Balikkan teks, kata, kalimat, atau baris dengan berbagai mode.';
 const keywords = 'reverse text, reverse string, balik teks, reverse words, reverse sentences';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Reverse Text</h1><p class="text-muted small mb-0">Balikkan teks dengan berbagai mode: balik karakter, kata, kalimat, atau baris.</p></div></header>
-<div class="row g-4"><div class="col-lg-6">
-<div class="card shadow-sm border-0 p-3">
-<div class="mb-3"><label class="form-label fw-semibold">Input</label><textarea id="textInput" class="form-control font-mono" rows="5" placeholder="Masukkan teks..." autofocus>Halo, apa kabar?
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Reverse Text</h1><p class="opacity-60 small mb-0">Balikkan teks dengan berbagai mode: balik karakter, kata, kalimat, atau baris.</p></div></header>
+<div class="flex flex-wrap gap-4"><div class="col-lg-6">
+<div class="card card-bordered bg-base-100 p-3">
+<div class="mb-3"><label class="label-text font-semibold">Input</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="5" placeholder="Masukkan teks..." autofocus>Halo, apa kabar?
 Selamat datang di WebApps!
 Semoga harimu menyenangkan.</textarea></div>
-<div class="mb-3"><label class="form-label fw-semibold">Mode</label>
-<select id="modeSelect" class="form-select"><option value="chars">Balik Karakter</option><option value="words">Balik Kata</option><option value="lines">Balik Baris</option><option value="wordsChars">Balik Kata + Karakter</option></select></div>
-<button id="btnReverse" class="btn btn-primary w-100">Reverse</button>
+<div class="mb-3"><label class="label-text font-semibold">Mode</label>
+<select id="modeSelect" class="select select-bordered w-full"><option value="chars">Balik Karakter</option><option value="words">Balik Kata</option><option value="lines">Balik Baris</option><option value="wordsChars">Balik Kata + Karakter</option></select></div>
+<button id="btnReverse" class="btn btn-primary w-full">Reverse</button>
 </div></div>
 <div class="col-lg-6">
-<div class="card shadow-sm border-0 p-3">
-<div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label fw-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
-<textarea id="outputArea" class="form-control font-mono" rows="8" readonly></textarea>
+<div class="card card-bordered bg-base-100 p-3">
+<div class="flex justify-between items-center mb-2"><label class="label-text font-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
+<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="8" readonly></textarea>
 </div></div></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Reverse Text</h6><p class="small mb-1" style="line-height:1.6">Reverse text online untuk membalikkan urutan karakter, kata, atau baris dalam teks. Alat ini menyediakan berbagai mode reverse yang berguna untuk berbagai keperluan: membalik karakter (olahragA jadi Agarlaho), membalik kata ('saya suka coding' jadi 'coding suka saya'), membalik baris, dan membalik urutan huruf dalam setiap kata. Cukup tempelkan teks dan hasil akan ditampilkan secara instan.</p><p class="small mb-0" style="line-height:1.6">Fitur meliputi: reverse teks per karakter, reverse per kata (membalik urutan kata dalam kalimat), reverse per baris (membalik urutan baris dalam paragraf), reverse per kata secara internal (membalik huruf dalam setiap kata tanpa mengubah urutan kata), dan mode flip text (membalik teks secara vertikal). Setiap mode memiliki tombol copy untuk menyalin hasil dengan cepat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Reverse text tool berguna untuk: membuat teks unik untuk username atau bio media sosial, menulis teka-teki atau kode sederhana, memeriksa pola simetri dalam teks, belajar tentang struktur kalimat dan kata, menguji readability teks yang dibalik, dan bersenang-senang dengan manipulasi teks. Alat ini bekerja sepenuhnya di browser Anda secara offline.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Reverse Text</h6><p class="small mb-1" style="line-height:1.6">Reverse text online untuk membalikkan urutan karakter, kata, atau baris dalam teks. Alat ini menyediakan berbagai mode reverse yang berguna untuk berbagai keperluan: membalik karakter (olahragA jadi Agarlaho), membalik kata ('saya suka coding' jadi 'coding suka saya'), membalik baris, dan membalik urutan huruf dalam setiap kata. Cukup tempelkan teks dan hasil akan ditampilkan secara instan.</p><p class="small mb-0" style="line-height:1.6">Fitur meliputi: reverse teks per karakter, reverse per kata (membalik urutan kata dalam kalimat), reverse per baris (membalik urutan baris dalam paragraf), reverse per kata secara internal (membalik huruf dalam setiap kata tanpa mengubah urutan kata), dan mode flip text (membalik teks secara vertikal). Setiap mode memiliki tombol copy untuk menyalin hasil dengan cepat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Reverse text tool berguna untuk: membuat teks unik untuk username atau bio media sosial, menulis teka-teki atau kode sederhana, memeriksa pola simetri dalam teks, belajar tentang struktur kalimat dan kata, menguji readability teks yang dibalik, dan bersenang-senang dengan manipulasi teks. Alat ini bekerja sepenuhnya di browser Anda secara offline.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="palindrome-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Palindrome Checker</a><a href="anagram-finder" class="btn btn-outline-secondary btn-sm rounded-pill">Anagram Finder</a><a href="text-repeater" class="btn btn-outline-secondary btn-sm rounded-pill">Text Repeater</a><a href="char-counter" class="btn btn-outline-secondary btn-sm rounded-pill">Character Counter</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="palindrome-checker" class="btn btn-outline btn-sm rounded-full">Palindrome Checker</a><a href="anagram-finder" class="btn btn-outline btn-sm rounded-full">Anagram Finder</a><a href="text-repeater" class="btn btn-outline btn-sm rounded-full">Text Repeater</a><a href="char-counter" class="btn btn-outline btn-sm rounded-full">Character Counter</a></div>`;
 ---
 
 <ToolLayout

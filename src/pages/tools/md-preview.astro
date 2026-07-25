@@ -4,14 +4,14 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Markdown Previewer';
 const description = 'Preview markdown secara real-time online. Editor markdown dengan live preview dan HTML output.';
 const keywords = 'markdown previewer, markdown editor, md to html, markdown online';
-const bodyHtml = `<div class="row g-4">
-        <div class="col-md-6">
-          <label for="editor" class="form-label">Markdown Input</label>
-          <textarea id="editor" class="form-control" placeholder="# Judul&#10;Teks **bold** dan *italic*&#10;- List item 1&#10;- List item 2"></textarea>
+const bodyHtml = `<div class="flex flex-wrap gap-4">
+        <div class="md:w-1/2 w-full">
+          <label for="editor" class="label-text">Markdown Input</label>
+          <textarea id="editor" class="input input-bordered w-full" placeholder="# Judul&#10;Teks **bold** dan *italic*&#10;- List item 1&#10;- List item 2"></textarea>
         </div>
-        <div class="col-md-6">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <label class="form-label mb-0">Live Preview</label>
+        <div class="md:w-1/2 w-full">
+          <div class="flex justify-between items-center mb-2">
+            <label class="label-text mb-0">Live Preview</label>
             <button id="copyBtn" class="btn btn-sm btn-outline-primary">?? Copy HTML</button>
           </div>
           <div id="preview"></div>
@@ -36,16 +36,16 @@ const bodyHtml = `<div class="row g-4">
           </tbody>
         </table>
       </div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Markdown Previewer</h6><p class="small mb-1" style="line-height:1.6">Markdown previewer online untuk menulis dan melihat hasil rendering markdown secara real-time. Alat ini sangat berguna bagi developer, penulis teknis, content creator, dan siapa pun yang bekerja dengan format markdown untuk dokumentasi, blog post, README file, atau catatan. Tampilan side-by-side menampilkan editor markdown di sisi kiri dan hasil preview HTML yang sudah di-render di sisi kanan.</p><p class="small mb-0" style="line-height:1.6">Markdown editor ini mendukung sintaks markdown standar: heading (H1-H6), bold dan italic, blockquote, list ordered dan unordered, code inline dan code block dengan syntax highlighting, tabel, link, gambar, horizontal rule, dan task list. Preview diperbarui secara otomatis setiap kali Anda mengetik, tanpa perlu menekan tombol refresh. Hasil markdown dapat disalin dalam format HTML jadi atau markdown mentah.</p><p class="small mb-0 mt-2" style="line-height:1.6">Markdown adalah format markup ringan yang banyak digunakan di GitHub, GitLab, Reddit, Discord, dan berbagai platform dokumentasi. Markdown previewer ini membantu Anda: menulis dokumentasi proyek dengan format yang rapi, menyusun README file untuk repositori GitHub, membuat catatan dengan struktur yang jelas, menulis konten blog dalam format markdown, dan belajar sintaks markdown secara interaktif. Semua rendering dilakukan di browser.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Markdown Previewer</h6><p class="small mb-1" style="line-height:1.6">Markdown previewer online untuk menulis dan melihat hasil rendering markdown secara real-time. Alat ini sangat berguna bagi developer, penulis teknis, content creator, dan siapa pun yang bekerja dengan format markdown untuk dokumentasi, blog post, README file, atau catatan. Tampilan side-by-side menampilkan editor markdown di sisi kiri dan hasil preview HTML yang sudah di-render di sisi kanan.</p><p class="small mb-0" style="line-height:1.6">Markdown editor ini mendukung sintaks markdown standar: heading (H1-H6), bold dan italic, blockquote, list ordered dan unordered, code inline dan code block dengan syntax highlighting, tabel, link, gambar, horizontal rule, dan task list. Preview diperbarui secara otomatis setiap kali Anda mengetik, tanpa perlu menekan tombol refresh. Hasil markdown dapat disalin dalam format HTML jadi atau markdown mentah.</p><p class="small mb-0 mt-2" style="line-height:1.6">Markdown adalah format markup ringan yang banyak digunakan di GitHub, GitLab, Reddit, Discord, dan berbagai platform dokumentasi. Markdown previewer ini membantu Anda: menulis dokumentasi proyek dengan format yang rapi, menyusun README file untuk repositori GitHub, membuat catatan dengan struktur yang jelas, menulis konten blog dalam format markdown, dan belajar sintaks markdown secara interaktif. Semua rendering dilakukan di browser.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="html-preview" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Preview</a><a href="html-entity" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Entity</a><a href="url-encode" class="btn btn-outline-secondary btn-sm rounded-pill">URL Encoder</a><a href="lorem-ipsum" class="btn btn-outline-secondary btn-sm rounded-pill">Lorem Ipsum</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="html-preview" class="btn btn-outline btn-sm rounded-full">HTML Preview</a><a href="html-entity" class="btn btn-outline btn-sm rounded-full">HTML Entity</a><a href="url-encode" class="btn btn-outline btn-sm rounded-full">URL Encoder</a><a href="lorem-ipsum" class="btn btn-outline btn-sm rounded-full">Lorem Ipsum</a></div>`;
 ---
 
 <ToolLayout

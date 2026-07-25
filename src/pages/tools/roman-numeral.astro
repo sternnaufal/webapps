@@ -4,19 +4,19 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Roman Numeral Converter';
 const description = 'Konverter angka Romawi online. Ubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.';
 const keywords = 'roman numeral converter, angka romawi, romawi converter, roman to number, number to roman';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">IV</div><div><h1 class="h3 mb-0">Roman Numeral Converter</h1><p class="text-muted small mb-0">Konversi angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.</p></div></header>
-<div class="row g-4"><div class="col-lg-5">
-<div class="card shadow-sm border-0 p-3 mb-3">
-<div class="btn-group mb-3 w-100" role="group"><button id="modeToRoman" class="btn btn-primary w-50">Desimal ? Romawi</button><button id="modeToDecimal" class="btn btn-outline-primary w-50">Romawi ? Desimal</button></div>
-<div id="toRomanPane"><label class="form-label fw-semibold">Angka Desimal</label><input type="number" id="decimalInput" class="form-control font-mono" value="2024" min="1" max="3999">
-<button id="btnToRoman" class="btn btn-primary w-100 mt-2">Konversi ke Romawi</button>
-<div id="romanResult" class="mt-3 p-3 bg-light rounded text-center"><div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">MMXXIV</div></div></div>
-<div id="toDecimalPane" style="display:none"><label class="form-label fw-semibold">Angka Romawi</label><input type="text" id="romanInput" class="form-control font-mono" value="MMXXIV" maxlength="20">
-<button id="btnToDecimal" class="btn btn-primary w-100 mt-2">Konversi ke Desimal</button>
-<div id="decimalResult" class="mt-3 p-3 bg-light rounded text-center"><div class="display-5 fw-bold" style="color:#6366f1">2024</div></div></div>
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">IV</div><div><h1 class="h3 mb-0">Roman Numeral Converter</h1><p class="opacity-60 small mb-0">Konversi angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.</p></div></header>
+<div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
+<div class="card card-bordered bg-base-100 p-3 mb-3">
+<div class="btn-group mb-3 w-full" role="group"><button id="modeToRoman" class="btn btn-primary w-50">Desimal ? Romawi</button><button id="modeToDecimal" class="btn btn-outline-primary w-50">Romawi ? Desimal</button></div>
+<div id="toRomanPane"><label class="label-text font-semibold">Angka Desimal</label><input type="number" id="decimalInput" class="input input-bordered w-full font-mono" value="2024" min="1" max="3999">
+<button id="btnToRoman" class="btn btn-primary w-full mt-2">Konversi ke Romawi</button>
+<div id="romanResult" class="mt-3 p-3 bg-light rounded text-center"><div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">MMXXIV</div></div></div>
+<div id="toDecimalPane" style="display:none"><label class="label-text font-semibold">Angka Romawi</label><input type="text" id="romanInput" class="input input-bordered w-full font-mono" value="MMXXIV" maxlength="20">
+<button id="btnToDecimal" class="btn btn-primary w-full mt-2">Konversi ke Desimal</button>
+<div id="decimalResult" class="mt-3 p-3 bg-light rounded text-center"><div class="text-3xl font-bold font-bold" style="color:#6366f1">2024</div></div></div>
 </div>
-<div class="card shadow-sm border-0 p-3"><h6 class="mb-3">Tabel Referensi Cepat</h6>
-<div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Romawi</th><th>Desimal</th><th>Romawi</th><th>Desimal</th></tr></thead><tbody>
+<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Tabel Referensi Cepat</h6>
+<div class="overflow-x-auto"><table class="table table-sm small mb-0"><thead><tr><th>Romawi</th><th>Desimal</th><th>Romawi</th><th>Desimal</th></tr></thead><tbody>
 <tr><td>I</td><td>1</td><td>XL</td><td>40</td></tr>
 <tr><td>IV</td><td>4</td><td>L</td><td>50</td></tr>
 <tr><td>V</td><td>5</td><td>XC</td><td>90</td></tr>
@@ -27,44 +27,44 @@ const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div clas
 <tr><td>XX</td><td>20</td><td>M</td><td>1000</td></tr>
 </tbody></table></div></div>
 </div>
-<div class="col-lg-7">
-<div class="card shadow-sm border-0 p-3">
+<div class="lg:w-7/12 w-full">
+<div class="card card-bordered bg-base-100 p-3">
 <h6 class="mb-3">Konversi Cepat</h6>
-<div class="row g-2">
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="1">I</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="4">IV</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="5">V</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="9">IX</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="10">X</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="14">XIV</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="19">XIX</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="20">XX</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="40">XL</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="50">L</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="90">XC</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="100">C</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="400">CD</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="500">D</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="900">CM</button>
-<button class="btn btn-outline-secondary btn-sm col-3" data-val="1000">M</button>
+<div class="row gap-2">
+<button class="btn btn-outline btn-sm col-3" data-val="1">I</button>
+<button class="btn btn-outline btn-sm col-3" data-val="4">IV</button>
+<button class="btn btn-outline btn-sm col-3" data-val="5">V</button>
+<button class="btn btn-outline btn-sm col-3" data-val="9">IX</button>
+<button class="btn btn-outline btn-sm col-3" data-val="10">X</button>
+<button class="btn btn-outline btn-sm col-3" data-val="14">XIV</button>
+<button class="btn btn-outline btn-sm col-3" data-val="19">XIX</button>
+<button class="btn btn-outline btn-sm col-3" data-val="20">XX</button>
+<button class="btn btn-outline btn-sm col-3" data-val="40">XL</button>
+<button class="btn btn-outline btn-sm col-3" data-val="50">L</button>
+<button class="btn btn-outline btn-sm col-3" data-val="90">XC</button>
+<button class="btn btn-outline btn-sm col-3" data-val="100">C</button>
+<button class="btn btn-outline btn-sm col-3" data-val="400">CD</button>
+<button class="btn btn-outline btn-sm col-3" data-val="500">D</button>
+<button class="btn btn-outline btn-sm col-3" data-val="900">CM</button>
+<button class="btn btn-outline btn-sm col-3" data-val="1000">M</button>
 </div>
 </div>
-<div class="card shadow-sm border-0 p-3 mt-3">
+<div class="card card-bordered bg-base-100 p-3 mt-3">
 <h6 class="mb-3">Tahun Romawi Populer</h6>
 <div id="yearList" class="small"></div>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Roman numeral converter online untuk mengkonversi angka antara format desimal (Arab) dan Romawi. Angka Romawi menggunakan kombinasi huruf I, V, X, L, C, D, dan M untuk merepresentasikan nilai numerik. Alat ini mendukung konversi dua arah: dari angka desimal ke Romawi dan dari Romawi ke desimal, dengan rentang nilai yang lengkap.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input desimal ke Romawi dengan hasil instan, input Romawi ke desimal dengan validasi aturan penulisan Romawi, dukungan angka Romawi klasik hingga ribuan (M, MM, MMM, dst.), informasi tentang aturan penulisan angka Romawi (subtractive notation: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Roman numeral converter berguna untuk: memahami sistem penomoran kuno yang masih digunakan hingga kini, membaca tahun pada film, acara TV, dan bangunan bersejarah, penomoran bab buku, halaman awal (preamble), dan daftar isi, penomoran raja dan paus (Henry VIII, Paus Yohanes Paulus II), dan pembelajaran sejarah matematika. Konverter ini akurat dan mudah digunakan.</p></div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Roman numeral converter online untuk mengkonversi angka antara format desimal (Arab) dan Romawi. Angka Romawi menggunakan kombinasi huruf I, V, X, L, C, D, dan M untuk merepresentasikan nilai numerik. Alat ini mendukung konversi dua arah: dari angka desimal ke Romawi dan dari Romawi ke desimal, dengan rentang nilai yang lengkap.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input desimal ke Romawi dengan hasil instan, input Romawi ke desimal dengan validasi aturan penulisan Romawi, dukungan angka Romawi klasik hingga ribuan (M, MM, MMM, dst.), informasi tentang aturan penulisan angka Romawi (subtractive notation: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Roman numeral converter berguna untuk: memahami sistem penomoran kuno yang masih digunakan hingga kini, membaca tahun pada film, acara TV, dan bangunan bersejarah, penomoran bab buku, halaman awal (preamble), dan daftar isi, penomoran raja dan paus (Henry VIII, Paus Yohanes Paulus II), dan pembelajaran sejarah matematika. Konverter ini akurat dan mudah digunakan.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Roman numeral converter online untuk mengkonversi angka antara format desimal (Arab) dan Romawi. Angka Romawi menggunakan kombinasi huruf I, V, X, L, C, D, dan M untuk merepresentasikan nilai numerik. Alat ini mendukung konversi dua arah: dari angka desimal ke Romawi dan dari Romawi ke desimal, dengan rentang nilai yang lengkap.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input desimal ke Romawi dengan hasil instan, input Romawi ke desimal dengan validasi aturan penulisan Romawi, dukungan angka Romawi klasik hingga ribuan (M, MM, MMM, dst.), informasi tentang aturan penulisan angka Romawi (subtractive notation: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Roman numeral converter berguna untuk: memahami sistem penomoran kuno yang masih digunakan hingga kini, membaca tahun pada film, acara TV, dan bangunan bersejarah, penomoran bab buku, halaman awal (preamble), dan daftar isi, penomoran raja dan paus (Henry VIII, Paus Yohanes Paulus II), dan pembelajaran sejarah matematika. Konverter ini akurat dan mudah digunakan.</p></div>
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Roman Numeral Converter</h6><p class="small mb-1" style="line-height:1.6">Roman numeral converter online untuk mengkonversi angka antara format desimal (Arab) dan Romawi. Angka Romawi menggunakan kombinasi huruf I, V, X, L, C, D, dan M untuk merepresentasikan nilai numerik. Alat ini mendukung konversi dua arah: dari angka desimal ke Romawi dan dari Romawi ke desimal, dengan rentang nilai yang lengkap.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: input desimal ke Romawi dengan hasil instan, input Romawi ke desimal dengan validasi aturan penulisan Romawi, dukungan angka Romawi klasik hingga ribuan (M, MM, MMM, dst.), informasi tentang aturan penulisan angka Romawi (subtractive notation: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900), dan tombol copy hasil.</p><p class="small mb-0 mt-2" style="line-height:1.6">Roman numeral converter berguna untuk: memahami sistem penomoran kuno yang masih digunakan hingga kini, membaca tahun pada film, acara TV, dan bangunan bersejarah, penomoran bab buku, halaman awal (preamble), dan daftar isi, penomoran raja dan paus (Henry VIII, Paus Yohanes Paulus II), dan pembelajaran sejarah matematika. Konverter ini akurat dan mudah digunakan.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="konverter-bilangan" class="btn btn-outline-secondary btn-sm rounded-pill">Konverter Bilangan</a><a href="age-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Age Calculator</a><a href="date-calculator" class="btn btn-outline-secondary btn-sm rounded-pill">Date Calculator</a><a href="password-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Password Generator</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="konverter-bilangan" class="btn btn-outline btn-sm rounded-full">Konverter Bilangan</a><a href="age-calculator" class="btn btn-outline btn-sm rounded-full">Age Calculator</a><a href="date-calculator" class="btn btn-outline btn-sm rounded-full">Date Calculator</a><a href="password-generator" class="btn btn-outline btn-sm rounded-full">Password Generator</a></div>`;
 ---
 
 <ToolLayout
@@ -122,39 +122,39 @@ document.getElementById('modeToDecimal').addEventListener('click',function(){
 
 document.getElementById('btnToRoman').addEventListener('click',function(){
   var v=parseInt(document.getElementById('decimalInput').value)||0;
-  document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'<span class="text-danger">Invalid</span>')+'</div>';
+  document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'<span class="text-error">Invalid</span>')+'</div>';
 });
 document.getElementById('btnToDecimal').addEventListener('click',function(){
   var v=document.getElementById('romanInput').value.toUpperCase().replace(/[^IVXLCDM]/g,'');
-  document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
+  document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
 });
 document.getElementById('decimalInput').addEventListener('input',function(){
   var v=parseInt(this.value)||0;
-  document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'')+'</div>';
+  document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'')+'</div>';
 });
 document.getElementById('romanInput').addEventListener('input',function(){
   var v=this.value.toUpperCase().replace(/[^IVXLCDM]/g,'');
-  document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
+  document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
 });
 
 document.querySelectorAll('[data-val]').forEach(function(b){
   b.addEventListener('click',function(){
     var v=parseInt(this.dataset.val),r=toRoman(v);
-    if(mode==='roman'){document.getElementById('decimalInput').value=v;document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+r+'</div>'}
-    else{document.getElementById('romanInput').value=r;document.getElementById('decimalResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1">'+v+'</div>'}
+    if(mode==='roman'){document.getElementById('decimalInput').value=v;document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+r+'</div>'}
+    else{document.getElementById('romanInput').value=r;document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+v+'</div>'}
   });
 });
 
 var yearsHtml='';
 [1990,2000,2010,2020,2024,2025,2026,2027,2045,2050].forEach(function(y){
-  yearsHtml+='<span class="badge bg-light text-dark me-1 mb-1" style="cursor:pointer" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span> ';
+  yearsHtml+='<span class="badge bg-light text-dark mr-1 mb-1" style="cursor:pointer" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span> ';
 });
 document.getElementById('yearList').innerHTML=yearsHtml;
 document.querySelectorAll('[data-yr]').forEach(function(el){
   el.addEventListener('click',function(){
     var y=parseInt(this.dataset.yr);
     document.getElementById('decimalInput').value=y;
-    document.getElementById('romanResult').innerHTML='<div class="display-5 fw-bold" style="color:#6366f1;letter-spacing:4px">'+toRoman(y)+'</div>';
+    document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+toRoman(y)+'</div>';
   });
 });
 </script>

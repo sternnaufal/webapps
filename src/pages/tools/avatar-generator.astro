@@ -4,24 +4,24 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Avatar Generator';
 const description = 'Buat avatar random online gratis. Generator avatar unik dari inisial, ikon, atau emoji. Download PNG siap pakai.';
 const keywords = 'avatar generator, random avatar, profile picture maker, avatar maker, profile pic generator';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#22c55e;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div><div><h1 class="h3 mb-0">Avatar Generator</h1><p class="text-muted small mb-0">Buat avatar random dari inisial, emoji, atau ikon. Download PNG, siap buat profile picture.</p></div></header>
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#22c55e;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div><div><h1 class="h3 mb-0">Avatar Generator</h1><p class="opacity-60 small mb-0">Buat avatar random dari inisial, emoji, atau ikon. Download PNG, siap buat profile picture.</p></div></header>
 
-<div class="row g-4">
-<div class="col-lg-4">
-<div class="card shadow-sm border-0 p-3 text-center">
+<div class="flex flex-wrap gap-4">
+<div class="col-lgap-4">
+<div class="card card-bordered bg-base-100 p-3 text-center">
 <canvas id="avatarPreview" class="avatar-canvas" width="440" height="440"></canvas>
 <h5 id="avatarLabel" class="mt-3 mb-0">Avatar</h5>
-<p id="avatarSub" class="text-muted small">Klik Generate atau pilih style</p>
-<button id="btnGenerate" class="btn btn-primary w-100 mt-2">Generate Avatar</button>
-<button id="btnDownload" class="btn btn-outline-secondary w-100 mt-2">Download PNG</button>
+<p id="avatarSub" class="opacity-60 small">Klik Generate atau pilih style</p>
+<button id="btnGenerate" class="btn btn-primary w-full mt-2">Generate Avatar</button>
+<button id="btnDownload" class="btn btn-outline w-full mt-2">Download PNG</button>
 </div>
 </div>
 
 <div class="col-lg-8">
-<div class="row g-3">
-<div class="col-12"><div class="card shadow-sm border-0 p-3">
+<div class="flex flex-wrap gap-3">
+<div class="w-full"><div class="card card-bordered bg-base-100 p-3">
 <h6 class="mb-3">Pilih Style Avatar</h6>
-<div class="d-flex gap-2 flex-wrap" id="styleOptions">
+<div class="flex gap-2 flex-wrap" id="styleOptions">
 <div class="avatar-option active" data-style="initials"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Inisial</div></div>
 <div class="avatar-option" data-style="emoji"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Emoji</div></div>
 <div class="avatar-option" data-style="geometric"><canvas width="64" height="64" class="style-preview"></canvas><div class="small text-center mt-1">Geometric</div></div>
@@ -29,28 +29,28 @@ const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div clas
 </div>
 </div></div>
 
-<div class="col-12"><div class="card shadow-sm border-0 p-3">
+<div class="w-full"><div class="card card-bordered bg-base-100 p-3">
 <h6 class="mb-3">Custom</h6>
-<div class="row g-2">
-<div class="col-md-6"><label class="form-label small">Teks / Inisial</label><input id="avatarText" class="form-control form-control-sm" placeholder="Kosongi biar random"></div>
-<div class="col-md-3"><label class="form-label small">Warna</label><input id="avatarColor" type="color" class="form-control form-control-color form-control-sm" value="#6366f1"></div>
-<div class="col-md-3"><label class="form-label small">Background</label><input id="avatarBg" type="color" class="form-control form-control-color form-control-sm" value="#eef2ff"></div>
+<div class="row gap-2">
+<div class="md:w-1/2 w-full"><label class="label-text small">Teks / Inisial</label><input id="avatarText" class="input input-bordered w-full input input-bordered w-full-sm" placeholder="Kosongi biar random"></div>
+<div class="md:w-1/4 w-full"><label class="label-text small">Warna</label><input id="avatarColor" type="color" class="input input-bordered w-full input input-bordered w-full-color input input-bordered w-full-sm" value="#6366f1"></div>
+<div class="md:w-1/4 w-full"><label class="label-text small">Background</label><input id="avatarBg" type="color" class="input input-bordered w-full input input-bordered w-full-color input input-bordered w-full-sm" value="#eef2ff"></div>
 </div>
 </div></div>
 </div>
 </div>
 </div>
 
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Avatar Generator</h6><p class="small mb-1" style="line-height:1.6">Avatar generator online untuk membuat profile picture atau avatar unik secara instan. Pilih dari berbagai style: inisial (tampilan teks huruf pertama), emoji (avatar ikon lucu), geometric (bentuk geometris acak), atau gradient (gradasi warna halus). Setiap avatar bisa di-download sebagai file PNG transparan dengan resolusi 220x220px yang siap digunakan untuk profile picture sosial media, forum, game, atau kebutuhan branding.</p><p class="small mb-0" style="line-height:1.6">Avatar generator sangat berguna untuk: membuat profile picture unik tanpa foto asli, menyembunyikan identitas di forum atau grup, membuat avatar sementara untuk akun baru, mendapatkan identitas visual di berbagai platform, atau sekadar eksplorasi desain avatar minimalis. Semua avatar diproses langsung di browser tanpa server.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Avatar Generator</h6><p class="small mb-1" style="line-height:1.6">Avatar generator online untuk membuat profile picture atau avatar unik secara instan. Pilih dari berbagai style: inisial (tampilan teks huruf pertama), emoji (avatar ikon lucu), geometric (bentuk geometris acak), atau gradient (gradasi warna halus). Setiap avatar bisa di-download sebagai file PNG transparan dengan resolusi 220x220px yang siap digunakan untuk profile picture sosial media, forum, game, atau kebutuhan branding.</p><p class="small mb-0" style="line-height:1.6">Avatar generator sangat berguna untuk: membuat profile picture unik tanpa foto asli, menyembunyikan identitas di forum atau grup, membuat avatar sementara untuk akun baru, mendapatkan identitas visual di berbagai platform, atau sekadar eksplorasi desain avatar minimalis. Semua avatar diproses langsung di browser tanpa server.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="random-color-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Random Color</a><a href="qr-generator" class="btn btn-outline-secondary btn-sm rounded-pill">QR Generator</a><a href="gradient-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Gradient</a><a href="color-picker" class="btn btn-outline-secondary btn-sm rounded-pill">Color Picker</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="random-color-generator" class="btn btn-outline btn-sm rounded-full">Random Color</a><a href="qr-generator" class="btn btn-outline btn-sm rounded-full">QR Generator</a><a href="gradient-generator" class="btn btn-outline btn-sm rounded-full">Gradient</a><a href="color-picker" class="btn btn-outline btn-sm rounded-full">Color Picker</a></div>`;
 const toolCss = `
     .avatar-canvas { width: 220px; height: 220px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,.1); margin: 0 auto; display: block; }
     .avatar-option { cursor: pointer; border: 2px solid transparent; border-radius: 12px; padding: 4px; transition: all .15s; }
@@ -269,9 +269,9 @@ generate();
 
 function showToast(message) {
   var t = document.createElement('div');
-  t.className = 'toast align-items-center text-bg-light border p-2';
+  t.className = 'toast items-center text-bg-light border p-2';
   t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
-  t.innerHTML = '<div class="d-flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close"></button></div>';
+  t.innerHTML = '<div class="flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>';
   document.body.appendChild(t);
   t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
   setTimeout(function() { t.remove(); }, 2500);

@@ -4,41 +4,41 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Lorem Ipsum Generator';
 const description = 'Generate teks lorem ipsum untuk dummy content. Lorem ipsum generator dengan berbagai opsi panjang.';
 const keywords = 'lorem ipsum, dummy text, placeholder text, lorem generator, sample text';
-const bodyHtml = `<form id="loremForm" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label class="form-label">Jumlah</label>
-          <input type="number" id="amount" class="form-control" min="1" value="3">
+const bodyHtml = `<form id="loremForm" class="flex flex-wrap gap-3 mb-4">
+        <div class="md:w-1/3 w-full">
+          <label class="label-text">Jumlah</label>
+          <input type="number" id="amount" class="input input-bordered w-full" min="1" value="3">
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Tipe</label>
-          <select id="type" class="form-select">
+        <div class="md:w-1/3 w-full">
+          <label class="label-text">Tipe</label>
+          <select id="type" class="select select-bordered w-full">
             <option value="paragraphs">Paragraf</option>
             <option value="sentences">Kalimat</option>
             <option value="words">Kata</option>
           </select>
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-success w-100">Generate</button>
+        <div class="md:w-1/3 w-full flex align-items-end">
+          <button type="submit" class="btn btn-success w-full">Generate</button>
         </div>
       </form>
 
-      <div class="card shadow-sm p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="card card-bordered bg-base-100 p-3">
+        <div class="flex justify-between items-center mb-2">
           <h5 class="mb-0">Hasil:</h5>
           <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
         </div>
         <div id="output"></div>
       </div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Lorem Ipsum Generator</h6><p class="small mb-1" style="line-height:1.6">Lorem ipsum generator online untuk menghasilkan teks dummy atau placeholder text dengan cepat. Alat ini berguna bagi desainer web, graphic designer, developer, dan content creator yang membutuhkan teks pengisi untuk mockup desain, prototipe website, percetakan, atau preview layout. Anda dapat mengatur jumlah paragraf, kata, atau kalimat yang ingin dihasilkan.</p><p class="small mb-0" style="line-height:1.6">Fitur kustomisasi meliputi: jumlah paragraf (1-50), panjang paragraf (pendek, sedang, panjang), opsi untuk memulai dengan 'Lorem ipsum dolor sit amet...' klasik atau teks acak penuh, serta format output dalam bentuk plain text atau HTML dengan tag paragraph. Hasil teks dapat langsung disalin ke clipboard dengan tombol Copy. Anda juga bisa memilih varian teks seperti standar lorem ipsum, Cicero Latin, atau teks placeholder berbahasa Indonesia.</p><p class="small mb-0 mt-2" style="line-height:1.6">Teks dummy atau placeholder text sangat penting dalam workflow desain dan pengembangan: mengisi konten sementara pada mockup website sebelum konten asli tersedia, menguji layout dan tipografi, mempresentasikan desain kepada klien, mengisi template percetakan, dan menguji responsive design dengan berbagai panjang teks. Generator ini gratis dan dapat digunakan kapan saja tanpa batasan.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Lorem Ipsum Generator</h6><p class="small mb-1" style="line-height:1.6">Lorem ipsum generator online untuk menghasilkan teks dummy atau placeholder text dengan cepat. Alat ini berguna bagi desainer web, graphic designer, developer, dan content creator yang membutuhkan teks pengisi untuk mockup desain, prototipe website, percetakan, atau preview layout. Anda dapat mengatur jumlah paragraf, kata, atau kalimat yang ingin dihasilkan.</p><p class="small mb-0" style="line-height:1.6">Fitur kustomisasi meliputi: jumlah paragraf (1-50), panjang paragraf (pendek, sedang, panjang), opsi untuk memulai dengan 'Lorem ipsum dolor sit amet...' klasik atau teks acak penuh, serta format output dalam bentuk plain text atau HTML dengan tag paragraph. Hasil teks dapat langsung disalin ke clipboard dengan tombol Copy. Anda juga bisa memilih varian teks seperti standar lorem ipsum, Cicero Latin, atau teks placeholder berbahasa Indonesia.</p><p class="small mb-0 mt-2" style="line-height:1.6">Teks dummy atau placeholder text sangat penting dalam workflow desain dan pengembangan: mengisi konten sementara pada mockup website sebelum konten asli tersedia, menguji layout dan tipografi, mempresentasikan desain kepada klien, mengisi template percetakan, dan menguji responsive design dengan berbagai panjang teks. Generator ini gratis dan dapat digunakan kapan saja tanpa batasan.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="text-repeater" class="btn btn-outline-secondary btn-sm rounded-pill">Text Repeater</a><a href="char-counter" class="btn btn-outline-secondary btn-sm rounded-pill">Character Counter</a><a href="md-preview" class="btn btn-outline-secondary btn-sm rounded-pill">Markdown Preview</a><a href="html-preview" class="btn btn-outline-secondary btn-sm rounded-pill">HTML Preview</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="text-repeater" class="btn btn-outline btn-sm rounded-full">Text Repeater</a><a href="char-counter" class="btn btn-outline btn-sm rounded-full">Character Counter</a><a href="md-preview" class="btn btn-outline btn-sm rounded-full">Markdown Preview</a><a href="html-preview" class="btn btn-outline btn-sm rounded-full">HTML Preview</a></div>`;
 ---
 
 <ToolLayout

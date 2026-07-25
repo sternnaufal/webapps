@@ -11,9 +11,9 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
 
       <!-- Stopwatch -->
       <div id="tabStopwatch">
-        <div class="card p-4 shadow-sm text-center">
+        <div class="card card-bordered bg-base-100 p-4 shadow-sm text-center">
           <div class="time-display mb-3" id="swDisplay">00:00:00.00</div>
-          <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+          <div class="flex justify-center gap-2 mb-3 flex-wrap">
             <button id="swStart" class="btn btn-success btn-lg">Start</button>
             <button id="swPause" class="btn btn-warning btn-lg" disabled>Pause</button>
             <button id="swReset" class="btn btn-outline-danger btn-lg">Reset</button>
@@ -25,12 +25,12 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
 
       <!-- Timer -->
       <div id="tabTimer" style="display:none;">
-        <div class="card p-4 shadow-sm text-center">
+        <div class="card card-bordered bg-base-100 p-4 shadow-sm text-center">
           <div class="time-display mb-3" id="tmDisplay">05:00</div>
-          <div class="row g-2 mb-3 justify-content-center">
+          <div class="row gap-2 mb-3 justify-center">
             <div class="col-auto">
-              <label class="form-label small">Jam</label>
-              <select id="tmHours" class="form-select" style="width:80px;">
+              <label class="label-text small">Jam</label>
+              <select id="tmHours" class="select select-bordered w-full" style="width:80px;">
                 <option value="0" selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -40,8 +40,8 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
               </select>
             </div>
             <div class="col-auto">
-              <label class="form-label small">Menit</label>
-              <select id="tmMinutes" class="form-select" style="width:80px;">
+              <label class="label-text small">Menit</label>
+              <select id="tmMinutes" class="select select-bordered w-full" style="width:80px;">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -54,8 +54,8 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
               </select>
             </div>
             <div class="col-auto">
-              <label class="form-label small">Detik</label>
-              <select id="tmSeconds" class="form-select" style="width:80px;">
+              <label class="label-text small">Detik</label>
+              <select id="tmSeconds" class="select select-bordered w-full" style="width:80px;">
                 <option value="0">0</option>
                 <option value="15">15</option>
                 <option value="30">30</option>
@@ -64,26 +64,26 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
               </select>
             </div>
           </div>
-          <div class="d-flex justify-content-center gap-2 flex-wrap">
+          <div class="flex justify-center gap-2 flex-wrap">
             <button id="tmStart" class="btn btn-success btn-lg">Start</button>
             <button id="tmPause" class="btn btn-warning btn-lg" disabled>Pause</button>
             <button id="tmReset" class="btn btn-outline-danger btn-lg">Reset</button>
           </div>
           <div id="tmAlert" class="mt-3" style="display:none;">
-            <div class="alert alert-success mb-0">Time's up! <button id="tmDismiss" class="btn btn-sm btn-outline-success ms-2">Dismiss</button></div>
+            <div class="alert alert-success mb-0">Time's up! <button id="tmDismiss" class="btn btn-sm btn-outline-success ml-2">Dismiss</button></div>
           </div>
         </div>
       </div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Timer & Stopwatch</h6><p class="small mb-1" style="line-height:1.6">Timer dan stopwatch online dengan fitur lengkap untuk mengukur waktu dengan presisi. Stopwatch mendukung penghitungan waktu maju dengan fitur lap times / split times, sedangkan timer memungkinkan Anda mengatur hitung mundur dari durasi tertentu. Kedua alat ini berguna untuk berbagai kebutuhan: olahraga, memasak, belajar (teknik Pomodoro), presentasi, dan produktivitas sehari-hari.</p><p class="small mb-0" style="line-height:1.6">Fitur stopwatch meliputi: start, stop, dan reset; pencatatan lap times dengan timestamp; tampilan waktu dalam format jam:menit:detik.milidetik; dan daftar riwayat lap yang bisa diekspor. Fitur timer meliputi: pengaturan durasi manual atau preset cepat (1, 3, 5, 10, 15, 30 menit); alarm suara saat waktu habis; dan tampilan visual progress bar. Kedua mode dapat diakses dari tab yang berbeda dalam satu halaman.</p><p class="small mb-0 mt-2" style="line-height:1.6">Timer dan stopwatch online ini sangat praktis karena tidak perlu menginstal aplikasi tambahan. Gunakan stopwatch untuk: mengukur waktu lari atau olahraga, mencatat waktu pengerjaan tugas, timing presentasi, dan eksperimen laboratorium. Gunakan timer untuk: teknik Pomodoro (25 menit fokus, 5 menit istirahat), memasak, waktu istirahat, dan pengingat aktivitas. Semua fungsi berjalan di browser, bahkan saat berpindah tab.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Timer & Stopwatch</h6><p class="small mb-1" style="line-height:1.6">Timer dan stopwatch online dengan fitur lengkap untuk mengukur waktu dengan presisi. Stopwatch mendukung penghitungan waktu maju dengan fitur lap times / split times, sedangkan timer memungkinkan Anda mengatur hitung mundur dari durasi tertentu. Kedua alat ini berguna untuk berbagai kebutuhan: olahraga, memasak, belajar (teknik Pomodoro), presentasi, dan produktivitas sehari-hari.</p><p class="small mb-0" style="line-height:1.6">Fitur stopwatch meliputi: start, stop, dan reset; pencatatan lap times dengan timestamp; tampilan waktu dalam format jam:menit:detik.milidetik; dan daftar riwayat lap yang bisa diekspor. Fitur timer meliputi: pengaturan durasi manual atau preset cepat (1, 3, 5, 10, 15, 30 menit); alarm suara saat waktu habis; dan tampilan visual progress bar. Kedua mode dapat diakses dari tab yang berbeda dalam satu halaman.</p><p class="small mb-0 mt-2" style="line-height:1.6">Timer dan stopwatch online ini sangat praktis karena tidak perlu menginstal aplikasi tambahan. Gunakan stopwatch untuk: mengukur waktu lari atau olahraga, mencatat waktu pengerjaan tugas, timing presentasi, dan eksperimen laboratorium. Gunakan timer untuk: teknik Pomodoro (25 menit fokus, 5 menit istirahat), memasak, waktu istirahat, dan pengingat aktivitas. Semua fungsi berjalan di browser, bahkan saat berpindah tab.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="countdown" class="btn btn-outline-secondary btn-sm rounded-pill">Countdown</a><a href="pomodoro" class="btn btn-outline-secondary btn-sm rounded-pill">Pomodoro</a><a href="world-clock" class="btn btn-outline-secondary btn-sm rounded-pill">World Clock</a><a href="screen-recorder" class="btn btn-outline-secondary btn-sm rounded-pill">Screen Recorder</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="countdown" class="btn btn-outline btn-sm rounded-full">Countdown</a><a href="pomodoro" class="btn btn-outline btn-sm rounded-full">Pomodoro</a><a href="world-clock" class="btn btn-outline btn-sm rounded-full">World Clock</a><a href="screen-recorder" class="btn btn-outline btn-sm rounded-full">Screen Recorder</a></div>`;
 ---
 
 <ToolLayout
@@ -182,8 +182,8 @@ function swLap() {
   var lapTime = swLaps[lapNum - 1] - (lapNum > 1 ? swLaps[lapNum - 2] : 0);
   var container = document.getElementById('lapList');
   var div = document.createElement('div');
-  div.className = 'lap-item d-flex justify-content-between border-bottom py-1';
-  div.innerHTML = '<span>Lap ' + lapNum + '</span><span class="lap-time">' + swFormat(lapTime) + ' <span class="text-muted">(' + swFormat(swLaps[lapNum - 1]) + ')</span></span>';
+  div.className = 'lap-item flex justify-between border-bottom py-1';
+  div.innerHTML = '<span>Lap ' + lapNum + '</span><span class="lap-time">' + swFormat(lapTime) + ' <span class="opacity-60">(' + swFormat(swLaps[lapNum - 1]) + ')</span></span>';
   container.insertBefore(div, container.firstChild);
 }
 

@@ -4,35 +4,35 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Character Counter';
 const description = 'Character counter online. Hitung karakter, kata, kalimat, paragraf, dan baris secara real-time.';
 const keywords = 'character counter, word counter, character count, word count, text analyzer';
-const bodyHtml = `<header class="d-flex align-items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div><div><h1 class="h3 mb-0">Character Counter</h1><p class="text-muted small mb-0">Analisis teks secara real-time: karakter, kata, kalimat, paragraf, dan lainnya.</p></div></header>
-<textarea id="textInput" class="form-control font-mono mb-3" rows="8" placeholder="Ketik atau paste teks di sini..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div><div><h1 class="h3 mb-0">Character Counter</h1><p class="opacity-60 small mb-0">Analisis teks secara real-time: karakter, kata, kalimat, paragraf, dan lainnya.</p></div></header>
+<textarea id="textInput" class="input input-bordered w-full font-mono mb-3" rows="8" placeholder="Ketik atau paste teks di sini..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea>
-<div class="row g-3">
-<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="charCount">0</div><small class="text-muted">Karakter</small></div></div>
-<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="charNoSpace">0</div><small class="text-muted">Tanpa Spasi</small></div></div>
-<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="wordCount">0</div><small class="text-muted">Kata</small></div></div>
-<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="sentCount">0</div><small class="text-muted">Kalimat</small></div></div>
-<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="paraCount">0</div><small class="text-muted">Paragraf</small></div></div>
-<div class="col-4 col-md-2"><div class="card shadow-sm border-0 p-3 text-center"><div class="h4 mb-0 fw-bold" id="lineCount">0</div><small class="text-muted">Baris</small></div></div>
+<div class="flex flex-wrap gap-3">
+<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="charCount">0</div><small class="opacity-60">Karakter</small></div></div>
+<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="charNoSpace">0</div><small class="opacity-60">Tanpa Spasi</small></div></div>
+<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="wordCount">0</div><small class="opacity-60">Kata</small></div></div>
+<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="sentCount">0</div><small class="opacity-60">Kalimat</small></div></div>
+<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="paraCount">0</div><small class="opacity-60">Paragraf</small></div></div>
+<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="lineCount">0</div><small class="opacity-60">Baris</small></div></div>
 </div>
-<div class="row g-3 mt-2">
-<div class="col-md-3"><div class="card shadow-sm border-0 p-3 text-center"><div class="h5 mb-0 fw-bold" id="readTime">0</div><small class="text-muted">Menit baca</small></div></div>
-<div class="col-md-3"><div class="card shadow-sm border-0 p-3 text-center"><div class="h5 mb-0 fw-bold" id="density">0</div><small class="text-muted">Kata unik</small></div></div>
-<div class="col-md-6"><div class="card shadow-sm border-0 p-3"><small class="text-muted">Top words:</small><div id="topWords" class="small mt-1"></div></div></div>
+<div class="flex flex-wrap gap-3 mt-2">
+<div class="md:w-1/4 w-full"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h5 mb-0 font-bold" id="readTime">0</div><small class="opacity-60">Menit baca</small></div></div>
+<div class="md:w-1/4 w-full"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h5 mb-0 font-bold" id="density">0</div><small class="opacity-60">Kata unik</small></div></div>
+<div class="md:w-1/2 w-full"><div class="card card-bordered bg-base-100 p-3"><small class="opacity-60">Top words:</small><div id="topWords" class="small mt-1"></div></div></div>
 </div>
-<div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Character Counter</h6><p class="small mb-1" style="line-height:1.6">Character counter online untuk menganalisis teks secara detail. Alat ini menghitung jumlah karakter (dengan dan tanpa spasi), jumlah kata, jumlah kalimat, jumlah paragraf, jumlah baris, jumlah halaman perkiraan, dan frekuensi kemunculan setiap kata. Sangat berguna bagi penulis, content creator, pelajar, dan profesional yang perlu memenuhi batasan jumlah karakter atau kata.</p><p class="small mb-0" style="line-height:1.6">Fitur analisis meliputi: hitungan real-time saat Anda mengetik atau menempelkan teks, statistik lengkap karakter dan kata, frekuensi kata dalam bentuk daftar atau word cloud, analisis readability (tingkat keterbacaan), durasi membaca dan berbicara, serta deteksi kata unik vs kata berulang. Hasil diperbarui secara instan tanpa perlu menekan tombol.</p><p class="small mb-0 mt-2" style="line-height:1.6">Character counter sangat praktis untuk: menulis konten dengan batasan karakter tertentu (judul artikel, meta description, SMS, Twitter), mengoptimalkan SEO dengan menghitung panjang konten, mengecek jumlah kata untuk esai atau tugas kuliah, menganalisis frekuensi kata dalam teks, menghitung durasi pidato atau presentasi, dan memastikan teks iklan atau copywriting sesuai ketentuan platform.</p></div>`;
+<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Character Counter</h6><p class="small mb-1" style="line-height:1.6">Character counter online untuk menganalisis teks secara detail. Alat ini menghitung jumlah karakter (dengan dan tanpa spasi), jumlah kata, jumlah kalimat, jumlah paragraf, jumlah baris, jumlah halaman perkiraan, dan frekuensi kemunculan setiap kata. Sangat berguna bagi penulis, content creator, pelajar, dan profesional yang perlu memenuhi batasan jumlah karakter atau kata.</p><p class="small mb-0" style="line-height:1.6">Fitur analisis meliputi: hitungan real-time saat Anda mengetik atau menempelkan teks, statistik lengkap karakter dan kata, frekuensi kata dalam bentuk daftar atau word cloud, analisis readability (tingkat keterbacaan), durasi membaca dan berbicara, serta deteksi kata unik vs kata berulang. Hasil diperbarui secara instan tanpa perlu menekan tombol.</p><p class="small mb-0 mt-2" style="line-height:1.6">Character counter sangat praktis untuk: menulis konten dengan batasan karakter tertentu (judul artikel, meta description, SMS, Twitter), mengoptimalkan SEO dengan menghitung panjang konten, mengecek jumlah kata untuk esai atau tugas kuliah, menganalisis frekuensi kata dalam teks, menghitung durasi pidato atau presentasi, dan memastikan teks iklan atau copywriting sesuai ketentuan platform.</p></div>`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="textcase" class="btn btn-outline-secondary btn-sm rounded-pill">Text Case Converter</a><a href="reverse-text" class="btn btn-outline-secondary btn-sm rounded-pill">Reverse Text</a><a href="lorem-ipsum" class="btn btn-outline-secondary btn-sm rounded-pill">Lorem Ipsum</a><a href="palindrome-checker" class="btn btn-outline-secondary btn-sm rounded-pill">Palindrome Checker</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="textcase" class="btn btn-outline btn-sm rounded-full">Text Case Converter</a><a href="reverse-text" class="btn btn-outline btn-sm rounded-full">Reverse Text</a><a href="lorem-ipsum" class="btn btn-outline btn-sm rounded-full">Lorem Ipsum</a><a href="palindrome-checker" class="btn btn-outline btn-sm rounded-full">Palindrome Checker</a></div>`;
 ---
 
 <ToolLayout
@@ -76,7 +76,7 @@ function analyze(){
   var keys=Object.keys(uniq);
   density.textContent=keys.length;
   var sorted=keys.sort(function(a,b){return uniq[b]-uniq[a]}).slice(0,6);
-  topWords.innerHTML=sorted.map(function(w){return '<span class="badge bg-light text-dark me-1 mb-1">'+w+' <span class="text-muted">x'+uniq[w]+'</span></span>'}).join('');
+  topWords.innerHTML=sorted.map(function(w){return '<span class="badge bg-light text-dark mr-1 mb-1">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'}).join('');
 }
 inp.addEventListener('input',analyze);analyze();
 </script>

@@ -4,49 +4,49 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 const title = 'Diff Checker';
 const description = 'Bandingkan perbedaan dua teks atau file secara online. Diff checker dengan highlight perubahan.';
 const keywords = 'diff checker, text diff, compare text, perbedaan teks, diff tool';
-const bodyHtml = `<div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label for="textA" class="form-label fw-semibold">Original (A)</label>
-          <textarea id="textA" class="form-control font-monospace" rows="8" placeholder="Text A...">Hello World
+const bodyHtml = `<div class="flex flex-wrap gap-3 mb-3">
+        <div class="md:w-1/2 w-full">
+          <label for="textA" class="label-text font-semibold">Original (A)</label>
+          <textarea id="textA" class="input input-bordered w-full font-monospace" rows="8" placeholder="Text A...">Hello World
 This is line two
 Another line here</textarea>
         </div>
-        <div class="col-md-6">
-          <label for="textB" class="form-label fw-semibold">Modified (B)</label>
-          <textarea id="textB" class="form-control font-monospace" rows="8" placeholder="Text B...">Hello World
+        <div class="md:w-1/2 w-full">
+          <label for="textB" class="label-text font-semibold">Modified (B)</label>
+          <textarea id="textB" class="input input-bordered w-full font-monospace" rows="8" placeholder="Text B...">Hello World
 This is line two modified
 Another line here
 New line added</textarea>
         </div>
       </div>
-      <div class="d-flex gap-2 mb-4">
+      <div class="flex gap-2 mb-4">
         <button id="btnDiff" class="btn btn-primary">Compare</button>
         <button id="btnClear" class="btn btn-outline-danger">Clear</button>
       </div>
 
       <div id="diffOutput" style="display:none;">
         <div class="card shadow-sm">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <span class="fw-semibold">Diff Result</span>
-            <span id="diffStats" class="small text-muted"></span>
+          <div class="card-header flex justify-between items-center">
+            <span class="font-semibold">Diff Result</span>
+            <span id="diffStats" class="text-sm opacity-60"></span>
           </div>
           <div class="card-body p-0">
-            <div class="table-responsive">
+            <div class="overflow-x-auto">
               <table class="diff-table" id="diffTable"></table>
             </div>
           </div>
         </div>
       </div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang Diff Checker</h6><p class="small mb-1" style="line-height:1.6">Diff checker online untuk membandingkan dua teks dan menampilkan perbedaannya secara detail. Alat ini sangat berguna bagi developer, penulis, editor, dan siapa pun yang perlu membandingkan dua versi teks untuk menemukan perubahan, penambahan, atau penghapusan. Hasil perbandingan ditampilkan dengan kode warna: hijau untuk teks yang ditambahkan dan merah untuk teks yang dihapus.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan teks versi pertama di kolom kiri dan teks versi kedua di kolom kanan, lalu klik Compare. Hasil diff akan menampilkan perbedaan baris per baris dengan highlighting yang jelas. Anda juga bisa beralih ke mode unified view yang menggabungkan kedua versi dalam satu tampilan. Tombol navigasi memudahkan berpindah antar perbedaan (next/previous diff).</p><p class="small mb-0 mt-2" style="line-height:1.6">Diff checker memiliki banyak kegunaan: membandingkan versi kode sebelum dan sesudah perubahan, mengecek perubahan dalam file konfigurasi, memvalidasi perubahan konten website, membandingkan output program yang diharapkan dengan aktual, mereview edit teks atau dokumen, dan mendeteksi perubahan dalam data terstruktur. Semua perbandingan dilakukan di browser tanpa mengirim data ke server.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Diff Checker</h6><p class="small mb-1" style="line-height:1.6">Diff checker online untuk membandingkan dua teks dan menampilkan perbedaannya secara detail. Alat ini sangat berguna bagi developer, penulis, editor, dan siapa pun yang perlu membandingkan dua versi teks untuk menemukan perubahan, penambahan, atau penghapusan. Hasil perbandingan ditampilkan dengan kode warna: hijau untuk teks yang ditambahkan dan merah untuk teks yang dihapus.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaan: tempelkan teks versi pertama di kolom kiri dan teks versi kedua di kolom kanan, lalu klik Compare. Hasil diff akan menampilkan perbedaan baris per baris dengan highlighting yang jelas. Anda juga bisa beralih ke mode unified view yang menggabungkan kedua versi dalam satu tampilan. Tombol navigasi memudahkan berpindah antar perbedaan (next/previous diff).</p><p class="small mb-0 mt-2" style="line-height:1.6">Diff checker memiliki banyak kegunaan: membandingkan versi kode sebelum dan sesudah perubahan, mengecek perubahan dalam file konfigurasi, memvalidasi perubahan konten website, membandingkan output program yang diharapkan dengan aktual, mereview edit teks atau dokumen, dan mendeteksi perubahan dalam data terstruktur. Semua perbandingan dilakukan di browser tanpa mengirim data ke server.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="json-formatter" class="btn btn-outline-secondary btn-sm rounded-pill">JSON Formatter</a><a href="json-csv" class="btn btn-outline-secondary btn-sm rounded-pill">JSON to CSV</a><a href="csv-viewer" class="btn btn-outline-secondary btn-sm rounded-pill">CSV Viewer</a><a href="regex-tester" class="btn btn-outline-secondary btn-sm rounded-pill">Regex Tester</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="json-formatter" class="btn btn-outline btn-sm rounded-full">JSON Formatter</a><a href="json-csv" class="btn btn-outline btn-sm rounded-full">JSON to CSV</a><a href="csv-viewer" class="btn btn-outline btn-sm rounded-full">CSV Viewer</a><a href="regex-tester" class="btn btn-outline btn-sm rounded-full">Regex Tester</a></div>`;
 ---
 
 <ToolLayout
@@ -127,7 +127,7 @@ function compare() {
     } else if (row.type === 'removed') {
       tr.className = 'diff-removed';
       removed++;
-      tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td><span class="text-danger">- </span>' + escapeHtml(row.textA) + '</td><td class="line-num"></td><td></td>';
+      tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td><span class="text-error">- </span>' + escapeHtml(row.textA) + '</td><td class="line-num"></td><td></td>';
     } else {
       tr.className = 'diff-unchanged';
       tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td>' + escapeHtml(row.textA) + '</td><td class="line-num">' + row.lineB + '</td><td>' + escapeHtml(row.textB) + '</td>';

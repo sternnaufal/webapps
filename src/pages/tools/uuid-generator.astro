@@ -7,20 +7,20 @@ const keywords = 'uuid generator, guid generator, uuid v4, generate uuid, unique
 const bodyHtml = `<!-- Navbar khusus mobile -->
       
 
-      <header class="d-flex align-items-center justify-content-between mb-4">
-        <div class="d-flex gap-3 align-items-center">
+      <header class="flex items-center justify-between mb-4">
+        <div class="flex gap-3 items-center">
           <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
           <div>
             <h1 class="h3 mb-0">UUID / GUID Generator</h1>
-            <p class="text-muted small mb-0">Generate UUID v1, v3, v4, v5  pilih quantity dan format (uppercase / braces).</p>
+            <p class="opacity-60 small mb-0">Generate UUID v1, v3, v4, v5  pilih quantity dan format (uppercase / braces).</p>
           </div>
         </div>
       </header>
 
-      <form id="uuidForm" onsubmit="return generateUUIDs()" class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label for="version" class="form-label">Versi UUID</label>
-          <select id="version" class="form-select" required>
+      <form id="uuidForm" onsubmit="return generateUUIDs()" class="flex flex-wrap gap-3 mb-4">
+        <div class="md:w-1/3 w-full">
+          <label for="version" class="label-text">Versi UUID</label>
+          <select id="version" class="select select-bordered w-full" required>
             <option value="v4" selected>v4 (Random)  direkomendasikan</option>
             <option value="v1">v1 (Time-based)</option>
             <option value="v3">v3 (MD5, namespace+name)</option>
@@ -29,8 +29,8 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
         </div>
 
         <div class="col-md-2">
-          <label for="count" class="form-label">Jumlah</label>
-          <select id="count" class="form-select">
+          <label for="count" class="label-text">Jumlah</label>
+          <select id="count" class="select select-bordered w-full">
             <option value="1" selected>1</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -38,48 +38,48 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
           </select>
         </div>
 
-        <div class="col-md-3">
-          <label for="format" class="form-label">Format</label>
-          <div class="d-flex gap-2">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="format_upper">
-              <label class="form-check-label" for="format_upper">UPPERCASE</label>
+        <div class="md:w-1/4 w-full">
+          <label for="format" class="label-text">Format</label>
+          <div class="flex gap-2">
+            <div class="flex items-center gap-2">
+              <input class="checkbox" type="checkbox" id="format_upper">
+              <label class="flex items-center gap-2-label" for="format_upper">UPPERCASE</label>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="format_braces">
-              <label class="form-check-label" for="format_braces">{braces}</label>
+            <div class="flex items-center gap-2">
+              <input class="checkbox" type="checkbox" id="format_braces">
+              <label class="flex items-center gap-2-label" for="format_braces">{braces}</label>
             </div>
           </div>
         </div>
 
-        <div class="col-md-3" id="nsSection" style="display:none;">
-          <label for="namespace" class="form-label">Namespace UUID</label>
-          <input type="text" id="namespace" class="form-control" placeholder="6ba7b810-9dad-11d1-80b4-00c04fd430c8">
-          <div class="form-text">Default DNS namespace</div>
+        <div class="md:w-1/4 w-full" id="nsSection" style="display:none;">
+          <label for="namespace" class="label-text">Namespace UUID</label>
+          <input type="text" id="namespace" class="input input-bordered w-full" placeholder="6ba7b810-9dad-11d1-80b4-00c04fd430c8">
+          <div class="text-xs opacity-60">Default DNS namespace</div>
         </div>
 
-        <div class="col-12">
-          <label for="name" class="form-label">Name (untuk v3/v5)</label>
-          <input type="text" id="name" class="form-control" placeholder="Name string (mis: example.com)">
+        <div class="w-full">
+          <label for="name" class="label-text">Name (untuk v3/v5)</label>
+          <input type="text" id="name" class="input input-bordered w-full" placeholder="Name string (mis: example.com)">
         </div>
 
-        <div class="col-12">
+        <div class="w-full">
           <button type="submit" class="btn btn-info">Generate</button>
-          <button type="button" id="btnCopyAll" class="btn btn-outline-secondary ms-2" disabled>Copy All</button>
+          <button type="button" id="btnCopyAll" class="btn btn-outline ml-2" disabled>Copy All</button>
         </div>
       </form>
 
       <div id="results"></div>
-    <div class="mt-4 p-3 rounded" style="background:var(--surface-soft);border:1px solid var(--border)"><h6 class="fw-bold">Tentang UUID / GUID Generator</h6><p class="small mb-1" style="line-height:1.6">UUID (Universally Unique Identifier) atau GUID (Globally Unique Identifier) generator online untuk membuat identifier unik secara instan. Alat ini mendukung pembuatan UUID versi 1 (berbasis waktu dan MAC address), versi 3 (berbasis namespace MD5), versi 4 (acak), dan versi 5 (berbasis namespace SHA-1). UUID banyak digunakan dalam pengembangan perangkat lunak untuk mengidentifikasi entity secara unik tanpa memerlukan koordinasi terpusat.</p><p class="small mb-0" style="line-height:1.6">Generator ini menyediakan beberapa format output: format standar dengan tanda hubung (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx), tanpa tanda hubung, huruf besar/kecil, dan format array untuk berbagai bahasa pemrograman. Cukup pilih versi UUID yang diinginkan, atur jumlah yang akan digenerate (hingga 10 sekaligus), dan klik tombol Generate. Hasil dapat disalin satu per satu atau semua sekaligus dengan tombol Copy All.</p><p class="small mb-0 mt-2" style="line-height:1.6">UUID versi 4 berbasis angka acak kriptografis adalah yang paling umum digunakan karena sederhana dan cukup unik untuk hampir semua aplikasi praktis. UUID digunakan sebagai primary key di database, ID sesi pengguna, ID pesanan atau transaksi, ID file atau dokumen, ID perangkat dalam sistem IoT, dan identifier untuk resource dalam REST API. Dengan UUID, risiko tabrakan ID sangat kecil sehingga ideal untuk sistem terdistribusi dan aplikasi skala besar.</p></div>\`n`;
+    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang UUID / GUID Generator</h6><p class="small mb-1" style="line-height:1.6">UUID (Universally Unique Identifier) atau GUID (Globally Unique Identifier) generator online untuk membuat identifier unik secara instan. Alat ini mendukung pembuatan UUID versi 1 (berbasis waktu dan MAC address), versi 3 (berbasis namespace MD5), versi 4 (acak), dan versi 5 (berbasis namespace SHA-1). UUID banyak digunakan dalam pengembangan perangkat lunak untuk mengidentifikasi entity secara unik tanpa memerlukan koordinasi terpusat.</p><p class="small mb-0" style="line-height:1.6">Generator ini menyediakan beberapa format output: format standar dengan tanda hubung (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx), tanpa tanda hubung, huruf besar/kecil, dan format array untuk berbagai bahasa pemrograman. Cukup pilih versi UUID yang diinginkan, atur jumlah yang akan digenerate (hingga 10 sekaligus), dan klik tombol Generate. Hasil dapat disalin satu per satu atau semua sekaligus dengan tombol Copy All.</p><p class="small mb-0 mt-2" style="line-height:1.6">UUID versi 4 berbasis angka acak kriptografis adalah yang paling umum digunakan karena sederhana dan cukup unik untuk hampir semua aplikasi praktis. UUID digunakan sebagai primary key di database, ID sesi pengguna, ID pesanan atau transaksi, ID file atau dokumen, ID perangkat dalam sistem IoT, dan identifier untuk resource dalam REST API. Dengan UUID, risiko tabrakan ID sangat kecil sehingga ideal untuk sistem terdistribusi dan aplikasi skala besar.</p></div>\`n`;
 const extraHtml = `
-<div class="mt-3 pt-2 d-flex gap-2 justify-content-center align-items-center">
-<span class="small text-muted me-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill" title="WhatsApp">wa</a>
+<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
+<span class="text-sm opacity-60 mr-2">Bagikan:</span>
+<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
+<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
 </div>
-<div class="mt-4 pt-2"><div class="small fw-semibold mb-2 text-muted">Alat Terkait</div><div class="d-flex gap-2 flex-wrap"><a href="hash-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Hash Generator</a><a href="password-generator" class="btn btn-outline-secondary btn-sm rounded-pill">Password Generator</a><a href="jwt-decoder" class="btn btn-outline-secondary btn-sm rounded-pill">JWT Decoder</a><a href="qr-generator" class="btn btn-outline-secondary btn-sm rounded-pill">QR Generator</a></div>`;
+<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="hash-generator" class="btn btn-outline btn-sm rounded-full">Hash Generator</a><a href="password-generator" class="btn btn-outline btn-sm rounded-full">Password Generator</a><a href="jwt-decoder" class="btn btn-outline btn-sm rounded-full">JWT Decoder</a><a href="qr-generator" class="btn btn-outline btn-sm rounded-full">QR Generator</a></div>`;
 ---
 
 <ToolLayout
@@ -200,7 +200,7 @@ function generateUUIDs() {
   const results = [];
 
   if ((version === 'v3' || version === 'v5') && name && !isValidNamespace(namespace)) {
-    document.getElementById('results').innerHTML = '<div class="alert alert-danger">Namespace tidak valid. Masukkan UUID namespace yang benar.</div>';
+    document.getElementById('results').innerHTML = '<div class="alert alert-error">Namespace tidak valid. Masukkan UUID namespace yang benar.</div>';
     return false;
   }
 
@@ -214,7 +214,7 @@ function generateUUIDs() {
     }
 
     if (!uuid) {
-      document.getElementById('results').innerHTML = '<div class="alert alert-danger">Gagal generate UUID. Periksa input Anda.</div>';
+      document.getElementById('results').innerHTML = '<div class="alert alert-error">Gagal generate UUID. Periksa input Anda.</div>';
       return false;
     }
 
@@ -235,7 +235,7 @@ function isValidNamespace(ns) {
 }
 
 function renderResults(uuids) {
-  let html = '<div class="card shadow-sm p-3 mb-4"><h5 class="mb-3">Hasil UUID</h5><div class="table-responsive"><table class="table table-sm table-bordered align-middle"><thead class="table-light"><tr><th>#</th><th>UUID</th><th>Aksi</th></tr></thead><tbody>';
+  let html = '<div class="card card-bordered bg-base-100 p-3 mb-4"><h5 class="mb-3">Hasil UUID</h5><div class="overflow-x-auto"><table class="table table-sm table-zebra align-middle"><thead class="table-light"><tr><th>#</th><th>UUID</th><th>Aksi</th></tr></thead><tbody>';
 
   uuids.forEach((uuid, idx) => {
     const id = \`uuid_\${idx}\`;
@@ -259,8 +259,8 @@ function escapeHtml(text) {
 
 function showToast(message) {
   const toast = document.createElement('div');
-  toast.className = 'toast align-items-center text-bg-light border p-2 toast-fixed';
-  toast.innerHTML = \`<div class="d-flex"><div class="toast-body">\${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close"></button></div>\`;
+  toast.className = 'toast items-center text-bg-light border p-2 toast-fixed';
+  toast.innerHTML = \`<div class="flex"><div class="toast-body">\${message}</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>\`;
   document.body.appendChild(toast);
   toast.querySelector('.btn-close').addEventListener('click', () => toast.remove());
   setTimeout(() => toast.remove(), 2200);
