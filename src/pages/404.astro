@@ -2,11 +2,11 @@
 import ToolLayout from '../layouts/ToolLayout.astro';
 ---
 
-<ToolLayout title="404 - Halaman Tidak Ditemukan" description="Maaf, halaman tidak ditemukan." noindex={true}>
-  <div class="text-center py-5">
-    <div class="text-6xl text-text-muted font-bold">404</div>
-    <h4 class="mb-3 mt-2">Halaman Tidak Ditemukan</h4>
-    <p class="text-text-muted mb-4">Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.</p>
-    <a href="/" class="btn btn-warning">Kembali ke Beranda</a>
+<ToolLayout title="404 - Tidak Ditemukan" description="Halaman tidak ditemukan." noindex={true}>
+  <div class="flex flex-col items-center justify-center py-16">
+    <p class="text-6xl font-black opacity-20 mb-4">404</p>
+    <h2 class="text-xl font-bold mb-2">Halaman Tidak Ditemukan</h2>
+    <p class="text-sm opacity-50 mb-6">Halaman tidak ada atau telah dipindahkan.</p>
+    <a href="/" class="btn btn-primary">Kembali ke Beranda</a>
   </div>
 </ToolLayout>

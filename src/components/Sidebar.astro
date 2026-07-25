@@ -1,52 +1,59 @@
 ---
 import tools from '../data/tools.json';
 const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 'index';
+const allTools = tools.categories.flatMap(c => c.tools);
 ---
 
-<aside class="sidebar w-[260px] shrink-0 overflow-hidden sticky top-0 max-h-screen flex flex-col text-white">
-  <!-- Header -->
-  <div class="flex items-center gap-2 px-3 py-3 border-b border-white/8">
-    <span class="text-xl">🚀</span>
-    <div>
-      <a href="/" class="text-white no-underline font-bold text-sm">WebApps</a>
-      <div class="text-[.65rem] text-white/40">{tools.categories.flatMap(c => c.tools).length} tools</div>
-    </div>
+<div class="menu-title flex items-center gap-2 px-4 py-3 border-b border-base-300 sticky top-0 bg-base-200 z-10">
+  <span class="text-lg">🚀</span>
+  <div>
+    <a href="/" class="font-bold text-base no-underline">WebApps</a>
+    <div class="text-xs opacity-60">{allTools.length} tools</div>
   </div>
+</div>
 
-  <!-- Search -->
-  <div class="px-3 py-2">
-    <input type="text" class="sidebar-search w-full text-xs bg-white/7 border border-white/10 text-white rounded-md px-2 py-1.5 focus:border-accent focus:outline-none" placeholder="Cari tool..." />
-  </div>
+<div class="p-2 border-b border-base-300">
+  <input type="text" class="sidebar-search input input-bordered input-xs w-full" placeholder="Cari tool...">
+</div>
 
-  <!-- Categories -->
-  <nav class="flex-1 overflow-y-auto overflow-x-hidden px-1.5 scrollbar-thin">
-    {tools.categories.map((cat, i) => (
-      <div class="mb-0.5">
-        <a class="sidebar-cat-header flex items-center gap-2" data-bs-toggle="collapse" href={`#sc${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'}>
-          <span class="text-sm">{cat.icon}</span>
-          <span class="flex-1 truncate">{cat.name}</span>
-          <span class="text-[.55rem] transition-transform duration-200 cat-chevron">{'>'}</span>
-        </a>
-        <div class={`collapse${i === 0 ? ' show' : ''}`} id={`sc${i}`}>
-          {cat.tools.map(t => (
-            <a class={`sidebar-navlink flex items-center gap-2 my-0.5 ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`}>
-              <span class="tool-icon-badge">{t.icon}</span>
-              <span class="truncate">{t.name}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    ))}
-  </nav>
+<nav class="flex-1 overflow-y-auto px-2 py-2 scrollbar-thin">
+  {tools.categories.map((cat, i) => (
+    <ul class="menu menu-xs mb-3">
+      <li class="menu-title text-xs flex items-center gap-1">
+        <span>{cat.icon}</span> {cat.name}
+      </li>
+      <li>
+        <details open={i < 2}>
+          <summary class="hidden"></summary>
+          <ul>
+            {cat.tools.map(t => (
+              <li><a href={`/tools/${t.slug}`} class={`flex items-center gap-2 ${t.slug === current ? 'active' : ''}`}>
+                <span class="w-5 h-5 flex items-center justify-center text-[10px] font-bold rounded bg-base-300 shrink-0">{t.icon}</span>
+                <span class="truncate">{t.name}</span>
+              </a></li>
+            ))}
+          </ul>
+        </details>
+      </li>
+    </ul>
+  ))}
+</nav>
 
-  <!-- Footer -->
-  <div class="flex items-center justify-between px-3 py-2 border-t border-white/8">
-    <span class="text-[.6rem] text-white/30">🌙 Dark mode</span>
-    <button class="dark-toggle w-7 h-7 rounded-full border-0 bg-white/8 text-white/50 text-sm flex items-center justify-center cursor-pointer hover:bg-white/12">🌙</button>
-  </div>
-</aside>
+<div class="p-3 border-t border-base-300 flex items-center justify-between">
+  <span class="text-xs opacity-40">🌙 Tema</span>
+  <label class="swap swap-rotate">
+    <input type="checkbox" id="themeToggleSidebar" />
+    <span class="swap-off">☀️</span>
+    <span class="swap-on">🌙</span>
+  </label>
+</div>
 
-<style>
-  .cat-chevron.rotate { transform: rotate(90deg); }
-  .sidebar-search:focus { box-shadow: 0 0 0 2px rgba(99,102,241,.2); }
-</style>
+<script is:inline>
+  const sToggle = document.getElementById('themeToggleSidebar');
+  const cToggle = document.getElementById('themeToggle');
+  if (sToggle && cToggle) {
+    sToggle.checked = cToggle.checked;
+    sToggle.addEventListener('change', () => { cToggle.click(); });
+    cToggle.addEventListener('change', () => { sToggle.checked = cToggle.checked; });
+  }
+</script>

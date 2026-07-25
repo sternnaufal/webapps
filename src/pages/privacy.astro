@@ -2,15 +2,11 @@
 import ToolLayout from '../layouts/ToolLayout.astro';
 ---
 
-<ToolLayout title="Kebijakan Privasi - WebApps" description="Privasi WebApps. Data tidak dikumpulkan. Semua alat berjalan 100% di browser.">
-  <h1 class="text-xl font-bold mb-4">Kebijakan Privasi</h1>
-  <div class="card p-5 text-sm" style="line-height:1.8">
-    <p>WebApps berkomitmen menjaga privasi Anda. Semua alat berjalan 100% di sisi klien (browser). Data Anda tidak pernah dikirim ke server.</p>
-    <h5 class="font-semibold mt-4 mb-2">Data yang Dikumpulkan</h5>
-    <p>Kami tidak mengumpulkan data pribadi apa pun. Tidak ada cookie pelacakan, tidak ada analitik pihak ketiga.</p>
-    <h5 class="font-semibold mt-4 mb-2">Penyimpanan Lokal</h5>
-    <p>Fitur seperti pin tool menggunakan localStorage browser. Data hanya di perangkat Anda, bisa dihapus kapan saja.</p>
-    <h5 class="font-semibold mt-4 mb-2">Hosting</h5>
-    <p>WebApps dihosting di Vercel. Vercel dapat mengumpulkan log standar (IP, browser, halaman) untuk keperluan operasional.</p>
+<ToolLayout title="Kebijakan Privasi" description="Data tidak dikumpulkan. Semua alat berjalan di browser.">
+  <div class="prose prose-base max-w-3xl">
+    <h1 class="text-2xl font-bold mb-4">Kebijakan Privasi</h1>
+    <p>Semua alat berjalan <strong>100% di sisi klien</strong> (browser). Data tidak pernah dikirim ke server. Tidak ada cookie pelacakan.</p>
+    <p><strong>Penyimpanan Lokal:</strong> Fitur pin tool menggunakan <code>localStorage</code> — data hanya di perangkat Anda.</p>
+    <p><strong>Hosting:</strong> WebApps dihosting di Vercel yang dapat mengumpulkan log standar (IP, browser).</p>
   </div>
 </ToolLayout>

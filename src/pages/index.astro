@@ -3,111 +3,89 @@ import ToolLayout from '../layouts/ToolLayout.astro';
 import tools from '../data/tools.json';
 
 const allTools = tools.categories.flatMap(c => c.tools);
-const featured = ['password-generator', 'qr-generator', 'json-formatter', 'subnetting', 'color-picker', 'unit-converter', 'markdown-to-html', 'image-resizer'];
+const featured = ['password-generator', 'qr-generator', 'json-formatter', 'subnetting', 'color-picker', 'unit-converter', 'markdown-to-html', 'image-resizer', 'hash-generator', 'uuid-generator'];
 const featuredTools = featured.map(s => allTools.find(t => t.slug === s)).filter(Boolean);
 
-function getIcon(slug) {
-  const icons = {
-    'hash-generator': '#', 'uuid-generator': '🆔', 'base64-coded': 'B64', 'json-formatter': '{}',
-    'password-generator': '🔑', 'qr-generator': '▐▌', 'subnetting': '📐', 'color-picker': '🎨',
-    'unit-converter': '⇄', 'markdown-to-html': '▶', 'image-resizer': '🖼', 'css-minifier': 'CSS',
-    'json-to-typescript': 'TS', 'json-schema-generator': '📋', 'email-validator': '@',
-    'password-memorable': '🔐', 'user-agent-parser': '🖥', 'color-converter': '🌈', 'word-frequency': '📊',
-  };
-  return icons[slug] || '⚡';
+function icon(slug) {
+  const m = { 'password-generator': '🔑', 'qr-generator': '▐▌', 'json-formatter': '{}', 'subnetting': '📐', 'color-picker': '🎨', 'unit-converter': '⇄', 'markdown-to-html': '▶', 'image-resizer': '🖼', 'hash-generator': '#', 'uuid-generator': '🆔', 'base64-coded': 'B64', 'regex-tester': '.*', 'diff-checker': '⇔', 'sql-formatter': 'SQL', 'yaml-json': '⇄', 'meta-tag-generator': '🏷', 'ascii-table': 'A', 'json-to-typescript': 'TS', 'json-schema-generator': '📋', 'css-minifier': 'CSS', 'url-encode': '%', 'cron-builder': '⏰', 'mac-address-generator': '🔗', 'user-agent-parser': '🖥', 'textcase': 'Aa', 'lorem-ipsum': '¶', 'md-preview': 'MD', 'image-to-base64': '🖼', 'palindrome-checker': '↔', 'anagram-finder': '🔀', 'text-repeater': '×', 'reverse-text': '↩', 'list-sorter': '↕', 'morse-code-converter': '···', 'word-frequency': '📊', 'color-converter': '🌈', };
+  return m[slug] || '⚡';
 }
-function getColor(slug) {
-  const c = {
-    'hash-generator': '#ef4444', 'uuid-generator': '#8b5cf6', 'password-generator': '#10b981',
-    'qr-generator': '#6366f1', 'json-formatter': '#f59e0b', 'subnetting': '#0ea5e9',
-    'color-picker': '#e11d48', 'unit-converter': '#14b8a6', 'markdown-to-html': '#059669',
-    'image-resizer': '#8b5cf6', 'css-minifier': '#3b82f6', 'json-to-typescript': '#3178c6',
-    'email-validator': '#06b6d4',
-  };
-  return c[slug] || '#6366f1';
+function col(slug) {
+  const m = { 'hash-generator': '#ef4444', 'uuid-generator': '#8b5cf6', 'password-generator': '#10b981', 'qr-generator': '#6366f1', 'json-formatter': '#f59e0b', 'subnetting': '#0ea5e9', 'color-picker': '#e11d48', 'unit-converter': '#14b8a6', 'markdown-to-html': '#059669', 'image-resizer': '#8b5cf6', 'css-minifier': '#3b82f6', 'json-to-typescript': '#3178c6', 'email-validator': '#06b6d4', 'ip-calculator': '#64748b', 'url-encode': '#8b5cf6', };
+  return m[slug] || '#6366f1';
 }
 ---
 
-<ToolLayout
-  title="WebApps Naufal Rakha - 86+ Online Developer Tools"
-  description="Koleksi 86+ online tools gratis untuk developer. Tanpa server, 100% di browser."
-  keywords="web tools, online tools, developer tools, web apps, password generator, qr code"
->
+<ToolLayout title="WebApps - 86+ Online Tools Gratis" description="86+ online tools gratis untuk developer. 100% di browser, tanpa server.">
   <!-- Hero -->
-  <div class="hero-section border-0">
-    <div class="flex flex-wrap items-center gap-4">
-      <div class="flex-1 min-w-[200px]" style="position:relative;z-index:1">
-        <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-extrabold -tracking-[.03em] mb-2">🚀 WebApps</h1>
-        <p class="text-sm opacity-90 max-w-[500px]">{allTools.length} online tools gratis. Semua jalan di browser — data ga pernah ke server.</p>
-        <div class="flex gap-4 flex-wrap mt-3 opacity-85">
-          <div><strong class="text-lg">{allTools.length}</strong> <span class="text-xs">Tools</span></div>
-          <div><strong class="text-lg">6</strong> <span class="text-xs">Kategori</span></div>
-          <div><strong class="text-lg">0</strong> <span class="text-xs">Server</span></div>
-          <div><strong class="text-lg">100%</strong> <span class="text-xs">Gratis</span></div>
+  <div class="hero rounded-xl mb-6 relative overflow-hidden" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#a855f7)">
+    <div class="hero-content flex-col lg:flex-row items-center gap-6 py-8 lg:py-10 text-white">
+      <div class="flex-1 text-center lg:text-left">
+        <h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight">🚀 WebApps</h1>
+        <p class="text-sm lg:text-base opacity-90 mt-1 max-w-xl">{allTools.length} tools gratis — semua jalan di browser, data ga pernah ke server.</p>
+        <div class="flex justify-center lg:justify-start gap-6 mt-4 text-white/80">
+          <div><span class="text-xl font-bold text-white">{allTools.length}</span> <span class="text-xs">Tools</span></div>
+          <div><span class="text-xl font-bold text-white">6</span> <span class="text-xs">Kategori</span></div>
+          <div><span class="text-xl font-bold text-white">0</span> <span class="text-xs">Server</span></div>
+          <div><span class="text-xl font-bold text-white">100%</span> <span class="text-xs">Gratis</span></div>
         </div>
       </div>
-      <div class="text-6xl opacity-20 select-none leading-none">⚡</div>
+      <div class="text-6xl opacity-20 select-none hidden lg:block">⚡</div>
     </div>
   </div>
 
   <!-- Search -->
-  <div class="mb-4">
-    <div class="flex">
-      <span class="inline-flex items-center px-3 bg-white border border-r-0 border-border rounded-l-lg">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </span>
-      <input type="search" id="toolSearch" class="flex-1 form-control border-l-0 rounded-none rounded-r-lg" placeholder="Cari tool..." aria-label="Cari tool" />
-    </div>
-    <div class="text-xs text-text-muted text-center mt-1">
-      <span id="toolCount">{allTools.length}</span> tools &nbsp;|&nbsp; Tekan <kbd class="px-1 py-0.5 bg-gray-100 rounded text-xs">/</kbd> untuk fokus
-    </div>
+  <div class="mb-5">
+    <label class="input input-bordered flex items-center gap-2 input-md shadow-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-50 shrink-0"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd"/></svg>
+      <input type="search" id="toolSearch" class="grow" placeholder="Cari tool... (contoh: password, hash, json)" />
+      <kbd class="kbd kbd-sm opacity-40">/</kbd>
+    </label>
+    <p class="text-xs opacity-50 text-center mt-1"><span id="toolCount">{allTools.length}</span> tools tersedia</p>
   </div>
 
-  <!-- Category quick jump -->
-  <div class="flex gap-2 flex-wrap mb-4">
+  <!-- Category jump -->
+  <div class="flex flex-wrap gap-2 mb-5">
     {tools.categories.map(cat => (
-      <a href={`#cat-${cat.name.replace(/\s+/g, '-')}`} class="cat-chip">{cat.icon} {cat.name}</a>
+      <a href={`#cat-${cat.name.replace(/\s+/g, '-')}`} class="badge badge-outline gap-1 py-3 px-3 hover:badge-primary transition-all">{cat.icon} {cat.name}</a>
     ))}
   </div>
 
-  <!-- Pinned -->
-  <div class="mb-4 hidden" id="pinnedSection">
-    <h5 class="font-bold mb-3">⭐ Pinned</h5>
-    <div class="tool-grid" id="pinnedGrid"></div>
-  </div>
-
   <!-- Featured -->
-  <div class="mb-4">
-    <h5 class="font-bold mb-3">🔥 Featured</h5>
-    <div class="tool-grid">
+  <div class="mb-6">
+    <h3 class="text-sm font-bold mb-3 flex items-center gap-1">🔥 Featured</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
       {featuredTools.map(t => (
-        <a href={`/tools/${t.slug}`} class="tool-card-sm" data-slug={t.slug}>
-          <div class="tc-icon" style="background:var(--color-accent-soft);color:var(--color-accent)">{getIcon(t.slug)}</div>
-          <div class="flex-1 min-w-0">
-            <div class="tc-name">{t.name}</div>
-            <div class="tc-desc">{t.desc}</div>
+        <a href={`/tools/${t.slug}`} class="card card-compact bg-base-100 border border-base-200 hover:border-primary transition-all duration-150 no-underline hover:-translate-y-0.5 hover:shadow-md" data-slug={t.slug}>
+          <div class="card-body flex-row items-center gap-2 p-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0" style={`background:${col(t.slug)}15;color:${col(t.slug)}`}>{icon(t.slug)}</div>
+            <div class="min-w-0">
+              <div class="text-xs font-semibold truncate">{t.name}</div>
+              <div class="text-[10px] opacity-50 line-clamp-1">{t.desc}</div>
+            </div>
           </div>
         </a>
       ))}
     </div>
   </div>
 
-  <!-- Categories -->
+  <!-- All categories -->
   <div id="toolGrid">
     {tools.categories.map(cat => (
-      <div data-category={cat.name} id={`cat-${cat.name.replace(/\s+/g, '-')}`}>
-        <h5 class="font-bold mb-3 mt-3 flex items-center gap-2">
-          {cat.icon}
-          <span>{cat.name}</span>
-          <span class="tag-badge">{cat.tools.length}</span>
-        </h5>
-        <div class="tool-grid">
+      <div data-category={cat.name} id={`cat-${cat.name.replace(/\s+/g, '-')}`} class="mb-5">
+        <h3 class="text-sm font-bold mb-3 flex items-center gap-1">
+          {cat.icon} {cat.name}
+          <span class="badge badge-sm badge-ghost ml-1">{cat.tools.length}</span>
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
           {cat.tools.map(t => (
-            <a href={`/tools/${t.slug}`} class="tool-card-sm" data-slug={t.slug}>
-              <div class="tc-icon" style={`background:${getColor(t.slug)}15;color:${getColor(t.slug)}`}>{getIcon(t.slug)}</div>
-              <div class="flex-1 min-w-0">
-                <div class="tc-name">{t.name}</div>
-                <div class="tc-desc">{t.desc}</div>
+            <a href={`/tools/${t.slug}`} class="card card-compact bg-base-100 border border-base-200 hover:border-primary transition-all duration-150 no-underline hover:-translate-y-0.5 hover:shadow-md" data-slug={t.slug}>
+              <div class="card-body flex-row items-center gap-2 p-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0" style={`background:${col(t.slug)}15;color:${col(t.slug)}`}>{icon(t.slug)}</div>
+                <div class="min-w-0">
+                  <div class="text-xs font-semibold truncate">{t.name}</div>
+                  <div class="text-[10px] opacity-50 line-clamp-1">{t.desc}</div>
+                </div>
               </div>
             </a>
           ))}
@@ -116,20 +94,16 @@ function getColor(slug) {
     ))}
   </div>
 
-  <div id="noResults" class="hidden text-center py-5">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-text-muted inline-block mb-3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <h5 class="text-text-muted">Tidak ada tool yang cocok</h5>
+  <div id="noResults" class="hidden text-center py-8">
+    <p class="text-lg opacity-40 mb-2">🔍</p>
+    <p class="font-semibold">Tidak ada tool yang cocok</p>
+    <p class="text-xs opacity-40">Coba kata kunci lain</p>
   </div>
 </ToolLayout>
 
 <script is:inline>
 const s=document.getElementById('toolSearch'),g=document.getElementById('toolGrid'),c=document.getElementById('toolCount'),n=document.getElementById('noResults');
-const cards=Array.from(document.querySelectorAll('[data-slug]'));
-const gp=()=>JSON.parse(localStorage.getItem('pinnedT')||'[]'),sp=a=>localStorage.setItem('pinnedT',JSON.stringify(a));
-const ps=document.getElementById('pinnedSection'),pg=document.getElementById('pinnedGrid');
-function up(){const p=gp();if(!p.length){ps.classList.add('hidden');return}ps.classList.remove('hidden');pg.innerHTML='';p.forEach(slug=>{const cr=cards.find(c=>c.dataset.slug===slug);if(cr){const cl=cr.cloneNode(true);const btn=document.createElement('button');btn.className='absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs border-0 cursor-pointer';btn.textContent='×';btn.onclick=e=>{e.preventDefault();sp(gp().filter(s=>s!==slug));up()};cl.style.position='relative';cl.prepend(btn);pg.appendChild(cl)}})}
-s.addEventListener('input',function(){const q=this.value.toLowerCase().trim();let v=0;cards.forEach(card=>{const ok=!q||card.textContent.toLowerCase().includes(q);card.closest('[data-category]').style.display=ok?'':'none';if(ok)v++});c.textContent=v;n.classList.toggle('hidden',v||!q)});
+const cards=Array.from(g.querySelectorAll('[data-slug]'));
+s.addEventListener('input',function(){const q=this.value.toLowerCase().trim();let v=0;cards.forEach(cd=>{const ok=!q||cd.textContent.toLowerCase().includes(q);cd.closest('[data-category]').style.display=ok?'':'none';if(ok)v++});c.textContent=v;n.classList.toggle('hidden',!!(v===0&&q))});
 document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==s){e.preventDefault();s.focus()}});
-cards.forEach(card=>{card.addEventListener('dblclick',e=>{e.preventDefault();const slug=card.dataset.slug;const p=gp();p.includes(slug)?sp(p.filter(s=>s!==slug)):(p.push(slug),sp(p));up()})});
-up();
 </script>
