@@ -1,12 +1,16 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+import tailwindcss from '@tailwindcss/vite';
+
 export default defineConfig({
   site: 'https://webapps.naufalrakha.my.id',
   output: 'static',
+
   build: {
     assets: 'assets',
   },
+
   integrations: [
     sitemap({
       filter: (page) => !page.includes('404'),
@@ -17,6 +21,7 @@ export default defineConfig({
       },
     }),
   ],
+
   server: {
     headers: {
       'X-Frame-Options': 'SAMEORIGIN',
@@ -24,5 +29,9 @@ export default defineConfig({
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
     },
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
   },
 });
