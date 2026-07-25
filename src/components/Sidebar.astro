@@ -1,38 +1,37 @@
 ---
 import tools from '../data/tools.json';
-
 const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 'index';
 ---
 
-<aside class="sidebar d-flex flex-column text-white" style="background:var(--gradient-dark);width:260px;flex-shrink:0;overflow:hidden;position:sticky;top:0;max-height:100vh;">
+<aside class="sidebar w-[260px] shrink-0 overflow-hidden sticky top-0 max-h-screen flex flex-col text-white">
   <!-- Header -->
-  <div class="d-flex align-items-center gap-2 px-3 py-3" style="border-bottom:1px solid rgba(255,255,255,.08)">
-    <span style="font-size:1.3rem;">🚀</span>
+  <div class="flex items-center gap-2 px-3 py-3 border-b border-white/8">
+    <span class="text-xl">🚀</span>
     <div>
-      <a href="/" class="text-white text-decoration-none fw-bold" style="font-size:.95rem">WebApps</a>
-      <div style="font-size:.65rem;color:rgba(255,255,255,.4)">{tools.categories.flatMap(c => c.tools).length} tools</div>
+      <a href="/" class="text-white no-underline font-bold text-sm">WebApps</a>
+      <div class="text-[.65rem] text-white/40">{tools.categories.flatMap(c => c.tools).length} tools</div>
     </div>
   </div>
 
   <!-- Search -->
   <div class="px-3 py-2">
-    <input type="text" class="sidebar-search form-control form-control-sm" placeholder="Cari tool..." style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.78rem;border-radius:6px;">
+    <input type="text" class="sidebar-search w-full text-xs bg-white/7 border border-white/10 text-white rounded-md px-2 py-1.5 focus:border-accent focus:outline-none" placeholder="Cari tool..." />
   </div>
 
   <!-- Categories -->
-  <nav class="flex-grow-1" style="overflow-y:auto;overflow-x:hidden;padding:0 6px">
+  <nav class="flex-1 overflow-y-auto overflow-x-hidden px-1.5 scrollbar-thin">
     {tools.categories.map((cat, i) => (
-      <div class="mb-1">
-        <a class="d-flex align-items-center gap-2 px-2 py-1.5 rounded text-decoration-none text-white cat-header" data-bs-toggle="collapse" href={`#sc${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'} style="font-size:.78rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:rgba(255,255,255,.5) !important;transition:all .15s;">
-          <span style="font-size:.9rem">{cat.icon}</span>
-          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{cat.name}</span>
-          <span class="cat-arrow" style="font-size:.55rem;transition:transform .2s">▶</span>
+      <div class="mb-0.5">
+        <a class="sidebar-cat-header flex items-center gap-2" data-bs-toggle="collapse" href={`#sc${i}`} role="button" aria-expanded={i === 0 ? 'true' : 'false'}>
+          <span class="text-sm">{cat.icon}</span>
+          <span class="flex-1 truncate">{cat.name}</span>
+          <span class="text-[.55rem] transition-transform duration-200 cat-chevron">{'>'}</span>
         </a>
-        <div class="collapse {i === 0 ? 'show' : ''}" id={`sc${i}`}>
+        <div class={`collapse${i === 0 ? ' show' : ''}`} id={`sc${i}`}>
           {cat.tools.map(t => (
-            <a class={`d-flex align-items-center gap-2 px-2 py-1.5 rounded text-decoration-none text-white tool-link ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`} style="font-size:.8rem;margin:1px 2px;transition:all .12s;color:rgba(255,255,255,.7) !important;">
-              <span class="tool-link-icon" style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600;border-radius:5px;background:rgba(255,255,255,.06);flex-shrink:0;">{t.icon}</span>
-              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{t.name}</span>
+            <a class={`sidebar-navlink flex items-center gap-2 my-0.5 ${t.slug === current ? 'active' : ''}`} href={`/tools/${t.slug}`}>
+              <span class="tool-icon-badge">{t.icon}</span>
+              <span class="truncate">{t.name}</span>
             </a>
           ))}
         </div>
@@ -41,20 +40,13 @@ const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 
   </nav>
 
   <!-- Footer -->
-  <div class="d-flex align-items-center justify-content-between px-3 py-2" style="border-top:1px solid rgba(255,255,255,.08)">
-    <span style="color:rgba(255,255,255,.3);font-size:.6rem;">🌙 Dark mode</span>
-    <button class="dark-toggle" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">🌙</button>
+  <div class="flex items-center justify-between px-3 py-2 border-t border-white/8">
+    <span class="text-[.6rem] text-white/30">🌙 Dark mode</span>
+    <button class="dark-toggle w-7 h-7 rounded-full border-0 bg-white/8 text-white/50 text-sm flex items-center justify-center cursor-pointer hover:bg-white/12">🌙</button>
   </div>
 </aside>
 
 <style>
-  .cat-header { transition: all .15s; }
-  .cat-header:hover { background: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.8) !important; }
-  .cat-header[aria-expanded="true"] .cat-arrow { transform: rotate(90deg); }
-  .tool-link:hover { background: rgba(255,255,255,.08) !important; color: #fff !important; }
-  .tool-link.active { background: rgba(99,102,241,.25) !important; color: #fff !important; }
-  .tool-link.active .tool-link-icon { background: var(--accent) !important; color: #fff !important; }
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 2px; }
-  .sidebar-search:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 2px rgba(99,102,241,.2); }
+  .cat-chevron.rotate { transform: rotate(90deg); }
+  .sidebar-search:focus { box-shadow: 0 0 0 2px rgba(99,102,241,.2); }
 </style>
