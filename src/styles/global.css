@@ -13,18 +13,12 @@
 body { font-family: 'Inter', system-ui, sans-serif; }
 
 /* Sidebar collapse */
-.sidebar-desktop { overflow: hidden; }
-.sidebar-desktop.collapsed { width: 3.5rem !important; }
+.sidebar-desktop.collapsed { width: 3.5rem !important; overflow: hidden; }
 .sidebar-desktop.collapsed .sidebar-label { display: none; }
 .sidebar-desktop.collapsed .sidebar-search { display: none; }
-.sidebar-desktop.collapsed .sidebar-nav { overflow: visible; }
 .sidebar-desktop.collapsed .sidebar-nav .menu-title > *:nth-child(2) { display: none; }
 .sidebar-desktop.collapsed .sidebar-nav .menu li a span:last-child { display: none; }
 .sidebar-desktop.collapsed .sidebar-nav .menu li a { justify-content: center; padding: 8px 0; }
-.sidebar-desktop.collapsed details > summary { display: none; }
-.sidebar-desktop.collapsed details > ul { display: block !important; }
-.sidebar-desktop.collapsed .sidebar-nav .menu li a span:first-child { margin: 0; }
-.sidebar-desktop.collapsed #collapseToggle svg { transform: rotate(180deg); }
 
 @layer utilities {
   .scrollbar-thin::-webkit-scrollbar { width: 4px; }
