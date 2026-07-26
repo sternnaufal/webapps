@@ -58,7 +58,7 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
 </head>
 <body class="flex flex-col min-h-screen">
   <div class="flex flex-1">
-    <aside id="app-sidebar" class="hidden lg:flex w-64 shrink-0 flex-col bg-base-200 border-r border-base-300 overflow-y-auto" style="position:sticky;top:0;height:100vh;">
+    <aside id="app-sidebar" class="hidden lg:flex w-64 shrink-0 flex-col bg-base-200 border-r border-base-300 overflow-hidden sidebar-desktop transition-all duration-200" style="position:sticky;top:0;height:100vh;">
       <Sidebar />
     </aside>
     <div class="flex-1 flex flex-col min-w-0">
@@ -120,6 +120,17 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
 
     // Keyboard shortcut: Escape closes mobile
     document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMobile(); });
+
+    // Sidebar collapse
+    const sidebar = document.getElementById('app-sidebar');
+    const collapseBtn = document.getElementById('collapseToggle');
+    const saved = localStorage.getItem('sidebarCollapsed');
+    if (saved === 'true' && sidebar) sidebar.classList.add('collapsed');
+    collapseBtn?.addEventListener('click', () => {
+      if (!sidebar) return;
+      const isCollapsed = sidebar.classList.toggle('collapsed');
+      localStorage.setItem('sidebarCollapsed', isCollapsed);
+    });
   </script>
 </body>
 </html>

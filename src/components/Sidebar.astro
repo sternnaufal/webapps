@@ -4,23 +4,28 @@ const current = Astro.url.pathname.replace('/tools/', '').replace(/\/$/, '') || 
 const allTools = tools.categories.flatMap(c => c.tools);
 ---
 
-<div class="menu-title flex items-center gap-2 px-4 py-3 border-b border-base-300 sticky top-0 bg-base-200 z-10">
-  <span class="text-lg">🚀</span>
-  <div>
-    <a href="/" class="font-bold text-base no-underline">WebApps</a>
-    <div class="text-xs opacity-60">{allTools.length} tools</div>
-  </div>
+<div class="sidebar-header flex items-center gap-2 px-3 py-2.5 border-b border-base-300">
+  <a href="/" class="btn btn-ghost btn-sm btn-square">🚀</a>
+  <span class="sidebar-label flex-1 truncate font-bold text-sm">WebApps <span class="text-xs opacity-50 font-normal">{allTools.length}</span></span>
+  <label class="swap swap-rotate btn btn-ghost btn-xs" title="Dark mode">
+    <input type="checkbox" id="themeToggleSidebar" />
+    <span class="swap-off">☀️</span>
+    <span class="swap-on">🌙</span>
+  </label>
+  <button id="collapseToggle" class="btn btn-ghost btn-xs btn-square hidden lg:flex" title="Collapse sidebar">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+  </button>
 </div>
 
-<div class="p-2 border-b border-base-300">
-  <input type="text" class="sidebar-search input input-bordered input-xs w-full" placeholder="Cari tool...">
+<div class="sidebar-search p-2 border-b border-base-300">
+  <input type="text" class="input input-bordered input-xs w-full" placeholder="Cari tool...">
 </div>
 
-<nav class="flex-1 overflow-y-auto px-2 py-2 scrollbar-thin">
+<nav class="sidebar-nav flex-1 overflow-y-auto px-2 py-2 scrollbar-thin">
   {tools.categories.map((cat, i) => (
     <ul class="menu menu-xs mb-3">
       <li class="menu-title text-xs flex items-center gap-1">
-        <span>{cat.icon}</span> {cat.name}
+        <span class="sidebar-label">{cat.icon}</span> <span class="sidebar-label">{cat.name}</span>
       </li>
       <li>
         <details open={i < 2}>
@@ -29,7 +34,7 @@ const allTools = tools.categories.flatMap(c => c.tools);
             {cat.tools.map(t => (
               <li><a href={`/tools/${t.slug}`} class={`flex items-center gap-2 ${t.slug === current ? 'active' : ''}`}>
                 <span class="w-5 h-5 flex items-center justify-center text-[10px] font-bold rounded bg-base-300 shrink-0">{t.icon}</span>
-                <span class="truncate">{t.name}</span>
+                <span class="sidebar-label truncate">{t.name}</span>
               </a></li>
             ))}
           </ul>
@@ -38,15 +43,6 @@ const allTools = tools.categories.flatMap(c => c.tools);
     </ul>
   ))}
 </nav>
-
-<div class="p-3 border-t border-base-300 flex items-center justify-between">
-  <span class="text-xs opacity-40">🌙 Tema</span>
-  <label class="swap swap-rotate">
-    <input type="checkbox" id="themeToggleSidebar" />
-    <span class="swap-off">☀️</span>
-    <span class="swap-on">🌙</span>
-  </label>
-</div>
 
 <script is:inline>
   const sToggle = document.getElementById('themeToggleSidebar');
