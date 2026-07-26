@@ -28,7 +28,7 @@ const allTools = tools.categories.flatMap(c => c.tools);
         <span class="sidebar-label">{cat.icon}</span> <span class="sidebar-label">{cat.name}</span>
       </li>
       <li>
-        <details open={i < 2}>
+        <details open={i < 6}>
           <summary class="hidden"></summary>
           <ul>
             {cat.tools.map(t => (
