@@ -1,61 +1,18 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Color Picker';
 const description = 'Pilih warna dan konversi HEX, RGB, HSL secara online. Color picker gratis dengan preview warna.';
 const keywords = 'color picker, color converter, hex to rgb, rgb to hex, web color';
-const bodyHtml = `<header class="mb-4 flex items-center gap-3">
-        <div class="tool-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
-        <div>
-          <h1 class="h3 mb-0">?? Color Picker</h1>
-          <p class="opacity-60 small mb-0">Pilih atau masukkan warna, semua format akan otomatis sinkron.</p>
-        </div>
-      </header>
-
-      <div class="card card-bordered bg-base-100 p-4 shadow">
-        <div id="previewBox" class="preview-box mb-3">Preview</div>
-
-        <div class="text-center mb-3">
-          <input type="color" id="colorInput" value="#3498db"
-                 class="input input-bordered w-full input input-bordered w-full-color"
-                 style="width: 120px; height: 120px;">
-        </div>
-
-        <div class="mb-3">
-          <label for="alphaRange" class="label-text">Transparansi (Alpha)</label>
-          <input type="range" class="range range-sm" min="0" max="1" step="0.01" id="alphaRange" value="1">
-        </div>
-
-        <div class="row text-center">
-          <div class="md:w-1/4 w-full mb-3">
-            <h6>HEX</h6>
-            <input type="text" id="hexValue" class="input input-bordered w-full copyable">
-          </div>
-          <div class="md:w-1/4 w-full mb-3">
-            <h6>RGB</h6>
-            <input type="text" id="rgbValue" class="input input-bordered w-full copyable">
-          </div>
-          <div class="md:w-1/4 w-full mb-3">
-            <h6>HSL</h6>
-            <input type="text" id="hslValue" class="input input-bordered w-full copyable">
-          </div>
-          <div class="md:w-1/4 w-full mb-3">
-            <h6>CMYK</h6>
-            <input type="text" id="cmykValue" class="input input-bordered w-full copyable">
-          </div>
-        </div>
-
-        <div class="flex gap-2 mt-3">
-          <button class="btn btn-secondary" id="btnRandom">?? Random</button>
-          <button class="btn btn-success" id="btnSave">?? Save</button>
-        </div>
-
-        <div class="mt-4">
-          <h6>Saved Colors</h6>
-          <div id="savedColors" class="flex gap-2 flex-wrap saved-colors"></div>
-        </div>
-      </div>
-    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Color Picker</h6><p class="small mb-1" style="line-height:1.6">Color picker online lengkap dengan dukungan format warna HEX, RGB, HSL, dan CMYK. Alat ini membantu desainer grafis, web developer, dan siapa pun yang bekerja dengan warna untuk memilih, mengkonversi, dan mendapatkan kode warna secara presisi. Cukup klik pada color wheel atau masukkan nilai warna pada salah satu format, dan semua format lainnya akan terkonversi secara otomatis secara real-time.</p><p class="small mb-0" style="line-height:1.6">Fitur unggulan color picker ini meliputi: color wheel interaktif dengan 360 derajat hue, slider saturation dan lightness, input numerik presisi untuk setiap format, riwayat warna yang telah dipilih, dan palet warna yang sudah jadi. Setiap warna yang dipilih dapat disalin ke clipboard dalam format yang diinginkan. Mendukung juga pemilihan warna dari layar melalui input color native browser.</p><p class="small mb-0 mt-2" style="line-height:1.6">Konversi warna antar format sangat penting dalam workflow desain: desainer web menggunakan HEX dan RGB untuk CSS, desainer cetak menggunakan CMYK, dan desainer UI sering bekerja dengan HSL untuk kemudahan readability dan adjustability. Color picker ini juga menampilkan preview warna dalam bentuk swatch besar, kode HEX lengkap dengan hash, nilai RGB desimal, dan persentase CMYK. Cocok digunakan untuk desain website, pembuatan konten visual, ilustrasi digital, dan pengembangan aplikasi.</p></div>\`n`;
+const aboutText = 'Color picker online lengkap dengan dukungan format warna HEX, RGB, HSL, dan CMYK. Alat ini membantu desainer grafis, web developer, dan siapa pun yang bekerja dengan warna untuk memilih, mengkonversi, dan mendapatkan kode warna secara presisi. Cukup klik pada color wheel atau masukkan nilai warna pada salah satu format, dan semua format lainnya akan terkonversi secara otomatis secara real-time.';
+const aboutExtra = 'Konversi warna antar format sangat penting dalam workflow desain: desainer web menggunakan HEX dan RGB untuk CSS, desainer cetak menggunakan CMYK, dan desainer UI sering bekerja dengan HSL untuk kemudahan readability dan adjustability. Color picker ini juga menampilkan preview warna dalam bentuk swatch besar, kode HEX lengkap dengan hash, nilai RGB desimal, dan persentase CMYK. Cocok digunakan untuk desain website, pembuatan konten visual, ilustrasi digital, dan pengembangan aplikasi.';
+const relatedTools = [
+  { slug: 'gradient-generator', name: 'Gradient Generator', icon: '🌈' },
+  { slug: 'contrast-checker', name: 'Contrast Checker', icon: '◐' },
+  { slug: 'css-unit', name: 'CSS Unit Converter', icon: '⇄' },
+  { slug: 'image-to-base64', name: 'Image to Base64', icon: '🖼' },
+];
 const extraHtml = `
 <div class="mt-3 pt-2 flex gap-2 justify-center items-center">
 <span class="text-sm opacity-60 mr-2">Bagikan:</span>
@@ -73,21 +30,56 @@ const extraHtml = `
   keywords={keywords}
 >
 
-<Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+  <div class="card card-bordered bg-base-200/50">
+    <div class="card-body">
+      <div id="previewBox" class="preview-box mb-4">Preview</div>
+
+      <div class="text-center mb-3">
+        <input type="color" id="colorInput" value="#3498db"
+               class="input input-bordered w-32 h-32 mx-auto cursor-pointer">
+      </div>
+
+      <div class="mb-3">
+        <label for="alphaRange" class="label-text text-sm">Transparansi (Alpha)</label>
+        <input type="range" class="range range-sm w-full" min="0" max="1" step="0.01" id="alphaRange" value="1">
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+        <div>
+          <div class="text-xs font-bold mb-1">HEX</div>
+          <input type="text" id="hexValue" class="input input-bordered w-full input-sm copyable">
+        </div>
+        <div>
+          <div class="text-xs font-bold mb-1">RGB</div>
+          <input type="text" id="rgbValue" class="input input-bordered w-full input-sm copyable">
+        </div>
+        <div>
+          <div class="text-xs font-bold mb-1">HSL</div>
+          <input type="text" id="hslValue" class="input input-bordered w-full input-sm copyable">
+        </div>
+        <div>
+          <div class="text-xs font-bold mb-1">CMYK</div>
+          <input type="text" id="cmykValue" class="input input-bordered w-full input-sm copyable">
+        </div>
+      </div>
+
+      <div class="flex gap-2 mt-4">
+        <button class="btn btn-secondary btn-sm" id="btnRandom">🎲 Random</button>
+        <button class="btn btn-success btn-sm" id="btnSave">💾 Save</button>
+      </div>
+
+      <div class="mt-4">
+        <div class="text-sm font-bold mb-2">Saved Colors</div>
+        <div id="savedColors" class="flex gap-2 flex-wrap saved-colors"></div>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 <script is:inline>
@@ -232,8 +224,3 @@ updateValues();
 renderSaved();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>
