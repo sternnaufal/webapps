@@ -1,14 +1,25 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'User Agent Parser';
 const desc = 'Parse dan analisis User Agent string. Deteksi browser, versi, engine, OS, device, dan kategori.';
 const keywords = 'user agent parser, browser detection, ua parser, parse user agent, browser info';
+const aboutText = 'User Agent Parser User Agent Parser online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'subnetting', name: 'Subnetting', icon: '📐' },
+  { slug: 'ip-calculator', name: 'Ip Calculator', icon: '🔌' },
+  { slug: 'url-encode', name: 'Url Encode', icon: '%' },
+  { slug: 'cron-builder', name: 'Cron Builder', icon: '⏰' }
+];
 const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full">\n    <textarea id="uaIn" class="input input-bordered w-full font-mono" rows="3" placeholder="Tempel User Agent string..."></textarea>\n    <div class="flex gap-2 mt-2 flex-wrap">\n      <button id="uaBtn" class="btn btn-warning">Parse</button>\n      <button id="uaMy" class="btn btn-outline">User Agent Saya</button>\n      <button id="uaClear" class="btn btn-outline">Clear</button>\n    </div>\n  </div>\n  <div class="md:w-1/2 w-full">\n    <div class="card card-bordered bg-base-100 p-3 small">\n      <h6 class="font-semibold mb-2">Browser & OS</h6>\n      <table class="table table-sm mb-0"><tbody>\n        <tr><td class="opacity-60">Browser</td><td id="uaBr" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">Version</td><td id="uaVer" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">Engine</td><td id="uaEng" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">OS</td><td id="uaOS" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">Device</td><td id="uaDev" class="font-semibold">---</td></tr>\n      </tbody></table>\n    </div>\n  </div>\n  <div class="md:w-1/2 w-full">\n    <div class="card card-bordered bg-base-100 p-3 small">\n      <h6 class="font-semibold mb-2">Kategori</h6>\n      <table class="table table-sm mb-0"><tbody>\n        <tr><td class="opacity-60">Mobile</td><td id="uaMob" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">Desktop</td><td id="uaDesk" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">Tablet</td><td id="uaTab" class="font-semibold">---</td></tr>\n        <tr><td class="opacity-60">Bot/Crawler</td><td id="uaBot" class="font-semibold">---</td></tr>\n      </tbody></table>\n    </div>\n  </div>\n</div>';
 ---
 
 <ToolLayout title={title} description={desc} keywords={keywords}>
 <Fragment set:html={bodyHtml} />
+
+  <ToolShell about={aboutText} />
+
 </ToolLayout>
 
 <style is:inline>
@@ -28,8 +39,3 @@ document.getElementById("uaClear").onclick=()=>{document.getElementById("uaIn").
 document.getElementById("uaMy").click();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

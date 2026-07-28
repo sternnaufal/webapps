@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Regex Tester';
 const description = 'Tes regular expression online dengan highlight matches. Regex tester dengan replace dan split.';
 const keywords = 'regex tester, regular expression, regex online, regex test, regex tool';
+const aboutText = 'Regex Tester Tes regular expression online dengan highlight matches. Regex tester dengan replace dan split.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
+  { slug: 'diff-checker', name: 'Diff Checker', icon: '⇔' },
+  { slug: 'slug-generator', name: 'Slug Generator', icon: '🔗' },
+  { slug: 'html-preview', name: 'Html Preview', icon: '</>' }
+];
 const bodyHtml = `<div class="flex flex-wrap gap-3 mb-4">
         <div class="md:w-1/2 w-full">
           <label for="regexPattern" class="label-text">Pattern</label>
@@ -40,16 +48,7 @@ const bodyHtml = `<div class="flex flex-wrap gap-3 mb-4">
           </div>
         </div>
       </div>
-    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Regex Tester</h6><p class="small mb-1" style="line-height:1.6">Regex tester online untuk menguji dan memvalidasi regular expression secara real-time. Alat ini membantu developer menulis, menguji, dan menyempurnakan pola regex sebelum digunakan dalam kode. Mendukung berbagai flag seperti global (g), case-insensitive (i), multiline (m), dan single-line (s). Fitur live match highlighting menampilkan hasil pencocokan secara langsung saat Anda mengetik pola regex.</p><p class="small mb-0" style="line-height:1.6">Terdapat tiga mode operasi: match untuk menemukan semua kecocokan pola dalam teks, replace untuk mengganti teks yang cocok dengan string baru, dan split untuk memotong teks berdasarkan pola regex. Regex tester ini juga menampilkan detail setiap match termasuk posisi awal dan akhir dalam teks. Cocok untuk pengujian pola validasi input form, ekstraksi data dari teks tidak terstruktur, parsing log file, dan transformasi teks berbasis pola.</p><p class="small mb-0 mt-2" style="line-height:1.6">Regular expression adalah alat yang sangat powerful untuk pemrosesan teks. Dengan regex tester ini Anda bisa: memvalidasi format email, nomor telepon, atau URL; mengekstrak data dari file HTML atau log; melakukan search and replace berbasis pola; memisahkan teks berdasarkan delimiter kompleks; dan menguji pola sebelum deploy ke production. Proses pengujian regex dilakukan sepenuhnya di browser, sehingga data teks Anda tetap privat dan aman.</p></div>\`n`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="json-formatter" class="btn btn-outline btn-sm rounded-full">JSON Formatter</a><a href="diff-checker" class="btn btn-outline btn-sm rounded-full">Diff Checker</a><a href="csv-viewer" class="btn btn-outline btn-sm rounded-full">CSV Viewer</a><a href="sql-formatter" class="btn btn-outline btn-sm rounded-full">SQL Formatter</a></div>`;
+    \`n`;
 ---
 
 <ToolLayout
@@ -59,7 +58,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -72,7 +72,6 @@ const extraHtml = `
 </style>
 
 <script is:inline>
-document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 <script is:inline>
@@ -155,8 +154,3 @@ document.getElementById('btnClear').addEventListener('click', function() { testA
 update();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Mortgage Calculator';
 const description = 'Kalkulator KPR (mortgage) online. Hitung cicilan rumah per bulan, total bunga, dan total pembayaran. Mendukung simulasi KPR dengan bunga fixed dan floating.';
 const keywords = 'mortgage calculator, kalkulator KPR, kalkulator rumah, cicilan rumah, kredit pemilikan rumah, simulasi KPR';
+const aboutText = 'Mortgage Calculator Kalkulator KPR (mortgage) online. Hitung cicilan rumah per bulan, total bunga, dan total pembayaran. Mendukung simulasi KPR dengan bunga fixed dan floating.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'savings-calculator', name: 'Savings Calculator', icon: '🏦' },
+  { slug: 'compound-interest-calculator', name: 'Compound Interest Calculator', icon: '💰' },
+  { slug: 'discount-calculator', name: 'Discount Calculator', icon: '🏷' },
+  { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#ecfdf5;color:#059669;">$</div><div><h1 class="h3 mb-0">Mortgage Calculator</h1><p class="opacity-60 small mb-0">Hitung estimasi cicilan KPR rumah per bulan.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full">
 <div class="card card-bordered bg-base-100 p-3">
@@ -31,15 +39,7 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </table>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Mortgage Calculator</h6><p class="small mb-1" style="line-height:1.6">Mortgage calculator online untuk menghitung estimasi cicilan Kredit Pemilikan Rumah (KPR) atau pinjaman properti lainnya. Alat ini membantu calon pembeli rumah merencanakan keuangan dengan menghitung angsuran bulanan berdasarkan jumlah pinjaman, suku bunga, dan tenor pinjaman. Juga menampilkan rincian pembayaran bunga vs pokok selama masa pinjaman.</p><p class="small mb-0" style="line-height:1.6">Fitur kalkulator KPR ini meliputi: input jumlah pinjaman (Rp), suku bunga per tahun (%), dan tenor (tahun), perhitungan angsuran bulanan (fixed), tabel amortisasi lengkap yang menunjukkan rincian pembayaran pokok dan bunga setiap bulan hingga lunas, total bunga yang dibayarkan selama masa pinjaman, total pembayaran keseluruhan, dan grafik visual perbandingan porsi bunga vs pokok dari waktu ke waktu.</p><p class="small mb-0 mt-2" style="line-height:1.6">Mortgage calculator sangat membantu dalam perencanaan keuangan properti: membandingkan penawaran KPR dari berbagai bank, menentukan tenor yang paling sesuai dengan kemampuan finansial, memahami berapa besar bunga yang akan dibayarkan selama masa pinjaman, merencanakan strategi pelunasan dipercepat, dan menghitung dampak perubahan suku bunga terhadap angsuran bulanan. Kalkulator ini gratis dan informatif.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center"><span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="savings-calculator" class="btn btn-outline btn-sm rounded-full">Savings Calculator</a><a href="percentage-calculator" class="btn btn-outline btn-sm rounded-full">Percentage Calculator</a><a href="discount-calculator" class="btn btn-outline btn-sm rounded-full">Discount Calculator</a><a href="calorie-calculator" class="btn btn-outline btn-sm rounded-full">Calorie Calculator</a></div>`;
+`;
 ---
 
 <ToolLayout
@@ -49,7 +49,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -86,8 +87,3 @@ document.getElementById('btnCalc').addEventListener('click',calc);
 calc();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

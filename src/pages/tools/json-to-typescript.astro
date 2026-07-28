@@ -1,14 +1,25 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'JSON to TypeScript Interface';
 const desc = 'Konversi JSON ke TypeScript Interface otomatis. Hasilkan tipe TypeScript dari data JSON dengan 1 klik.';
 const keywords = 'json to typescript, json to ts, typescript interface generator, type generator';
+const aboutText = 'JSON to TypeScript Interface JSON to TypeScript Interface online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
+  { slug: 'json-schema-generator', name: 'Json Schema Generator', icon: '📋' },
+  { slug: 'json-csv', name: 'Json Csv', icon: '⇄' },
+  { slug: 'yaml-json', name: 'Yaml Json', icon: '⇄' }
+];
 const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="md:w-1/2 w-full">\n    <label class="label-text font-semibold">JSON Input</label>\n    <textarea id="j2tIn" class="input input-bordered w-full font-mono" rows="16" placeholder=\'{\n  "name": "John",\n  "age": 30\n}\'></textarea>\n  </div>\n  <div class="md:w-1/2 w-full">\n    <label class="label-text font-semibold">TypeScript Interface</label>\n    <div class="relative">\n      <textarea id="j2tOut" class="input input-bordered w-full font-mono" rows="16" readonly></textarea>\n      <button id="j2tCopy" class="btn btn-sm btn-outline-secondary absolute top-0 end-0 m-1">Copy</button>\n    </div>\n  </div>\n  <div class="w-full">\n    <div class="flex gap-2 flex-wrap">\n      <button id="j2tBtn" class="btn btn-warning">Convert</button>\n      <div class="flex items-center gap-2 form-switch flex items-center"><input class="checkbox" type="checkbox" id="j2tExport" checked><label class="flex items-center gap-2-label small" for="j2tExport">Export</label></div>\n      <div class="flex items-center gap-2 form-switch flex items-center"><input class="checkbox" type="checkbox" id="j2tOptional"><label class="flex items-center gap-2-label small" for="j2tOptional">Optional (?)</label></div>\n      <div class="flex items-center gap-2 form-switch flex items-center"><input class="checkbox" type="checkbox" id="j2tReadonly"><label class="flex items-center gap-2-label small" for="j2tReadonly">Readonly</label></div>\n    </div>\n  </div>\n</div>';
 ---
 
 <ToolLayout title={title} description={desc} keywords={keywords}>
 <Fragment set:html={bodyHtml} />
+
+  <ToolShell about={aboutText} />
+
 </ToolLayout>
 
 <style is:inline>
@@ -25,8 +36,3 @@ function j2t(){const i=document.getElementById("j2tIn").value.trim();const o=doc
 function gen(n,v,opt,ro,in2){const isArr=Array.isArray(v);const obj=isArr&&v.length>0?v[0]:v;if(typeof obj!=="object"||obj===null){return"type "+n+" = "+typeof v+";"}const pr=ro?"readonly ":"";const q=opt?"?":"";let s="interface "+n+" {\n";Object.entries(obj).forEach(([k,val])=>{const vt=typeof val;let ts;if(val===null)ts="any";else if(vt==="string")ts="string";else if(vt==="number")ts="number";else if(vt==="boolean")ts="boolean";else if(Array.isArray(val)){if(val.length>0&&typeof val[0]==="object"&&val[0]!==null){const nn=k.charAt(0).toUpperCase()+k.slice(1);s+=in2+pr+k+q+": "+nn+"[];\n"+gen(nn,val,opt,ro,in2);return}ts=typeof val[0]+"[]"}else if(vt==="object"){const nn=k.charAt(0).toUpperCase()+k.slice(1);s+=in2+pr+k+q+": "+nn+";\n"+gen(nn,val,opt,ro,in2);return}else ts="any";s+=in2+pr+k+q+": "+ts+";\n"});s+="}";return s}j2t();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Morse Code Converter';
 const description = 'Morse code converter online. Ubah teks ke kode Morse dan sebaliknya. Lengkap dengan alfabet Morse, audio, dan copy hasil.';
 const keywords = 'morse code converter, kode morse, text to morse, morse translator, sandi morse, sandi';
+const aboutText = 'Morse Code Converter Morse code converter online. Ubah teks ke kode Morse dan sebaliknya. Lengkap dengan alfabet Morse, audio, dan copy hasil.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'ascii-table', name: 'Ascii Table', icon: 'A' },
+  { slug: 'char-counter', name: 'Char Counter', icon: '#' },
+  { slug: 'word-counter', name: 'Word Counter', icon: '⚡' },
+  { slug: 'textcase', name: 'Textcase', icon: 'Aa' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#7c3aed;">-.--</div><div><h1 class="h3 mb-0">Morse Code Converter</h1><p class="opacity-60 small mb-0">Ubah teks ke kode Morse dan sebaliknya secara instan.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-8">
 <div class="card card-bordered bg-base-100 p-3"><ul class="nav nav-tabs nav-justified mb-3" id="modeTab"><li class="nav-item"><button class="nav-link active" id="tabText" data-mode="text">Teks ke Morse</button></li><li class="nav-item"><button class="nav-link" id="tabMorse" data-mode="morse">Morse ke Teks</button></li></ul>
@@ -17,15 +25,7 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div class="small" id="morseRef" style="line-height:2;column-count:2">Memuat...</div>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Morse Code Converter</h6><p class="small mb-1" style="line-height:1.6">Morse code converter online untuk mengkonversi teks biasa ke kode Morse dan sebaliknya. Morse code adalah sistem representasi huruf, angka, dan tanda baca menggunakan sinyal titik (.) dan garis (-) yang diciptakan oleh Samuel Morse. Alat ini mendukung konversi dua arah dengan dukungan penuh untuk huruf A-Z, angka 0-9, dan tanda baca umum.</p><p class="small mb-0" style="line-height:1.6">Fitur konverter ini meliputi: teks ke Morse (encode) dan Morse ke teks (decode), audio playback kode Morse dengan kecepatan dapat diatur (lambat, sedang, cepat), visual blinking indicator yang menyala sesuai ketukan Morse, tampilan kode Morse dengan format yang rapi (setiap huruf dipisah spasi, setiap kata dipisah garis miring), dan tombol copy untuk menyalin hasil konversi.</p><p class="small mb-0 mt-2" style="line-height:1.6">Morse code converter berguna untuk: belajar dan berlatih kode Morse, berkomunikasi menggunakan sinyal Morse dalam situasi darurat, teka-teki dan game edukasi, memahami sejarah telekomunikasi, dan eksperimen dengan encoding data. Meskipun sudah jarang digunakan untuk komunikasi sehari-hari, Morse code tetap menjadi keterampilan yang diakui secara internasional dan digunakan dalam radio amatir.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center"><span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="textcase" class="btn btn-outline btn-sm rounded-full">Text Case</a><a href="reverse-text" class="btn btn-outline btn-sm rounded-full">Reverse Text</a><a href="palindrome-checker" class="btn btn-outline btn-sm rounded-full">Palindrome Checker</a><a href="anagram-finder" class="btn btn-outline btn-sm rounded-full">Anagram Finder</a></div>`;
+`;
 const toolCss = `.morse-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--text);margin:0 4px}.morse-dash{display:inline-block;width:32px;height:12px;border-radius:6px;background:var(--text);margin:0 4px}.morse-char{display:inline-block;margin:0 6px;vertical-align:middle}.morse-space{display:inline-block;width:16px}`;
 ---
 
@@ -36,7 +36,8 @@ const toolCss = `.morse-dot{display:inline-block;width:12px;height:12px;border-r
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -136,8 +137,3 @@ document.querySelector('.card.shadow-sm.border-0.p-3 ul').after(exDiv);
 convert();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

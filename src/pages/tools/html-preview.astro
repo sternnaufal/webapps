@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'HTML Live Preview';
 const description = 'Live HTML preview online. Tulis HTML, CSS, JS dan lihat hasilnya secara real-time.';
 const keywords = 'html preview, live html editor, html css js playground';
+const aboutText = 'HTML Live Preview Live HTML preview online. Tulis HTML, CSS, JS dan lihat hasilnya secara real-time.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'md-preview', name: 'Md Preview', icon: 'MD' },
+  { slug: 'markdown-to-html', name: 'Markdown To Html', icon: '▶' },
+  { slug: 'html-entity', name: 'Html Entity', icon: '&' },
+  { slug: 'css-minifier', name: 'Css Minifier', icon: 'CSS' }
+];
 const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg-light">
   <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;width:28px;height:28px;font-size:0.7rem;">&lt;/&gt;</div>
   <h1 class="h6 mb-0 font-bold">HTML Live Preview</h1>
@@ -27,8 +35,7 @@ const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
 </div><div class="md:w-1/2 w-full p-0"><iframe id="preview" srcdoc=" "></iframe></div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang HTML Live Preview</h6><p class="small mb-1" style="line-height:1.6">HTML live preview online untuk menulis kode HTML, CSS, dan JavaScript serta melihat hasil rendering secara real-time. Alat ini menampilkan editor kode di sisi kiri dan preview halaman yang sudah di-render di sisi kanan (atau atas-bawah di perangkat mobile). Sangat berguna untuk prototyping cepat, belajar coding, dan menguji cuplikan kode tanpa perlu setup lingkungan development.</p><p class="small mb-0" style="line-height:1.6">Fitur HTML preview meliputi: editor dengan syntax highlighting untuk HTML, CSS, dan JavaScript; live preview yang diperbarui secara otomatis saat Anda mengetik; dukungan untuk eksternal library via CDN (dengan menambahkan tag link atau script di HTML); mode layar penuh untuk preview; dan tombol untuk menyalin atau mendownload kode. Error JavaScript akan ditampilkan di console area.</p><p class="small mb-0 mt-2" style="line-height:1.6">HTML live preview sangat berguna untuk: belajar HTML, CSS, dan JavaScript secara interaktif, prototyping ide desain dengan cepat, menguji komponen UI sebelum diintegrasikan ke proyek utama, debugging cuplikan kode, membuat demo untuk dibagikan ke rekan tim atau klien, dan mengajar coding dengan demonstrasi langsung. Semua rendering dilakukan di browser tanpa perlu server.</p></div>`;
-const extraHtml = ``;
+`;
 ---
 
 <ToolLayout
@@ -38,7 +45,8 @@ const extraHtml = ``;
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -58,8 +66,3 @@ document.getElementById('btnRun').addEventListener('click',update);
 update();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

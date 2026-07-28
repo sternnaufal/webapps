@@ -1,14 +1,25 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Color Format Converter';
 const desc = 'Konversi warna antara format HEX, RGB, RGBA, HSL, HSLA, dan CMYK. Color picker visual.';
 const keywords = 'color converter, hex to rgb, rgb to hsl, color picker, konversi warna, cmyk';
+const aboutText = 'Color Format Converter Color Format Converter online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'color-picker', name: 'Color Picker', icon: '🎨' },
+  { slug: 'gradient-generator', name: 'Gradient Generator', icon: '◐' },
+  { slug: 'contrast-checker', name: 'Contrast Checker', icon: '◐' },
+  { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
+];
 const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="md:w-1/2 w-full">\n    <div class="card card-bordered bg-base-100 p-3 mb-3"><label class="label-text font-semibold">Color Picker</label><input type="color" id="ccPick" class="input input-bordered w-full input input-bordered w-full-color w-full" value="#6366f1" style="height:50px"></div>\n    <div class="card card-bordered bg-base-100 p-3"><label class="label-text font-semibold">Manual Input</label><input type="text" id="ccIn" class="input input-bordered w-full font-mono" value="#6366f1" placeholder="#ff0000 / rgb(255,0,0) / hsl(0,100%,50%)"><div class="text-xs opacity-60">HEX, RGB, atau HSL</div></div>\n  </div>\n  <div class="md:w-1/2 w-full">\n    <div class="card card-bordered bg-base-100 p-3">\n      <div class="flex items-center gap-3 mb-3"><div id="ccPrev" style="width:60px;height:60px;border-radius:12px;background:#6366f1;border:2px solid #e9ecef"></div><div><h6 class="mb-0">Preview</h6><span id="ccHexLabel" class="text-sm opacity-60">#6366f1</span></div></div>\n      <table class="table table-sm small mb-0"><tbody>\n        <tr><td>HEX</td><td id="ccHex" class="font-semibold font-mono">#6366f1</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccHex\')">Copy</button></td></tr>\n        <tr><td>RGB</td><td id="ccRgb" class="font-semibold font-mono">rgb(99,102,241)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccRgb\')">Copy</button></td></tr>\n        <tr><td>RGBA</td><td id="ccRgba" class="font-semibold font-mono">rgba(99,102,241,1)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccRgba\')">Copy</button></td></tr>\n        <tr><td>HSL</td><td id="ccHsl" class="font-semibold font-mono">hsl(239,83%,67%)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccHsl\')">Copy</button></td></tr>\n        <tr><td>CMYK</td><td id="ccCmyk" class="font-semibold font-mono">cmyk(59,58,0,5)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccCmyk\')">Copy</button></td></tr>\n      </tbody></table>\n    </div>\n  </div>\n</div>';
 ---
 
 <ToolLayout title={title} description={desc} keywords={keywords}>
 <Fragment set:html={bodyHtml} />
+
+  <ToolShell about={aboutText} />
+
 </ToolLayout>
 
 <style is:inline>
@@ -30,8 +41,3 @@ document.getElementById("ccPick").oninput=function(){document.getElementById("cc
 document.getElementById("ccIn").oninput=function(){const x=ccParse(this.value);if(x[0]!==undefined){document.getElementById("ccPick").value="#"+[x[0],x[1],x[2]].map(v=>v.toString(16).padStart(2,"0")).join("");ccUpd(...x)}};const _r=ccHex2Rgb("#6366f1");if(_r)ccUpd(..._r);
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all .3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

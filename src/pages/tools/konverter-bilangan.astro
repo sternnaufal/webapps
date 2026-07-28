@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Konverter Bilangan';
 const description = 'Konversi bilangan biner, oktal, desimal, heksadesimal online gratis. Alat konversi angka lengkap.';
 const keywords = 'konverter bilangan, biner, oktal, desimal, heksadesimal, number converter';
+const aboutText = 'Konverter Bilangan Konversi bilangan biner, oktal, desimal, heksadesimal online gratis. Alat konversi angka lengkap.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'unit-converter', name: 'Unit Converter', icon: '⚖' },
+  { slug: 'decimal-to-fraction', name: 'Decimal To Fraction', icon: '½' },
+  { slug: 'roman-numeral', name: 'Roman Numeral', icon: 'IV' },
+  { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' }
+];
 const bodyHtml = `<!-- Navbar khusus mobile -->
       
 
@@ -94,16 +102,7 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
       <p class="opacity-60 small mt-4">
         ?? Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
       </p>
-    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Konverter Bilangan</h6><p class="small mb-1" style="line-height:1.6">Konverter bilangan online untuk mengkonversi angka antar empat sistem bilangan sekaligus: desimal (basis 10), biner (basis 2), oktal (basis 8), dan heksadesimal (basis 16). Alat ini sangat berguna bagi mahasiswa teknik informatika, programmer, network engineer, dan siapa pun yang sedang mempelajari sistem bilangan komputer. Cukup masukkan angka pada salah satu field input, dan semua field lainnya akan terkonversi secara otomatis secara real-time tanpa perlu menekan tombol apa pun.</p><p class="small mb-0" style="line-height:1.6">Kalkulator bilangan ini mendukung bilangan positif dan negatif dengan presisi tinggi menggunakan BigInt, sehingga dapat menangani angka besar tanpa batasan. Fitur tambahan termasuk pengelompokan 4-bit pada bilangan biner untuk memudahkan pembacaan, opsi huruf besar/kecil pada output heksadesimal, serta informasi jumlah digit atau bit dari setiap bilangan yang dimasukkan. Setiap field juga dilengkapi tombol salin untuk menyalin hasil konversi dengan cepat.</p><p class="small mb-0 mt-2" style="line-height:1.6">Konversi bilangan memiliki banyak kegunaan praktis dalam dunia teknologi: membaca dan menulis alamat IPv4 dan IPv6, memahami representasi data dalam memori komputer, melakukan debugging pada level bit, menyelesaikan soal-soal mata kuliah arsitektur komputer dan jaringan, serta bekerja dengan permission file di sistem Linux (755, 644, dll.) yang menggunakan notasi oktal. Semua proses konversi dilakukan sepenuhnya di browser Anda tanpa mengirim data ke server mana pun, sehingga privasi data Anda tetap terjaga.</p></div>\`n`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="roman-numeral" class="btn btn-outline btn-sm rounded-full">Roman Numeral</a><a href="unit-converter" class="btn btn-outline btn-sm rounded-full">Unit Converter</a><a href="ip-calculator" class="btn btn-outline btn-sm rounded-full">IP Calculator</a><a href="subnetting" class="btn btn-outline btn-sm rounded-full">Subnetting</a></div>`;
+    \`n`;
 ---
 
 <ToolLayout
@@ -113,7 +112,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -126,8 +126,6 @@ const extraHtml = `
 </style>
 
 <script is:inline>
-document.getElementById('year').textContent = new Date().getFullYear();
-
 const el = id => document.getElementById(id);
 
 const RE = {
@@ -269,8 +267,3 @@ el('btnSample').addEventListener('click', ()=>{
 setInfo();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

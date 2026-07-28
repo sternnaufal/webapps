@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Percentage Calculator';
 const description = 'Kalkulator persentase online. Hitung persentase, kenaikan, diskon, dan perbandingan.';
 const keywords = 'percentage calculator, kalkulator persen, persentase, diskon, kenaikan';
+const aboutText = 'Percentage Calculator Kalkulator persentase online. Hitung persentase, kenaikan, diskon, dan perbandingan.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'discount-calculator', name: 'Discount Calculator', icon: '🏷' },
+  { slug: 'tip-calculator', name: 'Tip Calculator', icon: '💰' },
+  { slug: 'decimal-to-fraction', name: 'Decimal To Fraction', icon: '½' },
+  { slug: 'bmi-calculator', name: 'Bmi Calculator', icon: '⚖' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">%</div><div><h1 class="h3 mb-0">Percentage Calculator</h1><p class="opacity-60 small mb-0">Kalkulator persentase dengan 3 mode: hitung persen, cari persentase, dan hitung perubahan.</p></div></header>
 <div class="flex flex-wrap gap-4">
 <div class="col-lg-8">
@@ -42,16 +50,7 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Percentage Calculator</h6><p class="small mb-1" style="line-height:1.6">Percentage calculator online untuk berbagai perhitungan persentase. Alat ini mendukung tiga jenis perhitungan utama: berapa X% dari Y (misal: 15% dari 200), berapa persen X dari Y (misal: 30 dari 150 = 20%), dan perubahan persentase dari X ke Y (misal: kenaikan 50 ke 75 = 50%). Berguna untuk keperluan keuangan, akademik, dan bisnis sehari-hari.</p><p class="small mb-0" style="line-height:1.6">Fitur kalkulator persentase meliputi: tiga mode perhitungan dalam satu antarmuka yang mudah dipindah, input angka yang responsif, hasil ditampilkan berserta rumus perhitungannya, riwayat perhitungan, opsi pembulatan desimal, dan tombol copy hasil. Setiap mode memiliki label yang jelas sehingga Anda tidak bingung memilih rumus yang tepat. Hasil diperbarui secara real-time.</p><p class="small mb-0 mt-2" style="line-height:1.6">Kalkulator persentase sangat berguna dalam kehidupan sehari-hari: menghitung diskon belanja, menentukan nilai ujian atau tugas (skor yang diperoleh dari total), menghitung kenaikan gaji atau inflasi, menganalisis pertumbuhan bisnis atau penjualan, menghitung komisi atau bonus, menentukan proporsi anggaran, dan membandingkan data statistik. Alat ini sederhana, cepat, dan akurat.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="tip-calculator" class="btn btn-outline btn-sm rounded-full">Tip Calculator</a><a href="bmi-calculator" class="btn btn-outline btn-sm rounded-full">BMI Calculator</a><a href="savings-calculator" class="btn btn-outline btn-sm rounded-full">Savings Calculator</a><a href="date-calculator" class="btn btn-outline btn-sm rounded-full">Date Calculator</a></div>`;
+`;
 ---
 
 <ToolLayout
@@ -61,7 +60,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -110,8 +110,3 @@ document.querySelectorAll('[data-calc]').forEach(function(btn){
 document.querySelector('[data-calc="m1"]').click();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

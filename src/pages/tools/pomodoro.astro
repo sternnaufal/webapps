@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Pomodoro Timer';
 const description = 'Pomodoro timer online. Fokus kerja 25 menit, istirahat 5 menit. Tingkatkan produktivitas.';
 const keywords = 'pomodoro timer, pomodoro technique, focus timer, productivity timer, time management';
+const aboutText = 'Pomodoro Timer Pomodoro timer online. Fokus kerja 25 menit, istirahat 5 menit. Tingkatkan produktivitas.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'timer', name: 'Timer', icon: '⏱' },
+  { slug: 'stopwatch', name: 'Stopwatch', icon: '⏱' },
+  { slug: 'countdown', name: 'Countdown', icon: '⏳' },
+  { slug: 'sleep-cycle', name: 'Sleep Cycle', icon: '😴' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h1 class="h3 mb-0">Pomodoro Timer</h1><p class="opacity-60 small mb-0">Teknik Pomodoro: 25 menit fokus, 5 menit istirahat. Tingkatkan produktivitas Anda.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full">
 <div class="card card-bordered bg-base-100 p-4 text-center">
@@ -31,16 +39,7 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <p class="mb-0">Setelah 4 sesi, ambil long break (15-30 menit).</p>
 </div></div>
 </div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Pomodoro Timer</h6><p class="small mb-1" style="line-height:1.6">Pomodoro timer online untuk membantu Anda menerapkan teknik Pomodoro dalam bekerja atau belajar. Teknik Pomodoro adalah metode manajemen waktu yang membagi pekerjaan menjadi interval fokus 25 menit yang dipisahkan oleh istirahat pendek 5 menit. Setelah empat sesi fokus, Anda mengambil istirahat panjang 15-30 menit. Metode ini terbukti meningkatkan produktivitas dan konsentrasi.</p><p class="small mb-0" style="line-height:1.6">Fitur timer ini meliputi: pengaturan durasi fokus default 25 menit (dapat disesuaikan 10-60 menit), istirahat pendek 5 menit, istirahat panjang 15-30 menit, indikator sesi ke berapa, notifikasi suara saat sesi berganti, progress bar visual, dan statistik sesi yang telah diselesaikan hari ini. Timer berjalan meskipun Anda berpindah tab browser.</p><p class="small mb-0 mt-2" style="line-height:1.6">Teknik Pomodoro membantu mengatasi prokrastinasi, meningkatkan fokus, mencegah kelelahan mental, dan membuat pekerjaan terasa lebih ringan dengan dibagi menjadi sesi-sesi kecil. Pomodoro timer ini cocok untuk: belajar untuk ujian, menulis laporan atau artikel, coding, mengerjakan tugas deadline, dan pekerjaan kreatif. Timer Pomodoro online ini gratis dan bisa langsung digunakan tanpa registrasi.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="timer" class="btn btn-outline btn-sm rounded-full">Timer</a><a href="countdown" class="btn btn-outline btn-sm rounded-full">Countdown</a><a href="world-clock" class="btn btn-outline btn-sm rounded-full">World Clock</a><a href="screen-recorder" class="btn btn-outline btn-sm rounded-full">Screen Recorder</a></div>`;
+`;
 ---
 
 <ToolLayout
@@ -50,7 +49,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -138,8 +138,3 @@ btnReset.addEventListener('click',resetTimer);
 resetTimer();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

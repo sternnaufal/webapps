@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Dice Roller';
 const description = 'Dice roller online virtual. Lempar dadu dengan berbagai sisi (D4, D6, D8, D10, D12, D20, D100). Multiple dice, animasi, history, dan statistik.';
 const keywords = 'dice roller, dadu online, roll dice, random dice, lempar dadu, d20, d6, dnd dice, tabletop';
+const aboutText = 'Dice Roller Dice roller online virtual. Lempar dadu dengan berbagai sisi (D4, D6, D8, D10, D12, D20, D100). Multiple dice, animasi, history, dan statistik.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'random-number-generator', name: 'Random Number Generator', icon: '🎲' },
+  { slug: 'decision-maker', name: 'Decision Maker', icon: '🎲' },
+  { slug: 'random-color-generator', name: 'Random Color Generator', icon: '🎰' },
+  { slug: 'char-counter', name: 'Char Counter', icon: '#' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">D6</div><div><h1 class="h3 mb-0">Dice Roller</h1><p class="opacity-60 small mb-0">Virtual dice roller dengan berbagai jenis dadu. D4, D6, D8, D10, D12, D20, D100.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-8">
 <div class="card card-bordered bg-base-100 p-3">
@@ -26,15 +34,7 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <button id="btnClearHistory" class="btn btn-outline-danger btn-sm mt-2 w-full">Hapus Riwayat</button>
 </div>
 </div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Dice Roller</h6><p class="small mb-1" style="line-height:1.6">Dice roller online virtual untuk melempar dadu digital dengan berbagai tipe: D4, D6, D8, D10, D12, D20, dan D100. Alat ini mensimulasikan lemparan dadu acak untuk berbagai keperluan: permainan board game, role-playing games (RPG) seperti Dungeons & Dragons, pengambilan keputusan, dan berbagai permainan yang membutuhkan angka acak. Animasi lemparan dadu yang realistis menambah keseruan.</p><p class="small mb-0" style="line-height:1.6">Fitur dice roller meliputi: pilihan tipe dadu (semua standar RPG), jumlah dadu yang dilempar (1-20), animasi 3D lemparan dadu yang realistis, total nilai lemparan, detail setiap dadu, riwayat lemparan, mode lempar otomatis (rolling), dan sound effect opsional. Hasil lemparan benar-benar acak menggunakan Math.random() yang cukup untuk permainan non-kriptografis.</p><p class="small mb-0 mt-2" style="line-height:1.6">Dice roller digital sangat berguna untuk: bermain Dungeons & Dragons dan RPG lainnya tanpa perlu membawa dadu fisik, board game yang kehilangan dadu asli, pengambilan keputusan dengan 'dadu takdir', permainan edukasi untuk anak-anak belajar angka dan probabilitas, dan prototyping game yang membutuhkan mekanisme dadu. Roller dadu ini gratis dan siap digunakan kapan saja.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center"><span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="random-number-generator" class="btn btn-outline btn-sm rounded-full">Random Number Generator</a><a href="decision-maker" class="btn btn-outline btn-sm rounded-full">Decision Maker</a><a href="password-generator" class="btn btn-outline btn-sm rounded-full">Password Generator</a><a href="countdown" class="btn btn-outline btn-sm rounded-full">Countdown</a></div>`;
+`;
 const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:3px;background:var(--surface-soft);transition:all .2s}.dice-icon.rolling{animation:shake .3s}@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}`;
 ---
 
@@ -45,7 +45,8 @@ const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-ra
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -85,8 +86,3 @@ document.getElementById('btnClearHistory').addEventListener('click',function(){h
 roll();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

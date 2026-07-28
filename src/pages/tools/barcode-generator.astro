@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Barcode Generator';
 const description = 'Barcode generator online gratis. Buat barcode CODE128, EAN-13, EAN-8, UPC-A, CODE39, ITF-14, Codabar, Pharmacode. Download PNG/SVG.';
 const keywords = 'barcode generator, generate barcode, barcode maker, code128, ean13, upc, barcode online gratis';
+const aboutText = 'Barcode Generator Barcode generator online gratis. Buat barcode CODE128, EAN-13, EAN-8, UPC-A, CODE39, ITF-14, Codabar, Pharmacode. Download PNG/SVG.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'qr-generator', name: 'Qr Generator', icon: '▐▌' },
+  { slug: 'avatar-generator', name: 'Avatar Generator', icon: '👤' },
+  { slug: 'password-generator', name: 'Password Generator', icon: '🔑' },
+  { slug: 'uuid-generator', name: 'Uuid Generator', icon: '🆔' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0369a1;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="5" x2="4" y2="19"/><line x1="7" y1="5" x2="7" y2="19"/><line x1="10" y1="5" x2="10" y2="19"/><line x1="13" y1="5" x2="13" y2="19"/><line x1="16" y1="5" x2="16" y2="19"/><line x1="19" y1="5" x2="19" y2="19"/></svg></div><div><h1 class="h3 mb-0">Barcode Generator</h1><p class="opacity-60 small mb-0">Generate barcode dengan berbagai format. Download PNG/SVG.</p></div></header>
 
 <div class="flex flex-wrap gap-4">
@@ -66,15 +74,7 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div></div>
 
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Barcode Generator</h6><p class="small mb-1" style="line-height:1.6">Barcode generator online gratis untuk membuat berbagai jenis barcode langsung di browser. Alat ini mendukung format populer seperti CODE128 (auto, A, B, C), EAN-13, EAN-8, UPC-A, UPC-E, CODE39, ITF-14, ITF, Codabar, CODE93, MSI, dan Pharmacode. Hasil bisa di-download sebagai PNG atau SVG.</p><p class="small mb-0" style="line-height:1.6">Cocok untuk kebutuhan product labeling, inventory management, publishing, retail, dan logistik. Semua proses berjalan di sisi klien — data Anda tidak dikirim ke server mana pun.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center"><span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="qr-generator" class="btn btn-outline btn-sm rounded-full">QR Code Generator</a><a href="random-number-generator" class="btn btn-outline btn-sm rounded-full">Random Number</a><a href="uuid-generator" class="btn btn-outline btn-sm rounded-full">UUID Generator</a><a href="rsa-generator" class="btn btn-outline btn-sm rounded-full">RSA Key</a></div>`;
+`;
 const toolCss = `
     .barcode-output { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .barcode-output svg { max-width: 100%; height: auto; }
@@ -92,7 +92,8 @@ const toolCss = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -212,8 +213,3 @@ valInp.addEventListener('keydown',function(e){if(e.key==='Enter')generate()});
 generate();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

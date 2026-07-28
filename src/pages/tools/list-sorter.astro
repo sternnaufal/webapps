@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'List Sorter';
 const description = 'Sort list online. Urutkan daftar teks secara ascending, descending, random, atau by length.';
 const keywords = 'list sorter, sort list, urutkan daftar, sort text, alphabetical sorter';
+const aboutText = 'List Sorter Sort list online. Urutkan daftar teks secara ascending, descending, random, atau by length.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
+  { slug: 'reverse-text', name: 'Reverse Text', icon: '↩' },
+  { slug: 'text-repeater', name: 'Text Repeater', icon: '×' },
+  { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' }
+];
 const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><h1 class="h3 mb-0">List Sorter</h1><p class="opacity-60 small mb-0">Urutkan daftar teks: A-Z, Z-A, acak, by length, hapus duplikat. Satu item per baris.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-6">
 <div class="card card-bordered bg-base-100 p-3">
@@ -28,16 +36,7 @@ Nanas</textarea></div>
 <textarea id="outputArea" class="input input-bordered w-full font-mono" rows="8" readonly></textarea>
 <button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
 </div></div></div>
-<div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang List Sorter</h6><p class="small mb-1" style="line-height:1.6">List sorter online untuk mengurutkan daftar teks dengan cepat. Alat ini menerima daftar item (satu item per baris) dan mengurutkannya berdasarkan berbagai kriteria: ascending (A-Z), descending (Z-A), ascending numerik, descending numerik, berdasarkan panjang karakter, acak (randomize), dan reverse order. Sangat berguna untuk mengatur data dalam format list atau daftar.</p><p class="small mb-0" style="line-height:1.6">Fitur tambahan meliputi: hapus duplikat (remove duplicates), trim spasi berlebih pada setiap baris, ignore case saat sorting, filter baris yang mengandung kata kunci tertentu, dan opsi untuk mengubah delimiter output (baris baru, koma, titik koma, atau pipe). Hasil pengurutan dapat langsung disalin atau di-download sebagai file teks. Jumlah item yang diurutkan juga ditampilkan.</p><p class="small mb-0 mt-2" style="line-height:1.6">List sorter sangat membantu dalam berbagai situasi: mengurutkan daftar nama peserta atau siswa, merapikan daftar belanja, mengatur daftar tugas berdasarkan prioritas, mengurutkan kata kunci untuk SEO, merandomize urutan undian atau giveaway, mengurutkan data ekspor dari spreadsheet, dan mempersiapkan data untuk import ke sistem lain. Alat ini cepat, gratis, dan bekerja offline.</p></div>`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="anagram-finder" class="btn btn-outline btn-sm rounded-full">Anagram Finder</a><a href="reverse-text" class="btn btn-outline btn-sm rounded-full">Reverse Text</a><a href="json-csv" class="btn btn-outline btn-sm rounded-full">JSON to CSV</a><a href="csv-viewer" class="btn btn-outline btn-sm rounded-full">CSV Viewer</a></div>`;
+`;
 ---
 
 <ToolLayout
@@ -47,7 +46,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -88,8 +88,3 @@ document.getElementById('btnCopy').addEventListener('click',function(){
 sortList();
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>

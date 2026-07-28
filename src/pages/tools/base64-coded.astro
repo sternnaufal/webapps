@@ -1,9 +1,17 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Base64 Encode / Decode';
 const description = 'Encode dan decode Base64 online gratis. Konversi teks ke Base64 dan sebaliknya dengan cepat.';
 const keywords = 'base64, encode, decode, base64 encoder, base64 decoder';
+const aboutText = 'Base64 Encode / Decode Encode dan decode Base64 online gratis. Konversi teks ke Base64 dan sebaliknya dengan cepat.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'hash-generator', name: 'Hash Generator', icon: '#' },
+  { slug: 'uuid-generator', name: 'Uuid Generator', icon: '🆔' },
+  { slug: 'url-encode', name: 'Url Encode', icon: '%' },
+  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' }
+];
 const bodyHtml = `<!-- Navbar khusus mobile -->
       
 
@@ -33,16 +41,7 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
           </div>
         </div>
       </div>
-    <div class="mt-4 p-3 rounded" ><h6 class="font-bold">Tentang Base64 Encode / Decode</h6><p class="small mb-1" style="line-height:1.6">Base64 encoder dan decoder online untuk mengkonversi teks biasa menjadi encoding Base64 dan sebaliknya. Base64 adalah skema encoding yang mengubah data biner menjadi format teks ASCII yang aman untuk ditransmisikan melalui media yang hanya mendukung teks, seperti email (MIME), URL, dan data JSON. Alat ini sangat penting bagi web developer, backend engineer, dan siapa pun yang bekerja dengan transmisi data antar sistem.</p><p class="small mb-0" style="line-height:1.6">Cara penggunaannya intuitif: tempelkan teks yang ingin di-encode atau di-decode ke dalam kolom input, lalu pilih operasi yang diinginkan. Hasil encoding atau decoding akan ditampilkan secara instan dan bisa langsung disalin ke clipboard. Base64 converter ini mendukung teks dengan berbagai karakter termasuk Unicode, simbol, dan spasi. Cocok untuk mengirim data biner melalui API, menyematkan gambar sebagai data URI di HTML/CSS, atau menyandikan kredensial untuk HTTP Basic Authentication.</p><p class="small mb-0 mt-2" style="line-height:1.6">Penggunaan umum Base64 encoding meliputi: melampirkan file dalam email (MIME), menyematkan gambar kecil langsung di kode HTML atau CSS (data:image/png;base64,...), menyandikan token autentikasi, merepresentasikan data kriptografi (sertifikat, kunci publik dalam format PEM), dan menyimpan data biner di database yang hanya mendukung teks. Semua proses encoding dan decoding dilakukan sepenuhnya di browser Anda tanpa mengirim data ke server.</p></div>\`n`;
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="url-encode" class="btn btn-outline btn-sm rounded-full">URL Encoder</a><a href="hash-generator" class="btn btn-outline btn-sm rounded-full">Hash Generator</a><a href="image-to-base64" class="btn btn-outline btn-sm rounded-full">Image to Base64</a><a href="html-entity" class="btn btn-outline btn-sm rounded-full">HTML Entity</a></div>`;
+    \`n`;
 ---
 
 <ToolLayout
@@ -52,7 +51,8 @@ const extraHtml = `
 >
 
 <Fragment set:html={bodyHtml} />
-<Fragment set:html={extraHtml} />
+
+  <ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -65,8 +65,6 @@ const extraHtml = `
 </style>
 
 <script is:inline>
-document.getElementById('year').textContent = new Date().getFullYear();
-
 let currentResult = '';
 
 function encode() {
@@ -124,8 +122,3 @@ document.getElementById('decodeBtn').addEventListener('click', decode);
 document.getElementById('copyBtn').addEventListener('click', copyResult);
 </script>
 
-<a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="saweria-float" title="Donasi via Saweria">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span>Donasi</span>
-</a>
-<button class="dark-float btn btn-sm" title="Toggle dark mode" style="position:fixed;bottom:80px;right:24px;z-index:9998;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;line-height:1;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"></button>
