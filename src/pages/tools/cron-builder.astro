@@ -59,13 +59,13 @@ const relatedTools = [
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
 var inp=document.getElementById('cronExpr'),desc=document.getElementById('cronDesc');
-var PRESETS=&#123;'@yearly':'0 0 1 1 *','@annually':'0 0 1 1 *','@monthly':'0 0 1 * *','@weekly':'0 0 * * 0','@daily':'0 0 * * *','@midnight':'0 0 * * *','@hourly':'0 * * * *'&#125;;
-function describe(e)&#123;e=e.trim();if(PRESETS[e])e=PRESETS[e];var p=e.split(/\\s+/);if(p.length!==5)&#123;desc.textContent='Expression tidak valid. Gunakan 5 field atau @preset.';return&#125;
+var PRESETS={'@yearly':'0 0 1 1 *','@annually':'0 0 1 1 *','@monthly':'0 0 1 * *','@weekly':'0 0 * * 0','@daily':'0 0 * * *','@midnight':'0 0 * * *','@hourly':'0 * * * *'};
+function describe(e){e=e.trim();if(PRESETS[e])e=PRESETS[e];var p=e.split(/\\s+/);if(p.length!==5){desc.textContent='Expression tidak valid. Gunakan 5 field atau @preset.';return}
 var labels=[['minute','minutes'],['hour','hours'],['day','days'],['month','months'],['weekday','weekdays']];
-var parts=[];for(var i=0;i<5;i++)&#123;var f=p[i];if(f==='*')parts.push('every '+labels[i][1]);else if(f.startsWith('*/'))parts.push('every '+f.slice(2)+' '+labels[i][1]);else parts.push(f+' '+labels[i][0])&#125;
-desc.textContent=parts.join(', ')&#125;
-inp.addEventListener('input',function()&#123;describe(inp.value)&#125;);describe(inp.value);
-document.querySelectorAll('.preset').forEach(function(b)&#123;b.addEventListener('click',function()&#123;inp.value=this.getAttribute('data-cron');describe(inp.value)&#125;)&#125;);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;var b=this;navigator.clipboard.writeText(inp.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;)&#125;);
+var parts=[];for(var i=0;i<5;i++){var f=p[i];if(f==='*')parts.push('every '+labels[i][1]);else if(f.startsWith('*/'))parts.push('every '+f.slice(2)+' '+labels[i][1]);else parts.push(f+' '+labels[i][0])}
+desc.textContent=parts.join(', ')}
+inp.addEventListener('input',function(){describe(inp.value)});describe(inp.value);
+document.querySelectorAll('.preset').forEach(function(b){b.addEventListener('click',function(){inp.value=this.getAttribute('data-cron');describe(inp.value)})});
+document.getElementById('btnCopy').addEventListener('click',function(){var b=this;navigator.clipboard.writeText(inp.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});
 </script>
 

@@ -58,42 +58,42 @@ var cdDays=document.getElementById('cdDays'),cdHours=document.getElementById('cd
 var evName=document.getElementById('eventName'),evDate=document.getElementById('eventDate'),evTime=document.getElementById('eventTime'),btnSet=document.getElementById('btnSet'),preset=document.getElementById('presetSelect');
 var target=null,timer=null;
 
-function setCountdown(name,dateStr,timeStr)&#123;
+function setCountdown(name,dateStr,timeStr){
   target=new Date(dateStr+'T'+(timeStr||'00:00'));
   evName.value=name;evDate.value=dateStr;evTime.value=timeStr||'00:00';
   cdTitle.textContent='Menuju: '+name;
   if(timer)clearInterval(timer);
   tick();timer=setInterval(tick,1000);
-&#125;
+}
 
-function tick()&#123;
-  if(!target)&#123;cdDays.textContent='0';cdHours.textContent='0';cdMins.textContent='0';cdSecs.textContent='0';cdStatus.textContent='';return&#125;
+function tick(){
+  if(!target){cdDays.textContent='0';cdHours.textContent='0';cdMins.textContent='0';cdSecs.textContent='0';cdStatus.textContent='';return}
   var now=new Date(),diff=target-now;
-  if(diff<=0)&#123;
+  if(diff<=0){
     cdDays.textContent='0';cdHours.textContent='0';cdMins.textContent='0';cdSecs.textContent='0';
     cdStatus.innerHTML='<span class="text-success font-bold">? '+evName.value+' sudah tiba!</span>';
     if(timer)clearInterval(timer);
     return;
-  &#125;
+  }
   var d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
   cdDays.textContent=d;cdHours.textContent=String(h).padStart(2,'0');cdMins.textContent=String(m).padStart(2,'0');cdSecs.textContent=String(s).padStart(2,'0');
-  cdStatus.innerHTML='<span class="opacity-60">'+evName.value+': '+target.toLocaleDateString('id-ID',&#123;weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'&#125;)+'</span>';
-&#125;
+  cdStatus.innerHTML='<span class="opacity-60">'+evName.value+': '+target.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'})+'</span>';
+}
 
-btnSet.addEventListener('click',function()&#123;
+btnSet.addEventListener('click',function(){
   var d=evDate.value,t=evTime.value,n=evName.value.trim()||'Acara';
-  if(!d)&#123;alert('Pilih tanggal!');return&#125;
+  if(!d){alert('Pilih tanggal!');return}
   setCountdown(n,d,t);
-&#125;);
+});
 
-preset.addEventListener('change',function()&#123;
+preset.addEventListener('change',function(){
   var now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0'),d=String(now.getDate()).padStart(2,'0');
-  if(this.value==='nye')&#123;var ny=new Date(y+1,0,1);setCountdown('Tahun Baru '+(y+1),ny.toISOString().split('T')[0],'00:00')&#125;
-  else if(this.value==='ultah')&#123;var b=new Date(y+1,now.getMonth(),now.getDate());setCountdown('Ulang Tahun',b.toISOString().split('T')[0],'00:00')&#125;
-  else if(this.value==='libur')&#123;var l=new Date(now);l.setMonth(l.getMonth()+1);setCountdown('Liburan '+l.toLocaleDateString('id-ID',&#123;month:'long'&#125;),l.toISOString().split('T')[0],'00:00')&#125;
-  else if(this.value==='week')&#123;var w=new Date(now);w.setDate(w.getDate()+7);setCountdown('+1 Minggu',w.toISOString().split('T')[0],'00:00')&#125;
+  if(this.value==='nye'){var ny=new Date(y+1,0,1);setCountdown('Tahun Baru '+(y+1),ny.toISOString().split('T')[0],'00:00')}
+  else if(this.value==='ultah'){var b=new Date(y+1,now.getMonth(),now.getDate());setCountdown('Ulang Tahun',b.toISOString().split('T')[0],'00:00')}
+  else if(this.value==='libur'){var l=new Date(now);l.setMonth(l.getMonth()+1);setCountdown('Liburan '+l.toLocaleDateString('id-ID',{month:'long'}),l.toISOString().split('T')[0],'00:00')}
+  else if(this.value==='week'){var w=new Date(now);w.setDate(w.getDate()+7);setCountdown('+1 Minggu',w.toISOString().split('T')[0],'00:00')}
   this.value='';
-&#125;);
+});
 
 // Set default: New Year 2027
 var nyDate=new Date(2027,0,1);

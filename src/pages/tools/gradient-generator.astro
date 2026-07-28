@@ -109,36 +109,36 @@ var use3=document.getElementById('useColor3');
 var type=document.getElementById('gradType'),dir=document.getElementById('gradDirection');
 var preview=document.getElementById('preview'),output=document.getElementById('cssOutput');
 
-function syncHex(picker,hex)&#123;hex.value=picker.value&#125;
-function syncPicker(hex,picker)&#123;picker.value=hex.value&#125;
-color1.addEventListener('input',function()&#123;syncHex(color1,hex1);update();&#125;);
-color2.addEventListener('input',function()&#123;syncHex(color2,hex2);update();&#125;);
-color3.addEventListener('input',function()&#123;syncHex(color3,hex3);update();&#125;);
-hex1.addEventListener('input',function()&#123;syncPicker(hex1,color1);update();&#125;);
-hex2.addEventListener('input',function()&#123;syncPicker(hex2,color2);update();&#125;);
-hex3.addEventListener('input',function()&#123;syncPicker(hex3,color3);update();&#125;);
+function syncHex(picker,hex){hex.value=picker.value}
+function syncPicker(hex,picker){picker.value=hex.value}
+color1.addEventListener('input',function(){syncHex(color1,hex1);update();});
+color2.addEventListener('input',function(){syncHex(color2,hex2);update();});
+color3.addEventListener('input',function(){syncHex(color3,hex3);update();});
+hex1.addEventListener('input',function(){syncPicker(hex1,color1);update();});
+hex2.addEventListener('input',function(){syncPicker(hex2,color2);update();});
+hex3.addEventListener('input',function(){syncPicker(hex3,color3);update();});
 use3.addEventListener('change',update);
-type.addEventListener('change',function()&#123;document.getElementById('directionGroup').style.display=this.value==='linear'?'block':'none';update();&#125;);
+type.addEventListener('change',function(){document.getElementById('directionGroup').style.display=this.value==='linear'?'block':'none';update();});
 dir.addEventListener('change',update);
 
-function update()&#123;
+function update(){
   var c1=color1.value,c2=color2.value,c3=color3.value;
   var css;
-  if(type.value==='linear')&#123;
+  if(type.value==='linear'){
     var d=dir.value;
     if(use3.checked) css='linear-gradient('+d+', '+c1+', '+c2+', '+c3+')';
     else css='linear-gradient('+d+', '+c1+', '+c2+')';
-  &#125; else &#123;
+  } else {
     if(use3.checked) css='radial-gradient(circle, '+c1+', '+c2+', '+c3+')';
     else css='radial-gradient(circle, '+c1+', '+c2+')';
-  &#125;
+  }
   preview.style.background=css;
   output.value='background: '+css+';';
-&#125;
+}
 update();
 
-document.getElementById('btnCopy').addEventListener('click',function()&#123;
-  var b=this;navigator.clipboard.writeText(output.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
-&#125;);
+document.getElementById('btnCopy').addEventListener('click',function(){
+  var b=this;navigator.clipboard.writeText(output.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
 </script>
 

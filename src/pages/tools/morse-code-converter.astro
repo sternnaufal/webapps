@@ -56,82 +56,82 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script is:inline>
-var MORSE=&#123;A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',
+var MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',
 0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.',
-'.':'.-.-.-',',':'--..--','?':'..--..',"'":'.----.','!':'-.-.--','/':'-..-.','(':'-.--.',')':'-.--.-','&':'.-...',':':'---...',';':'-.-.-.','=':'-...-','+':'.-.-.','-':'-....-','_':'..--.-','"':'.-..-.','@':'.--.-.'&#125;;
-var REV=&#123;&#125;;for(var k in MORSE)REV[MORSE[k]]=k;
+'.':'.-.-.-',',':'--..--','?':'..--..',"'":'.----.','!':'-.-.--','/':'-..-.','(':'-.--.',')':'-.--.-','&':'.-...',':':'---...',';':'-.-.-.','=':'-...-','+':'.-.-.','-':'-....-','_':'..--.-','"':'.-..-.','@':'.--.-.'};
+var REV={};for(var k in MORSE)REV[MORSE[k]]=k;
 var mode='text',inp=document.getElementById('inputText'),out=document.getElementById('outputText'),vis=document.getElementById('visualMorse'),ref=document.getElementById('morseRef');
 // build ref table
-var refHtml='';var keys=Object.keys(MORSE).filter(function(k)&#123;return k.match(/[A-Z0-9]/)&#125;);
-for(var i=0;i<keys.length;i++)&#123;var c=keys[i];refHtml+='<div><b>'+c+'</b>: '+MORSE[c]+'</div>'&#125;
+var refHtml='';var keys=Object.keys(MORSE).filter(function(k){return k.match(/[A-Z0-9]/)});
+for(var i=0;i<keys.length;i++){var c=keys[i];refHtml+='<div><b>'+c+'</b>: '+MORSE[c]+'</div>'}
 ref.innerHTML=refHtml;
-document.getElementById('tabText').addEventListener('click',function()&#123;mode='text';this.classList.add('active');document.getElementById('tabMorse').classList.remove('active');convert()&#125;);
-document.getElementById('tabMorse').addEventListener('click',function()&#123;mode='morse';this.classList.add('active');document.getElementById('tabText').classList.remove('active');convert()&#125;);
-function convert()&#123;
+document.getElementById('tabText').addEventListener('click',function(){mode='text';this.classList.add('active');document.getElementById('tabMorse').classList.remove('active');convert()});
+document.getElementById('tabMorse').addEventListener('click',function(){mode='morse';this.classList.add('active');document.getElementById('tabText').classList.remove('active');convert()});
+function convert(){
   var txt=inp.value.trim(),res='';
-  if(!txt)&#123;out.textContent='';vis.innerHTML='';return&#125;
-  if(mode==='text')&#123;
+  if(!txt){out.textContent='';vis.innerHTML='';return}
+  if(mode==='text'){
     var chars=txt.toUpperCase().split('');
-    for(var i=0;i<chars.length;i++)&#123;
+    for(var i=0;i<chars.length;i++){
       if(chars[i]===' ')res+='/ ';
       else if(MORSE[chars[i]])res+=MORSE[chars[i]]+' ';
       else res+=chars[i]+' ';
-    &#125;
+    }
     out.textContent=res.trim();
-  &#125; else &#123;
+  } else {
     var words=txt.split('/');
-    for(var w=0;w<words.length;w++)&#123;
+    for(var w=0;w<words.length;w++){
       if(w>0)res+=' ';var letters=words[w].trim().split(' ');
-      for(var l=0;l<letters.length;l++)&#123;
+      for(var l=0;l<letters.length;l++){
         if(REV[letters[l]])res+=REV[letters[l]];else res+=letters[l];
-      &#125;
-    &#125;
+      }
+    }
     out.textContent=res;
-  &#125;
+  }
   // visual
   vis.innerHTML='';if(mode!=='text')return;
   var items=out.textContent.split(' ');
-  for(var i=0;i<items.length;i++)&#123;
-    if(items[i]==='/')&#123;vis.innerHTML+='<span class="morse-space"></span>';continue&#125;
+  for(var i=0;i<items.length;i++){
+    if(items[i]==='/'){vis.innerHTML+='<span class="morse-space"></span>';continue}
     var sp=document.createElement('span');sp.className='morse-char';
-    for(var j=0;j<items[i].length;j++)&#123;
+    for(var j=0;j<items[i].length;j++){
       var el=document.createElement('span');
       el.className=items[i][j]==='.'?'morse-dot':'morse-dash';
       sp.appendChild(el);
-    &#125;
+    }
     vis.appendChild(sp);
-  &#125;
-&#125;
+  }
+}
 document.getElementById('btnConvert').addEventListener('click',convert);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;navigator.clipboard.writeText(out.textContent).catch(function()&#123;&#125;)&#125;);
-document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.textContent='';vis.innerHTML=''&#125;);
-document.getElementById('btnPlay').addEventListener('click',function()&#123;
+document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(out.textContent).catch(function(){})});
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.textContent='';vis.innerHTML=''});
+document.getElementById('btnPlay').addEventListener('click',function(){
   var txt=out.textContent;
-  try&#123;
+  try{
     var ctx=new(window.AudioContext||window.webkitAudioContext)();
     var t=ctx.currentTime;
-    for(var i=0;i<txt.length;i++)&#123;
+    for(var i=0;i<txt.length;i++){
       var c=txt[i];
-      if(c==='.')&#123;playBeep(ctx,t,0.1);t+=0.15&#125;
-      else if(c==='-')&#123;playBeep(ctx,t,0.3);t+=0.35&#125;
+      if(c==='.'){playBeep(ctx,t,0.1);t+=0.15}
+      else if(c==='-'){playBeep(ctx,t,0.3);t+=0.35}
       else t+=0.1;
-    &#125;
-  &#125;catch(e)&#123;&#125;
-&#125;);
-function playBeep(ctx,t,dur)&#123;
+    }
+  }catch(e){}
+});
+function playBeep(ctx,t,dur){
   var osc=ctx.createOscillator();osc.type='sine';osc.frequency.value=700;
   var gain=ctx.createGain();gain.gain.setValueAtTime(0.5,t);gain.gain.setValueAtTime(0,t+dur);
   osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+dur);
-&#125;
+}
 inp.addEventListener('input',convert);
 var examples=['SOS','HELLO WORLD','LAMPUNG','INDONESIA','123'];
 var exDiv=document.createElement('div');exDiv.className='mt-2';
 exDiv.innerHTML='<small class="opacity-60">Contoh: </small>';
-for(var i=0;i<examples.length;i++)&#123;(function(e)&#123;
+for(var i=0;i<examples.length;i++){(function(e){
   var a=document.createElement('a');a.href='#';a.className='small mr-2';a.textContent=e;
-  a.addEventListener('click',function(ev)&#123;ev.preventDefault();inp.value=e;mode='text';document.getElementById('tabText').click();convert()&#125;);
+  a.addEventListener('click',function(ev){ev.preventDefault();inp.value=e;mode='text';document.getElementById('tabText').click();convert()});
   exDiv.appendChild(a);
-&#125;)(examples[i])&#125;
+})(examples[i])}
 document.querySelector('.card.shadow-sm.border-0.p-3 ul').after(exDiv);
 convert();
 </script>

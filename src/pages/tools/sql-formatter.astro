@@ -3,63 +3,76 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'SQL Formatter';
-const description = 'Format dan beautify SQL query online. SQL formatter dengan dukungan MySQL, PostgreSQL, SQL Server.';
+const description = 'Format dan beautify SQL query online. SQL formatter dengan keyword highlighting.';
 const keywords = 'sql formatter, sql beautifier, format sql, sql online, sql prettify';
-const aboutText = 'SQL Formatter Format dan beautify SQL query online. SQL formatter dengan dukungan MySQL, PostgreSQL, SQL Server.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'SQL formatter online untuk memformat dan mempercantik query SQL. Alat ini secara otomatis menambahkan indentasi, line breaks, dan kapitalisasi pada keyword SQL sehingga query lebih mudah dibaca. Mendukung berbagai database termasuk MySQL, PostgreSQL, dan SQL Server.';
+const aboutExtra = 'Fitur yang tersedia: format (beautify) dengan indentasi keyword utama seperti SELECT, FROM, WHERE, JOIN, GROUP BY, dll. Juga tersedia mode minify untuk memperkecil ukuran query. Cocok digunakan saat debugging query kompleks, code review, atau dokumentasi.';
 const relatedTools = [
-  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
-  { slug: 'yaml-json', name: 'Yaml Json', icon: '⇄' },
-  { slug: 'css-minifier', name: 'Css Minifier', icon: 'CSS' },
-  { slug: 'html-minifier', name: 'Html Minifier', icon: 'CSS' }
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'yaml-json', name: 'YAML/JSON Converter', icon: '⇄' },
+  { slug: 'css-minifier', name: 'CSS Minifier', icon: 'CSS' },
+  { slug: 'html-minifier', name: 'HTML Minifier', icon: 'CSS' },
 ];
-
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#8b5cf6;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7V4h16v3M4 12h16M4 17h16M4 22h16"/></svg></div><div><h1 class="h3 mb-0">SQL Formatter</h1><p class="opacity-60 small mb-0">Format SQL queries  kapitalisasi keyword, indentasi, dan line breaks otomatis.</p></div></header>
-<div class="flex flex-wrap gap-4 mb-4">
-<div class="col-lg-6"><label class="label-text font-semibold">Input SQL</label><textarea id="sqlInput" class="input input-bordered w-full font-mono" rows="10" placeholder="Paste SQL query...">SELECT id, name, email, created_at FROM users WHERE status = 'active' ORDER BY created_at DESC LIMIT 10</textarea>
-<div class="flex gap-2 mt-2"><button id="btnFormat" class="btn btn-primary">Format</button><button id="btnMinify" class="btn btn-outline-warning">Minify</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div>
-<div class="col-lg-6"><div class="flex justify-between items-center mb-1"><label class="label-text font-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
-<textarea id="sqlOutput" class="input input-bordered w-full font-mono" rows="10" readonly></textarea></div></div>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+      <div>
+        <label for="sqlInput" class="text-xs font-medium opacity-60 mb-1 block">Input SQL</label>
+        <textarea id="sqlInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" placeholder="Paste SQL query...">SELECT id, name, email, created_at FROM users WHERE status = 'active' ORDER BY created_at DESC LIMIT 10</textarea>
+        <div class="flex gap-2 mt-2">
+          <button id="btnFormat" class="btn btn-primary btn-sm">Format</button>
+          <button id="btnMinify" class="btn btn-ghost btn-sm">Minify</button>
+          <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="text-xs font-medium opacity-60 mb-0">Output</label>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="sqlOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" readonly></textarea>
+      </div>
+    </div>
+  </div>
 
-<ToolShell about={aboutText} />
-
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
 var inp=document.getElementById('sqlInput'),out=document.getElementById('sqlOutput');
 var KW=['SELECT','FROM','WHERE','AND','OR','NOT','IN','IS','NULL','LIKE','BETWEEN','EXISTS','ORDER BY','GROUP BY','HAVING','LIMIT','OFFSET','JOIN','INNER JOIN','LEFT JOIN','RIGHT JOIN','FULL JOIN','CROSS JOIN','ON','AS','INSERT INTO','VALUES','UPDATE','SET','DELETE FROM','CREATE TABLE','ALTER TABLE','DROP TABLE','INDEX','UNIQUE','PRIMARY KEY','FOREIGN KEY','REFERENCES','CASCADE','DEFAULT','CHECK','CONSTRAINT','DISTINCT','COUNT','SUM','AVG','MIN','MAX','CASE','WHEN','THEN','ELSE','END','UNION','ALL','ASC','DESC','INSERT','INTO','TABLE','CREATE','ALTER','DROP','INDEX','VIEW'];
-function escapeRegex(s)&#123;return s.replace(/[.*+?^\$&#123;&#125;()|[\\]\\\\]/g,'\\\\$&')&#125;
-function format()&#123;var s=inp.value;if(!s.trim())&#123;out.value='';return&#125;
-var kwMap=&#123;&#125;;KW.forEach(function(k)&#123;kwMap[k.toLowerCase()]=k&#125;);
-var t=s.replace(/\\b[a-zA-Z]+\\b/g,function(m)&#123;var l=m.toLowerCase();return kwMap[l]||m&#125;);
-t=t.replace(/\\s*,\\s*/g,', ').replace(/\\s+/g,' ').trim();
-var indent=0,lines=[],buffer='',tokens=t.split(/\\b(?=(?:SELECT|FROM|WHERE|AND|OR|ORDER BY|GROUP BY|HAVING|LIMIT|OFFSET|JOIN|INNER JOIN|LEFT JOIN|RIGHT JOIN|FULL JOIN|CROSS JOIN|ON|UNION|INSERT INTO|VALUES|SET|INTO)\\b)|\\b(?<=\\b(?:SELECT|FROM|WHERE|AND|OR|ORDER BY|GROUP BY|HAVING|LIMIT|OFFSET|JOIN|INNER JOIN|LEFT JOIN|RIGHT JOIN|FULL JOIN|CROSS JOIN|ON|UNION|INSERT INTO|VALUES|SET|INTO)\\b)/i);
-if(tokens.length<2)tokens=[t];
-var bigKWs=['SELECT','FROM','WHERE','ORDER BY','GROUP BY','HAVING','LIMIT','OFFSET','UNION'];
-var increaseIndent=['SELECT'];
-for(var i=0;i<tokens.length;i++)&#123;var tok=tokens[i].trim();if(!tok)continue;var isBig=bigKWs.some(function(k)&#123;return tok.toUpperCase().startsWith(k)&#125;);var isJoin=tok.toUpperCase().startsWith('JOIN')||tok.toUpperCase().endsWith(' JOIN');
-if(isBig||isJoin)&#123;lines.push('  '.repeat(indent)+tok);if(tok.toUpperCase()==='SELECT')indent++&#125;
-else&#123;lines.push('  '.repeat(indent+1)+tok)&#125;&#125;
-if(lines.length<2)out.value=t;else out.value=lines.join('\\n').replace(/,/g,',\\n'+'  '.repeat(indent))&#125;
-function minify()&#123;var s=inp.value.replace(/--.*/g,'').replace(/\\/\\*[\\s\\S]*?\\*\\//g,'').replace(/\\s+/g,' ').trim();out.value=s&#125;
-document.getElementById('btnFormat').addEventListener('click',format);document.getElementById('btnMinify').addEventListener('click',minify);
-document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.value=''&#125;);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;)&#125;);
+function escapeRegex(s){return s.replace(/[.*+?${}()|[\]\\]/g,'\\$&')}
+function format(){
+  var s=inp.value;if(!s.trim()){out.value='';return}
+  var kwMap={};KW.forEach(function(k){kwMap[k.toLowerCase()]=k});
+  var t=s.replace(/\b[a-zA-Z]+\b/g,function(m){var l=m.toLowerCase();return kwMap[l]||m});
+  t=t.replace(/\s*,\s*/g,', ').replace(/\s+/g,' ').trim();
+  var indent=0,lines=[],tokens=t.split(/\b(?=(?:SELECT|FROM|WHERE|AND|OR|ORDER BY|GROUP BY|HAVING|LIMIT|OFFSET|JOIN|INNER JOIN|LEFT JOIN|RIGHT JOIN|FULL JOIN|CROSS JOIN|ON|UNION|INSERT INTO|VALUES|SET|INTO)\b)|(?<=\b(?:SELECT|FROM|WHERE|AND|OR|ORDER BY|GROUP BY|HAVING|LIMIT|OFFSET|JOIN|INNER JOIN|LEFT JOIN|RIGHT JOIN|FULL JOIN|CROSS JOIN|ON|UNION|INSERT INTO|VALUES|SET|INTO)\b)/i);
+  if(tokens.length<2)tokens=[t];
+  var bigKWs=['SELECT','FROM','WHERE','ORDER BY','GROUP BY','HAVING','LIMIT','OFFSET','UNION'];
+  for(var i=0;i<tokens.length;i++){
+    var tok=tokens[i].trim();if(!tok)continue;
+    var isBig=bigKWs.some(function(k){return tok.toUpperCase().startsWith(k)});
+    var isJoin=tok.toUpperCase().startsWith('JOIN')||tok.toUpperCase().endsWith(' JOIN');
+    if(isBig||isJoin){lines.push('  '.repeat(indent)+tok);if(tok.toUpperCase()==='SELECT')indent++}
+    else{lines.push('  '.repeat(indent+1)+tok)}
+  }
+  if(lines.length<2)out.value=t;
+  else out.value=lines.join('\n').replace(/,/g,',\n'+'  '.repeat(indent));
+}
+function minify(){var s=inp.value.replace(/--.*/g,'').replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,' ').trim();out.value=s}
+document.getElementById('btnFormat').addEventListener('click',format);
+document.getElementById('btnMinify').addEventListener('click',minify);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!out.value)return;var b=this;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
 </script>
-

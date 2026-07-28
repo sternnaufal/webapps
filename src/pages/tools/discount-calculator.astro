@@ -72,8 +72,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var ori=document.getElementById('originalPrice'),d1=document.getElementById('disc1'),d2=document.getElementById('disc2'),d2r=document.getElementById('disc2Row');
-function fmt(x)&#123;return'Rp '+x.toLocaleString('id-ID')&#125;
-function calc()&#123;
+function fmt(x){return'Rp '+x.toLocaleString('id-ID')}
+function calc(){
   var o=parseFloat(ori.value)||0,a=parseFloat(d1.value)||0,b=parseFloat(d2.value)||0;
   var ad=o*a/100,bd=(o-ad)*b/100,td=ad+bd,fp=o-td;
   document.getElementById('originalDisplay').textContent=fmt(o);
@@ -83,11 +83,11 @@ function calc()&#123;
   document.getElementById('totalDiscountDisplay').textContent='-'+fmt(td);
   document.getElementById('finalPriceDisplay').textContent=fmt(fp);
   document.getElementById('savedDisplay').textContent=fmt(td);
-&#125;
+}
 document.getElementById('btnCalc').addEventListener('click',calc);
-document.querySelectorAll('.preset').forEach(function(el)&#123;el.addEventListener('click',function()&#123;
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
   d1.value=this.dataset.d1||0;d2.value=this.dataset.d2||0;calc();
-&#125;)&#125;);
+})});
 calc();
 </script>
 

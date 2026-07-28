@@ -44,12 +44,12 @@ const relatedTools = [
 
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
-function ab2pem(buf,label)&#123;var b64=btoa(String.fromCharCode.apply(null,new Uint8Array(buf))),chunks=[];for(var i=0;i<b64.length;i+=64)chunks.push(b64.substr(i,64));return'-----BEGIN '+label+'-----\\n'+chunks.join('\\n')+'\\n-----END '+label+'-----\\n'&#125;
-document.getElementById('btnGenerate').addEventListener('click',async function()&#123;var size=parseInt(document.getElementById('keySize').value,10);this.disabled=true;this.textContent='Generating...';
-try&#123;var keyPair=await crypto.subtle.generateKey(&#123;name:'RSA-OAEP',modulusLength:size,publicExponent:new Uint8Array([1,0,1]),hash:'SHA-256'&#125;,true,['encrypt','decrypt']);
+function ab2pem(buf,label){var b64=btoa(String.fromCharCode.apply(null,new Uint8Array(buf))),chunks=[];for(var i=0;i<b64.length;i+=64)chunks.push(b64.substr(i,64));return'-----BEGIN '+label+'-----\\n'+chunks.join('\\n')+'\\n-----END '+label+'-----\\n'}
+document.getElementById('btnGenerate').addEventListener('click',async function(){var size=parseInt(document.getElementById('keySize').value,10);this.disabled=true;this.textContent='Generating...';
+try{var keyPair=await crypto.subtle.generateKey({name:'RSA-OAEP',modulusLength:size,publicExponent:new Uint8Array([1,0,1]),hash:'SHA-256'},true,['encrypt','decrypt']);
 var pubBuf=await crypto.subtle.exportKey('spki',keyPair.publicKey),privBuf=await crypto.subtle.exportKey('pkcs8',keyPair.privateKey);
 document.getElementById('pubKey').value=ab2pem(pubBuf,'PUBLIC KEY');document.getElementById('privKey').value=ab2pem(privBuf,'PRIVATE KEY');document.getElementById('keyOutput').style.display='block';
-&#125;catch(e)&#123;alert('Error: '+e.message)&#125;finally&#123;this.disabled=false;this.textContent='Generate Keys'&#125;&#125;);
-document.querySelectorAll('.copy-key').forEach(function(b)&#123;b.addEventListener('click',function()&#123;var id=this.getAttribute('data-target'),text=document.getElementById(id).value;if(!text)return;navigator.clipboard.writeText(text).then(function()&#123;var t=this;this.textContent='Copied!';setTimeout(function()&#123;this.textContent='Copy'&#125;.bind(this),1500)&#125;.bind(this))&#125;)&#125;);
+}catch(e){alert('Error: '+e.message)}finally{this.disabled=false;this.textContent='Generate Keys'}});
+document.querySelectorAll('.copy-key').forEach(function(b){b.addEventListener('click',function(){var id=this.getAttribute('data-target'),text=document.getElementById(id).value;if(!text)return;navigator.clipboard.writeText(text).then(function(){var t=this;this.textContent='Copied!';setTimeout(function(){this.textContent='Copy'}.bind(this),1500)}.bind(this))})});
 </script>
 

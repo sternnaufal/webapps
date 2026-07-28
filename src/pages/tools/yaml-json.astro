@@ -46,11 +46,11 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
-function toJson()&#123;try&#123;var d=jsyaml.load(inp.value);out.value=JSON.stringify(d,null,2)&#125;catch(e)&#123;out.value='Error: '+e.message&#125;&#125;
-function toYaml()&#123;try&#123;var d=JSON.parse(inp.value);out.value=jsyaml.dump(d,&#123;indent:2&#125;)&#125;catch(e)&#123;out.value='Error: '+e.message&#125;&#125;
+function toJson(){try{var d=jsyaml.load(inp.value);out.value=JSON.stringify(d,null,2)}catch(e){out.value='Error: '+e.message}}
+function toYaml(){try{var d=JSON.parse(inp.value);out.value=jsyaml.dump(d,{indent:2})}catch(e){out.value='Error: '+e.message}}
 document.getElementById('btnToJson').addEventListener('click',toJson);
 document.getElementById('btnToYaml').addEventListener('click',toYaml);
-document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.value=''&#125;);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;)&#125;);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
+document.getElementById('btnCopy').addEventListener('click',function(){if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});
 </script>
 

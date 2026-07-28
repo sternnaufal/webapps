@@ -59,24 +59,24 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput');
-['charCount','charNoSpace','wordCount','sentCount','paraCount','lineCount','readTime','density'].forEach(function(id)&#123;window[id]=document.getElementById(id)&#125;);
+['charCount','charNoSpace','wordCount','sentCount','paraCount','lineCount','readTime','density'].forEach(function(id){window[id]=document.getElementById(id)});
 window.topWords=document.getElementById('topWords');
-function analyze()&#123;
+function analyze(){
   var t=inp.value;
   charCount.textContent=t.length;
   charNoSpace.textContent=t.replace(/\\s/g,'').length;
   wordCount.textContent=t.trim()?t.trim().split(/\\s+/).length:0;
-  sentCount.textContent=t.split(/[.!?]+/).filter(function(s)&#123;return s.trim().length>0&#125;).length;
-  paraCount.textContent=t.split(/\\n\\s*\\n/).filter(function(p)&#123;return p.trim().length>0&#125;).length;
+  sentCount.textContent=t.split(/[.!?]+/).filter(function(s){return s.trim().length>0}).length;
+  paraCount.textContent=t.split(/\\n\\s*\\n/).filter(function(p){return p.trim().length>0}).length;
   lineCount.textContent=t.split('\\n').length;
   readTime.textContent=Math.max(1,Math.round((t.trim().split(/\\s+/).length||0)/200))+' menit';
   var words=t.toLowerCase().match(/\\b\\w+\\b/g)||[];
-  var uniq=&#123;&#125;;words.forEach(function(w)&#123;uniq[w]=(uniq[w]||0)+1&#125;);
+  var uniq={};words.forEach(function(w){uniq[w]=(uniq[w]||0)+1});
   var keys=Object.keys(uniq);
   density.textContent=keys.length;
-  var sorted=keys.sort(function(a,b)&#123;return uniq[b]-uniq[a]&#125;).slice(0,6);
-  topWords.innerHTML=sorted.map(function(w)&#123;return '<span class="badge bg-light text-dark mr-1 mb-1">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'&#125;).join('');
-&#125;
+  var sorted=keys.sort(function(a,b){return uniq[b]-uniq[a]}).slice(0,6);
+  topWords.innerHTML=sorted.map(function(w){return '<span class="badge bg-light text-dark mr-1 mb-1">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'}).join('');
+}
 inp.addEventListener('input',analyze);analyze();
 </script>
 

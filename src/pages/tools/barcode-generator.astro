@@ -117,8 +117,8 @@ var wInp=document.getElementById('barWidth'),hInp=document.getElementById('barHe
 var fsInp=document.getElementById('barFontSize'),lcInp=document.getElementById('barLineColor'),bgInp=document.getElementById('barBgColor');
 var svInp=document.getElementById('barShowVal'),svgEl=document.getElementById('barcodeSvg'),outDiv=document.getElementById('barcodeOutput');
 
-function getOptions()&#123;
-  return &#123;
+function getOptions(){
+  return {
     format: fmtInp.value,
     width: parseFloat(wInp.value)||2,
     height: parseInt(hInp.value)||80,
@@ -127,39 +127,39 @@ function getOptions()&#123;
     lineColor: lcInp.value,
     background: bgInp.value,
     displayValue: svInp.checked
-  &#125;;
-&#125;
+  };
+}
 
-function validateInput(val,fmt)&#123;
-  if(!val)&#123;return 'Nilai tidak boleh kosong';&#125;
-  if(fmt==='EAN13'||fmt==='EAN13')&#123;if(!/^\d&#123;12,13&#125;$/.test(val))return 'EAN-13 harus 12-13 digit angka'&#125;
-  if(fmt==='EAN8')&#123;if(!/^\d&#123;7,8&#125;$/.test(val))return 'EAN-8 harus 7-8 digit angka'&#125;
-  if(fmt==='UPC')&#123;if(!/^\d&#123;11,12&#125;$/.test(val))return 'UPC-A harus 11-12 digit angka'&#125;
-  if(fmt==='UPCE')&#123;if(!/^\d&#123;7,8&#125;$/.test(val))return 'UPC-E harus 7-8 digit angka'&#125;
-  if(fmt==='ITF14')&#123;if(!/^\d&#123;13,14&#125;$/.test(val))return 'ITF-14 harus 13-14 digit angka'&#125;
-  if(fmt==='pharmacode')&#123;if(!/^\d+$/.test(val))return 'Pharmacode hanya menerima angka'&#125;
+function validateInput(val,fmt){
+  if(!val){return 'Nilai tidak boleh kosong';}
+  if(fmt==='EAN13'||fmt==='EAN13'){if(!/^\d{12,13}$/.test(val))return 'EAN-13 harus 12-13 digit angka'}
+  if(fmt==='EAN8'){if(!/^\d{7,8}$/.test(val))return 'EAN-8 harus 7-8 digit angka'}
+  if(fmt==='UPC'){if(!/^\d{11,12}$/.test(val))return 'UPC-A harus 11-12 digit angka'}
+  if(fmt==='UPCE'){if(!/^\d{7,8}$/.test(val))return 'UPC-E harus 7-8 digit angka'}
+  if(fmt==='ITF14'){if(!/^\d{13,14}$/.test(val))return 'ITF-14 harus 13-14 digit angka'}
+  if(fmt==='pharmacode'){if(!/^\d+$/.test(val))return 'Pharmacode hanya menerima angka'}
   return null;
-&#125;
+}
 
-function generate()&#123;
+function generate(){
   var val=valInp.value.trim(),fmt=fmtInp.value;
   var err=validateInput(val,fmt);
-  if(err)&#123;
+  if(err){
     outDiv.innerHTML='<div class="error-msg">'+err+'</div>';
     return;
-  &#125;
+  }
   outDiv.innerHTML='<svg id="barcodeSvg"></svg>';
   var svg=document.getElementById('barcodeSvg');
-  try&#123;
+  try{
     JsBarcode(svg,val,getOptions());
-  &#125;catch(e)&#123;
+  }catch(e){
     outDiv.innerHTML='<div class="error-msg">Error: '+e.message+'</div>';
-  &#125;
-&#125;
+  }
+}
 
 document.getElementById('btnGenerate').addEventListener('click',generate);
 
-document.getElementById('btnPng').addEventListener('click',function()&#123;
+document.getElementById('btnPng').addEventListener('click',function(){
   var svg=document.getElementById('barcodeSvg');
   if(!svg||!svg.getBBox)return;
   var b=svg.getBBox(),pad=5;
@@ -170,45 +170,45 @@ document.getElementById('btnPng').addEventListener('click',function()&#123;
   var img=new Image();
   var s=new XMLSerializer();
   var svgStr=s.serializeToString(svg);
-  img.onload=function()&#123;
+  img.onload=function(){
     ctx.drawImage(img,pad,pad);
-    c.toBlob(function(blob)&#123;
+    c.toBlob(function(blob){
       var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='barcode.png';a.click();
-    &#125;,'image/png');
-  &#125;;
+    },'image/png');
+  };
   img.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(svgStr)));
-&#125;);
+});
 
-document.getElementById('btnSvg').addEventListener('click',function()&#123;
+document.getElementById('btnSvg').addEventListener('click',function(){
   var svg=document.getElementById('barcodeSvg');
   if(!svg||!svg.getBBox)return;
   var s=new XMLSerializer(),svgStr=s.serializeToString(svg);
   var a=document.createElement('a');a.href='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(svgStr)));a.download='barcode.svg';a.click();
-&#125;);
+});
 
-document.getElementById('btnCopy').addEventListener('click',function()&#123;
+document.getElementById('btnCopy').addEventListener('click',function(){
   var svg=document.getElementById('barcodeSvg');
   if(!svg||!svg.getBBox)return;
   var s=new XMLSerializer(),svgStr=s.serializeToString(svg);
   navigator.clipboard.write([
-    new ClipboardItem(&#123;'image/svg+xml':new Blob([svgStr],&#123;type:'image/svg+xml'&#125;)&#125;)
-  ]).then(function()&#123;showToast('Gambar disalin ke clipboard');&#125;).catch(function()&#123;showToast('Gagal menyalin');&#125;);
-&#125;);
+    new ClipboardItem({'image/svg+xml':new Blob([svgStr],{type:'image/svg+xml'})})
+  ]).then(function(){showToast('Gambar disalin ke clipboard');}).catch(function(){showToast('Gagal menyalin');});
+});
 
-document.querySelectorAll('.preset').forEach(function(el)&#123;el.addEventListener('click',function()&#123;
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
   valInp.value=this.dataset.val;fmtInp.value=this.dataset.fmt;generate();
-&#125;)&#125;);
+})});
 
-function showToast(m)&#123;
+function showToast(m){
   var t=document.createElement('div');t.className='toast items-center text-bg-light border p-2';
   t.style.position='fixed';t.style.right='20px';t.style.bottom='20px';t.style.zIndex=9999;
   t.innerHTML='<div class="flex"><div class="toast-body">'+m+'</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>';
   document.body.appendChild(t);
-  t.querySelector('.btn-close').addEventListener('click',function()&#123;t.remove();&#125;);
-  setTimeout(function()&#123;t.remove();&#125;,2500);
-&#125;
+  t.querySelector('.btn-close').addEventListener('click',function(){t.remove();});
+  setTimeout(function(){t.remove();},2500);
+}
 
-valInp.addEventListener('keydown',function(e)&#123;if(e.key==='Enter')generate()&#125;);
+valInp.addEventListener('keydown',function(e){if(e.key==='Enter')generate()});
 generate();
 </script>
 

@@ -3,87 +3,117 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Calorie Calculator (BMR/TDEE)';
-const description = 'Kalkulator kalori online. Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk diet dan fitness.';
-const keywords = 'calorie calculator, bmr calculator, tdee calculator, kalkulator kalori, bmr, tdee, diet, fitness';
-const aboutText = 'Calorie Calculator (BMR/TDEE) Kalkulator kalori online. Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk diet dan fitness.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const description = 'Kalkulator kalori online. Hitung BMR dan TDEE untuk kebutuhan kalori harian Anda.';
+const keywords = 'calorie calculator, bmr calculator, tdee calculator, kalkulator kalori, bmr, tdee';
+const aboutText = 'Kalkulator kalori online untuk menghitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure). Alat ini membantu Anda menentukan kebutuhan kalori harian berdasarkan usia, jenis kelamin, tinggi, berat badan, dan level aktivitas fisik. Hasil perhitungan mencakup BMR, TDEE, serta rekomendasi kalori untuk menurunkan atau menaikkan berat badan.';
+const aboutExtra = 'BMR adalah jumlah kalori minimum yang dibutuhkan tubuh saat istirahat total untuk menjaga fungsi vital seperti pernapasan, sirkulasi darah, dan suhu tubuh. TDEE adalah total kalori yang dibakar per hari termasuk aktivitas fisik. Dengan mengetahui TDEE, Anda dapat mengatur asupan kalori untuk mencapai tujuan berat badan ideal.';
 const relatedTools = [
-  { slug: 'bmi-calculator', name: 'Bmi Calculator', icon: '⚖' },
+  { slug: 'bmi-calculator', name: 'BMI Calculator', icon: '⚖' },
   { slug: 'savings-calculator', name: 'Savings Calculator', icon: '🏦' },
   { slug: 'tip-calculator', name: 'Tip Calculator', icon: '💰' },
-  { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' }
+  { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' },
 ];
-
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">Calorie Calculator</h1><p class="opacity-60 small mb-0">Hitung BMR (Basal Metabolic Rate) dan TDEE (Total Daily Energy Expenditure) untuk kebutuhan kalori harian Anda.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Jenis Kelamin</label><div><div class="flex items-center gap-2 flex items-center gap-2-inline"><input type="radio" name="gender" id="genMale" class="checkbox" checked><label class="flex items-center gap-2-label" for="genMale">Laki-laki</label></div><div class="flex items-center gap-2 flex items-center gap-2-inline"><input type="radio" name="gender" id="genFemale" class="checkbox"><label class="flex items-center gap-2-label" for="genFemale">Perempuan</label></div></div></div>
-<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Usia (thn)</label><input type="number" id="ageInput" class="input input-bordered w-full" value="25" min="1" max="120"></div>
-<div class="col-4"><label class="label-text small">Tinggi (cm)</label><input type="number" id="heightInput" class="input input-bordered w-full" value="170" min="50" max="300"></div>
-<div class="col-4"><label class="label-text small">Berat (kg)</label><input type="number" id="weightInput" class="input input-bordered w-full" value="65" min="10" max="500"></div></div>
-<div class="mb-3"><label class="label-text font-semibold">Level Aktivitas</label>
-<select id="activitySelect" class="select select-bordered w-full">
-<option value="1.2">Sedentary (jarang olahraga)</option>
-<option value="1.375" selected>Light (1-3 hari/minggu)</option>
-<option value="1.55">Moderate (3-5 hari/minggu)</option>
-<option value="1.725">Active (6-7 hari/minggu)</option>
-<option value="1.9">Very Active (atlet/fisik berat)</option>
-</select></div>
-<button id="btnCalc" class="btn btn-primary w-full">Hitung Kebutuhan Kalori</button>
-</div></div>
-<div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3 mb-3">
-<h6 class="mb-3">Hasil Perhitungan</h6>
-<div class="flex flex-wrap gap-3"><div class="col-6"><div class="p-3 rounded text-center" style="background:#eef2ff"><small class="opacity-60">BMR</small><div class="h3 mb-0 font-bold" id="bmrResult" style="color:#6366f1">0</div><small>kkal/hari</small></div></div>
-<div class="col-6"><div class="p-3 rounded text-center" style="background:#f0fdf4"><small class="opacity-60">TDEE</small><div class="h3 mb-0 font-bold" id="tdeeResult" style="color:#16a34a">0</div><small>kkal/hari</small></div></div></div>
-</div>
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Rekomendasi Kalori Harian</h6>
-<div id="recommendations" class="small"></div></div>
-</div></div>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <div class="flex flex-wrap gap-4">
+      <div class="lg:w-5/12 w-full">
+        <div class="mb-3">
+          <label class="text-xs font-medium opacity-60 mb-1 block">Jenis Kelamin</label>
+          <div class="flex gap-3">
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="gender" id="genMale" class="checkbox" checked>
+              Laki-laki
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="gender" id="genFemale" class="checkbox">
+              Perempuan
+            </label>
+          </div>
+        </div>
 
-<ToolShell about={aboutText} />
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <div>
+            <label class="text-xs opacity-60 mb-0.5 block">Usia (thn)</label>
+            <input type="number" id="ageInput" class="input input-bordered w-full input-sm" value="25" min="1" max="120">
+          </div>
+          <div>
+            <label class="text-xs opacity-60 mb-0.5 block">Tinggi (cm)</label>
+            <input type="number" id="heightInput" class="input input-bordered w-full input-sm" value="170" min="50" max="300">
+          </div>
+          <div>
+            <label class="text-xs opacity-60 mb-0.5 block">Berat (kg)</label>
+            <input type="number" id="weightInput" class="input input-bordered w-full input-sm" value="65" min="10" max="500">
+          </div>
+        </div>
 
+        <div class="mb-3">
+          <label class="text-xs opacity-60 mb-0.5 block">Level Aktivitas</label>
+          <select id="activitySelect" class="select select-bordered w-full select-sm">
+            <option value="1.2">Sedentary (jarang olahraga)</option>
+            <option value="1.375" selected>Light (1-3 hari/minggu)</option>
+            <option value="1.55">Moderate (3-5 hari/minggu)</option>
+            <option value="1.725">Active (6-7 hari/minggu)</option>
+            <option value="1.9">Very Active (atlet/fisik berat)</option>
+          </select>
+        </div>
+
+        <button id="btnCalc" class="btn btn-primary w-full btn-sm">Hitung Kebutuhan Kalori</button>
+      </div>
+
+      <div class="lg:w-7/12 w-full">
+        <div class="mb-3">
+          <div class="text-xs font-semibold opacity-50 mb-2">Hasil Perhitungan</div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-3 rounded-lg text-center" style="background:oklch(0.55 0.25 270 / 0.1);">
+              <div class="text-xs opacity-50">BMR</div>
+              <div class="text-xl font-bold" id="bmrResult" style="color:#6366f1">0</div>
+              <div class="text-xs opacity-40">kkal/hari</div>
+            </div>
+            <div class="p-3 rounded-lg text-center" style="background:oklch(0.6 0.18 150 / 0.1);">
+              <div class="text-xs opacity-50">TDEE</div>
+              <div class="text-xl font-bold" id="tdeeResult" style="color:#16a34a">0</div>
+              <div class="text-xs opacity-40">kkal/hari</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="text-xs font-semibold opacity-50 mb-2">Rekomendasi Kalori Harian</div>
+          <div id="recommendations" class="text-sm"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var age=document.getElementById('ageInput'),height=document.getElementById('heightInput'),weight=document.getElementById('weightInput'),activity=document.getElementById('activitySelect'),bmrEl=document.getElementById('bmrResult'),tdeeEl=document.getElementById('tdeeResult'),recEl=document.getElementById('recommendations');
-function calc()&#123;
+function calc() {
   var a=parseInt(age.value)||0,h=parseFloat(height.value)||0,w=parseFloat(weight.value)||0,act=parseFloat(activity.value);
   var isMale=document.getElementById('genMale').checked;
-  if(!a||!h||!w)&#123;bmrEl.textContent='0';tdeeEl.textContent='0';recEl.innerHTML='';return&#125;
-  var bmr=isMale?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
+  if(!a||!h||!w) { bmrEl.textContent='0';tdeeEl.textContent='0';recEl.innerHTML='';return; }
+  var bmr=isMale ? 10*w+6.25*h-5*a+5 : 10*w+6.25*h-5*a-161;
   var tdee=bmr*act;
-  bmrEl.textContent=Math.round(bmr);tdeeEl.textContent=Math.round(tdee);
+  bmrEl.textContent=Math.round(bmr); tdeeEl.textContent=Math.round(tdee);
   var loss05=Math.round(tdee-500),loss1=Math.round(tdee-1000),gain05=Math.round(tdee+500),gain1=Math.round(tdee+1000);
-  recEl.innerHTML='<table class="table table-sm small mb-0">'+
-    '<tr><td>Maintenance (jaga berat)</td><td class="font-bold">'+Math.round(tdee)+' kkal/hari</td></tr>'+
-    '<tr><td>Turun berat (0.5 kg/minggu)</td><td class="font-bold text-success">'+loss05+' kkal/hari</td></tr>'+
-    '<tr><td>Turun berat (1 kg/minggu)</td><td class="font-bold text-success">'+Math.max(loss1,1200)+' kkal/hari</td></tr>'+
-    '<tr><td>Naik berat (0.5 kg/minggu)</td><td class="font-bold text-error">'+gain05+' kkal/hari</td></tr>'+
-    '<tr><td>Naik berat (1 kg/minggu)</td><td class="font-bold text-error">'+gain1+' kkal/hari</td></tr></table>';
-&#125;
+  recEl.innerHTML='<table class="table table-sm w-full text-xs">'+
+    '<tr><td class="py-1 opacity-60">Maintenance (jaga berat)</td><td class="py-1 font-bold text-right">'+Math.round(tdee)+' kkal/hari</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Turun berat (0.5 kg/minggu)</td><td class="py-1 font-bold text-right text-success">'+loss05+' kkal/hari</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Turun berat (1 kg/minggu)</td><td class="py-1 font-bold text-right text-success">'+Math.max(loss1,1200)+' kkal/hari</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Naik berat (0.5 kg/minggu)</td><td class="py-1 font-bold text-right text-error">'+gain05+' kkal/hari</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Naik berat (1 kg/minggu)</td><td class="py-1 font-bold text-right text-error">'+gain1+' kkal/hari</td></tr></table>';
+}
 document.getElementById('btnCalc').addEventListener('click',calc);
-[age,height,weight,activity].forEach(function(el)&#123;el.addEventListener('input',calc);el.addEventListener('change',calc)&#125;);
-document.querySelectorAll('input[name=gender]').forEach(function(el)&#123;el.addEventListener('change',calc)&#125;);
+[age,height,weight,activity].forEach(function(el) { el.addEventListener('input',calc); el.addEventListener('change',calc); });
+document.querySelectorAll('input[name=gender]').forEach(function(el) { el.addEventListener('change',calc); });
 calc();
 </script>
-

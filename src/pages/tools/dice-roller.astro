@@ -66,22 +66,22 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var dt=document.getElementById('diceType'),dc=document.getElementById('diceCount'),dr=document.getElementById('diceResult'),td=document.getElementById('totalDisplay'),mxd=document.getElementById('maxDisplay'),mnd=document.getElementById('minDisplay'),hl=document.getElementById('historyList'),history=[];
-function roll()&#123;
+function roll(){
   var sides=parseInt(dt.value),cnt=parseInt(dc.value),vals=[];
   for(var i=0;i<cnt;i++)vals.push(Math.floor(Math.random()*sides)+1);
-  dr.innerHTML='';vals.forEach(function(v,i)&#123;
+  dr.innerHTML='';vals.forEach(function(v,i){
     var el=document.createElement('span');el.className='dice-icon rolling';el.textContent=v;
-    setTimeout(function()&#123;el.classList.remove('rolling')&#125;,300);
+    setTimeout(function(){el.classList.remove('rolling')},300);
     dr.appendChild(el);
-  &#125;);
-  var total=vals.reduce(function(a,b)&#123;return a+b&#125;,0);
+  });
+  var total=vals.reduce(function(a,b){return a+b},0);
   td.textContent=total;mxd.textContent=Math.max.apply(null,vals);mnd.textContent=Math.min.apply(null,vals);
   var label='D'+sides+' x'+cnt+': ['+vals.join(', ')+'] = '+total;
   history.unshift(label);if(history.length>20)history.pop();
-  hl.innerHTML=history.map(function(h)&#123;return'<div class="small py-1 border-bottom">'+h+'</div>'&#125;).join('');
-&#125;
+  hl.innerHTML=history.map(function(h){return'<div class="small py-1 border-bottom">'+h+'</div>'}).join('');
+}
 document.getElementById('btnRoll').addEventListener('click',roll);
-document.getElementById('btnClearHistory').addEventListener('click',function()&#123;history=[];hl.innerHTML='<small class="opacity-60">Belum ada lemparan</small>'&#125;);
+document.getElementById('btnClearHistory').addEventListener('click',function(){history=[];hl.innerHTML='<small class="opacity-60">Belum ada lemparan</small>'});
 roll();
 </script>
 

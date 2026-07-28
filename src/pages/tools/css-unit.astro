@@ -76,9 +76,9 @@ var inpVal=document.getElementById('inputValue'),fromU=document.getElementById('
 var baseRem=document.getElementById('baseRem'),vpW=document.getElementById('vpWidth'),vpH=document.getElementById('vpHeight'),dpi=document.getElementById('dpi');
 var resVal=document.getElementById('resultValue'),allRes=document.getElementById('allResults');
 
-function toPx(val,unit)&#123;
+function toPx(val,unit){
   var br=parseFloat(baseRem.value)||16,vw=parseFloat(vpW.value)||1920,vh=parseFloat(vpH.value)||1080,d=parseFloat(dpi.value)||96;
-  switch(unit)&#123;
+  switch(unit){
     case'px':return val;
     case'rem':case'em':return val*br;
     case'vw':return val*vw/100;
@@ -90,11 +90,11 @@ function toPx(val,unit)&#123;
     case'mm':return val*d/25.4;
     case'in':return val*d;
     default:return val;
-  &#125;
-&#125;
-function fromPx(px,unit)&#123;
+  }
+}
+function fromPx(px,unit){
   var br=parseFloat(baseRem.value)||16,vw=parseFloat(vpW.value)||1920,vh=parseFloat(vpH.value)||1080,d=parseFloat(dpi.value)||96;
-  switch(unit)&#123;
+  switch(unit){
     case'px':return px;
     case'rem':case'em':return px/br;
     case'vw':return px*100/vw;
@@ -106,24 +106,24 @@ function fromPx(px,unit)&#123;
     case'mm':return px*25.4/d;
     case'in':return px/d;
     default:return px;
-  &#125;
-&#125;
+  }
+}
 
 var units=['px','rem','em','vw','vh','%','pt','pc','cm','mm','in'];
 
-function convert()&#123;
+function convert(){
   var val=parseFloat(inpVal.value)||0,fu=fromU.value,tu=toU.value;
   var px=toPx(val,fu);
   var result=fromPx(px,tu);
   resVal.textContent=val+' '+fu+' = '+result.toFixed(4)+' '+tu;
   allRes.innerHTML='';
-  units.forEach(function(u)&#123;
+  units.forEach(function(u){
     var v=fromPx(px,u);
     allRes.innerHTML+='<tr'+(u===tu?' class="table-active"':'')+'><td>'+u+'</td><td class="font-mono">'+v.toFixed(4)+'</td></tr>';
-  &#125;);
-&#125;
+  });
+}
 
-[inpVal,fromU,toU,baseRem,vpW,vpH,dpi].forEach(function(el)&#123;el.addEventListener('input',convert)&#125;);
+[inpVal,fromU,toU,baseRem,vpW,vpH,dpi].forEach(function(el){el.addEventListener('input',convert)});
 convert();
 </script>
 

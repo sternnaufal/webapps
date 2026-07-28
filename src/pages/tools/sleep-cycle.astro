@@ -61,47 +61,47 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var wakePane=document.getElementById('wakePane'),sleepPane=document.getElementById('sleepPane'),wakeInp=document.getElementById('wakeTime'),sleepInp=document.getElementById('sleepTime'),res=document.getElementById('results');
-document.getElementById('tabWake').addEventListener('click',function()&#123;wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');document.getElementById('tabSleep').classList.remove('active');calc();&#125;);
-document.getElementById('tabSleep').addEventListener('click',function()&#123;wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');document.getElementById('tabWake').classList.remove('active');calc();&#125;);
+document.getElementById('tabWake').addEventListener('click',function(){wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');document.getElementById('tabSleep').classList.remove('active');calc();});
+document.getElementById('tabSleep').addEventListener('click',function(){wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');document.getElementById('tabWake').classList.remove('active');calc();});
 
-function fmt(t)&#123;
+function fmt(t){
   var h=t.getHours(),m=t.getMinutes();
   return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
-&#125;
-function fmtLong(t)&#123;
+}
+function fmtLong(t){
   var days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
   return days[t.getDay()]+', '+fmt(t);
-&#125;
+}
 
-function calc()&#123;
+function calc(){
   var mode=wakePane.style.display!=='none'?'wake':'sleep',now=new Date();
-  if(mode==='wake')&#123;
+  if(mode==='wake'){
     var wp=wakeInp.value.split(':'),wh=parseInt(wp[0]),wm=parseInt(wp[1]);
     var wake=new Date(now);wake.setHours(wh,wm,0,0);if(wake<=now)wake.setDate(wake.getDate()+1);
     var html='<div class="font-bold mb-3">Jika bangun '+fmt(wake)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Tidur</th><th>Siklus</th><th>Keterangan</th></tr>';
-    for(var c=6;c>=3;c--)&#123;
+    for(var c=6;c>=3;c--){
       var sleep=new Date(wake);sleep.setMinutes(sleep.getMinutes()-c*90-14);
       var desc=c+' siklus ('+(c*90+14)+' menit)';
       var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
       html+='<tr><td class="font-bold">'+fmt(sleep)+'</td><td>'+desc+'</td><td>'+label+'</td></tr>';
-    &#125;
+    }
     html+='</table><div class="text-sm opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
     res.innerHTML=html;
-  &#125;else&#123;
+  }else{
     var sp=sleepInp.value.split(':'),sh=parseInt(sp[0]),sm=parseInt(sp[1]);
     var sleep=new Date(now);sleep.setHours(sh,sm,0,0);
     var html='<div class="font-bold mb-3">Jika tidur '+fmt(sleep)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Bangun</th><th>Siklus</th><th>Keterangan</th></tr>';
-    for(var c=3;c<=6;c++)&#123;
+    for(var c=3;c<=6;c++){
       var wake=new Date(sleep);wake.setMinutes(wake.getMinutes()+c*90+14);
       var desc=c+' siklus ('+(c*90+14)+' menit)';
       var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
       html+='<tr><td class="font-bold">'+fmt(wake)+' ('+(wake<=now?'besok':'hari ini')+')</td><td>'+desc+'</td><td>'+label+'</td></tr>';
-    &#125;
+    }
     html+='</table><div class="text-sm opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
     res.innerHTML=html;
-  &#125;
-&#125;
-[wakeInp,sleepInp].forEach(function(el)&#123;el.addEventListener('input',calc);el.addEventListener('change',calc)&#125;);
+  }
+}
+[wakeInp,sleepInp].forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc)});
 calc();
 </script>
 

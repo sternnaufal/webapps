@@ -54,27 +54,27 @@ const relatedTools = [
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
 // Tabs
-document.querySelectorAll('#tabEpoch, #tabTZ').forEach(function()&#123;&#125;);
-document.querySelectorAll('.nav-tabs .nav-link').forEach(function(t)&#123;t.addEventListener('click',function(e)&#123;e.preventDefault();document.querySelectorAll('.nav-tabs .nav-link').forEach(function(x)&#123;x.classList.remove('active')&#125;);this.classList.add('active');
-var tab=this.getAttribute('data-tab');document.getElementById('tabEpoch').style.display=tab==='epoch'?'block':'none';document.getElementById('tabTZ').style.display=tab==='tz'?'block':'none'&#125;)&#125;);
+document.querySelectorAll('#tabEpoch, #tabTZ').forEach(function(){});
+document.querySelectorAll('.nav-tabs .nav-link').forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.nav-tabs .nav-link').forEach(function(x){x.classList.remove('active')});this.classList.add('active');
+var tab=this.getAttribute('data-tab');document.getElementById('tabEpoch').style.display=tab==='epoch'?'block':'none';document.getElementById('tabTZ').style.display=tab==='tz'?'block':'none'})});
 // Epoch
 var eInp=document.getElementById('epochInput'),dInp=document.getElementById('dateInput'),dUTC=document.getElementById('dispUTC'),dLoc=document.getElementById('dispLocal'),dISO=document.getElementById('dispISO'),dRel=document.getElementById('dispRelative');
-function updateFromEpoch()&#123;var s=parseInt(eInp.value,10);if(isNaN(s))return;var d=new Date(s*1000);refreshDisplay(d)&#125;
-function updateFromDate()&#123;var s=dInp.value;if(!s)return;var d=new Date(s);if(isNaN(d.getTime()))return;eInp.value=Math.floor(d.getTime()/1000);refreshDisplay(d)&#125;
-function refreshDisplay(d)&#123;dUTC.textContent=d.toUTCString();dLoc.textContent=d.toLocaleString();dISO.textContent=d.toISOString();
-var n=Date.now(),diff=Math.floor((n-d.getTime())/1000);if(diff<60)dRel.textContent='just now';else if(diff<3600)dRel.textContent=Math.floor(diff/60)+' min ago';else if(diff<86400)dRel.textContent=Math.floor(diff/3600)+' hours ago';else dRel.textContent=Math.floor(diff/86400)+' days ago'&#125;
-document.getElementById('btnEpochNow').addEventListener('click',function()&#123;eInp.value=Math.floor(Date.now()/1000);updateFromEpoch()&#125;);
+function updateFromEpoch(){var s=parseInt(eInp.value,10);if(isNaN(s))return;var d=new Date(s*1000);refreshDisplay(d)}
+function updateFromDate(){var s=dInp.value;if(!s)return;var d=new Date(s);if(isNaN(d.getTime()))return;eInp.value=Math.floor(d.getTime()/1000);refreshDisplay(d)}
+function refreshDisplay(d){dUTC.textContent=d.toUTCString();dLoc.textContent=d.toLocaleString();dISO.textContent=d.toISOString();
+var n=Date.now(),diff=Math.floor((n-d.getTime())/1000);if(diff<60)dRel.textContent='just now';else if(diff<3600)dRel.textContent=Math.floor(diff/60)+' min ago';else if(diff<86400)dRel.textContent=Math.floor(diff/3600)+' hours ago';else dRel.textContent=Math.floor(diff/86400)+' days ago'}
+document.getElementById('btnEpochNow').addEventListener('click',function(){eInp.value=Math.floor(Date.now()/1000);updateFromEpoch()});
 document.getElementById('btnEpochToDate').addEventListener('click',updateFromEpoch);
-document.getElementById('btnDateNow').addEventListener('click',function()&#123;dInp.value=new Date().toISOString().slice(0,16);updateFromDate()&#125;);
+document.getElementById('btnDateNow').addEventListener('click',function(){dInp.value=new Date().toISOString().slice(0,16);updateFromDate()});
 document.getElementById('btnDateToEpoch').addEventListener('click',updateFromDate);
 // TZ
 var tzNames=Intl.supportedValuesOf?Intl.supportedValuesOf('timeZone'):['UTC','Asia/Jakarta','Asia/Makassar','Asia/Jayapura','America/New_York','America/Los_Angeles','Europe/London','Europe/Berlin','Asia/Tokyo','Australia/Sydney','Pacific/Auckland'];
 var tzF=document.getElementById('tzFrom'),tzT=document.getElementById('tzTo');
-tzNames.forEach(function(z)&#123;var o1=document.createElement('option');o1.value=z;o1.textContent=z;tzF.appendChild(o1);
-var o2=document.createElement('option');o2.value=z;o2.textContent=z;tzT.appendChild(o2)&#125;);tzF.value=Intl.DateTimeFormat().resolvedOptions().timeZone;tzT.value='UTC';
-document.getElementById('btnTZConvert').addEventListener('click',function()&#123;var v=document.getElementById('tzInput').value;if(!v)&#123;alert('Pilih tanggal & waktu');return&#125;var d=new Date(v+':00'),f=tzF.value,t=tzT.value;
-var fStr=d.toLocaleString('en-US',&#123;timeZone:f,timeStyle:'full',dateStyle:'full'&#125;),tStr=d.toLocaleString('en-US',&#123;timeZone:t,timeStyle:'full',dateStyle:'full'&#125;);
-document.getElementById('tzResult').innerHTML='<div class="mb-2"><strong>'+f+':</strong> '+fStr+'</div><div><strong>'+t+':</strong> '+tStr+'</div>';document.getElementById('tzResult').style.display='block'&#125;);
+tzNames.forEach(function(z){var o1=document.createElement('option');o1.value=z;o1.textContent=z;tzF.appendChild(o1);
+var o2=document.createElement('option');o2.value=z;o2.textContent=z;tzT.appendChild(o2)});tzF.value=Intl.DateTimeFormat().resolvedOptions().timeZone;tzT.value='UTC';
+document.getElementById('btnTZConvert').addEventListener('click',function(){var v=document.getElementById('tzInput').value;if(!v){alert('Pilih tanggal & waktu');return}var d=new Date(v+':00'),f=tzF.value,t=tzT.value;
+var fStr=d.toLocaleString('en-US',{timeZone:f,timeStyle:'full',dateStyle:'full'}),tStr=d.toLocaleString('en-US',{timeZone:t,timeStyle:'full',dateStyle:'full'});
+document.getElementById('tzResult').innerHTML='<div class="mb-2"><strong>'+f+':</strong> '+fStr+'</div><div><strong>'+t+':</strong> '+tStr+'</div>';document.getElementById('tzResult').style.display='block'});
 updateFromEpoch();
 </script>
 

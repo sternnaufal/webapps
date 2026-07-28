@@ -52,19 +52,19 @@ document.getElementById('year').textContent=new Date().getFullYear();
 var preview=document.getElementById('preview'),btnStart=document.getElementById('btnStart'),btnStop=document.getElementById('btnStop'),status=document.getElementById('recStatus'),dlSection=document.getElementById('downloadSection'),dlLink=document.getElementById('downloadLink'),source=document.getElementById('recSource');
 var mediaStream=null,mediaRecorder=null,chunks=[];
 
-async function startRec()&#123;try&#123;
-var src=source.value,constraints=src==='camera'?&#123;video:true,audio:true&#125;:&#123;video:&#123;mediaSource:'screen'&#125;,audio:false&#125;;
+async function startRec(){try{
+var src=source.value,constraints=src==='camera'?{video:true,audio:true}:{video:{mediaSource:'screen'},audio:false};
 mediaStream=src==='camera'?await navigator.mediaDevices.getUserMedia(constraints):await navigator.mediaDevices.getDisplayMedia(constraints);
-preview.srcObject=mediaStream;mediaRecorder=new MediaRecorder(mediaStream,&#123;mimeType:'video/webm'&#125;);
-chunks=[];mediaRecorder.ondataavailable=function(e)&#123;if(e.data.size>0)chunks.push(e.data)&#125;;
-mediaRecorder.onstop=function()&#123;var blob=new Blob(chunks,&#123;type:'video/webm'&#125;),url=URL.createObjectURL(blob);
+preview.srcObject=mediaStream;mediaRecorder=new MediaRecorder(mediaStream,{mimeType:'video/webm'});
+chunks=[];mediaRecorder.ondataavailable=function(e){if(e.data.size>0)chunks.push(e.data)};
+mediaRecorder.onstop=function(){var blob=new Blob(chunks,{type:'video/webm'}),url=URL.createObjectURL(blob);
 dlLink.href=url;dlLink.download='recording.webm';dlSection.style.display='block';
-mediaStream.getTracks().forEach(function(t)&#123;t.stop()&#125;);preview.srcObject=null&#125;;
+mediaStream.getTracks().forEach(function(t){t.stop()});preview.srcObject=null};
 mediaRecorder.start();btnStart.disabled=true;btnStop.disabled=false;source.disabled=true;
 status.textContent='Recording...';status.className='mt-2 text-error small font-semibold';
-&#125;catch(e)&#123;status.textContent='Error: '+e.message;status.className='mt-2 text-error small'&#125;&#125;
+}catch(e){status.textContent='Error: '+e.message;status.className='mt-2 text-error small'}}
 
-function stopRec()&#123;if(mediaRecorder&&mediaRecorder.state!=='inactive')&#123;mediaRecorder.stop();btnStart.disabled=false;btnStop.disabled=true;source.disabled=false;status.textContent='Stopped. Download below.';status.className='mt-2 text-success small'&#125;&#125;
+function stopRec(){if(mediaRecorder&&mediaRecorder.state!=='inactive'){mediaRecorder.stop();btnStart.disabled=false;btnStop.disabled=true;source.disabled=false;status.textContent='Stopped. Download below.';status.className='mt-2 text-success small'}}
 btnStart.addEventListener('click',startRec);btnStop.addEventListener('click',stopRec);
 </script>
 

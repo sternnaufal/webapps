@@ -92,11 +92,11 @@ var currentBg = '#eef2ff';
 var emojis = ['😀','😎','🤖','👾','🦊','🐱','🐶','🦄','🐸','🌈','🔥','⭐','💎','🎮','🛸','🧠','🎯','🚀','💡','🎨'];
 var shapes = ['circle','square','triangle','diamond','hexagon'];
 
-function randItem(arr) &#123; return arr[Math.floor(Math.random() * arr.length)]; &#125;
-function randColor() &#123; return '#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'); &#125;
-function randBetween(min,max) &#123; return Math.floor(Math.random()*(max-min+1))+min; &#125;
+function randItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function randColor() { return '#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'); }
+function randBetween(min,max) { return Math.floor(Math.random()*(max-min+1))+min; }
 
-function drawAvatar(style, text, color, bg) &#123;
+function drawAvatar(style, text, color, bg) {
   ctx.clearRect(0, 0, 440, 440);
 
   // Background
@@ -107,7 +107,7 @@ function drawAvatar(style, text, color, bg) &#123;
 
   ctx.save();
 
-  switch(style) &#123;
+  switch(style) {
     case 'initials':
       var t = text || '?';
       ctx.fillStyle = color;
@@ -131,7 +131,7 @@ function drawAvatar(style, text, color, bg) &#123;
       ctx.save();
       ctx.translate(220, 220);
       var s = 140;
-      switch(type) &#123;
+      switch(type) {
         case 'circle':
           ctx.beginPath(); ctx.arc(0, 0, s, 0, Math.PI*2); ctx.fill(); break;
         case 'square':
@@ -142,9 +142,9 @@ function drawAvatar(style, text, color, bg) &#123;
           ctx.beginPath(); ctx.moveTo(0,-s); ctx.lineTo(s,0); ctx.lineTo(0,s); ctx.lineTo(-s,0); ctx.closePath(); ctx.fill(); break;
         case 'hexagon':
           ctx.beginPath();
-          for(var i=0;i<6;i++)&#123;var a=i*Math.PI/3-Math.PI/2;ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s);&#125;
+          for(var i=0;i<6;i++){var a=i*Math.PI/3-Math.PI/2;ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s);}
           ctx.closePath(); ctx.fill(); break;
-      &#125;
+      }
       ctx.restore();
       // Inner detail
       ctx.fillStyle = bg;
@@ -171,27 +171,27 @@ function drawAvatar(style, text, color, bg) &#123;
       ctx.beginPath(); ctx.arc(220, 220, 160, 0, Math.PI*2); ctx.fill();
       ctx.globalAlpha = 1;
       break;
-  &#125;
+  }
 
   ctx.restore();
   document.getElementById('avatarLabel').textContent = style.charAt(0).toUpperCase() + style.slice(1) + ' Avatar';
   document.getElementById('avatarSub').textContent = 'Ukuran: 220x220px | Klik Generate buat ganti';
-&#125;
+}
 
 // Generate function
-function generate() &#123;
+function generate() {
   currentColor = document.getElementById('avatarColor').value;
   currentBg = document.getElementById('avatarBg').value;
   var txt = document.getElementById('avatarText').value.trim();
 
-  switch(currentStyle) &#123;
+  switch(currentStyle) {
     case 'initials':
-      if (!txt) &#123;
+      if (!txt) {
         var initials = '';
         var cons = 'BCDFGHJKLMNPQRSTVWXYZ';
         for(var i=0;i<randBetween(1,2);i++) initials += randItem(cons);
         txt = initials;
-      &#125;
+      }
       drawAvatar('initials', txt, currentColor, currentBg);
       break;
     case 'emoji':
@@ -204,19 +204,19 @@ function generate() &#123;
     case 'gradient':
       drawAvatar('gradient', '', currentColor, currentBg);
       break;
-  &#125;
-&#125;
+  }
+}
 
 // Style thumbnails
-function renderThumbs() &#123;
-  document.querySelectorAll('.style-preview').forEach(function(c) &#123;
+function renderThumbs() {
+  document.querySelectorAll('.style-preview').forEach(function(c) {
     var parent = c.closest('.avatar-option');
     var style = parent.dataset.style;
     var tc = c.getContext('2d');
     tc.fillStyle = '#f1f5f9';
     tc.beginPath(); tc.roundRect(0, 0, 64, 64, 8); tc.fill();
 
-    switch(style) &#123;
+    switch(style) {
       case 'initials':
         tc.fillStyle = '#6366f1';
         tc.font = 'bold 36px Inter, sans-serif';
@@ -233,28 +233,28 @@ function renderThumbs() &#123;
         var g = tc.createLinearGradient(0,0,64,64);
         g.addColorStop(0,'#6366f1'); g.addColorStop(1,'#22c55e');
         tc.fillStyle = g; tc.beginPath(); tc.roundRect(4,4,56,56,12); tc.fill(); break;
-    &#125;
-  &#125;);
-&#125;
+    }
+  });
+}
 
 // Style picker
-document.querySelectorAll('.avatar-option').forEach(function(el) &#123;
-  el.addEventListener('click', function() &#123;
-    document.querySelectorAll('.avatar-option').forEach(function(o) &#123; o.classList.remove('active'); &#125;);
+document.querySelectorAll('.avatar-option').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('.avatar-option').forEach(function(o) { o.classList.remove('active'); });
     el.classList.add('active');
     currentStyle = el.dataset.style;
     generate();
-  &#125;);
-&#125;);
+  });
+});
 
 document.getElementById('btnGenerate').addEventListener('click', generate);
 
-document.getElementById('btnDownload').addEventListener('click', function() &#123;
+document.getElementById('btnDownload').addEventListener('click', function() {
   var link = document.createElement('a');
   link.download = 'avatar-' + Date.now() + '.png';
   link.href = canvas.toDataURL('image/png');
   link.click();
-&#125;);
+});
 
 // Color inputs auto regenerate
 document.getElementById('avatarColor').addEventListener('input', generate);
@@ -264,14 +264,14 @@ document.getElementById('avatarText').addEventListener('input', generate);
 renderThumbs();
 generate();
 
-function showToast(message) &#123;
+function showToast(message) {
   var t = document.createElement('div');
   t.className = 'toast items-center text-bg-light border p-2';
   t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
   t.innerHTML = '<div class="flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>';
   document.body.appendChild(t);
-  t.querySelector('.btn-close').addEventListener('click', function() &#123; t.remove(); &#125;);
-  setTimeout(function() &#123; t.remove(); &#125;, 2500);
-&#125;
+  t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
+  setTimeout(function() { t.remove(); }, 2500);
+}
 </script>
 

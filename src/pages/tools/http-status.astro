@@ -43,35 +43,35 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var statuses=[
-  &#123;code:100,cat:'Informational',label:'Continue',desc:'Server menerima header request, client bisa lanjut kirim body.'&#125;,
-  &#123;code:101,cat:'Informational',label:'Switching Protocols',desc:'Server setuju switch protocol sesuai request client.'&#125;,
-  &#123;code:200,cat:'Success',label:'OK',desc:'Request berhasil. Response tergantung method yang digunakan.'&#125;,
-  &#123;code:201,cat:'Success',label:'Created',desc:'Request berhasil dan resource baru telah dibuat.'&#125;,
-  &#123;code:204,cat:'Success',label:'No Content',desc:'Request berhasil tapi tidak ada konten yang dikembalikan.'&#125;,
-  &#123;code:301,cat:'Redirection',label:'Moved Permanently',desc:'Resource sudah pindah permanen ke URL baru.'&#125;,
-  &#123;code:302,cat:'Redirection',label:'Found',desc:'Resource sementara ada di URL berbeda.'&#125;,
-  &#123;code:304,cat:'Redirection',label:'Not Modified',desc:'Resource tidak berubah sejak akses terakhir (cache).'&#125;,
-  &#123;code:400,cat:'Client Error',label:'Bad Request',desc:'Server tidak bisa memproses request karena syntax salah.'&#125;,
-  &#123;code:401,cat:'Client Error',label:'Unauthorized',desc:'Memerlukan autentikasi.'&#125;,
-  &#123;code:403,cat:'Client Error',label:'Forbidden',desc:'Server menolak request, tidak ada akses.'&#125;,
-  &#123;code:404,cat:'Client Error',label:'Not Found',desc:'Resource tidak ditemukan di server.'&#125;,
-  &#123;code:405,cat:'Client Error',label:'Method Not Allowed',desc:'Method HTTP tidak didukung untuk resource ini.'&#125;,
-  &#123;code:408,cat:'Client Error',label:'Request Timeout',desc:'Server timeout menunggu request dari client.'&#125;,
-  &#123;code:409,cat:'Client Error',label:'Conflict',desc:'Request bentrok dengan kondisi server saat ini.'&#125;,
-  &#123;code:422,cat:'Client Error',label:'Unprocessable Entity',desc:'Request tidak bisa diproses karena semantic error.'&#125;,
-  &#123;code:429,cat:'Client Error',label:'Too Many Requests',desc:'Client melebihi batas request (rate limiting).'&#125;,
-  &#123;code:500,cat:'Server Error',label:'Internal Server Error',desc:'Server mengalami error internal.'&#125;,
-  &#123;code:502,cat:'Server Error',label:'Bad Gateway',desc:'Gateway menerima response invalid dari server upstream.'&#125;,
-  &#123;code:503,cat:'Server Error',label:'Service Unavailable',desc:'Server sementara tidak bisa melayani (overload/maintenance).'&#125;,
-  &#123;code:504,cat:'Server Error',label:'Gateway Timeout',desc:'Gateway tidak menerima response dari server upstream.'&#125;,
+  {code:100,cat:'Informational',label:'Continue',desc:'Server menerima header request, client bisa lanjut kirim body.'},
+  {code:101,cat:'Informational',label:'Switching Protocols',desc:'Server setuju switch protocol sesuai request client.'},
+  {code:200,cat:'Success',label:'OK',desc:'Request berhasil. Response tergantung method yang digunakan.'},
+  {code:201,cat:'Success',label:'Created',desc:'Request berhasil dan resource baru telah dibuat.'},
+  {code:204,cat:'Success',label:'No Content',desc:'Request berhasil tapi tidak ada konten yang dikembalikan.'},
+  {code:301,cat:'Redirection',label:'Moved Permanently',desc:'Resource sudah pindah permanen ke URL baru.'},
+  {code:302,cat:'Redirection',label:'Found',desc:'Resource sementara ada di URL berbeda.'},
+  {code:304,cat:'Redirection',label:'Not Modified',desc:'Resource tidak berubah sejak akses terakhir (cache).'},
+  {code:400,cat:'Client Error',label:'Bad Request',desc:'Server tidak bisa memproses request karena syntax salah.'},
+  {code:401,cat:'Client Error',label:'Unauthorized',desc:'Memerlukan autentikasi.'},
+  {code:403,cat:'Client Error',label:'Forbidden',desc:'Server menolak request, tidak ada akses.'},
+  {code:404,cat:'Client Error',label:'Not Found',desc:'Resource tidak ditemukan di server.'},
+  {code:405,cat:'Client Error',label:'Method Not Allowed',desc:'Method HTTP tidak didukung untuk resource ini.'},
+  {code:408,cat:'Client Error',label:'Request Timeout',desc:'Server timeout menunggu request dari client.'},
+  {code:409,cat:'Client Error',label:'Conflict',desc:'Request bentrok dengan kondisi server saat ini.'},
+  {code:422,cat:'Client Error',label:'Unprocessable Entity',desc:'Request tidak bisa diproses karena semantic error.'},
+  {code:429,cat:'Client Error',label:'Too Many Requests',desc:'Client melebihi batas request (rate limiting).'},
+  {code:500,cat:'Server Error',label:'Internal Server Error',desc:'Server mengalami error internal.'},
+  {code:502,cat:'Server Error',label:'Bad Gateway',desc:'Gateway menerima response invalid dari server upstream.'},
+  {code:503,cat:'Server Error',label:'Service Unavailable',desc:'Server sementara tidak bisa melayani (overload/maintenance).'},
+  {code:504,cat:'Server Error',label:'Gateway Timeout',desc:'Gateway tidak menerima response dari server upstream.'},
 ];
 
-var catColors=&#123;Informational:'#3b82f6',Success:'#22c55e',Redirection:'#f59e0b','Client Error':'#ef4444','Server Error':'#dc2626'&#125;;
+var catColors={Informational:'#3b82f6',Success:'#22c55e',Redirection:'#f59e0b','Client Error':'#ef4444','Server Error':'#dc2626'};
 
-function render(q)&#123;
+function render(q){
   q=(q||'').toLowerCase();
   var list=document.getElementById('statusList');list.innerHTML='';
-  statuses.forEach(function(s)&#123;
+  statuses.forEach(function(s){
     if(q&&!String(s.code).includes(q)&&!s.label.toLowerCase().includes(q)&&!s.cat.toLowerCase().includes(q)&&!s.desc.toLowerCase().includes(q))return;
     var col=document.createElement('div');col.className='md:w-1/3 w-full sm:w-1/2 w-full';
     col.innerHTML='<div class="card shadow-sm border-0 h-full p-3">'+
@@ -79,9 +79,9 @@ function render(q)&#123;
       '<div class="text-sm opacity-60">'+s.desc+'</div>'+
       '<div class="mt-1"><span class="badge bg-light text-dark" style="font-size:0.6rem;">'+s.cat+'</span></div></div>';
     list.appendChild(col);
-  &#125;);
-&#125;
+  });
+}
 render();
-document.getElementById('statusSearch').addEventListener('input',function()&#123;render(this.value)&#125;);
+document.getElementById('statusSearch').addEventListener('input',function(){render(this.value)});
 </script>
 

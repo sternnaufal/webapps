@@ -50,42 +50,42 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('jwtInput'),hdr=document.getElementById('headerOut'),pay=document.getElementById('payloadOut'),msg=document.getElementById('statusMsg'),sec=document.getElementById('secretKey'),vres=document.getElementById('verifyResult');
-function decode()&#123;
+function decode(){
   var t=inp.value.trim();
-  if(!t||t.split('.').length<3)&#123;hdr.textContent='';pay.textContent='';msg.textContent='';return;&#125;
+  if(!t||t.split('.').length<3){hdr.textContent='';pay.textContent='';msg.textContent='';return;}
   var parts=t.split('.');
-  try&#123;
+  try{
     var header=JSON.parse(atob(parts[0].replace(/-/g,'+').replace(/_/g,'/')));
     var payload=JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
     hdr.textContent=JSON.stringify(header,null,2);
     pay.textContent=JSON.stringify(payload,null,2);
     msg.innerHTML='<span class="text-success">? Valid JWT format</span>';
     inp.className='input input-bordered w-full font-mono valid';
-  &#125;catch(e)&#123;
+  }catch(e){
     hdr.textContent='Error: '+e.message;pay.textContent='';msg.innerHTML='<span class="text-error">? Invalid JWT format</span>';
     inp.className='input input-bordered w-full font-mono invalid';
-  &#125;
-&#125;
+  }
+}
 inp.addEventListener('input',decode);decode();
 
-function b64url(s)&#123;return s.replace(/-/g,'+').replace(/_/g,'/')&#125;
-function toU8(s)&#123;return Uint8Array.from(atob(s),function(c)&#123;return c.charCodeAt(0)&#125;)&#125;
-document.getElementById('btnVerify').addEventListener('click',async function()&#123;
+function b64url(s){return s.replace(/-/g,'+').replace(/_/g,'/')}
+function toU8(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
+document.getElementById('btnVerify').addEventListener('click',async function(){
   var t=inp.value.trim(),s=sec.value.trim();
-  if(!t||!s)&#123;vres.textContent='Token dan secret harus diisi.';vres.className='small text-error';return;&#125;
+  if(!t||!s){vres.textContent='Token dan secret harus diisi.';vres.className='small text-error';return;}
   var parts=t.split('.');
-  if(parts.length<3)&#123;vres.textContent='Token tidak valid.';vres.className='small text-error';return;&#125;
+  if(parts.length<3){vres.textContent='Token tidak valid.';vres.className='small text-error';return;}
   vres.textContent='Memverifikasi...';vres.className='text-sm opacity-60';
-  try&#123;
+  try{
     var key=toU8(b64url(btoa(s))).buffer;
-    var alg=&#123;name:'HMAC',hash:&#123;name:'SHA-256'&#125;&#125;;
+    var alg={name:'HMAC',hash:{name:'SHA-256'}};
     var sig=await crypto.subtle.importKey('raw',key,alg,false,['verify']);
     var ok=await crypto.subtle.verify(alg,sig,toU8(b64url(parts[2])),new TextEncoder().encode(parts[0]+'.'+parts[1]));
     vres.textContent=ok?'? Signature valid!':'? Signature TIDAK valid (secret salah?)';
     vres.className='small '+(ok?'text-success':'text-error');
-  &#125;catch(e)&#123;
+  }catch(e){
     vres.textContent='Gagal verifikasi. Mungkin bukan HS256 atau format salah.';vres.className='small text-warning';
-  &#125;
-&#125;);
+  }
+});
 </script>
 

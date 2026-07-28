@@ -71,69 +71,69 @@ var timeEl=document.getElementById('pomoTime'),phaseEl=document.getElementById('
 var focusInp=document.getElementById('focusTime'),breakInp=document.getElementById('breakTime'),longInp=document.getElementById('longBreak');
 var btnStart=document.getElementById('btnStart'),btnPause=document.getElementById('btnPause'),btnReset=document.getElementById('btnReset');
 
-function updateDisplay()&#123;
+function updateDisplay(){
   var m=Math.floor(seconds/60),s=seconds%60;
   timeEl.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
   phaseEl.textContent=isFocus?'Fokus':(sessionCount%4===0&&!isFocus?'Long Break':'Istirahat');
   phaseEl.style.color=isFocus?'#6366f1':'#22c55e';
   circleEl.className='pomo-circle'+(isFocus?'':' rest');
   countEl.textContent='Sesi: '+sessionCount;
-&#125;
+}
 
-function tick()&#123;
-  if(seconds<=0)&#123;
-    if(isFocus)&#123;
+function tick(){
+  if(seconds<=0){
+    if(isFocus){
       sessionCount++;
       isFocus=false;
       var longEvery=4,lb=parseInt(longInp.value)||15;
       seconds=(sessionCount%longEvery===0?lb:parseInt(breakInp.value||5))*60;
       notify('Waktu habis!','Waktunya '+(sessionCount%longEvery===0?'long break':'istirahat')+'!');
-    &#125;else&#123;
+    }else{
       isFocus=true;
       seconds=parseInt(focusInp.value||25)*60;
       notify('Istirahat selesai!','Kembali fokus!');
-    &#125;
-  &#125;else&#123;
+    }
+  }else{
     seconds--;
-  &#125;
+  }
   updateDisplay();
-&#125;
+}
 
-function notify(title,body)&#123;
-  if('Notification'in window&&Notification.permission==='granted')new Notification(title,&#123;body:body,icon:'apple-touch-icon.png'&#125;);
-&#125;
+function notify(title,body){
+  if('Notification'in window&&Notification.permission==='granted')new Notification(title,{body:body,icon:'apple-touch-icon.png'});
+}
 
-function startTimer()&#123;
+function startTimer(){
   if(isRunning)return;
   if(seconds<=0)return;
   if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
   isRunning=true;
   timer=setInterval(tick,1000);
   btnStart.disabled=true;btnPause.disabled=false;
-&#125;
+}
 
-function pauseTimer()&#123;
+function pauseTimer(){
   if(!isRunning)return;
   isRunning=false;
   clearInterval(timer);timer=null;
   btnStart.disabled=false;btnPause.disabled=true;
-&#125;
+}
 
-function resetTimer()&#123;
+function resetTimer(){
   pauseTimer();
   isFocus=true;seconds=parseInt(focusInp.value||25)*60;sessionCount=0;
   updateDisplay();
   btnStart.disabled=false;btnPause.disabled=true;
-&#125;
+}
 
 btnStart.addEventListener('click',startTimer);
 btnPause.addEventListener('click',pauseTimer);
 btnReset.addEventListener('click',resetTimer);
-[focusInp,breakInp,longInp].forEach(function(el)&#123;
-  el.addEventListener('change',function()&#123;
-    if(!isRunning)&#123;resetTimer()&#125;
-  &#125;);
-&#125;);
+[focusInp,breakInp,longInp].forEach(function(el){
+  el.addEventListener('change',function(){
+    if(!isRunning){resetTimer()}
+  });
+});
 resetTimer();
 </script>
 

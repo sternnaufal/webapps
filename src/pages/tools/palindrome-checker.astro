@@ -62,8 +62,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),cs=document.getElementById('caseSensitive');
-function check()&#123;
-  var t=inp.value.trim();if(!t)&#123;res.style.display='none';return&#125;
+function check(){
+  var t=inp.value.trim();if(!t){res.style.display='none';return}
   var clean=cs.checked?t:t.toLowerCase().replace(/[^a-z0-9]/g,'');
   var rev=clean.split('').reverse().join('');
   var isPal=clean===rev;
@@ -72,13 +72,13 @@ function check()&#123;
   txt.textContent=isPal?'Palindrome!':'Bukan Palindrome';
   txt.style.color=isPal?'#22c55e':'#ef4444';
   det.innerHTML='<span class="opacity-60">Setelah difilter: "'+clean+'"<br>Dibalik: "'+rev+'"</span>';
-&#125;
+}
 document.getElementById('btnCheck').addEventListener('click',check);
-document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';res.style.display='none'&#125;);
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';res.style.display='none'});
 inp.addEventListener('input',check);cs.addEventListener('change',check);
-document.querySelectorAll('.example').forEach(function(el)&#123;
-  el.addEventListener('click',function()&#123;inp.value=this.textContent;check()&#125;);
-&#125;);
+document.querySelectorAll('.example').forEach(function(el){
+  el.addEventListener('click',function(){inp.value=this.textContent;check()});
+});
 inp.value='Kasur ini rusak';check();
 </script>
 

@@ -49,8 +49,8 @@ Rakha,rakha@example.com,User</textarea></div>
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
 var inp=document.getElementById('csvInput'),delim=document.getElementById('delimiter'),hasHdr=document.getElementById('hasHeader'),con=document.getElementById('tableContainer'),tbl=document.getElementById('csvTable');
-function parse()&#123;var t=inp.value.trim();if(!t)return;var d=delim.value,r=t.split('\\n').map(function(l)&#123;return l.split(d)&#125;),h=hasHdr.checked&&r.length>0?r.shift():null,s='<thead class="table-light">';if(h)&#123;s+='<tr>';for(var i=0;i<h.length;i++)s+='<th>'+esc(h[i])+'</th>';s+='</tr>'&#125;s+='</thead><tbody>';for(var i=0;i<r.length;i++)&#123;s+='<tr>';for(var j=0;j<r[i].length;j++)s+='<td>'+esc(r[i][j])+'</td>';s+='</tr>'&#125;s+='</tbody>';tbl.innerHTML=s;con.style.display='block'&#125;
-function esc(s)&#123;var d=document.createElement('div');d.textContent=s;return d.innerHTML&#125;
-document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';con.style.display='none'&#125;);
+function parse(){var t=inp.value.trim();if(!t)return;var d=delim.value,r=t.split('\\n').map(function(l){return l.split(d)}),h=hasHdr.checked&&r.length>0?r.shift():null,s='<thead class="table-light">';if(h){s+='<tr>';for(var i=0;i<h.length;i++)s+='<th>'+esc(h[i])+'</th>';s+='</tr>'}s+='</thead><tbody>';for(var i=0;i<r.length;i++){s+='<tr>';for(var j=0;j<r[i].length;j++)s+='<td>'+esc(r[i][j])+'</td>';s+='</tr>'}s+='</tbody>';tbl.innerHTML=s;con.style.display='block'}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function(){inp.value='';con.style.display='none'});
 </script>
 

@@ -54,19 +54,19 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),cnt=document.getElementById('countInput'),sep=document.getElementById('separator'),cst=document.getElementById('customSep'),out=document.getElementById('outputArea'),stats=document.getElementById('outputStats');
-sep.addEventListener('change',function()&#123;cst.style.display=this.value==='custom'?'block':'none'&#125;);
-document.getElementById('btnGenerate').addEventListener('click',function()&#123;
+sep.addEventListener('change',function(){cst.style.display=this.value==='custom'?'block':'none'});
+document.getElementById('btnGenerate').addEventListener('click',function(){
   var t=inp.value,n=parseInt(cnt.value)||1,s=sep.value;
   if(s==='custom')s=cst.value;
   else if(s==='\\\\n')s='\\n';
   var result=Array(n).fill(t).join(s);
   out.value=result;
   stats.textContent=result.length+' chars, '+n+'x repeat';
-&#125;);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;
+});
+document.getElementById('btnCopy').addEventListener('click',function(){
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
-&#125;);
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
 document.getElementById('btnGenerate').click();
 </script>
 

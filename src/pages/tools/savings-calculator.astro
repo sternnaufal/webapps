@@ -62,30 +62,30 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var initial=document.getElementById('initialAmount'),monthly=document.getElementById('monthlyAmount'),rate=document.getElementById('interestRate'),years=document.getElementById('years'),freq=document.getElementById('compoundFreq');
-function fmt(n)&#123;return 'Rp '+Math.round(n).toLocaleString('id-ID')&#125;
+function fmt(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
 
-document.getElementById('btnCalc').addEventListener('click',function()&#123;
+document.getElementById('btnCalc').addEventListener('click',function(){
   var P=parseFloat(initial.value)||0,M=parseFloat(monthly.value)||0,r=parseFloat(rate.value)/100/100,y=parseInt(years.value)||1,n=parseInt(freq.value);
   var totalContrib=P+(M*12*y),balance=P,prevBalance=P,totalInterest=0;
   var rows='',monthsPerYear=12,months=y*12,monthlyRate=r/12;
 
-  for(var year=1;year<=y;year++)&#123;
+  for(var year=1;year<=y;year++){
     var annualContrib=M*12;
-    for(var m=1;m<=12;m++)&#123;
+    for(var m=1;m<=12;m++){
       balance=(balance+monthlyRate)*(1+monthlyRate);
       balance+=M;
-    &#125;
+    }
     var yearInterest=balance-prevBalance-annualContrib;
     totalInterest+=yearInterest;
     prevBalance=balance;
     rows+='<tr><td>'+year+'</td><td>'+fmt(totalContrib)+'</td><td>'+fmt(totalInterest)+'</td><td class="font-bold">'+fmt(balance)+'</td></tr>';
-  &#125;
+  }
 
   document.getElementById('totalContrib').textContent=fmt(totalContrib);
   document.getElementById('totalInterest').textContent=fmt(totalInterest);
   document.getElementById('totalFinal').textContent=fmt(balance);
   document.getElementById('yearlyTable').innerHTML=rows;
-&#125;);
+});
 document.getElementById('btnCalc').click();
 </script>
 

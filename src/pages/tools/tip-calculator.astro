@@ -66,8 +66,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var bill=document.getElementById('billInput'),tipRange=document.getElementById('tipRange'),tipLabel=document.getElementById('tipLabel'),people=document.getElementById('peopleInput');
-function fmt(n)&#123;return 'Rp '+Math.round(n).toLocaleString('id-ID')&#125;
-function calc()&#123;
+function fmt(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
+function calc(){
   var b=parseFloat(bill.value)||0,p=parseInt(people.value)||1,t=parseFloat(tipRange.value);
   var tip=b*t/100,total=b+tip,tipPP=tip/p,totalPP=total/p;
   document.getElementById('tipAmount').textContent=fmt(tip);
@@ -80,19 +80,19 @@ function calc()&#123;
     '<tr class="font-bold"><td>Total</td><td class="text-right">'+fmt(total)+'</td></tr>'+
     '<tr><td colspan="2"><hr class="my-1"></td></tr>'+
     '<tr><td>Dibagi '+p+' orang</td><td class="text-right">'+fmt(totalPP)+'/orang</td></tr></table>';
-&#125;
+}
 bill.addEventListener('input',calc);
-tipRange.addEventListener('input',function()&#123;tipLabel.textContent=this.value+'%';calc();&#125;);
+tipRange.addEventListener('input',function(){tipLabel.textContent=this.value+'%';calc();});
 people.addEventListener('input',calc);
-document.getElementById('decPeople').addEventListener('click',function()&#123;people.value=Math.max(1,parseInt(people.value)-1);calc();&#125;);
-document.getElementById('incPeople').addEventListener('click',function()&#123;people.value=Math.min(100,parseInt(people.value)+1);calc();&#125;);
-document.querySelectorAll('#tipPresets .btn').forEach(function(b)&#123;
-  b.addEventListener('click',function()&#123;
-    document.querySelectorAll('#tipPresets .btn').forEach(function(x)&#123;x.className='btn btn-outline-primary btn-sm'&#125;);
+document.getElementById('decPeople').addEventListener('click',function(){people.value=Math.max(1,parseInt(people.value)-1);calc();});
+document.getElementById('incPeople').addEventListener('click',function(){people.value=Math.min(100,parseInt(people.value)+1);calc();});
+document.querySelectorAll('#tipPresets .btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#tipPresets .btn').forEach(function(x){x.className='btn btn-outline-primary btn-sm'});
     this.className='btn btn-primary btn-sm';
     tipRange.value=this.dataset.pct;tipLabel.textContent=this.dataset.pct+'%';calc();
-  &#125;);
-&#125;);
+  });
+});
 calc();
 </script>
 

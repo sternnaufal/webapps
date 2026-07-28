@@ -67,8 +67,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var hp=document.getElementById('homePrice'),dp=document.getElementById('downPayment'),ir=document.getElementById('interestRate'),lt=document.getElementById('loanTerm');
-function fmt(x)&#123;if(x>=1e12)return'Rp '+(x/1e12).toFixed(1)+' T';return'Rp '+Math.round(x).toLocaleString('id-ID')&#125;
-function calc()&#123;
+function fmt(x){if(x>=1e12)return'Rp '+(x/1e12).toFixed(1)+' T';return'Rp '+Math.round(x).toLocaleString('id-ID')}
+function calc(){
   var h=Math.max(0,parseFloat(hp.value)||0),d=Math.max(0,parseFloat(dp.value)||0),i=Math.max(0,parseFloat(ir.value)||0)/100/12,t=Math.max(1,parseInt(lt.value)||1)*12;
   var loan=Math.max(0,h-d);
   var monthly=i>0?loan*i*Math.pow(1+i,t)/(Math.pow(1+i,t)-1):loan/t;
@@ -81,7 +81,7 @@ function calc()&#123;
   document.getElementById('effRateDisplay').textContent=ir.value+'%';
   document.getElementById('numPayDisplay').textContent=t+'x';
   document.getElementById('ratioDisplay').textContent=loan>0?(monthly/loan*100).toFixed(2)+'%':'-';
-&#125;
+}
 document.getElementById('btnCalc').addEventListener('click',calc);
 calc();
 </script>

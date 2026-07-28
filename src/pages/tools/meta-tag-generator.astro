@@ -81,9 +81,9 @@ const toolCss = `
 </style>
 
 <script is:inline>
-function esc(t) &#123; return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); &#125;
+function esc(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-document.getElementById('btnGenerate').addEventListener('click', function() &#123;
+document.getElementById('btnGenerate').addEventListener('click', function() {
   var title = esc(document.getElementById('mt-title').value.trim());
   var desc = esc(document.getElementById('mt-desc').value.trim());
   var keywords = esc(document.getElementById('mt-keywords').value.trim());
@@ -117,10 +117,10 @@ document.getElementById('btnGenerate').addEventListener('click', function() &#12
   if (ogImage) lines.push('&lt;meta property="og:image" content="' + ogImage + '" /&gt;');
   lines.push('&lt;meta property="og:locale" content="id_ID" /&gt;');
   if (ogSitename) lines.push('&lt;meta property="og:site_name" content="' + ogSitename + '" /&gt;');
-  if (ogImage) &#123;
+  if (ogImage) {
     lines.push('&lt;meta property="og:image:width" content="1200" /&gt;');
     lines.push('&lt;meta property="og:image:height" content="630" /&gt;');
-  &#125;
+  }
   lines.push('');
 
   // Twitter
@@ -131,21 +131,21 @@ document.getElementById('btnGenerate').addEventListener('click', function() &#12
   if (ogImage) lines.push('&lt;meta name="twitter:image" content="' + ogImage + '" /&gt;');
 
   document.getElementById('output').innerHTML = lines.join('\\n');
-&#125;);
+});
 
-document.getElementById('btnCopy').addEventListener('click', function() &#123;
+document.getElementById('btnCopy').addEventListener('click', function() {
   var text = document.getElementById('output').innerText;
-  navigator.clipboard.writeText(text).then(function() &#123; showToast('Copied to clipboard', 'success'); &#125;);
-&#125;);
+  navigator.clipboard.writeText(text).then(function() { showToast('Copied to clipboard', 'success'); });
+});
 
-function showToast(message) &#123;
+function showToast(message) {
   var t = document.createElement('div');
   t.className = 'toast items-center text-bg-light border p-2';
   t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
   t.innerHTML = '<div class="flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>';
   document.body.appendChild(t);
-  t.querySelector('.btn-close').addEventListener('click', function() &#123; t.remove(); &#125;);
-  setTimeout(function() &#123; t.remove(); &#125;, 2500);
-&#125;
+  t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
+  setTimeout(function() { t.remove(); }, 2500);
+}
 </script>
 

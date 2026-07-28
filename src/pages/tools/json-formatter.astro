@@ -60,45 +60,45 @@ var input = document.getElementById('jsonInput');
 var output = document.getElementById('jsonOutput');
 var msg = document.getElementById('validationMsg');
 
-function process(spaces) &#123;
+function process(spaces) {
   var raw = input.value.trim();
-  if (!raw) &#123; msg.textContent = ''; msg.className = 'mt-2 small'; output.value = ''; return; &#125;
-  try &#123;
+  if (!raw) { msg.textContent = ''; msg.className = 'mt-2 small'; output.value = ''; return; }
+  try {
     var parsed = JSON.parse(raw);
     output.value = JSON.stringify(parsed, null, spaces === undefined ? 2 : spaces);
     msg.textContent = 'Valid JSON!';
     msg.className = 'mt-2 small text-success';
-  &#125; catch (e) &#123;
+  } catch (e) {
     output.value = '';
     msg.textContent = 'Error: ' + e.message;
     msg.className = 'mt-2 small text-error';
-  &#125;
-&#125;
+  }
+}
 
-document.getElementById('btnFormat').addEventListener('click', function() &#123; process(2); &#125;);
-document.getElementById('btnFormat4').addEventListener('click', function() &#123; process(4); &#125;);
-document.getElementById('btnMinify').addEventListener('click', function() &#123;
+document.getElementById('btnFormat').addEventListener('click', function() { process(2); });
+document.getElementById('btnFormat4').addEventListener('click', function() { process(4); });
+document.getElementById('btnMinify').addEventListener('click', function() {
   var raw = input.value.trim();
   if (!raw) return;
-  try &#123;
+  try {
     output.value = JSON.stringify(JSON.parse(raw));
     msg.textContent = 'Minified!';
     msg.className = 'mt-2 small text-success';
-  &#125; catch (e) &#123;
+  } catch (e) {
     msg.textContent = 'Error: ' + e.message;
     msg.className = 'mt-2 small text-error';
-  &#125;
-&#125;);
-document.getElementById('btnValidate').addEventListener('click', function() &#123; process(); &#125;);
-document.getElementById('btnClear').addEventListener('click', function() &#123; input.value = ''; output.value = ''; msg.textContent = ''; msg.className = 'mt-2 small'; &#125;);
+  }
+});
+document.getElementById('btnValidate').addEventListener('click', function() { process(); });
+document.getElementById('btnClear').addEventListener('click', function() { input.value = ''; output.value = ''; msg.textContent = ''; msg.className = 'mt-2 small'; });
 
-document.getElementById('btnCopy').addEventListener('click', function() &#123;
+document.getElementById('btnCopy').addEventListener('click', function() {
   if (!output.value) return;
-  navigator.clipboard.writeText(output.value).then(function() &#123;
+  navigator.clipboard.writeText(output.value).then(function() {
     var btn = document.getElementById('btnCopy');
     btn.textContent = 'Copied!';
-    setTimeout(function() &#123; btn.textContent = 'Copy'; &#125;, 1500);
-  &#125;);
-&#125;);
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+  });
+});
 </script>
 

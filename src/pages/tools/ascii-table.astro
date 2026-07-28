@@ -77,15 +77,15 @@ var ctrlNames = [
   'DLE','DC1','DC2','DC3','DC4','NAK','SYN','ETB','CAN','EM','SUB','ESC','FS','GS','RS','US'
 ];
 
-function asciiChar(i) &#123;
+function asciiChar(i) {
   if (i === 32) return 'SP';
   if (i === 127) return 'DEL';
   if (i >= 33 && i <= 126) return String.fromCharCode(i);
   return ctrlNames[i] || '';
-&#125;
+}
 
-function asciiDesc(i) &#123;
-  var descs = &#123;
+function asciiDesc(i) {
+  var descs = {
     0:'Null byte', 1:'Start of Heading', 2:'Start of Text', 3:'End of Text',
     4:'End of Transmission', 5:'Enquiry', 6:'Acknowledgment', 7:'Bell',
     8:'Backspace', 9:'Horizontal Tab', 10:'Line Feed', 11:'Vertical Tab',
@@ -95,11 +95,11 @@ function asciiDesc(i) &#123;
     24:'Cancel', 25:'End of Medium', 26:'Substitute', 27:'Escape',
     28:'File Separator', 29:'Group Separator', 30:'Record Separator', 31:'Unit Separator',
     32:'Spasi', 127:'Delete'
-  &#125;;
+  };
   return descs[i] || '';
-&#125;
+}
 
-function buildRow(i) &#123;
+function buildRow(i) {
   var ch = asciiChar(i);
   var desc = asciiDesc(i);
   var isCtrl = i < 32 || i === 127;
@@ -112,26 +112,26 @@ function buildRow(i) &#123;
     '<td>' + i.toString(2).padStart(8,'0') + '</td>' +
     '<td class="' + cls + '">' + display + '</td>' +
     '<td class="text-sm opacity-60">' + (desc || '&mdash;') + '</td></tr>';
-&#125;
+}
 
 var allRows = [];
 for (var i = 0; i < 128; i++) allRows.push(buildRow(i));
 
-function render(rows) &#123;
+function render(rows) {
   document.getElementById('asciiBody').innerHTML = rows.join('');
   document.getElementById('rowCount').textContent = rows.length + ' / 128';
-&#125;
+}
 
 render(allRows);
 
 var searchTimer;
-document.getElementById('asciiSearch').addEventListener('input', function() &#123;
+document.getElementById('asciiSearch').addEventListener('input', function() {
   clearTimeout(searchTimer);
   var self = this;
-  searchTimer = setTimeout(function() &#123;
+  searchTimer = setTimeout(function() {
     var q = self.value.toLowerCase().trim();
     var cat = document.getElementById('filterCat').value;
-    var filtered = allRows.filter(function(r) &#123;
+    var filtered = allRows.filter(function(r) {
       var el = document.createElement('tr');
       el.innerHTML = r;
       if (cat !== 'all' && el.dataset.cat !== cat) return false;
@@ -140,23 +140,23 @@ document.getElementById('asciiSearch').addEventListener('input', function() &#12
              el.dataset.hex.toLowerCase().indexOf(q) !== -1 ||
              el.dataset.char.toLowerCase().indexOf(q) !== -1 ||
              el.dataset.desc.toLowerCase().indexOf(q) !== -1;
-    &#125;);
+    });
     render(filtered);
-  &#125;, 150);
-&#125;);
+  }, 150);
+});
 
-document.getElementById('filterCat').addEventListener('change', function() &#123;
+document.getElementById('filterCat').addEventListener('change', function() {
   document.getElementById('asciiSearch').dispatchEvent(new Event('input'));
-&#125;);
+});
 
-function showToast(message) &#123;
+function showToast(message) {
   var t = document.createElement('div');
   t.className = 'toast items-center text-bg-light border p-2';
   t.style.position = 'fixed'; t.style.right = '20px'; t.style.bottom = '20px'; t.style.zIndex = 9999;
   t.innerHTML = '<div class="flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>';
   document.body.appendChild(t);
-  t.querySelector('.btn-close').addEventListener('click', function() &#123; t.remove(); &#125;);
-  setTimeout(function() &#123; t.remove(); &#125;, 2500);
-&#125;
+  t.querySelector('.btn-close').addEventListener('click', function() { t.remove(); });
+  setTimeout(function() { t.remove(); }, 2500);
+}
 </script>
 

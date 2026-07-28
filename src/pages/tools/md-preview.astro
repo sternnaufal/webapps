@@ -71,31 +71,31 @@ const relatedTools = [
 </script>
 
 <script is:inline>
-marked.setOptions(&#123;
+marked.setOptions({
   breaks: true,
   gfm: true,
-  highlight: function(code, lang) &#123;
+  highlight: function(code, lang) {
     return hljs.highlightAuto(code, [lang]).value;
-  &#125;
-&#125;);
+  }
+});
 
 var editor = document.getElementById('editor');
 var preview = document.getElementById('preview');
 var copyBtn = document.getElementById('copyBtn');
 
-function updatePreview() &#123;
+function updatePreview() {
   preview.innerHTML = marked.parse(editor.value);
-&#125;
+}
 
 editor.addEventListener('input', updatePreview);
 
-copyBtn.addEventListener('click', function() &#123;
+copyBtn.addEventListener('click', function() {
   navigator.clipboard.writeText(preview.innerHTML)
-    .then(function() &#123;
+    .then(function() {
       copyBtn.textContent = '? Copied!';
-      setTimeout(function() &#123; copyBtn.textContent = '?? Copy HTML'; &#125;, 1500);
-    &#125;);
-&#125;);
+      setTimeout(function() { copyBtn.textContent = '?? Copy HTML'; }, 1500);
+    });
+});
 
 editor.value = '# Selamat Datang ??\\n\\nIni **Markdown Previewer**!\\n\\n- Tulisan *italic*\\n- Tulisan **bold**\\n- Link: [Web Naufal Rakha](https://naufalrakha.my.id)\\n\\n\`\`\`js\\nconsole.log(\\'Hello World\\');\\n\`\`\`';
 updatePreview();

@@ -5,144 +5,111 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Diff Checker';
 const description = 'Bandingkan perbedaan dua teks atau file secara online. Diff checker dengan highlight perubahan.';
 const keywords = 'diff checker, text diff, compare text, perbedaan teks, diff tool';
-const aboutText = 'Diff Checker Bandingkan perbedaan dua teks atau file secara online. Diff checker dengan highlight perubahan.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Diff checker online untuk membandingkan dua teks dan menampilkan perbedaannya secara detail. Alat ini sangat berguna bagi developer yang perlu membandingkan versi kode, reviewer yang memeriksa perubahan dokumen, atau siapa pun yang ingin mengetahui perbedaan antara dua teks. Menggunakan algoritma LCS (Longest Common Subsequence) untuk mendeteksi baris yang ditambahkan, dihapus, atau tidak berubah.';
+const aboutExtra = 'Hasil perbandingan ditampilkan dalam format yang mudah dibaca: baris baru (ditambahkan) ditandai dengan warna hijau dan prefix +, baris yang dihapus ditandai dengan warna merah dan prefix -. Statistik perubahan (jumlah added, removed, unchanged) ditampilkan untuk memberikan gambaran cepat tentang seberapa besar perbedaan antar teks.';
 const relatedTools = [
   { slug: 'regex-tester', name: 'Regex Tester', icon: '.*' },
-  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
-  { slug: 'list-sorter', name: 'List Sorter', icon: '↕' }
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
+  { slug: 'list-sorter', name: 'List Sorter', icon: '↕' },
 ];
-
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<div class="flex flex-wrap gap-3 mb-3">
-        <div class="md:w-1/2 w-full">
-          <label for="textA" class="label-text font-semibold">Original (A)</label>
-          <textarea id="textA" class="input input-bordered w-full font-monospace" rows="8" placeholder="Text A...">Hello World
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+      <div>
+        <label for="textA" class="text-xs font-medium opacity-60 mb-1 block">Original (A)</label>
+        <textarea id="textA" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" placeholder="Text A...">Hello World
 This is line two
 Another line here</textarea>
-        </div>
-        <div class="md:w-1/2 w-full">
-          <label for="textB" class="label-text font-semibold">Modified (B)</label>
-          <textarea id="textB" class="input input-bordered w-full font-monospace" rows="8" placeholder="Text B...">Hello World
+      </div>
+      <div>
+        <label for="textB" class="text-xs font-medium opacity-60 mb-1 block">Modified (B)</label>
+        <textarea id="textB" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" placeholder="Text B...">Hello World
 This is line two modified
 Another line here
 New line added</textarea>
-        </div>
       </div>
-      <div class="flex gap-2 mb-4">
-        <button id="btnDiff" class="btn btn-primary">Compare</button>
-        <button id="btnClear" class="btn btn-outline-danger">Clear</button>
+    </div>
+    <div class="flex gap-2 mb-3">
+      <button id="btnDiff" class="btn btn-primary btn-sm">Compare</button>
+      <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+    </div>
+
+    <div id="diffOutput" style="display:none;">
+      <div class="text-xs font-semibold opacity-50 mb-2">
+        Diff Result
+        <span id="diffStats" class="ml-2 opacity-40"></span>
       </div>
-
-      <div id="diffOutput" style="display:none;">
-        <div class="card shadow-sm">
-          <div class="card-header flex justify-between items-center">
-            <span class="font-semibold">Diff Result</span>
-            <span id="diffStats" class="text-sm opacity-60"></span>
-          </div>
-          <div class="card-body p-0">
-            <div class="overflow-x-auto">
-              <table class="diff-table" id="diffTable"></table>
-            </div>
-          </div>
-        </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs font-mono" id="diffTable"></table>
       </div>
-    `n
+    </div>
+  </div>
 
-<ToolShell about={aboutText} />
-
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
 
 <style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
+.diff-added { background: oklch(0.6 0.18 150 / 0.1); }
+.diff-removed { background: oklch(0.6 0.22 25 / 0.1); }
+.diff-unchanged { opacity: 0.6; }
+.diff-table td { padding: 2px 8px; vertical-align: top; }
+.line-num { opacity: 0.3; text-align: right; padding-right: 8px; user-select: none; }
 </style>
 
 <script is:inline>
-</script>
-
-<script is:inline>
-function diff(a, b) &#123;
-  var linesA = a.split('\\n');
-  var linesB = b.split('\\n');
-  var m = linesA.length, n = linesB.length;
-  var dp = [];
-  for (var i = 0; i <= m; i++) &#123; dp[i] = []; dp[i][0] = i; &#125;
-  for (var j = 0; j <= n; j++) &#123; dp[0][j] = j; &#125;
-  for (var i = 1; i <= m; i++) &#123;
-    for (var j = 1; j <= n; j++) &#123;
-      var cost = linesA[i - 1] === linesB[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
-    &#125;
-  &#125;
-
-  var result = [];
-  var i = m, j = n;
-  while (i > 0 || j > 0) &#123;
-    if (i > 0 && j > 0 && linesA[i - 1] === linesB[j - 1]) &#123;
-      result.unshift(&#123; type: 'unchanged', textA: linesA[i - 1], textB: linesB[j - 1], lineA: i, lineB: j &#125;);
-      i--; j--;
-    &#125; else if (j > 0 && (i === 0 || dp[i][j - 1] + 1 <= dp[i - 1][j])) &#123;
-      result.unshift(&#123; type: 'added', textA: '', textB: linesB[j - 1], lineA: null, lineB: j &#125;);
-      j--;
-    &#125; else if (i > 0) &#123;
-      result.unshift(&#123; type: 'removed', textA: linesA[i - 1], textB: '', lineA: i, lineB: null &#125;);
-      i--;
-    &#125;
-  &#125;
+function diff(a, b) {
+  var linesA = a.split('\n'), linesB = b.split('\n');
+  var m = linesA.length, n = linesB.length, dp = [];
+  for (var i = 0; i <= m; i++) { dp[i] = []; dp[i][0] = i; }
+  for (var j = 0; j <= n; j++) { dp[0][j] = j; }
+  for (var i = 1; i <= m; i++) for (var j = 1; j <= n; j++) {
+    dp[i][j] = Math.min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (linesA[i-1] === linesB[j-1] ? 0 : 1));
+  }
+  var result = [], i = m, j = n;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && linesA[i-1] === linesB[j-1]) {
+      result.unshift({type:'unchanged',textA:linesA[i-1],textB:linesB[j-1],lineA:i,lineB:j}); i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j-1] + 1 <= dp[i-1][j])) {
+      result.unshift({type:'added',textA:'',textB:linesB[j-1],lineA:null,lineB:j}); j--;
+    } else if (i > 0) {
+      result.unshift({type:'removed',textA:linesA[i-1],textB:'',lineA:i,lineB:null}); i--;
+    }
+  }
   return result;
-&#125;
+}
 
-function escapeHtml(s) &#123;
-  var div = document.createElement('div');
-  div.textContent = s;
-  return div.innerHTML;
-&#125;
+function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-function compare() &#123;
-  var a = document.getElementById('textA').value;
-  var b = document.getElementById('textB').value;
-  var result = diff(a, b);
-  var table = document.getElementById('diffTable');
+function compare() {
+  var a = document.getElementById('textA').value, b = document.getElementById('textB').value;
+  var result = diff(a, b), table = document.getElementById('diffTable');
   table.innerHTML = '';
   var added = 0, removed = 0;
-
-  result.forEach(function(row) &#123;
+  result.forEach(function(row) {
     var tr = document.createElement('tr');
-    if (row.type === 'added') &#123;
-      tr.className = 'diff-added';
-      added++;
-      tr.innerHTML = '<td class="line-num"></td><td></td><td class="line-num">' + row.lineB + '</td><td><span class="text-success">+ </span>' + escapeHtml(row.textB) + '</td>';
-    &#125; else if (row.type === 'removed') &#123;
-      tr.className = 'diff-removed';
-      removed++;
-      tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td><span class="text-error">- </span>' + escapeHtml(row.textA) + '</td><td class="line-num"></td><td></td>';
-    &#125; else &#123;
-      tr.className = 'diff-unchanged';
-      tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td>' + escapeHtml(row.textA) + '</td><td class="line-num">' + row.lineB + '</td><td>' + escapeHtml(row.textB) + '</td>';
-    &#125;
+    if (row.type === 'added') { added++; tr.className = 'diff-added';
+      tr.innerHTML = '<td class="line-num"></td><td></td><td class="line-num">'+row.lineB+'</td><td><span class="text-success">+ </span>'+escapeHtml(row.textB)+'</td>'; }
+    else if (row.type === 'removed') { removed++; tr.className = 'diff-removed';
+      tr.innerHTML = '<td class="line-num">'+row.lineA+'</td><td><span class="text-error">- </span>'+escapeHtml(row.textA)+'</td><td class="line-num"></td><td></td>'; }
+    else { tr.className = 'diff-unchanged';
+      tr.innerHTML = '<td class="line-num">'+row.lineA+'</td><td>'+escapeHtml(row.textA)+'</td><td class="line-num">'+row.lineB+'</td><td>'+escapeHtml(row.textB)+'</td>'; }
     table.appendChild(tr);
-  &#125;);
-
+  });
   document.getElementById('diffOutput').style.display = 'block';
   document.getElementById('diffStats').textContent = added + ' added, ' + removed + ' removed, ' + (result.length - added - removed) + ' unchanged';
-&#125;
+}
 
 document.getElementById('btnDiff').addEventListener('click', compare);
-document.getElementById('btnClear').addEventListener('click', function() &#123;
-  document.getElementById('textA').value = '';
-  document.getElementById('textB').value = '';
+document.getElementById('btnClear').addEventListener('click', function() {
+  document.getElementById('textA').value = ''; document.getElementById('textB').value = '';
   document.getElementById('diffOutput').style.display = 'none';
-&#125;);
+});
 </script>
-

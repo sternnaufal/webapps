@@ -5,87 +5,107 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Age Calculator';
 const description = 'Kalkulator usia online. Hitung umur dalam tahun, bulan, hari, jam, menit, dan detik secara real-time.';
 const keywords = 'age calculator, kalkulator umur, hitung usia, age counter';
-const aboutText = 'Age Calculator Kalkulator usia online. Hitung umur dalam tahun, bulan, hari, jam, menit, dan detik secara real-time.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Kalkulator usia online untuk menghitung umur secara detail hingga tingkat detik. Cukup masukkan tanggal lahir, alat ini akan menghitung usia Anda dalam tahun, bulan, minggu, hari, jam, menit, dan detik secara real-time. Juga menampilkan fakta menarik seperti jumlah detak jantung dan total jam tidur sejak lahir.';
+const aboutExtra = 'Kalkulator usia ini mendukung dua mode: mode real-time yang memperbarui hitungan setiap detik, dan mode tanggal tertentu untuk menghitung usia pada tanggal spesifik di masa lalu atau masa depan. Semua perhitungan dilakukan di browser tanpa mengirim data ke server.';
 const relatedTools = [
   { slug: 'date-calculator', name: 'Date Calculator', icon: '📅' },
   { slug: 'time-converter', name: 'Time Converter', icon: '🌍' },
-  { slug: 'countdown', name: 'Countdown', icon: '⏳' },
-  { slug: 'sleep-cycle', name: 'Sleep Cycle', icon: '😴' }
+  { slug: 'countdown', name: 'Countdown Timer', icon: '⏳' },
+  { slug: 'sleep-cycle', name: 'Sleep Cycle', icon: '😴' },
 ];
-
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">Age Calculator</h1><p class="opacity-60 small mb-0">Hitung usia Anda secara detail. Update real-time setiap detik.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3 mb-3">
-<div class="mb-3"><label class="label-text font-semibold">Tanggal Lahir</label>
-<input type="date" id="birthDate" class="input input-bordered w-full" value="2000-01-01"></div>
-<div class="mb-3"><label class="label-text font-semibold">Hingga Tanggal</label>
-<select id="modeSelect" class="select select-bordered w-full mb-2"><option value="now">Sekarang (real-time)</option><option value="custom">Tanggal Tertentu</option></select>
-<input type="date" id="customDate" class="input input-bordered w-full" disabled></div>
-<button id="btnCalc" class="btn btn-primary w-full">Hitung Usia</button>
-</div>
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Fakta Menarik</h6>
-<div id="funFacts" class="small"></div></div>
-</div>
-<div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3 mb-3">
-<div class="flex flex-wrap gap-3 text-center">
-<div class="col-4"><div class="p-3 rounded" style="background:#eef2ff"><div class="text-3xl font-bold font-bold" id="years" style="color:#6366f1">0</div><small class="opacity-60">Tahun</small></div></div>
-<div class="col-4"><div class="p-3 rounded" style="background:#f0fdf4"><div class="text-3xl font-bold font-bold" id="months" style="color:#16a34a">0</div><small class="opacity-60">Bulan</small></div></div>
-<div class="col-4"><div class="p-3 rounded" style="background:#fefce8"><div class="text-3xl font-bold font-bold" id="days" style="color:#ca8a04">0</div><small class="opacity-60">Hari</small></div></div>
-</div>
-</div>
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Detail Usia</h6>
-<div id="ageDetail" class="small"></div></div>
-</div></div>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <div class="flex flex-wrap gap-4">
+      <div class="lg:w-5/12 w-full">
+        <div class="mb-3">
+          <label class="text-xs font-medium opacity-60 mb-1 block">Tanggal Lahir</label>
+          <input type="date" id="birthDate" class="input input-bordered w-full input-sm" value="2000-01-01">
+        </div>
+        <div class="mb-3">
+          <label class="text-xs font-medium opacity-60 mb-1 block">Hingga Tanggal</label>
+          <select id="modeSelect" class="select select-bordered w-full select-sm mb-2">
+            <option value="now">Sekarang (real-time)</option>
+            <option value="custom">Tanggal Tertentu</option>
+          </select>
+          <input type="date" id="customDate" class="input input-bordered w-full input-sm" disabled>
+        </div>
+        <button id="btnCalc" class="btn btn-primary w-full btn-sm">Hitung Usia</button>
+      </div>
 
-<ToolShell about={aboutText} />
+      <div class="lg:w-7/12 w-full">
+        <div class="grid grid-cols-3 gap-3 mb-3 text-center">
+          <div class="p-3 rounded-lg" style="background:oklch(0.55 0.25 270 / 0.1);">
+            <div class="text-2xl font-bold" id="years" style="color:#6366f1">0</div>
+            <div class="text-xs opacity-50">Tahun</div>
+          </div>
+          <div class="p-3 rounded-lg" style="background:oklch(0.6 0.18 150 / 0.1);">
+            <div class="text-2xl font-bold" id="months" style="color:#16a34a">0</div>
+            <div class="text-xs opacity-50">Bulan</div>
+          </div>
+          <div class="p-3 rounded-lg" style="background:oklch(0.8 0.18 85 / 0.1);">
+            <div class="text-2xl font-bold" id="days" style="color:#ca8a04">0</div>
+            <div class="text-xs opacity-50">Hari</div>
+          </div>
+        </div>
 
+        <div class="mb-3">
+          <div class="text-xs font-semibold opacity-50 mb-2">Detail Usia</div>
+          <div id="ageDetail" class="text-sm"></div>
+        </div>
+
+        <div>
+          <div class="text-xs font-semibold opacity-50 mb-2">Fakta Menarik</div>
+          <div id="funFacts" class="text-sm"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var birth=document.getElementById('birthDate'),mode=document.getElementById('modeSelect'),custom=document.getElementById('customDate'),btn=document.getElementById('btnCalc');
-mode.addEventListener('change',function()&#123;custom.disabled=this.value!=='custom';if(this.value==='custom')custom.value=new Date().toISOString().split('T')[0]&#125;);
+mode.addEventListener('change',function() { custom.disabled=this.value!=='custom'; if(this.value==='custom') custom.value=new Date().toISOString().split('T')[0]; });
 
-function fmt(n,u)&#123;return n+' '+u+(n!==1?'':'')&#125;
-function calc()&#123;
-  var b=new Date(birth.value),e=mode.value==='now'?new Date():new Date(custom.value);
-  if(isNaN(b))&#123;document.getElementById('years').textContent='?';document.getElementById('months').textContent='?';document.getElementById('days').textContent='?';document.getElementById('ageDetail').innerHTML='<span class="text-error">Tanggal lahir tidak valid</span>';return&#125;
-  var ms=e-b,y=Math.floor(ms/31557600000),m=Math.floor((ms%31557600000)/2592000000),d=Math.floor((ms%2592000000)/86400000);
-  var h=Math.floor((ms%86400000)/3600000),mi=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);
-  document.getElementById('years').textContent=y;document.getElementById('months').textContent=m;document.getElementById('days').textContent=d;
-  document.getElementById('ageDetail').innerHTML='<table class="table table-sm small mb-0"><tr><td>Tahun</td><td class="font-bold">'+y+'</td></tr><tr><td>Bulan</td><td class="font-bold">'+(y*12+m)+' bulan</td></tr><tr><td>Minggu</td><td class="font-bold">'+Math.floor(ms/604800000)+' minggu</td></tr><tr><td>Hari</td><td class="font-bold">'+Math.floor(ms/86400000)+' hari</td></tr><tr><td>Jam</td><td class="font-bold">'+Math.floor(ms/3600000)+' jam</td></tr><tr><td>Menit</td><td class="font-bold">'+Math.floor(ms/60000)+' menit</td></tr><tr><td>Detik</td><td class="font-bold">'+Math.floor(ms/1000)+' detik</td></tr></table>';
+function calc() {
+  var b=new Date(birth.value), e=mode.value==='now' ? new Date() : new Date(custom.value);
+  if(isNaN(b)) {
+    document.getElementById('years').textContent='?'; document.getElementById('months').textContent='?';
+    document.getElementById('days').textContent='?';
+    document.getElementById('ageDetail').innerHTML='<span class="text-error text-xs">Tanggal lahir tidak valid</span>';
+    return;
+  }
+  var ms=e-b, y=Math.floor(ms/31557600000), m=Math.floor((ms%31557600000)/2592000000), d=Math.floor((ms%2592000000)/86400000);
+  var h=Math.floor((ms%86400000)/3600000), mi=Math.floor((ms%3600000)/60000), s=Math.floor((ms%60000)/1000);
+  document.getElementById('years').textContent=y;
+  document.getElementById('months').textContent=m;
+  document.getElementById('days').textContent=d;
+
+  document.getElementById('ageDetail').innerHTML='<table class="table table-sm w-full text-xs">'+
+    '<tr><td class="py-1 opacity-60">Tahun</td><td class="py-1 font-bold text-right">'+y+'</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Bulan</td><td class="py-1 font-bold text-right">'+(y*12+m)+' bulan</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Minggu</td><td class="py-1 font-bold text-right">'+Math.floor(ms/604800000)+' minggu</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Hari</td><td class="py-1 font-bold text-right">'+Math.floor(ms/86400000)+' hari</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Jam</td><td class="py-1 font-bold text-right">'+Math.floor(ms/3600000)+' jam</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Menit</td><td class="py-1 font-bold text-right">'+Math.floor(ms/60000)+' menit</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Detik</td><td class="py-1 font-bold text-right">'+Math.floor(ms/1000)+' detik</td></tr></table>';
+
   var facts=document.getElementById('funFacts');
-  var hr=Math.floor(ms/3600000);
-  facts.innerHTML='<ul class="mb-0" style="line-height:1.8">'+
+  facts.innerHTML='<ul class="space-y-1 text-xs opacity-70">'+
     '<li>Anda hidup selama <strong>'+Math.floor(ms/86400000)+' hari</strong></li>'+
-    '<li>Jantung Anda berdetak ~<strong>'+Math.floor(ms/86400000*100000)+' kali</strong></li>'+
+    '<li>Jantung berdetak ~<strong>'+Math.floor(ms/86400000*100000)+' kali</strong></li>'+
     '<li>Anda tidur ~<strong>'+Math.floor(ms/86400000*8)+' jam</strong></li>'+
-    '<li>Usia dalam jam: <strong>'+hr+' jam</strong></li>'+
-    '<li>Usia dalam menit: <strong>'+Math.floor(ms/60000)+' menit</strong></li>'+
-  '</ul>';
-&#125;
+    '<li>Usia dalam jam: <strong>'+Math.floor(ms/3600000)+' jam</strong></li>'+
+    '<li>Usia dalam menit: <strong>'+Math.floor(ms/60000)+' menit</strong></li></ul>';
+}
 btn.addEventListener('click',calc);
-if(mode.value==='now')&#123;calc();setInterval(calc,1000)&#125;else&#123;calc()&#125;
-birth.value='2000-01-01';calc();
+if(mode.value==='now') { calc(); setInterval(calc,1000); } else { calc(); }
 </script>
-

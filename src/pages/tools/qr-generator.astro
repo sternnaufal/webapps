@@ -120,7 +120,7 @@ const extraHtml = `
 </script>
 
 <script is:inline>
-(function()&#123;
+(function(){
   var elText   = document.getElementById('qrText');
   var elSize   = document.getElementById('qrSize');
   var elEcc    = document.getElementById('qrEcc');
@@ -136,13 +136,13 @@ const extraHtml = `
 
   var lastCanvasDataURL = null;
 
-  function clearQR()&#123;
+  function clearQR(){
     wrap.innerHTML = '';
     lastCanvasDataURL = null;
     elDl.disabled = true;
-  &#125;
+  }
 
-  function gen(previewOnly)&#123;
+  function gen(previewOnly){
     if (previewOnly === undefined) previewOnly = true;
     var text = elText.value.trim();
     if (!text) return;
@@ -154,27 +154,27 @@ const extraHtml = `
     var size = parseInt(elSize.value, 10);
     var previewSize = Math.min(size, 320);
 
-    new QRCode(wrap, &#123;
+    new QRCode(wrap, {
       text: text,
       width: previewOnly ? previewSize : size,
       height: previewOnly ? previewSize : size,
       colorDark: elFg.value,
       colorLight: elBg.value,
       correctLevel: chosenLevel
-    &#125;);
+    });
 
     wrapOuter.style.padding = Math.max(0, parseInt(elMargin.value, 10)) + 'px';
 
-    setTimeout(function() &#123;
+    setTimeout(function() {
       var canvas = wrap.querySelector('canvas');
-      if (canvas) &#123;
+      if (canvas) {
         lastCanvasDataURL = canvas.toDataURL('image/png');
         elDl.disabled = false;
-      &#125;
-    &#125;, 80);
-  &#125;
+      }
+    }, 80);
+  }
 
-  function downloadPNG()&#123;
+  function downloadPNG(){
     var text = elText.value.trim();
     if (!text) return;
 
@@ -183,29 +183,29 @@ const extraHtml = `
     var size = parseInt(elSize.value, 10);
 
     var tempDiv = document.createElement('div');
-    new QRCode(tempDiv, &#123;
+    new QRCode(tempDiv, {
       text: text,
       width: size,
       height: size,
       colorDark: elFg.value,
       colorLight: elBg.value,
       correctLevel: chosenLevel
-    &#125;);
+    });
 
-    setTimeout(function() &#123;
+    setTimeout(function() {
       var canvas = tempDiv.querySelector('canvas');
-      if (canvas) &#123;
+      if (canvas) {
         var a = document.createElement('a');
         a.href = canvas.toDataURL('image/png');
         a.download = 'qrcode.png';
         document.body.appendChild(a);
         a.click();
         a.remove();
-      &#125;
-    &#125;, 100);
-  &#125;
+      }
+    }, 100);
+  }
 
-  function sample()&#123;
+  function sample(){
     elText.value = 'https://webapps.naufalrakha.my.id/?ref=qr';
     elSize.value = '320';
     elEcc.value  = 'M';
@@ -213,31 +213,31 @@ const extraHtml = `
     elFg.value = '#000000';
     elBg.value = '#ffffff';
     gen();
-  &#125;
+  }
 
-  function clearAll()&#123;
+  function clearAll(){
     elText.value = '';
     clearQR();
     elText.focus();
-  &#125;
+  }
 
-  (function() &#123;
+  (function() {
     var params = new URLSearchParams(location.search);
     var t = params.get('t');
-    if (t) &#123;
+    if (t) {
       elText.value = decodeURIComponent(t);
       gen();
-    &#125;
-  &#125;)();
+    }
+  })();
 
-  elGen.addEventListener('click', function() &#123; gen(true); &#125;);
+  elGen.addEventListener('click', function() { gen(true); });
   elDl.addEventListener('click', downloadPNG);
   elSample.addEventListener('click', sample);
   elClear.addEventListener('click', clearAll);
 
-  [elSize, elEcc, elMargin, elFg, elBg].forEach(function(el) &#123;
-    el.addEventListener('change', function() &#123; if (elText.value.trim()) gen(); &#125;);
-  &#125;);
-&#125;)();
+  [elSize, elEcc, elMargin, elFg, elBg].forEach(function(el) {
+    el.addEventListener('change', function() { if (elText.value.trim()) gen(); });
+  });
+})();
 </script>
 

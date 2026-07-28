@@ -83,73 +83,73 @@ var matchCount = document.getElementById('matchCount');
 var matchList = document.getElementById('matchList');
 var replaceText = document.getElementById('replaceText');
 
-function update() &#123;
-  try &#123;
+function update() {
+  try {
     var re = new RegExp(pattern.value, flags.value);
     var text = testArea.value;
     var matches = [];
     var m;
     var safety = 0;
-    while ((m = re.exec(text)) !== null) &#123;
-      matches.push(&#123; index: m.index, text: m[0], groups: m.slice(1) &#125;);
+    while ((m = re.exec(text)) !== null) {
+      matches.push({ index: m.index, text: m[0], groups: m.slice(1) });
       if (!re.global) break;
       if (m.index === re.lastIndex) re.lastIndex++;
-      if (++safety > 50000) &#123; matches.push(&#123; text: '(truncated at 50k matches)', index: -1, groups: [] &#125;); break; &#125;
-    &#125;
+      if (++safety > 50000) { matches.push({ text: '(truncated at 50k matches)', index: -1, groups: [] }); break; }
+    }
 
-    if (matches.length === 0) &#123;
+    if (matches.length === 0) {
       preview.textContent = text;
       matchCount.textContent = '0 matches';
       matchList.innerHTML = '<div class="opacity-60 p-2">No matches</div>';
       return;
-    &#125;
+    }
 
     matchCount.textContent = matches.length + (matches.length === 1 ? ' match' : ' matches');
     var listHtml = '';
-    matches.forEach(function(mt, i) &#123;
+    matches.forEach(function(mt, i) {
       var groups = mt.groups.length > 0 ? ' groups: [' + mt.groups.join(', ') + ']' : '';
       listHtml += '<div class="border-bottom py-1 px-1"><span class="badge bg-secondary mr-1">' + (i + 1) + '</span> <span class="text-success">"' + escapeHtml(mt.text) + '"</span> <span class="opacity-60">@' + mt.index + '</span>' + groups + '</div>';
-    &#125;);
+    });
     matchList.innerHTML = listHtml;
 
     var html = '';
     var lastIdx = 0;
-    matches.forEach(function(mt) &#123;
+    matches.forEach(function(mt) {
       html += escapeHtml(text.slice(lastIdx, mt.index));
       html += '<span class="bg-warning bg-opacity-25 border border-warning rounded px-1">' + escapeHtml(mt.text) + '</span>';
       lastIdx = mt.index + mt.text.length;
-    &#125;);
+    });
     html += escapeHtml(text.slice(lastIdx));
     preview.innerHTML = html;
-  &#125; catch (e) &#123;
+  } catch (e) {
     preview.textContent = 'Error: ' + e.message;
     matchCount.textContent = '';
     matchList.innerHTML = '<div class="text-error p-2">' + escapeHtml(e.message) + '</div>';
-  &#125;
-&#125;
+  }
+}
 
-function escapeHtml(s) &#123;
+function escapeHtml(s) {
   var div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
-&#125;
+}
 
-function doReplace() &#123;
-  try &#123;
+function doReplace() {
+  try {
     var re = new RegExp(pattern.value, flags.value);
     var replacement = replaceText.value;
     testArea.value = testArea.value.replace(re, replacement);
     update();
-  &#125; catch (e) &#123;
+  } catch (e) {
     alert('Regex error: ' + e.message);
-  &#125;
-&#125;
+  }
+}
 
 pattern.addEventListener('input', update);
 flags.addEventListener('input', update);
 testArea.addEventListener('input', update);
 document.getElementById('btnReplace').addEventListener('click', doReplace);
-document.getElementById('btnClear').addEventListener('click', function() &#123; testArea.value = ''; update(); &#125;);
+document.getElementById('btnClear').addEventListener('click', function() { testArea.value = ''; update(); });
 
 update();
 </script>

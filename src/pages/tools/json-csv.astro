@@ -58,70 +58,70 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
-function escapeCSV(v)&#123;if(v==null)return '';v=String(v);if(v.includes(',')||v.includes('"')||v.includes('\\n'))&#123;v=v.replace(/"/g,'""');v='"'+v+'"'&#125;return v&#125;
-function toCSV()&#123;
-  try&#123;
+function escapeCSV(v){if(v==null)return '';v=String(v);if(v.includes(',')||v.includes('"')||v.includes('\\n')){v=v.replace(/"/g,'""');v='"'+v+'"'}return v}
+function toCSV(){
+  try{
     var data=JSON.parse(inp.value);
-    if(!Array.isArray(data)||!data.length)&#123;out.value='Error: Input harus array JSON';return&#125;
+    if(!Array.isArray(data)||!data.length){out.value='Error: Input harus array JSON';return}
     var headers=Object.keys(data[0]);
     var rows=[headers.join(',')];
-    data.forEach(function(row)&#123;
-      rows.push(headers.map(function(h)&#123;return escapeCSV(row[h])&#125;).join(','));
-    &#125;);
+    data.forEach(function(row){
+      rows.push(headers.map(function(h){return escapeCSV(row[h])}).join(','));
+    });
     out.value=rows.join('\\n');
-  &#125;catch(e)&#123;out.value='Error: '+e.message&#125;
-&#125;
-function toJSON()&#123;
-  try&#123;
+  }catch(e){out.value='Error: '+e.message}
+}
+function toJSON(){
+  try{
     var lines=inp.value.trim().split('\\n');
-    if(lines.length<2)&#123;out.value='Error: CSV harus punya header + minimal 1 baris data';return&#125;
-    var headers=lines[0].split(',').map(function(h)&#123;return h.trim()&#125;);
+    if(lines.length<2){out.value='Error: CSV harus punya header + minimal 1 baris data';return}
+    var headers=lines[0].split(',').map(function(h){return h.trim()});
     var result=[];
-    for(var i=1;i<lines.length;i++)&#123;
+    for(var i=1;i<lines.length;i++){
       if(!lines[i].trim())continue;
       var vals=parseCSVLine(lines[i]);
       if(vals.length!==headers.length)continue;
-      var obj=&#123;&#125;;
-      headers.forEach(function(h,j)&#123;obj[h]=vals[j]&#125;);
+      var obj={};
+      headers.forEach(function(h,j){obj[h]=vals[j]});
       result.push(obj);
-    &#125;
+    }
     out.value=JSON.stringify(result,null,2);
-  &#125;catch(e)&#123;out.value='Error: '+e.message&#125;
-&#125;
-function parseCSVLine(line)&#123;
+  }catch(e){out.value='Error: '+e.message}
+}
+function parseCSVLine(line){
   var result=[],cur='',inQuotes=false;
-  for(var i=0;i<line.length;i++)&#123;
+  for(var i=0;i<line.length;i++){
     var c=line[i];
-    if(inQuotes)&#123;
-      if(c=='"')&#123;if(line[i+1]=='"')&#123;cur+='"';i++&#125;else&#123;inQuotes=false&#125;&#125;
+    if(inQuotes){
+      if(c=='"'){if(line[i+1]=='"'){cur+='"';i++}else{inQuotes=false}}
       else cur+=c;
-    &#125;else&#123;
-      if(c=='"')&#123;inQuotes=true&#125;
-      else if(c==',')&#123;result.push(cur.trim());cur=''&#125;
+    }else{
+      if(c=='"'){inQuotes=true}
+      else if(c==','){result.push(cur.trim());cur=''}
       else cur+=c;
-    &#125;
-  &#125;
+    }
+  }
   result.push(cur.trim());
   return result;
-&#125;
+}
 document.getElementById('btnToCsv').addEventListener('click',toCSV);
 document.getElementById('btnToJson').addEventListener('click',toJSON);
-document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.value=''&#125;);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;
+document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
+document.getElementById('btnCopy').addEventListener('click',function(){
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
-&#125;);
-document.getElementById('fileInput').addEventListener('change',function(e)&#123;
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+document.getElementById('fileInput').addEventListener('change',function(e){
   var f=e.target.files[0];if(!f)return;
   var r=new FileReader();
-  r.onload=function()&#123;inp.value=r.result&#125;;
+  r.onload=function(){inp.value=r.result};
   r.readAsText(f);
-&#125;);
-document.getElementById('btnDownload').addEventListener('click',function()&#123;
+});
+document.getElementById('btnDownload').addEventListener('click',function(){
   if(!out.value)return;
-  var isCSV=out.value.startsWith('&#123;')||out.value.startsWith('[');
-  var blob=new Blob([out.value],&#123;type:isCSV?'application/json':'text/csv'&#125;);
+  var isCSV=out.value.startsWith('{')||out.value.startsWith('[');
+  var blob=new Blob([out.value],{type:isCSV?'application/json':'text/csv'});
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='output.'+(isCSV?'json':'csv');a.click();
-&#125;);
+});
 </script>
 

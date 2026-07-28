@@ -73,48 +73,48 @@ var preview = document.getElementById('preview');
 var output = document.getElementById('outputText');
 var info = document.getElementById('info');
 
-function handleFile(file) &#123;
+function handleFile(file) {
   if (!file) return;
-  if (!file.type.startsWith('image/')) &#123;
+  if (!file.type.startsWith('image/')) {
     alert('File harus berupa gambar');
     return;
-  &#125;
+  }
 
   var reader = new FileReader();
-  reader.onload = function(e) &#123;
+  reader.onload = function(e) {
     var dataUri = e.target.result;
     output.value = dataUri;
     preview.innerHTML = '<img src="' + dataUri + '" alt="preview">';
     var sizeKB = (file.size / 1024).toFixed(1);
     var base64Len = dataUri.length;
     info.textContent = file.name + ' | ' + sizeKB + ' KB | Base64: ' + base64Len + ' chars';
-  &#125;;
+  };
   reader.readAsDataURL(file);
-&#125;
+}
 
-dropZone.addEventListener('dragover', function(e) &#123; e.preventDefault(); this.classList.add('dragover'); &#125;);
-dropZone.addEventListener('dragleave', function() &#123; this.classList.remove('dragover'); &#125;);
-dropZone.addEventListener('drop', function(e) &#123;
+dropZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+dropZone.addEventListener('drop', function(e) {
   e.preventDefault();
   this.classList.remove('dragover');
   if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-&#125;);
-dropZone.addEventListener('click', function() &#123; fileInput.click(); &#125;);
-fileInput.addEventListener('change', function() &#123; if (this.files.length > 0) handleFile(this.files[0]); &#125;);
+});
+dropZone.addEventListener('click', function() { fileInput.click(); });
+fileInput.addEventListener('change', function() { if (this.files.length > 0) handleFile(this.files[0]); });
 
-document.getElementById('btnCopy').addEventListener('click', function() &#123;
+document.getElementById('btnCopy').addEventListener('click', function() {
   if (!output.value) return;
-  navigator.clipboard.writeText(output.value).then(function() &#123;
+  navigator.clipboard.writeText(output.value).then(function() {
     var btn = document.getElementById('btnCopy');
     btn.textContent = 'Copied!';
-    setTimeout(function() &#123; btn.textContent = 'Copy'; &#125;, 1500);
-  &#125;);
-&#125;);
-document.getElementById('btnClear').addEventListener('click', function() &#123;
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+  });
+});
+document.getElementById('btnClear').addEventListener('click', function() {
   output.value = '';
   preview.innerHTML = '';
   info.textContent = '';
   fileInput.value = '';
-&#125;);
+});
 </script>
 

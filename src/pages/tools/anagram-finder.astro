@@ -61,9 +61,9 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var t1=document.getElementById('text1'),t2=document.getElementById('text2'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),lc=document.getElementById('letterCompare');
-function check()&#123;
+function check(){
   var a=t1.value.trim().toLowerCase().replace(/[^a-z]/g,''),b=t2.value.trim().toLowerCase().replace(/[^a-z]/g,'');
-  if(!a||!b)&#123;res.style.display='none';lc.innerHTML='';return&#125;
+  if(!a||!b){res.style.display='none';lc.innerHTML='';return}
   var sortA=a.split('').sort().join(''),sortB=b.split('').sort().join('');
   var isAna=sortA===sortB;
   res.style.display='block';
@@ -73,12 +73,12 @@ function check()&#123;
   det.innerHTML='<span>Teks 1: "'+a+'"<br>Teks 2: "'+b+'"</span>';
   var sortedA=a.split('').sort().join(', '),sortedB=b.split('').sort().join(', ');
   lc.innerHTML='<div class="font-bold mb-1">Perbandingan huruf:</div><table class="table table-sm small mb-0"><tr><td>'+t1.value.trim()+'</td><td class="font-mono">['+sortedA+']</td></tr><tr><td>'+t2.value.trim()+'</td><td class="font-mono">['+sortedB+']</td></tr></table>';
-&#125;
+}
 document.getElementById('btnCheck').addEventListener('click',check);
 t1.addEventListener('input',check);t2.addEventListener('input',check);
-document.querySelectorAll('.example').forEach(function(el)&#123;
-  el.addEventListener('click',function()&#123;t1.value=this.dataset.a;t2.value=this.dataset.b;check()&#125;);
-&#125;);
+document.querySelectorAll('.example').forEach(function(el){
+  el.addEventListener('click',function(){t1.value=this.dataset.a;t2.value=this.dataset.b;check()});
+});
 check();
 </script>
 

@@ -59,7 +59,7 @@ const relatedTools = [
 
 <script is:inline>
 var inp=document.getElementById('htmlInput'),pre=document.getElementById('preview');
-function update()&#123;pre.srcdoc=inp.value;&#125;
+function update(){pre.srcdoc=inp.value;}
 inp.addEventListener('input',update);
 document.getElementById('btnRun').addEventListener('click',update);
 update();

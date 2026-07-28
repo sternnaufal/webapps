@@ -91,31 +91,31 @@ var mixedDisp=document.getElementById('mixedDisplay'),improperDisp=document.getE
 var stepsDisp=document.getElementById('stepsDisplay'),stepsContent=document.getElementById('stepsContent');
 var stepsVisible=false;
 
-function fracHTML(num,den)&#123;
+function fracHTML(num,den){
   return '<span class="frac"><span class="num">'+num+'</span><span class="den">'+den+'</span></span>';
-&#125;
+}
 
-function gcd(a,b)&#123;a=Math.abs(a);b=Math.abs(b);while(b)&#123;var t=b;b=a%b;a=t&#125;return a&#125;
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t}return a}
 
-function decToFrac(decimal,tol,maxDen)&#123;
+function decToFrac(decimal,tol,maxDen){
   var neg=decimal<0;decimal=Math.abs(decimal);
   var intPart=Math.floor(decimal),frac=decimal-intPart;
-  if(frac<tol)return&#123;num:neg?-intPart:intPart,den:1,mixed:intPart.toString(),improper:intPart+'/1',steps:['Nilai desimal sudah bilangan bulat']&#125;;
+  if(frac<tol)return{num:neg?-intPart:intPart,den:1,mixed:intPart.toString(),improper:intPart+'/1',steps:['Nilai desimal sudah bilangan bulat']};
   var num1=0,den1=1,num2=1,den2=0,a,n,d,steps=[];
   steps.push('Bilangan desimal: '+(neg?'-':'')+decimal);
   steps.push('Bagian bulat: '+intPart+', pecahan: '+frac.toFixed(10));
   steps.push('Menggunakan algoritma continued fraction:');
   var count=0;
-  while(count<100)&#123;
+  while(count<100){
     a=Math.floor(frac);n=a*num2+num1;d=a*den2+den1;
     steps.push('  Iterasi '+(count+1)+': a='+a+', pecahan='+num2+'/'+den2+' (≈'+(num2/den2).toFixed(8)+')');
-    if(d>maxDen)&#123;n=num2;d=den2;steps.push('  Penyebut melebihi batas. Mengembalikan iterasi sebelumnya.');break;&#125;
+    if(d>maxDen){n=num2;d=den2;steps.push('  Penyebut melebihi batas. Mengembalikan iterasi sebelumnya.');break;}
     var val=n/d;
-    if(Math.abs(val-(decimal-intPart))<tol)&#123;steps.push('  Konvergen! Error: '+Math.abs(val-(decimal-intPart)).toExponential(3));break;&#125;
+    if(Math.abs(val-(decimal-intPart))<tol){steps.push('  Konvergen! Error: '+Math.abs(val-(decimal-intPart)).toExponential(3));break;}
     num1=num2;den1=den2;num2=n;den2=d;
-    if(frac===a)&#123;steps.push('  Selesai (pecahan berakhir).');break;&#125;
+    if(frac===a){steps.push('  Selesai (pecahan berakhir).');break;}
     frac=1/(frac-a);count++;
-  &#125;
+  }
   n=intPart*d+n;
   if(neg)n=-n;
   var g=gcd(Math.abs(n),d);n/=g;d/=g;
@@ -130,31 +130,31 @@ function decToFrac(decimal,tol,maxDen)&#123;
   if(neg&&mixedPart===0&&rem>0)mixed='-'+rem+'/'+d;
   steps.push('Pecahan biasa: '+improper);
   steps.push('Pecahan campuran: '+mixed);
-  return&#123;num:n,den:d,mixed:mixed,improper:improper,steps:steps&#125;;
-&#125;
+  return{num:n,den:d,mixed:mixed,improper:improper,steps:steps};
+}
 
-function convert()&#123;
+function convert(){
   var raw=decInp.value.trim().replace(/,/g,'.');
   var val=parseFloat(raw);
-  if(isNaN(val))&#123;mixedDisp.innerHTML='<span class="text-error">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;&#125;
+  if(isNaN(val)){mixedDisp.innerHTML='<span class="text-error">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;}
   var tol=parseFloat(tolInp.value);var maxDen=parseInt(denInp.value)||1000;
   var result=decToFrac(val,tol,maxDen);
-  if(result.den===1)&#123;mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;&#125;
-  else&#123;mixedDisp.innerHTML=result.mixed.replace(/(\\d+)\\/(\\d+)/g,function(m,n,d)&#123;return fracHTML(n,d)&#125;);improperDisp.textContent=result.improper;&#125;
+  if(result.den===1){mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;}
+  else{mixedDisp.innerHTML=result.mixed.replace(/(\\d+)\\/(\\d+)/g,function(m,n,d){return fracHTML(n,d)});improperDisp.textContent=result.improper;}
   decimalDisp.textContent=val.toString();
-  stepsContent.innerHTML=result.steps.map(function(s)&#123;return s+'\\n'&#125;).join('<br>');
+  stepsContent.innerHTML=result.steps.map(function(s){return s+'\\n'}).join('<br>');
   if(stepsVisible)stepsDisp.style.display='block';
-&#125;
+}
 
 document.getElementById('btnConvert').addEventListener('click',convert);
-document.getElementById('btnToggleSteps').addEventListener('click',function()&#123;
+document.getElementById('btnToggleSteps').addEventListener('click',function(){
   stepsVisible=!stepsVisible;stepsDisp.style.display=stepsVisible?'block':'none';
   this.textContent=stepsVisible?'Sembunyikan Langkah':'Tampilkan Langkah';
-&#125;);
-document.querySelectorAll('.preset').forEach(function(el)&#123;el.addEventListener('click',function()&#123;
+});
+document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
   decInp.value=this.dataset.val;convert();
-&#125;)&#125;);
-decInp.addEventListener('keydown',function(e)&#123;if(e.key==='Enter')convert()&#125;);
+})});
+decInp.addEventListener('keydown',function(e){if(e.key==='Enter')convert()});
 convert();
 </script>
 

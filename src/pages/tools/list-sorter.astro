@@ -64,26 +64,26 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea'),stats=document.getElementById('stats'),unique=document.getElementById('uniqueOnly'),ic=document.getElementById('ignoreCase');
-function sortList()&#123;
+function sortList(){
   var lines=inp.value.split('\\n'),origCount=lines.length;
-  if(ic.checked)&#123;lines=lines.filter(function(l,i,a)&#123;return a.findIndex(function(x)&#123;return x.toLowerCase()===l.toLowerCase()&#125;)===i&#125;)&#125;
-  else if(unique.checked)lines=lines.filter(function(l,i,a)&#123;return a.indexOf(l)===i&#125;);
-  else lines=lines.filter(function(l)&#123;return l!==undefined&#125;);
+  if(ic.checked){lines=lines.filter(function(l,i,a){return a.findIndex(function(x){return x.toLowerCase()===l.toLowerCase()})===i})}
+  else if(unique.checked)lines=lines.filter(function(l,i,a){return a.indexOf(l)===i});
+  else lines=lines.filter(function(l){return l!==undefined});
   var m=mode.value;
-  if(m==='asc')lines.sort(function(a,b)&#123;var x=a.toLowerCase(),y=b.toLowerCase();return x<y?-1:x>y?1:0&#125;);
-  else if(m==='desc')lines.sort(function(a,b)&#123;var x=a.toLowerCase(),y=b.toLowerCase();return x<y?1:x>y?-1:0&#125;);
-  else if(m==='length')lines.sort(function(a,b)&#123;return a.length-b.length&#125;);
-  else if(m==='lengthDesc')lines.sort(function(a,b)&#123;return b.length-a.length&#125;);
-  else if(m==='random')for(var i=lines.length-1;i>0;i--)&#123;var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;&#125;
+  if(m==='asc')lines.sort(function(a,b){var x=a.toLowerCase(),y=b.toLowerCase();return x<y?-1:x>y?1:0});
+  else if(m==='desc')lines.sort(function(a,b){var x=a.toLowerCase(),y=b.toLowerCase();return x<y?1:x>y?-1:0});
+  else if(m==='length')lines.sort(function(a,b){return a.length-b.length});
+  else if(m==='lengthDesc')lines.sort(function(a,b){return b.length-a.length});
+  else if(m==='random')for(var i=lines.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;}
   out.value=lines.join('\\n');
   stats.textContent=origCount+' item ? '+lines.length+' item';
-&#125;
+}
 document.getElementById('btnSort').addEventListener('click',sortList);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;
+document.getElementById('btnCopy').addEventListener('click',function(){
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
-&#125;);
-[inp,mode,unique,ic].forEach(function(el)&#123;el.addEventListener('input',sortList);el.addEventListener('change',sortList)&#125;);
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
+[inp,mode,unique,ic].forEach(function(el){el.addEventListener('input',sortList);el.addEventListener('change',sortList)});
 sortList();
 </script>
 

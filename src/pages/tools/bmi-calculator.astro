@@ -54,22 +54,22 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var hInp=document.getElementById('heightInput'),wInp=document.getElementById('weightInput'),bmiV=document.getElementById('bmiValue'),bmiC=document.getElementById('bmiCategory'),bmiA=document.getElementById('bmiArrow'),bmiD=document.getElementById('bmiDetail');
-function calc()&#123;
+function calc(){
   var h=parseFloat(hInp.value)||0,w=parseFloat(wInp.value)||0;
-  if(h<=0||w<=0)&#123;bmiV.textContent='0';bmiC.textContent='Masukkan data';return&#125;
+  if(h<=0||w<=0){bmiV.textContent='0';bmiC.textContent='Masukkan data';return}
   var bmi=w/((h/100)*(h/100));
   bmiV.textContent=bmi.toFixed(1);
   var cat,color,advice;
-  if(bmi<18.5)&#123;cat='Kurus';color='#3b82f6';advice='Anda memiliki berat badan di bawah normal. Disarankan untuk meningkatkan asupan nutrisi dan konsultasi dengan ahli gizi.';bmiA.style.left=''+(bmi/18.5*20)+'%'&#125;
-  else if(bmi<25)&#123;cat='Normal';color='#22c55e';advice='Berat badan Anda ideal. Pertahankan pola makan sehat dan olahraga teratur!';bmiA.style.left=''+(20+(bmi-18.5)/6.4*20)+'%'&#125;
-  else if(bmi<30)&#123;cat='Overweight';color='#f59e0b';advice='Anda memiliki kelebihan berat badan. Disarankan untuk meningkatkan aktivitas fisik dan mengatur pola makan.';bmiA.style.left=''+(40+(bmi-25)/4.9*20)+'%'&#125;
-  else if(bmi<35)&#123;cat='Obesitas I';color='#f97316';advice='Anda berada dalam kategori obesitas tingkat I. Sangat disarankan untuk berkonsultasi dengan dokter.';bmiA.style.left=''+(60+(bmi-30)/4.9*20)+'%'&#125;
-  else&#123;cat='Obesitas II';color='#ef4444';advice='Anda berada dalam kategori obesitas tingkat II. Segera konsultasi dengan dokter untuk penanganan lebih lanjut.';bmiA.style.left='80%'&#125;
+  if(bmi<18.5){cat='Kurus';color='#3b82f6';advice='Anda memiliki berat badan di bawah normal. Disarankan untuk meningkatkan asupan nutrisi dan konsultasi dengan ahli gizi.';bmiA.style.left=''+(bmi/18.5*20)+'%'}
+  else if(bmi<25){cat='Normal';color='#22c55e';advice='Berat badan Anda ideal. Pertahankan pola makan sehat dan olahraga teratur!';bmiA.style.left=''+(20+(bmi-18.5)/6.4*20)+'%'}
+  else if(bmi<30){cat='Overweight';color='#f59e0b';advice='Anda memiliki kelebihan berat badan. Disarankan untuk meningkatkan aktivitas fisik dan mengatur pola makan.';bmiA.style.left=''+(40+(bmi-25)/4.9*20)+'%'}
+  else if(bmi<35){cat='Obesitas I';color='#f97316';advice='Anda berada dalam kategori obesitas tingkat I. Sangat disarankan untuk berkonsultasi dengan dokter.';bmiA.style.left=''+(60+(bmi-30)/4.9*20)+'%'}
+  else{cat='Obesitas II';color='#ef4444';advice='Anda berada dalam kategori obesitas tingkat II. Segera konsultasi dengan dokter untuk penanganan lebih lanjut.';bmiA.style.left='80%'}
   bmiC.textContent=cat;bmiC.style.color=color;
   bmiD.innerHTML='<div class="font-bold mb-1">Informasi BMI</div><table class="table table-sm small mb-0"><tr><td>BMI</td><td class="font-bold">'+bmi.toFixed(1)+'</td></tr><tr><td>Kategori</td><td style="color:'+color+';font-weight:600">'+cat+'</td></tr><tr><td>Keterangan</td><td>'+advice+'</td></tr></table>';
-&#125;
+}
 document.getElementById('btnCalc').addEventListener('click',calc);
-[hInp,wInp].forEach(function(el)&#123;el.addEventListener('input',calc)&#125;);
+[hInp,wInp].forEach(function(el){el.addEventListener('input',calc)});
 calc();
 </script>
 

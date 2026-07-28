@@ -52,63 +52,63 @@ const relatedTools = [
 </ToolLayout>
 
 <script is:inline>
-function generateHashes() &#123;
+function generateHashes() {
   const text = document.getElementById('text').value;
-  if (!text.trim()) &#123;
+  if (!text.trim()) {
     alert('Masukkan teks terlebih dahulu');
     return;
-  &#125;
+  }
 
-  const hashes = &#123;
+  const hashes = {
     'MD5': CryptoJS.MD5(text).toString(),
     'SHA-1': CryptoJS.SHA1(text).toString(),
     'SHA-256': CryptoJS.SHA256(text).toString(),
     'SHA-512': CryptoJS.SHA512(text).toString(),
-  &#125;;
+  };
 
   const tbody = document.getElementById('hashTable');
   tbody.innerHTML = '';
 
-  Object.entries(hashes).forEach(([algo, hash]) => &#123;
+  Object.entries(hashes).forEach(([algo, hash]) => {
     const row = document.createElement('tr');
     row.className = 'text-sm border-b';
     row.style.borderColor = 'oklch(0.9 0.005 270)';
     row.innerHTML = `
-      <td class="py-2 font-semibold text-xs">$&#123;algo&#125;</td>
-      <td class="py-2"><code class="text-xs font-mono" style="word-break:break-all;" id="hash_$&#123;algo&#125;">$&#123;escapeHtml(hash)&#125;</code></td>
+      <td class="py-2 font-semibold text-xs">${algo}</td>
+      <td class="py-2"><code class="text-xs font-mono" style="word-break:break-all;" id="hash_${algo}">${escapeHtml(hash)}</code></td>
       <td class="py-2">
-        <button type="button" class="btn btn-ghost btn-xs" onclick="copyHash('hash_$&#123;algo&#125;')">Copy</button>
+        <button type="button" class="btn btn-ghost btn-xs" onclick="copyHash('hash_${algo}')">Copy</button>
       </td>
     `;
     tbody.appendChild(row);
-  &#125;);
+  });
 
   document.getElementById('results').style.display = 'block';
-&#125;
+}
 
-function copyHash(id) &#123;
+function copyHash(id) {
   const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => &#123;
-    const btn = document.querySelector(`[onclick="copyHash('$&#123;id&#125;')"]`);
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector(`[onclick="copyHash('${id}')"]`);
     if (!btn) return;
     const oldText = btn.textContent;
     btn.textContent = '✓ Copied!';
-    setTimeout(() => &#123; btn.textContent = oldText; &#125;, 2000);
-  &#125;).catch(() => &#123;
+    setTimeout(() => { btn.textContent = oldText; }, 2000);
+  }).catch(() => {
     alert('Gagal menyalin');
-  &#125;);
-&#125;
+  });
+}
 
-function escapeHtml(text) &#123;
+function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
-&#125;
+}
 
 document.getElementById('generateBtn').addEventListener('click', generateHashes);
-document.getElementById('text').addEventListener('keypress', (e) => &#123;
-  if (e.key === 'Enter' && e.ctrlKey) &#123;
+document.getElementById('text').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter' && e.ctrlKey) {
     generateHashes();
-  &#125;
-&#125;);
+  }
+});
 </script>

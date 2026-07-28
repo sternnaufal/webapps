@@ -59,20 +59,20 @@ const relatedTools = [
 var inp = document.getElementById('inputText');
 var out = document.getElementById('outputText');
 
-document.getElementById('btnEncComponent').addEventListener('click', function() &#123;
-  try &#123; out.value = encodeURIComponent(inp.value); &#125; catch (e) &#123; out.value = 'Error: ' + e.message; &#125;
-&#125;);
-document.getElementById('btnEncURI').addEventListener('click', function() &#123;
-  try &#123; out.value = encodeURI(inp.value); &#125; catch (e) &#123; out.value = 'Error: ' + e.message; &#125;
-&#125;);
-document.getElementById('btnDecode').addEventListener('click', function() &#123;
-  try &#123; out.value = decodeURIComponent(inp.value); &#125; catch (e) &#123; out.value = 'Error: ' + e.message; &#125;
-&#125;);
-document.getElementById('btnSwap').addEventListener('click', function() &#123;
+document.getElementById('btnEncComponent').addEventListener('click', function() {
+  try { out.value = encodeURIComponent(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
+});
+document.getElementById('btnEncURI').addEventListener('click', function() {
+  try { out.value = encodeURI(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
+});
+document.getElementById('btnDecode').addEventListener('click', function() {
+  try { out.value = decodeURIComponent(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
+});
+document.getElementById('btnSwap').addEventListener('click', function() {
   var tmp = inp.value;
   inp.value = out.value;
   out.value = tmp;
-&#125;);
-document.getElementById('btnClear').addEventListener('click', function() &#123; inp.value = ''; out.value = ''; &#125;);
+});
+document.getElementById('btnClear').addEventListener('click', function() { inp.value = ''; out.value = ''; });
 </script>
 

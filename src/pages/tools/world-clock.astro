@@ -73,40 +73,40 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var defaultClocks=[
-  &#123;name:'Jakarta (WIB)',tz:'Asia/Jakarta',offset:7&#125;,
-  &#123;name:'Makassar (WITA)',tz:'Asia/Makassar',offset:8&#125;,
-  &#123;name:'Jayapura (WIT)',tz:'Asia/Jayapura',offset:9&#125;,
-  &#123;name:'UTC',tz:'UTC',offset:0&#125;,
-  &#123;name:'Tokyo',tz:'Asia/Tokyo',offset:9&#125;,
-  &#123;name:'London',tz:'Europe/London',offset:1&#125;,
-  &#123;name:'New York',tz:'America/New_York',offset:-4&#125;,
-  &#123;name:'Dubai',tz:'Asia/Dubai',offset:4&#125;,
+  {name:'Jakarta (WIB)',tz:'Asia/Jakarta',offset:7},
+  {name:'Makassar (WITA)',tz:'Asia/Makassar',offset:8},
+  {name:'Jayapura (WIT)',tz:'Asia/Jayapura',offset:9},
+  {name:'UTC',tz:'UTC',offset:0},
+  {name:'Tokyo',tz:'Asia/Tokyo',offset:9},
+  {name:'London',tz:'Europe/London',offset:1},
+  {name:'New York',tz:'America/New_York',offset:-4},
+  {name:'Dubai',tz:'Asia/Dubai',offset:4},
 ];
 
 var clocks=[];
 
-function loadClocks()&#123;
-  try&#123;var d=JSON.parse(localStorage.getItem('wc_clocks'));if(d&&d.length)clocks=d;else clocks=defaultClocks;&#125;
-  catch(e)&#123;clocks=defaultClocks;&#125;
-&#125;
-function saveClocks()&#123;try&#123;localStorage.setItem('wc_clocks',JSON.stringify(clocks))&#125;catch(e)&#123;&#125;&#125;
+function loadClocks(){
+  try{var d=JSON.parse(localStorage.getItem('wc_clocks'));if(d&&d.length)clocks=d;else clocks=defaultClocks;}
+  catch(e){clocks=defaultClocks;}
+}
+function saveClocks(){try{localStorage.setItem('wc_clocks',JSON.stringify(clocks))}catch(e){}}
 
-function formatTime(offset)&#123;
+function formatTime(offset){
   var now=new Date();
   var utc=now.getTime()+now.getTimezoneOffset()*60000;
   var d=new Date(utc+offset*3600000);
-  return d.toLocaleString('id-ID',&#123;hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false&#125;);
-&#125;
-function formatDate(offset)&#123;
+  return d.toLocaleString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+}
+function formatDate(offset){
   var now=new Date();
   var utc=now.getTime()+now.getTimezoneOffset()*60000;
   var d=new Date(utc+offset*3600000);
-  return d.toLocaleDateString('id-ID',&#123;weekday:'long',day:'numeric',month:'short',year:'numeric'&#125;);
-&#125;
+  return d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'short',year:'numeric'});
+}
 
-function render()&#123;
+function render(){
   var g=document.getElementById('clockGrid');g.innerHTML='';
-  clocks.forEach(function(c,i)&#123;
+  clocks.forEach(function(c,i){
     var col=document.createElement('div');col.className='md:w-1/4 w-full sm:w-1/2 w-full';
     col.innerHTML='<div class="card shadow-sm border-0 h-full"><div class="card-body text-center flex flex-column justify-center" style="min-height:140px">'+
       '<div class="font-bold text-sm opacity-60 mb-1">'+c.name+'</div>'+
@@ -116,27 +116,27 @@ function render()&#123;
       '<button class="btn btn-sm btn-outline-danger mt-2 remove-btn" data-idx="'+i+'" style="font-size:0.7rem">Hapus</button>'+
     '</div></div>';
     g.appendChild(col);
-  &#125;);
-  document.querySelectorAll('.remove-btn').forEach(function(b)&#123;
-    b.addEventListener('click',function()&#123;
+  });
+  document.querySelectorAll('.remove-btn').forEach(function(b){
+    b.addEventListener('click',function(){
       var idx=parseInt(this.dataset.idx);
       clocks.splice(idx,1);saveClocks();render();
-    &#125;);
-  &#125;);
-&#125;
+    });
+  });
+}
 
 loadClocks();render();
-setInterval(function()&#123;render()&#125;,1000);
+setInterval(function(){render()},1000);
 
-document.getElementById('btnAdd').addEventListener('click',function()&#123;
+document.getElementById('btnAdd').addEventListener('click',function(){
   var name=document.getElementById('newName').value.trim();
   var tz=document.getElementById('newTz').value.trim();
   var offset=parseInt(document.getElementById('newOffset').value);
-  if(!name)&#123;alert('Nama kota tidak boleh kosong');return;&#125;
-  if(!tz)&#123;alert('Timezone tidak boleh kosong');return;&#125;
-  clocks.push(&#123;name:name,tz:tz,offset:offset&#125;);
+  if(!name){alert('Nama kota tidak boleh kosong');return;}
+  if(!tz){alert('Timezone tidak boleh kosong');return;}
+  clocks.push({name:name,tz:tz,offset:offset});
   saveClocks();render();
   document.getElementById('newName').value='';document.getElementById('newTz').value='';
-&#125;);
+});
 </script>
 

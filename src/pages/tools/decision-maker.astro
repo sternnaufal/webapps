@@ -68,39 +68,39 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script is:inline>
-document.getElementById('btnPick').addEventListener('click',function()&#123;
-  var lines=document.getElementById('pickerInput').value.split('\\n').filter(function(l)&#123;return l.trim()&#125;);
-  if(!lines.length)&#123;document.getElementById('pickResult').textContent='Masukkan pilihan dulu!';return&#125;
+document.getElementById('btnPick').addEventListener('click',function(){
+  var lines=document.getElementById('pickerInput').value.split('\\n').filter(function(l){return l.trim()});
+  if(!lines.length){document.getElementById('pickResult').textContent='Masukkan pilihan dulu!';return}
   document.getElementById('pickResult').textContent=lines[Math.floor(Math.random()*lines.length)];
-&#125;);
-document.getElementById('btnYN').addEventListener('click',function()&#123;
+});
+document.getElementById('btnYN').addEventListener('click',function(){
   var answers=['Ya!','Tidak.','Mungkin','Coba lagi nanti','Pasti!','Jangan dulu','Terserah kamu','Iya sih','Kayaknya nggak deh','100% Ya!','No way!','Kenapa nggak?'];
   var el=document.getElementById('ynResult');el.textContent=answers[Math.floor(Math.random()*answers.length)];
-  el.style.transform='scale(1.2)';setTimeout(function()&#123;el.style.transform='scale(1)'&#125;,200);
-&#125;);
+  el.style.transform='scale(1.2)';setTimeout(function(){el.style.transform='scale(1)'},200);
+});
 var coinFaces=['?','?'];
-document.getElementById('btnCoin').addEventListener('click',function()&#123;
+document.getElementById('btnCoin').addEventListener('click',function(){
   document.getElementById('coinResult').textContent=coinFaces[Math.floor(Math.random()*2)];
-&#125;);
+});
 var dice=[1,2,3,4,5,6];
-document.getElementById('btnDice').addEventListener('click',function()&#123;
+document.getElementById('btnDice').addEventListener('click',function(){
   var el=document.getElementById('diceResult');el.textContent=dice[Math.floor(Math.random()*6)];
-  el.style.transform='rotate(360deg)';setTimeout(function()&#123;el.style.transform='rotate(0)'&#125;,300);
-&#125;);
+  el.style.transform='rotate(360deg)';setTimeout(function(){el.style.transform='rotate(0)'},300);
+});
 var eightAnswers=['It is certain','It is decidedly so','Without a doubt','Yes definitely','You may rely on it','As I see it, yes','Most likely','Outlook good','Yes','Signs point to yes','Reply hazy try again','Ask again later','Better not tell you now','Cannot predict now','Concentrate and ask again','Don\\'t count on it','My reply is no','My sources say no','Outlook not so good','Very doubtful'];
-document.getElementById('eightBall').addEventListener('click',function()&#123;
+document.getElementById('eightBall').addEventListener('click',function(){
   var el=document.getElementById('eightText'),msg=document.getElementById('eightMsg');
   el.textContent='?';msg.textContent='...';
   var ball=this;ball.classList.add('shake');
-  setTimeout(function()&#123;
+  setTimeout(function(){
     el.textContent=Math.floor(Math.random()*20+1);
     ball.classList.remove('shake');
-  &#125;,300);
-  setTimeout(function()&#123;
+  },300);
+  setTimeout(function(){
     var answer=eightAnswers[Math.floor(Math.random()*eightAnswers.length)];
     el.textContent='';msg.textContent=answer;
     el.innerHTML='<span style="font-size:0.7rem;padding:4px">'+answer+'</span>';
-  &#125;,600);
-&#125;);
+  },600);
+});
 </script>
 

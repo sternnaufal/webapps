@@ -55,17 +55,17 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea');
-document.getElementById('btnReverse').addEventListener('click',function()&#123;
+document.getElementById('btnReverse').addEventListener('click',function(){
   var t=inp.value,m=mode.value;
   if(m==='chars')out.value=t.split('').reverse().join('');
   else if(m==='words')out.value=t.split(/\\s+/).reverse().join(' ');
   else if(m==='lines')out.value=t.split('\\n').reverse().join('\\n');
-  else if(m==='wordsChars')out.value=t.split(/\\s+/).reverse().map(function(w)&#123;return w.split('').reverse().join('')&#125;).join(' ');
-&#125;);
-document.getElementById('btnCopy').addEventListener('click',function()&#123;
+  else if(m==='wordsChars')out.value=t.split(/\\s+/).reverse().map(function(w){return w.split('').reverse().join('')}).join(' ');
+});
+document.getElementById('btnCopy').addEventListener('click',function(){
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
-&#125;);
+  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
+});
 document.getElementById('btnReverse').click();
 </script>
 
