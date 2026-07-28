@@ -5,9 +5,10 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'ASCII Table';
 const description = 'Tabel ASCII lengkap 0-127 (0x00-0x7F). Lihat kode desimal, heksadesimal, biner, dan karakter. Cocok untuk programmer dan pelajar.';
 const keywords = 'ascii table, tabel ascii, ascii codes, ascii chart, kode ascii, character codes';
-const aboutText = 'ASCII Table Tabel ASCII lengkap 0-127 (0x00-0x7F). Lihat kode desimal, heksadesimal, biner, dan karakter. Cocok untuk programmer dan pelajar.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Tabel ASCII lengkap dari 0 hingga 127 (0x00-0x7F) yang menampilkan kode desimal, heksadesimal, biner, karakter, dan keterangan untuk setiap entry. Alat ini sangat berguna bagi programmer, pelajar, dan siapa pun yang perlu memahami atau mencari kode ASCII dengan cepat.';
+const aboutExtra = 'Tersedia fitur pencarian untuk mencari berdasarkan kode desimal, heksadesimal, karakter, atau keterangan. Bisa juga filter berdasarkan kategori: semua, control characters (0-31, 127), atau printable characters (32-126). Karakter control ditandai warna merah, karakter printable ditandai warna hijau. Tabel dapat di-scroll dan sticky header memudahkan navigasi.';
 const relatedTools = [
-  { slug: 'char-counter', name: 'Char Counter', icon: '#' },
+  { slug: 'char-counter', name: 'Character Counter', icon: '#' },
   { slug: 'word-counter', name: 'Word Counter', icon: '⚡' },
   { slug: 'morse-code-converter', name: 'Morse Code Converter', icon: '···' },
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' }
@@ -15,7 +16,7 @@ const relatedTools = [
 
 const toolCss = `
     .ascii-table { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 0.8rem; }
-    .ascii-table th { position: sticky; top: 0; background: var(--surface-soft); z-index: 1; }
+    .ascii-table th { position: sticky; top: 0; background: oklch(0.96 0.003 270); z-index: 1; }
     .ascii-table td, .ascii-table th { padding: 4px 10px; text-align: center; vertical-align: middle; }
     .ascii-table tbody tr:hover { background: rgba(99,102,241,.08); }
     td.ctrl { color: #ef4444; font-weight: 600; }
@@ -24,51 +25,46 @@ const toolCss = `
   `;
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#8b5cf6;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><polyline points="9 12 11 14 15 10"/></svg></div><div><h1 class="h3 mb-0">ASCII Table</h1><p class="opacity-60 small mb-0">Tabel kode ASCII lengkap 0&ndash;127. Desimal, heksadesimal, biner, dan karakter.</p></div></header>
-
-<div class="flex flex-wrap gap-3 mb-4">
-<div class="md:w-2/3 w-full">
-<input type="text" id="asciiSearch" class="input input-bordered w-full" placeholder="Cari kode atau karakter (misal: A, 65, 0x41, null, space, CR)..." autofocus>
-</div>
-<div class="md:w-1/3 w-full flex gap-2 items-center">
-<select id="filterCat" class="select select-bordered w-full">
-<option value="all">Semua</option>
-<option value="control">Control (0-31, 127)</option>
-<option value="print">Printable (32-126)</option>
-</select>
-<span class="text-sm opacity-60" id="rowCount">128 / 128</span>
-</div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
 
-<div class="card shadow-sm border-0" style="max-height: 600px; overflow-y: auto;">
-<table class="table table-sm table-zebra ascii-table mb-0">
-<thead>
-<tr><th>Desimal</th><th>Hex</th><th>Biner</th><th>Karakter</th><th>Keterangan</th></tr>
-</thead>
-<tbody id="asciiBody"></tbody>
-</table>
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+    <div class="md:col-span-2">
+      <input type="text" id="asciiSearch" class="input input-bordered w-full input-sm" placeholder="Cari kode atau karakter (misal: A, 65, 0x41, null, space, CR)..." autofocus>
+    </div>
+    <div class="flex gap-2 items-center">
+      <select id="filterCat" class="select select-bordered w-full select-sm">
+        <option value="all">Semua</option>
+        <option value="control">Control (0-31, 127)</option>
+        <option value="print">Printable (32-126)</option>
+      </select>
+      <span class="text-xs opacity-60" id="rowCount">128 / 128</span>
+    </div>
+  </div>
+
+  <div class="rounded-lg" style="max-height: 600px; overflow-y: auto; border:1px solid oklch(0.9 0.005 270);">
+    <table class="table table-sm w-full ascii-table">
+      <thead>
+        <tr class="text-xs opacity-50"><th>Desimal</th><th>Hex</th><th>Biner</th><th>Karakter</th><th>Keterangan</th></tr>
+      </thead>
+      <tbody id="asciiBody"></tbody>
+    </table>
+  </div>
+
 </div>
 
-
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
 <style is:inline>
 {toolCss}
-</style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
 </style>
 
 <script is:inline>
@@ -159,4 +155,3 @@ function showToast(message) {
   setTimeout(function() { t.remove(); }, 2500);
 }
 </script>
-

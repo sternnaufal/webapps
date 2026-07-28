@@ -3,7 +3,7 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'JSON Formatter & Validator';
-const description = 'Format, validasi, dan beautify JSON online. JSON formatter dengan syntax highlighting dan tree view.';
+const description = 'Format, validasi, dan beautify JSON online. JSON formatter dengan syntax highlighting.';
 const keywords = 'json formatter, json validator, json beautifier, format json, json tool';
 const aboutText = 'JSON formatter online untuk memformat, memvalidasi, dan mempercantik data JSON. Alat ini membantu developer memeriksa struktur JSON, menemukan error syntax, dan mengubah JSON mentah menjadi format yang mudah dibaca dengan indentasi yang rapi. Mendukung berbagai mode: format/beautify dengan indentasi 2 atau 4 spasi, minify untuk memperkecil ukuran data, dan validasi untuk mendeteksi syntax error secara akurat.';
 const aboutExtra = 'JSON (JavaScript Object Notation) adalah format pertukaran data standar yang digunakan secara luas dalam REST API development, konfigurasi aplikasi, penyimpanan data NoSQL, dan komunikasi client-server. JSON formatter sangat penting dalam workflow pengembangan: debugging response API, membaca file konfigurasi, mentransformasi data antar format, dan dokumentasi API. Semua pemrosesan dilakukan di browser tanpa mengirim data ke server.';
@@ -15,45 +15,42 @@ const relatedTools = [
 ];
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-  <div class="flex flex-wrap gap-4">
-    <div class="lg:w-1/2 w-full">
-      <label class="label-text font-semibold text-sm">Input JSON</label>
-      <textarea id="jsonInput" class="textarea textarea-bordered w-full font-mono text-sm" rows="8" placeholder="Paste JSON di sini..."></textarea>
-      <div class="flex gap-2 mt-2 flex-wrap">
-        <button id="btnFormat" class="btn btn-success btn-sm">Format (2 spaces)</button>
-        <button id="btnFormat4" class="btn btn-outline btn-sm">Format (4 spaces)</button>
-        <button id="btnMinify" class="btn btn-warning btn-sm">Minify</button>
-        <button id="btnValidate" class="btn btn-info btn-sm">Validate</button>
-        <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
-      </div>
-      <div id="validationMsg" class="mt-2 text-xs"></div>
-    </div>
-    <div class="lg:w-1/2 w-full">
-      <div class="flex justify-between items-center mb-1">
-        <label class="label-text font-semibold text-sm mb-0">Output</label>
-        <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
-      </div>
-      <textarea id="jsonOutput" class="textarea textarea-bordered w-full font-mono text-sm" rows="8" readonly></textarea>
-    </div>
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
   </div>
 
-  <div class="bg-base-200/50 rounded-xl p-4 mt-4 text-sm">
-    <span class="font-bold">?</span>
-    <span class="opacity-70">Tempel JSON, klik Format, dan lihat hasil yang rapi. Validasi otomatis memberi tahu jika ada error.</span>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input JSON</label>
+        <textarea id="jsonInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" placeholder="Paste JSON di sini..."></textarea>
+        <div class="flex gap-2 mt-2 flex-wrap">
+          <button id="btnFormat" class="btn btn-primary btn-sm">Format (2)</button>
+          <button id="btnFormat4" class="btn btn-ghost btn-sm">Format (4)</button>
+          <button id="btnMinify" class="btn btn-ghost btn-sm">Minify</button>
+          <button id="btnValidate" class="btn btn-ghost btn-sm">Validate</button>
+          <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+        </div>
+        <div id="validationMsg" class="mt-2 text-xs"></div>
+      </div>
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-xs font-medium opacity-60">Output</span>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="jsonOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" readonly></textarea>
+      </div>
+    </div>
+
+    <div class="text-xs px-3 py-2 rounded-lg" style="background:oklch(0.9 0.005 270);">
+      <span class="opacity-70">Tempel JSON, klik Format, dan lihat hasil yang rapi. Validasi otomatis memberi tahu jika ada error.</span>
+    </div>
   </div>
 
   <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
-
 </ToolLayout>
-
-<script is:inline>
-</script>
 
 <script is:inline>
 var input = document.getElementById('jsonInput');
@@ -62,16 +59,16 @@ var msg = document.getElementById('validationMsg');
 
 function process(spaces) {
   var raw = input.value.trim();
-  if (!raw) { msg.textContent = ''; msg.className = 'mt-2 small'; output.value = ''; return; }
+  if (!raw) { msg.textContent = ''; msg.className = 'mt-2 text-xs'; output.value = ''; return; }
   try {
     var parsed = JSON.parse(raw);
     output.value = JSON.stringify(parsed, null, spaces === undefined ? 2 : spaces);
     msg.textContent = 'Valid JSON!';
-    msg.className = 'mt-2 small text-success';
+    msg.className = 'mt-2 text-xs text-success';
   } catch (e) {
     output.value = '';
     msg.textContent = 'Error: ' + e.message;
-    msg.className = 'mt-2 small text-error';
+    msg.className = 'mt-2 text-xs text-error';
   }
 }
 
@@ -83,14 +80,14 @@ document.getElementById('btnMinify').addEventListener('click', function() {
   try {
     output.value = JSON.stringify(JSON.parse(raw));
     msg.textContent = 'Minified!';
-    msg.className = 'mt-2 small text-success';
+    msg.className = 'mt-2 text-xs text-success';
   } catch (e) {
     msg.textContent = 'Error: ' + e.message;
-    msg.className = 'mt-2 small text-error';
+    msg.className = 'mt-2 text-xs text-error';
   }
 });
 document.getElementById('btnValidate').addEventListener('click', function() { process(); });
-document.getElementById('btnClear').addEventListener('click', function() { input.value = ''; output.value = ''; msg.textContent = ''; msg.className = 'mt-2 small'; });
+document.getElementById('btnClear').addEventListener('click', function() { input.value = ''; output.value = ''; msg.textContent = ''; msg.className = 'mt-2 text-xs'; });
 
 document.getElementById('btnCopy').addEventListener('click', function() {
   if (!output.value) return;
@@ -101,4 +98,3 @@ document.getElementById('btnCopy').addEventListener('click', function() {
   });
 });
 </script>
-

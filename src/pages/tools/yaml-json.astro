@@ -2,47 +2,53 @@
 import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
-const title = 'YAML ? JSON Converter';
+const title = 'YAML to JSON Converter';
 const description = 'Konversi YAML ke JSON dan JSON ke YAML online. Format data dengan cepat dan akurat.';
 const keywords = 'yaml to json, json to yaml, yaml converter, yaml formatter';
-const aboutText = 'YAML ? JSON Converter Konversi YAML ke JSON dan JSON ke YAML online. Format data dengan cepat dan akurat.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'YAML to JSON converter online untuk mengkonversi data antara format YAML dan JSON secara instan. Alat ini mendukung konversi dua arah: YAML ke JSON dan JSON ke YAML. Sangat berguna bagi developer dan DevOps engineer yang bekerja dengan konfigurasi dalam berbagai format.';
+const aboutExtra = 'Cukup paste data YAML atau JSON pada kolom input, lalu pilih arah konversi. Hasil akan langsung ditampilkan di kolom output dan dapat disalin ke clipboard. Alat ini menggunakan library js-yaml untuk parsing YAML dan native JSON API browser. Semua pemrosesan dilakukan 100% di browser, data tidak dikirim ke server mana pun.';
 const relatedTools = [
-  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
-  { slug: 'json-csv', name: 'Json Csv', icon: '⇄' },
-  { slug: 'sql-formatter', name: 'Sql Formatter', icon: 'SQL' },
-  { slug: 'html-entity', name: 'Html Entity', icon: '&' }
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'json-csv', name: 'JSON to CSV', icon: '⇄' },
+  { slug: 'sql-formatter', name: 'SQL Formatter', icon: 'SQL' },
+  { slug: 'html-entity', name: 'HTML Entity Encoder', icon: '&' }
 ];
 
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div><h1 class="h3 mb-0">YAML ? JSON Converter</h1><p class="opacity-60 small mb-0">Konversi YAML ke JSON atau JSON ke YAML. Paste data, pilih arah, dan konversi.</p></div></header>
-<div class="flex flex-wrap gap-4 mb-4">
-<div class="col-lg-6"><label class="label-text font-semibold">Input</label><textarea id="inputArea" class="input input-bordered w-full font-mono" rows="10" placeholder="Paste YAML atau JSON..."></textarea>
-<div class="flex gap-2 mt-2"><button id="btnToJson" class="btn btn-primary">YAML ? JSON</button><button id="btnToYaml" class="btn btn-success">JSON ? YAML</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div>
-<div class="col-lg-6"><div class="flex justify-between items-center mb-1"><label class="label-text font-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
-<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
 
-<ToolShell about={aboutText} />
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+    <div>
+      <label for="inputArea" class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+      <textarea id="inputArea" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" placeholder="Paste YAML atau JSON..."></textarea>
+      <div class="flex gap-2 mt-2">
+        <button id="btnToJson" class="btn btn-primary btn-sm">YAML &rarr; JSON</button>
+        <button id="btnToYaml" class="btn btn-ghost btn-sm">JSON &rarr; YAML</button>
+        <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+      </div>
+    </div>
+    <div>
+      <div class="flex justify-between items-center mb-1">
+        <label for="outputArea" class="text-xs font-medium opacity-60 mb-1 block">Output</label>
+        <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+      </div>
+      <textarea id="outputArea" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" readonly></textarea>
+    </div>
+  </div>
+
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
@@ -53,4 +59,3 @@ document.getElementById('btnToYaml').addEventListener('click',toYaml);
 document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
 document.getElementById('btnCopy').addEventListener('click',function(){if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});
 </script>
-

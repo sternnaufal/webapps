@@ -3,36 +3,69 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'JSON to TypeScript Interface';
-const desc = 'Konversi JSON ke TypeScript Interface otomatis. Hasilkan tipe TypeScript dari data JSON dengan 1 klik.';
+const description = 'Konversi JSON ke TypeScript Interface otomatis. Hasilkan tipe TypeScript dari data JSON dengan 1 klik.';
 const keywords = 'json to typescript, json to ts, typescript interface generator, type generator';
-const aboutText = 'JSON to TypeScript Interface JSON to TypeScript Interface online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'JSON to TypeScript Interface generator online untuk mengkonversi data JSON menjadi TypeScript interface secara otomatis. Alat ini sangat berguna bagi developer TypeScript yang perlu membuat tipe data dari response API, konfigurasi, atau struktur data JSON lainnya.';
+const aboutExtra = 'Tempel JSON pada kolom input, hasil TypeScript interface akan langsung di-generate. Dapat diatur opsi: export (menambahkan keyword export), optional (menambahkan ? pada properti), dan readonly (menambahkan readonly modifier). Hasil dapat disalin ke clipboard. Semua pemrosesan dilakukan 100% di browser, data tidak dikirim ke server mana pun.';
 const relatedTools = [
-  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
-  { slug: 'json-schema-generator', name: 'Json Schema Generator', icon: '📋' },
-  { slug: 'json-csv', name: 'Json Csv', icon: '⇄' },
-  { slug: 'yaml-json', name: 'Yaml Json', icon: '⇄' }
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'json-schema-generator', name: 'JSON Schema Generator', icon: '📋' },
+  { slug: 'json-csv', name: 'JSON to CSV', icon: '⇄' },
+  { slug: 'yaml-json', name: 'YAML to JSON Converter', icon: '⇄' }
 ];
-const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="md:w-1/2 w-full">\n    <label class="label-text font-semibold">JSON Input</label>\n    <textarea id="j2tIn" class="input input-bordered w-full font-mono" rows="16" placeholder=\'{\n  "name": "John",\n  "age": 30\n}\'></textarea>\n  </div>\n  <div class="md:w-1/2 w-full">\n    <label class="label-text font-semibold">TypeScript Interface</label>\n    <div class="relative">\n      <textarea id="j2tOut" class="input input-bordered w-full font-mono" rows="16" readonly></textarea>\n      <button id="j2tCopy" class="btn btn-sm btn-outline-secondary absolute top-0 end-0 m-1">Copy</button>\n    </div>\n  </div>\n  <div class="w-full">\n    <div class="flex gap-2 flex-wrap">\n      <button id="j2tBtn" class="btn btn-warning">Convert</button>\n      <div class="flex items-center gap-2 form-switch flex items-center"><input class="checkbox" type="checkbox" id="j2tExport" checked><label class="flex items-center gap-2-label small" for="j2tExport">Export</label></div>\n      <div class="flex items-center gap-2 form-switch flex items-center"><input class="checkbox" type="checkbox" id="j2tOptional"><label class="flex items-center gap-2-label small" for="j2tOptional">Optional (?)</label></div>\n      <div class="flex items-center gap-2 form-switch flex items-center"><input class="checkbox" type="checkbox" id="j2tReadonly"><label class="flex items-center gap-2-label small" for="j2tReadonly">Readonly</label></div>\n    </div>\n  </div>\n</div>';
+
 ---
 
-<ToolLayout title={title} description=&#123;desc&#125; keywords={keywords}>
-<Fragment set:html=&#123;bodyHtml&#125; />
+<ToolLayout title={title} description={description} keywords={keywords}>
 
-  <ToolShell about={aboutText} />
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+    <div>
+      <label for="j2tIn" class="text-xs font-medium opacity-60 mb-1 block">JSON Input</label>
+      <textarea id="j2tIn" class="textarea textarea-bordered w-full text-sm font-mono" rows="16" placeholder='{
+  "name": "John",
+  "age": 30
+}'></textarea>
+    </div>
+    <div>
+      <label for="j2tOut" class="text-xs font-medium opacity-60 mb-1 block">TypeScript Interface</label>
+      <div class="relative">
+        <textarea id="j2tOut" class="textarea textarea-bordered w-full text-sm font-mono" rows="16" readonly></textarea>
+        <button id="j2tCopy" class="btn btn-ghost btn-xs absolute top-0 end-0 m-1">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-2 flex-wrap items-center">
+    <button id="j2tBtn" class="btn btn-primary btn-sm">Convert</button>
+    <label class="flex items-center gap-1.5 text-xs">
+      <input class="checkbox checkbox-xs" type="checkbox" id="j2tExport" checked>
+      Export
+    </label>
+    <label class="flex items-center gap-1.5 text-xs">
+      <input class="checkbox checkbox-xs" type="checkbox" id="j2tOptional">
+      Optional (?)
+    </label>
+    <label class="flex items-center gap-1.5 text-xs">
+      <input class="checkbox checkbox-xs" type="checkbox" id="j2tReadonly">
+      Readonly
+    </label>
+  </div>
+
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
-.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
-.saweria-float svg{animation:pulse 1.5s ease infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
-</style>
 
 <script is:inline>
 document.getElementById("j2tBtn").onclick=j2t;document.getElementById("j2tIn").oninput=j2t;document.getElementById("j2tExport").onchange=j2t;document.getElementById("j2tOptional").onchange=j2t;document.getElementById("j2tReadonly").onchange=j2t;document.getElementById("j2tCopy").onclick=()=>{navigator.clipboard.writeText(document.getElementById("j2tOut").value);};
 function j2t(){const i=document.getElementById("j2tIn").value.trim();const o=document.getElementById("j2tOut");if(!i){o.value="";return}try{const obj=JSON.parse(i);const opt=document.getElementById("j2tOptional").checked;const exp=document.getElementById("j2tExport").checked;const ro=document.getElementById("j2tReadonly").checked;o.value=(exp?"export ":"")+gen("Root",obj,opt,ro,"  ");o.style.color="inherit"}catch(e){o.value="// Error: "+e.message;o.style.color="#dc3545"}}
 function gen(n,v,opt,ro,in2){const isArr=Array.isArray(v);const obj=isArr&&v.length>0?v[0]:v;if(typeof obj!=="object"||obj===null){return"type "+n+" = "+typeof v+";"}const pr=ro?"readonly ":"";const q=opt?"?":"";let s="interface "+n+" {\n";Object.entries(obj).forEach(([k,val])=>{const vt=typeof val;let ts;if(val===null)ts="any";else if(vt==="string")ts="string";else if(vt==="number")ts="number";else if(vt==="boolean")ts="boolean";else if(Array.isArray(val)){if(val.length>0&&typeof val[0]==="object"&&val[0]!==null){const nn=k.charAt(0).toUpperCase()+k.slice(1);s+=in2+pr+k+q+": "+nn+"[];\n"+gen(nn,val,opt,ro,in2);return}ts=typeof val[0]+"[]"}else if(vt==="object"){const nn=k.charAt(0).toUpperCase()+k.slice(1);s+=in2+pr+k+q+": "+nn+";\n"+gen(nn,val,opt,ro,in2);return}else ts="any";s+=in2+pr+k+q+": "+ts+";\n"});s+="}";return s}j2t();
 </script>
-

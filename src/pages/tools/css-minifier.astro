@@ -3,32 +3,52 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'CSS Minifier / Beautifier';
-const desc = 'Minify atau beautify CSS kode. Kompres CSS untuk produksi, atau format/tulis rapi untuk development.';
+const description = 'Minify atau beautify CSS kode. Kompres CSS untuk produksi, atau format/tulis rapi untuk development.';
 const keywords = 'css minifier, css beautifier, css formatter, minify css, format css, css compression';
-const aboutText = 'CSS Minifier / Beautifier CSS Minifier / Beautifier online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'CSS Minifier dan Beautifier online untuk mengompres atau merapikan kode CSS. Alat ini membantu developer mengoptimalkan CSS untuk production dengan cara minify, atau merapikannya untuk development dengan beautify.';
+const aboutExtra = 'Tempel kode CSS pada kolom input, lalu pilih Minify untuk mengompres (menghapus komentar, spasi berlebih) atau Beautify untuk merapikan format. Statistik ukuran sebelum dan sesudah serta persentase kompresi akan ditampilkan. Hasil dapat disalin ke clipboard. Semua pemrosesan dilakukan 100% di browser, data tidak dikirim ke server mana pun.';
 const relatedTools = [
-  { slug: 'html-minifier', name: 'Html Minifier', icon: 'CSS' },
-  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
-  { slug: 'sql-formatter', name: 'Sql Formatter', icon: 'SQL' },
-  { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
+  { slug: 'html-minifier', name: 'HTML Minifier', icon: 'CSS' },
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'sql-formatter', name: 'SQL Formatter', icon: 'SQL' },
+  { slug: 'css-unit', name: 'CSS Unit Converter', icon: 'px' }
 ];
-const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full"><div class="flex gap-2 flex-wrap">\n    <button id="cssMin" class="btn btn-warning">Minify</button>\n    <button id="cssBeaut" class="btn btn-outline-primary">Beautify</button>\n    <button id="cssCopy" class="btn btn-outline">Copy</button>\n    <button id="cssClear" class="btn btn-outline">Clear</button>\n    <span id="cssStats" class="ml-auto text-sm opacity-60 flex items-center">---</span>\n  </div></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Input</label><textarea id="cssIn" class="input input-bordered w-full font-mono" rows="16" placeholder="Tempel CSS di sini...">body &#123; background: #fff; color: #333; font-family: system-ui; margin: 0; padding: 2rem; &#125;</textarea></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Output</label><textarea id="cssOut" class="input input-bordered w-full font-mono" rows="16" readonly></textarea></div>\n</div>';
+
 ---
 
-<ToolLayout title={title} description=&#123;desc&#125; keywords={keywords}>
-<Fragment set:html=&#123;bodyHtml&#125; />
+<ToolLayout title={title} description={description} keywords={keywords}>
 
-  <ToolShell about={aboutText} />
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+
+  <div class="flex gap-2 flex-wrap items-center mb-3">
+    <button id="cssMin" class="btn btn-primary btn-sm">Minify</button>
+    <button id="cssBeaut" class="btn btn-ghost btn-sm">Beautify</button>
+    <button id="cssCopy" class="btn btn-ghost btn-sm">Copy</button>
+    <button id="cssClear" class="btn btn-ghost btn-sm">Clear</button>
+    <span id="cssStats" class="text-xs opacity-60 ml-auto">---</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <label for="cssIn" class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+      <textarea id="cssIn" class="textarea textarea-bordered w-full text-sm font-mono" rows="16" placeholder="Tempel CSS di sini...">body &#123; background: #fff; color: #333; font-family: system-ui; margin: 0; padding: 2rem; &#125;</textarea>
+    </div>
+    <div>
+      <label for="cssOut" class="text-xs font-medium opacity-60 mb-1 block">Output</label>
+      <textarea id="cssOut" class="textarea textarea-bordered w-full text-sm font-mono" rows="16" readonly></textarea>
+    </div>
+  </div>
+
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
-.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
-.saweria-float svg{animation:pulse 1.5s ease infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
-</style>
 
 <script is:inline>
 document.getElementById("cssMin").onclick=()=>{const i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,"").replace(/\s+/g," ").replace(/\s*{\s*/g,"{").replace(/\s*}\s*/g,"}").replace(/;}/g,"}").replace(/\s*:\s*/g,":").replace(/\s*;\s*/g,";").replace(/\s*,\s*/g,",").trim();document.getElementById("cssOut").value=o;cssStats(i,o)};
@@ -37,4 +57,3 @@ document.getElementById("cssCopy").onclick=()=>navigator.clipboard.writeText(doc
 document.getElementById("cssClear").onclick=()=>{document.getElementById("cssIn").value="";document.getElementById("cssOut").value="";document.getElementById("cssStats").textContent="---"};
 function cssStats(i,o){const ib=new TextEncoder().encode(i).length,ob=new TextEncoder().encode(o).length;const saved=((ib-ob)/ib*100).toFixed(1);document.getElementById("cssStats").innerHTML=ib+" B &rarr; "+ob+" B ("+saved+"%)"}
 </script>
-

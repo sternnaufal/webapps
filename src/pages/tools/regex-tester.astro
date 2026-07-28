@@ -5,12 +5,13 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Regex Tester';
 const description = 'Tes regular expression online dengan highlight matches. Regex tester dengan replace dan split.';
 const keywords = 'regex tester, regular expression, regex online, regex test, regex tool';
-const aboutText = 'Regex Tester Tes regular expression online dengan highlight matches. Regex tester dengan replace dan split.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Regex tester online untuk menguji pola regular expression secara langsung. Alat ini mendukung test pattern, replace, dan split dengan visual highlight pada matched text. Sangat berguna bagi developer, data analyst, dan siapa pun yang bekerja dengan pencarian teks berbasis pola.';
+const aboutExtra = 'Masukkan pola regex (tanpa delimiter), atur flags seperti g (global), i (case-insensitive), m (multiline), lalu tulis teks yang ingin diuji. Panel Match Results akan menampilkan semua hasil kecocokan beserta posisinya. Fitur Replace memungkinkan penggantian teks yang cocok dengan string baru. Semua pemrosesan dilakukan 100% di browser, data tidak dikirim ke server mana pun.';
 const relatedTools = [
-  { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
   { slug: 'diff-checker', name: 'Diff Checker', icon: '⇔' },
   { slug: 'slug-generator', name: 'Slug Generator', icon: '🔗' },
-  { slug: 'html-preview', name: 'Html Preview', icon: '</>' }
+  { slug: 'html-preview', name: 'HTML Preview', icon: '</>' }
 ];
 
 ---
@@ -21,58 +22,53 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<div class="flex flex-wrap gap-3 mb-4">
-        <div class="md:w-1/2 w-full">
-          <label for="regexPattern" class="label-text">Pattern</label>
-          <div class="input-group">
-            <span class="input-group-text">/</span>
-            <input type="text" id="regexPattern" class="input input-bordered w-full font-monospace" placeholder="[a-z]+" value="\b\w&#123;4,&#125;\b">
-            <span class="input-group-text">/</span>
-            <input type="text" id="regexFlags" class="input input-bordered w-full font-monospace" placeholder="gmi" value="gm" style="max-width: 80px;">
-          </div>
-        </div>
-        <div class="md:w-1/4 w-full">
-          <label class="label-text">Replace with</label>
-          <input type="text" id="replaceText" class="input input-bordered w-full font-monospace" placeholder="(opsional)">
-        </div>
-        <div class="md:w-1/4 w-full flex align-items-end gap-2">
-          <button id="btnReplace" class="btn btn-warning">Replace</button>
-          <button id="btnClear" class="btn btn-outline-danger">Clear</button>
-        </div>
-      </div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
 
-      <div class="flex flex-wrap gap-4">
-        <div class="col-lg-8">
-          <label for="testArea" class="label-text">Test String</label>
-          <textarea id="testArea" class="input input-bordered w-full" placeholder="Masukkan teks untuk diuji...">The quick brown fox jumps over the lazy dog. Contact: support@example.com or call 555-1234.</textarea>
-          <div id="highlightedPreview" class="border rounded p-3 mt-2 bg-white" style="min-height: 80px; white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;"></div>
-        </div>
-        <div class="col-lgap-4">
-          <div class="card shadow-sm">
-            <div class="card-header font-semibold">Match Results</div>
-            <div class="card-body p-2">
-              <div id="matchCount" class="small mb-2 opacity-60">0 matches</div>
-              <div id="matchList" style="max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.8rem;"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `n
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
 
-<ToolShell about={aboutText} />
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+    <div>
+      <label for="regexPattern" class="text-xs font-medium opacity-60 mb-1 block">Pattern</label>
+      <div class="join w-full">
+        <span class="input input-bordered input-sm join-item flex items-center px-2 text-xs opacity-50">/</span>
+        <input type="text" id="regexPattern" class="input input-bordered w-full input-sm join-item font-mono" placeholder="[a-z]+" value="\b\w&#123;4,&#125;\b">
+        <span class="input input-bordered input-sm join-item flex items-center px-2 text-xs opacity-50">/</span>
+        <input type="text" id="regexFlags" class="input input-bordered input-sm join-item font-mono" placeholder="gmi" value="gm" style="max-width: 80px;">
+      </div>
+    </div>
+    <div>
+      <label for="replaceText" class="text-xs font-medium opacity-60 mb-1 block">Replace with</label>
+      <div class="flex gap-2">
+        <input type="text" id="replaceText" class="input input-bordered w-full input-sm font-mono" placeholder="(opsional)">
+        <button id="btnReplace" class="btn btn-primary btn-sm">Replace</button>
+        <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <label for="testArea" class="text-xs font-medium opacity-60 mb-1 block">Test String</label>
+      <textarea id="testArea" class="textarea textarea-bordered w-full text-sm font-mono" rows="6" placeholder="Masukkan teks untuk diuji...">The quick brown fox jumps over the lazy dog. Contact: support@example.com or call 555-1234.</textarea>
+      <div id="highlightedPreview" class="border rounded p-3 mt-2" style="min-height: 80px; white-space: pre-wrap; font-family: monospace; font-size: 0.9rem; border-color: oklch(0.9 0.005 270);"></div>
+    </div>
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Match Results</label>
+      <div class="rounded-lg p-3" style="background:oklch(0.96 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+        <div id="matchCount" class="text-xs opacity-60 mb-2">0 matches</div>
+        <div id="matchList" style="max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.8rem;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-</script>
 
 <script is:inline>
 var pattern = document.getElementById('regexPattern');
@@ -153,4 +149,3 @@ document.getElementById('btnClear').addEventListener('click', function() { testA
 
 update();
 </script>
-
