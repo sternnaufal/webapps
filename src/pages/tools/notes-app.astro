@@ -21,25 +21,35 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef9c3;color:#ca8a04;">&#128221;</div><div><h1 class="h3 mb-0">Notes App</h1><p class="opacity-60 small mb-0">Buat, edit, dan hapus catatan. Tersimpan otomatis di browser.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Buat Catatan Baru</h6><input type="text" id="noteTitle" class="input input-bordered w-full mb-2" placeholder="Judul catatan..."><textarea id="noteContent" class="input input-bordered w-full mb-2" rows="4" placeholder="Isi catatan..."></textarea><button id="btnSave" class="btn btn-primary w-full">Simpan</button></div></div><div class="col-lg-8"><div class="flex justify-between items-center mb-2"><h6 class="mb-0">Catatan Saya</h6><button id="btnExport" class="btn btn-outline btn-sm">Export</button></div><div id="noteList" class="row gap-2"><p class="opacity-60 small">Belum ada catatan</p></div></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-4/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Buat Catatan Baru</div>
+      <input type="text" id="noteTitle" class="input input-bordered w-full input-sm mb-2" placeholder="Judul catatan...">
+      <textarea id="noteContent" class="textarea textarea-bordered w-full text-sm font-mono mb-2" rows="4" placeholder="Isi catatan..."></textarea>
+      <button id="btnSave" class="btn btn-primary btn-sm w-full">Simpan</button>
+    </div>
+  </div>
+  <div class="lg:w-8/12 w-full">
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-xs font-medium opacity-60">Catatan Saya</span>
+      <button id="btnExport" class="btn btn-ghost btn-sm">Export</button>
+    </div>
+    <div id="noteList" class="grid gap-2">
+      <p class="text-xs opacity-60">Belum ada catatan</p>
+    </div>
+  </div>
+</div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
+var nT=document.getElementById('noteTitle'),nC=document.getElementById('noteContent'),bS=document.getElementById('btnSave'),nL=document.getElementById('noteList'),notes=[];try{var saved=localStorage.getItem('notes');if(saved)notes=JSON.parse(saved)}catch(e){}var editingId=null;function render(){if(notes.length===0){nL.innerHTML='<p class="text-xs opacity-60">Belum ada catatan</p>';return}nL.innerHTML=notes.map(function(n){return'<div class="rounded-xl p-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:2px solid #14b8a6"><div class="flex justify-between items-start"><div style="flex:1"><div class="text-sm font-medium mb-1" style="cursor:pointer" onclick="editNote(\''+n.id+'\')">'+n.title+'</div><p class="text-xs opacity-60 mb-0" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(n.content.substring(0,80)||'(kosong)')+'</p></div><div class="flex gap-1 ml-2"><button class="btn btn-ghost btn-xs py-0 px-1" onclick="delNote(\''+n.id+'\')">&#10005;</button></div></div><div class="text-xs opacity-40 mt-1" style="font-size:0.65rem">'+new Date(n.created).toLocaleString('id-ID')+'</div></div>'}).join('')}function saveNote(){var title=nT.value.trim()||'Tanpa Judul',content=nC.value.trim();if(!content){alert('Isi catatan tidak boleh kosong');return}if(editingId){var idx=notes.findIndex(function(n){return n.id===editingId});if(idx>=0){notes[idx].title=title;notes[idx].content=content;notes[idx].updated=Date.now()}editingId=null}else notes.push({id:Date.now().toString(),title:title,content:content,created:Date.now()});localStorage.setItem('notes',JSON.stringify(notes));nT.value='';nC.value='';bS.textContent='Simpan';render()}function editNote(id){var n=notes.find(function(n){return n.id===id});if(!n)return;nT.value=n.title;nC.value=n.content;editingId=id;bS.textContent='Update';nT.focus()}function delNote(id){if(!confirm('Hapus catatan ini?'))return;notes=notes.filter(function(n){return n.id!==id});localStorage.setItem('notes',JSON.stringify(notes));render()}bS.addEventListener('click',saveNote);document.getElementById('btnExport').addEventListener('click',function(){var t=JSON.stringify(notes,null,2);navigator.clipboard.writeText(t).catch(function(){})});render();
 </script>
-
-<script is:inline>
-var nT=document.getElementById('noteTitle'),nC=document.getElementById('noteContent'),bS=document.getElementById('btnSave'),nL=document.getElementById('noteList'),notes=[];try{var saved=localStorage.getItem('notes');if(saved)notes=JSON.parse(saved)}catch(e){}var editingId=null;function render(){if(notes.length===0){nL.innerHTML='<p class="opacity-60 small">Belum ada catatan</p>';return}nL.innerHTML=notes.map(function(n){return'<div class="w-full"><div class="card card-bordered bg-base-100 p-2"><div class="flex justify-between align-items-start"><div style="flex:1"><h6 class="mb-1" style="cursor:pointer" onclick="editNote(\\''+n.id+'\\')">'+n.title+'</h6><p class="text-sm opacity-60 mb-0" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(n.content.substring(0,80)||'(kosong)')+'</p></div><div class="flex gap-1 ml-2"><button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="delNote(\\''+n.id+'\\')">&#10005;</button></div></div><div class="text-sm opacity-60" style="font-size:0.65rem">'+new Date(n.created).toLocaleString('id-ID')+'</div></div></div>'}).join('')}function saveNote(){var title=nT.value.trim()||'Tanpa Judul',content=nC.value.trim();if(!content){alert('Isi catatan tidak boleh kosong');return}if(editingId){var idx=notes.findIndex(function(n){return n.id===editingId});if(idx>=0){notes[idx].title=title;notes[idx].content=content;notes[idx].updated=Date.now()}editingId=null}else notes.push({id:Date.now().toString(),title:title,content:content,created:Date.now()});localStorage.setItem('notes',JSON.stringify(notes));nT.value='';nC.value='';bS.textContent='Simpan';render()}function editNote(id){var n=notes.find(function(n){return n.id===id});if(!n)return;nT.value=n.title;nC.value=n.content;editingId=id;bS.textContent='Update';nT.focus()}function delNote(id){if(!confirm('Hapus catatan ini?'))return;notes=notes.filter(function(n){return n.id!==id});localStorage.setItem('notes',JSON.stringify(notes));render()}bS.addEventListener('click',saveNote);document.getElementById('btnExport').addEventListener('click',function(){var txt=notes.map(function(n){returnn.title+'\\n'+n.content+'\\n---'}).join('\\n\\n');navigator.clipboard.writeText(txt).catch(function(){})});render();
-</script>
-

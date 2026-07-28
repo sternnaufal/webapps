@@ -3,32 +3,62 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Color Format Converter';
-const desc = 'Konversi warna antara format HEX, RGB, RGBA, HSL, HSLA, dan CMYK. Color picker visual.';
+const description = 'Konversi warna antara format HEX, RGB, RGBA, HSL, HSLA, dan CMYK. Color picker visual.';
 const keywords = 'color converter, hex to rgb, rgb to hsl, color picker, konversi warna, cmyk';
-const aboutText = 'Color Format Converter Color Format Converter online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Color Format Converter adalah alat untuk mengkonversi warna antara berbagai format: HEX, RGB, RGBA, HSL, HSLA, dan CMYK. Dilengkapi color picker visual dan input manual. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Konversi format warna sangat penting dalam workflow desain dan pengembangan web. Desainer web menggunakan HEX dan RGB untuk CSS, desainer cetak menggunakan CMYK, dan desainer UI sering bekerja dengan HSL untuk kemudahan penyesuaian. Color Format Converter ini memungkinkan Anda memasukkan warna dalam format apapun (HEX, RGB, atau HSL) dan mendapatkan semua format lainnya secara otomatis. Dilengkapi juga color picker visual untuk memilih warna secara langsung.';
 const relatedTools = [
   { slug: 'color-picker', name: 'Color Picker', icon: '🎨' },
   { slug: 'gradient-generator', name: 'Gradient Generator', icon: '◐' },
   { slug: 'contrast-checker', name: 'Contrast Checker', icon: '◐' },
-  { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
+  { slug: 'css-unit', name: 'CSS Unit Converter', icon: 'px' }
 ];
-const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="md:w-1/2 w-full">\n    <div class="card card-bordered bg-base-100 p-3 mb-3"><label class="label-text font-semibold">Color Picker</label><input type="color" id="ccPick" class="input input-bordered w-full input input-bordered w-full-color w-full" value="#6366f1" style="height:50px"></div>\n    <div class="card card-bordered bg-base-100 p-3"><label class="label-text font-semibold">Manual Input</label><input type="text" id="ccIn" class="input input-bordered w-full font-mono" value="#6366f1" placeholder="#ff0000 / rgb(255,0,0) / hsl(0,100%,50%)"><div class="text-xs opacity-60">HEX, RGB, atau HSL</div></div>\n  </div>\n  <div class="md:w-1/2 w-full">\n    <div class="card card-bordered bg-base-100 p-3">\n      <div class="flex items-center gap-3 mb-3"><div id="ccPrev" style="width:60px;height:60px;border-radius:12px;background:#6366f1;border:2px solid #e9ecef"></div><div><h6 class="mb-0">Preview</h6><span id="ccHexLabel" class="text-sm opacity-60">#6366f1</span></div></div>\n      <table class="table table-sm small mb-0"><tbody>\n        <tr><td>HEX</td><td id="ccHex" class="font-semibold font-mono">#6366f1</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccHex\')">Copy</button></td></tr>\n        <tr><td>RGB</td><td id="ccRgb" class="font-semibold font-mono">rgb(99,102,241)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccRgb\')">Copy</button></td></tr>\n        <tr><td>RGBA</td><td id="ccRgba" class="font-semibold font-mono">rgba(99,102,241,1)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccRgba\')">Copy</button></td></tr>\n        <tr><td>HSL</td><td id="ccHsl" class="font-semibold font-mono">hsl(239,83%,67%)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccHsl\')">Copy</button></td></tr>\n        <tr><td>CMYK</td><td id="ccCmyk" class="font-semibold font-mono">cmyk(59,58,0,5)</td><td><button class="btn btn-sm py-0 px-1 btn-outline-secondary" onclick="ccCopy(\'ccCmyk\')">Copy</button></td></tr>\n      </tbody></table>\n    </div>\n  </div>\n</div>';
 ---
 
-<ToolLayout title={title} description=&#123;desc&#125; keywords={keywords}>
-<Fragment set:html=&#123;bodyHtml&#125; />
+<ToolLayout title={title} description={description} keywords={keywords}>
 
-  <ToolShell about={aboutText} />
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <div class="rounded-xl p-3 mb-3" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Color Picker</label>
+        <input type="color" id="ccPick" class="input input-bordered w-full" value="#6366f1" style="height:50px;cursor:pointer">
+      </div>
+      <div class="rounded-xl p-3" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Manual Input</label>
+        <input type="text" id="ccIn" class="input input-bordered w-full input-sm font-mono" value="#6366f1" placeholder="#ff0000 / rgb(255,0,0) / hsl(0,100%,50%)">
+        <div class="text-xs opacity-40 mt-1">HEX, RGB, atau HSL</div>
+      </div>
+    </div>
+    <div>
+      <div class="rounded-xl p-3" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="flex items-center gap-3 mb-3">
+          <div id="ccPrev" style="width:60px;height:60px;border-radius:12px;background:#6366f1;border:2px solid oklch(0.85 0.01 270);"></div>
+          <div>
+            <div class="text-sm font-medium">Preview</div>
+            <span id="ccHexLabel" class="text-xs opacity-60 font-mono">#6366f1</span>
+          </div>
+        </div>
+        <div class="text-xs space-y-1">
+          <div class="flex justify-between items-center py-1"><span class="opacity-60">HEX</span><span id="ccHex" class="font-mono font-medium">#6366f1</span><button class="btn btn-ghost btn-xs" onclick="ccCopy('ccHex')">Copy</button></div>
+          <div class="flex justify-between items-center py-1 border-t" style="border-color:oklch(0.93 0.005 270);"><span class="opacity-60">RGB</span><span id="ccRgb" class="font-mono font-medium">rgb(99,102,241)</span><button class="btn btn-ghost btn-xs" onclick="ccCopy('ccRgb')">Copy</button></div>
+          <div class="flex justify-between items-center py-1 border-t" style="border-color:oklch(0.93 0.005 270);"><span class="opacity-60">RGBA</span><span id="ccRgba" class="font-mono font-medium">rgba(99,102,241,1)</span><button class="btn btn-ghost btn-xs" onclick="ccCopy('ccRgba')">Copy</button></div>
+          <div class="flex justify-between items-center py-1 border-t" style="border-color:oklch(0.93 0.005 270);"><span class="opacity-60">HSL</span><span id="ccHsl" class="font-mono font-medium">hsl(239,83%,67%)</span><button class="btn btn-ghost btn-xs" onclick="ccCopy('ccHsl')">Copy</button></div>
+          <div class="flex justify-between items-center py-1 border-t" style="border-color:oklch(0.93 0.005 270);"><span class="opacity-60">CMYK</span><span id="ccCmyk" class="font-mono font-medium">cmyk(59%,57%,0%,5%)</span><button class="btn btn-ghost btn-xs" onclick="ccCopy('ccCmyk')">Copy</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
-.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
-.saweria-float svg{animation:pulse 1.5s ease infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
-</style>
 
 <script is:inline>
 function ccCopy(id){navigator.clipboard.writeText(document.getElementById(id).textContent);}
@@ -40,4 +70,3 @@ function ccUpd(r,g,b){if(r===undefined)return;const hex="#"+[r,g,b].map(x=>x.toS
 document.getElementById("ccPick").oninput=function(){document.getElementById("ccIn").value=this.value;const x=ccHex2Rgb(this.value);if(x)ccUpd(...x)};
 document.getElementById("ccIn").oninput=function(){const x=ccParse(this.value);if(x[0]!==undefined){document.getElementById("ccPick").value="#"+[x[0],x[1],x[2]].map(v=>v.toString(16).padStart(2,"0")).join("");ccUpd(...x)}};const _r=ccHex2Rgb("#6366f1");if(_r)ccUpd(..._r);
 </script>
-

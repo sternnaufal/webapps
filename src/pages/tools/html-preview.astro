@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'HTML Live Preview';
 const description = 'Live HTML preview online. Tulis HTML, CSS, JS dan lihat hasilnya secara real-time.';
 const keywords = 'html preview, live html editor, html css js playground';
-const aboutText = 'HTML Live Preview Live HTML preview online. Tulis HTML, CSS, JS dan lihat hasilnya secara real-time.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'HTML Live Preview untuk menulis dan melihat hasil HTML, CSS, dan JavaScript secara real-time di browser. Editor ini menggunakan iframe srcdoc untuk merender halaman langsung di browser Anda. Cocok untuk prototyping, debugging, atau belajar HTML/CSS/JS dengan feedback instan.';
+const aboutExtra = 'Dengan live preview, Anda bisa langsung melihat perubahan setiap kali mengetik kode HTML, CSS, atau JavaScript. Fitur ini sangat membantu untuk: prototyping komponen UI, debugging tampilan, belajar front-end development, menguji snippet kode, dan membuat halaman HTML sederhana dengan cepat. Semua processing terjadi di browser, data tidak dikirim ke server.';
 const relatedTools = [
-  { slug: 'md-preview', name: 'Md Preview', icon: 'MD' },
-  { slug: 'markdown-to-html', name: 'Markdown To Html', icon: '▶' },
-  { slug: 'html-entity', name: 'Html Entity', icon: '&' },
-  { slug: 'css-minifier', name: 'Css Minifier', icon: 'CSS' }
+  { slug: 'md-preview', name: 'Markdown Preview', icon: 'MD' },
+  { slug: 'markdown-to-html', name: 'Markdown to HTML', icon: '▶' },
+  { slug: 'html-entity', name: 'HTML Entity', icon: '&' },
+  { slug: 'css-minifier', name: 'CSS Minifier', icon: 'CSS' },
 ];
-
 ---
 
 <ToolLayout
@@ -21,41 +21,40 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<div class="flex items-center gap-2 px-3 py-2 border-bottom bg-light">
-  <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;width:28px;height:28px;font-size:0.7rem;">&lt;/&gt;</div>
-  <h1 class="h6 mb-0 font-bold">HTML Live Preview</h1>
-  <span class="badge bg-success ml-auto">Real-time</span>
-  <button id="btnRun" class="btn btn-sm btn-primary d-mhidden">Run</button>
-</div>
-<div class="row gap-0 flex-1"><div class="md:w-1/2 w-full border-end">
-<textarea id="htmlInput" class="input input-bordered w-full h-full border-0 p-3 font-mono" placeholder="&lt;h1&gt;Hello World&lt;/h1&gt;">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;style&gt;
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+
+  <div class="rounded-xl p-3 mt-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-xs font-medium opacity-40">HTML/CSS/JS</span>
+      <span class="text-xs px-2 py-0.5 rounded-full" style="background:#10b981;color:#fff;">Real-time</span>
+      <div class="ml-auto">
+        <button id="btnRun" class="btn btn-primary btn-sm">Run</button>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+      <textarea id="htmlInput" class="textarea textarea-bordered w-full h-full font-mono border-0 p-3 text-sm" rows="15" placeholder="<h1>Hello World</h1>"><!DOCTYPE html>
+<html>
+<head><style>
   body &#123; font-family: system-ui; padding: 2rem; background: #f8fafc; &#125;
   h1 &#123; color: #2563eb; &#125;
   .card &#123; background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); &#125;
-&lt;/style&gt;&lt;/head&gt;
-&lt;body&gt;
-  &lt;div class="card"&gt;
-    &lt;h1&gt;Hello, World!&lt;/h1&gt;
-    &lt;p&gt;Edit HTML/CSS/JS di sini, lihat hasilnya secara real-time.&lt;/p&gt;
-    &lt;button onclick="alert('Halo!')"&gt;Klik Aku&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;</textarea>
-</div><div class="md:w-1/2 w-full p-0"><iframe id="preview" srcdoc=" "></iframe></div></div>
+</style></head>
+<body>
+  <div class="card">
+    <h1>Hello, World!</h1>
+    <p>Edit HTML/CSS/JS di sini, lihat hasilnya secara real-time.</p>
+    <button onclick="alert('Halo!')">Klik Aku</button>
+  </div>
+</body>
+</html></textarea>
+      <div class="p-0"><iframe id="preview" srcdoc=" " class="w-full" style="height:100%;min-height:400px;border:none;"></iframe></div>
+    </div>
+  </div>
 
-<ToolShell about={aboutText} />
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
 <script is:inline>
 var inp=document.getElementById('htmlInput'),pre=document.getElementById('preview');
@@ -64,4 +63,3 @@ inp.addEventListener('input',update);
 document.getElementById('btnRun').addEventListener('click',update);
 update();
 </script>
-

@@ -5,11 +5,12 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'MAC Address Generator';
 const description = 'MAC address generator online. Generate alamat MAC acak dengan format colon, dash, atau dot. Batch generate, vendor prefix, dan OUI lookup.';
 const keywords = 'MAC address generator, generate MAC, random MAC, MAC vendor lookup, OUI, alamat MAC';
-const aboutText = 'MAC Address Generator MAC address generator online. Generate alamat MAC acak dengan format colon, dash, atau dot. Batch generate, vendor prefix, dan OUI lookup.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'MAC address generator online untuk menghasilkan alamat MAC acak dengan berbagai format dan opsi. Mendukung format colon (AA:BB:CC:DD:EE:FF), dash (AA-BB-CC-DD-EE-FF), dot (AABB.CCDD.EEFF), batch generate hingga 50 MAC, vendor prefix dari berbagai vendor (Apple, Intel, Cisco, VMware, Samsung, Dell, HP, Microsoft, Lenovo, dan lainnya), serta opsi unicast/multicast dan locally administered.';
+const aboutExtra = 'MAC (Media Access Control) address adalah identifikasi unik 48-bit yang ditetapkan oleh pabrikan untuk setiap perangkat jaringan. Struktur MAC terdiri dari 6 oktet (12 digit heksadesimal): 3 oktet pertama adalah OUI (Organizationally Unique Identifier) yang mengidentifikasi vendor pabrik, dan 3 oktet terakhir adalah nomor seri unik perangkat. Bit 0 oktet pertama menentukan unicast (0) atau multicast (1), bit 1 menentukan globally unique (0) atau locally administered (1). Generator ini berguna untuk pengujian jaringan, simulasi, konfigurasi virtual machine, dan development. Semua pemrosesan dilakukan 100% di browser, data tidak dikirim ke server mana pun.';
 const relatedTools = [
-  { slug: 'uuid-generator', name: 'Uuid Generator', icon: '🆔' },
+  { slug: 'uuid-generator', name: 'UUID Generator', icon: '🆔' },
   { slug: 'subnetting', name: 'Subnetting', icon: '📐' },
-  { slug: 'ip-calculator', name: 'Ip Calculator', icon: '🔌' },
+  { slug: 'ip-calculator', name: 'IP Calculator', icon: '🔌' },
   { slug: 'cron-builder', name: 'Cron Builder', icon: '⏰' }
 ];
 
@@ -18,110 +19,120 @@ const toolCss = `
   `;
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#059669;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="6" x2="6" y2="18"/><line x1="10" y1="6" x2="10" y2="18"/><line x1="14" y1="6" x2="14" y2="18"/><line x1="18" y1="6" x2="18" y2="18"/></svg></div><div><h1 class="h3 mb-0">MAC Address Generator</h1><p class="opacity-60 small mb-0">Generate alamat MAC acak dengan berbagai format dan opsi.</p></div></header>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #3b82f6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+          <div>
+            <label for="macCount" class="text-xs font-medium opacity-60 mb-1 block">Jumlah</label>
+            <input type="number" id="macCount" class="input input-bordered w-full input-sm" value="5" min="1" max="50">
+          </div>
+          <div>
+            <label for="macFormat" class="text-xs font-medium opacity-60 mb-1 block">Format</label>
+            <select id="macFormat" class="select select-bordered w-full select-sm">
+              <option value="colon">AA:BB:CC:DD:EE:FF</option>
+              <option value="dash">AA-BB-CC-DD-EE-FF</option>
+              <option value="dot">AABB.CCDD.EEFF</option>
+            </select>
+          </div>
+          <div>
+            <label for="macVendor" class="text-xs font-medium opacity-60 mb-1 block">Vendor Prefix</label>
+            <select id="macVendor" class="select select-bordered w-full select-sm">
+              <option value="">Random</option>
+              <option value="001A2A">Apple Inc.</option>
+              <option value="3C22FB">Apple Inc.</option>
+              <option value="A483E7">Apple Inc.</option>
+              <option value="001B21">Intel Corp.</option>
+              <option value="3C970E">Intel Corp.</option>
+              <option value="6805CA">Intel Corp.</option>
+              <option value="001AA1">Cisco Systems</option>
+              <option value="00260B">Cisco Systems</option>
+              <option value="005056">VMware</option>
+              <option value="001599">Samsung Elec.</option>
+              <option value="34C3AC">Samsung Elec.</option>
+              <option value="00188B">Dell Inc.</option>
+              <option value="3417EB">Dell Inc.</option>
+              <option value="B083FE">Dell Inc.</option>
+              <option value="0050B6">Dell Inc.</option>
+              <option value="001B63">Hewlett-Packard</option>
+              <option value="3C5282">Hewlett-Packard</option>
+              <option value="00155D">Microsoft Corp.</option>
+              <option value="3C0771">Lenovo</option>
+              <option value="9C5C8E">Lenovo</option>
+              <option value="00163E">Xerox Corp.</option>
+              <option value="08002B">DEC/Intel</option>
+              <option value="002590">Nokia</option>
+              <option value="08EA40">Huawei Tech.</option>
+              <option value="346F24">Huawei Tech.</option>
+              <option value="A4E731">TP-Link Tech.</option>
+              <option value="14CF92">TP-Link Tech.</option>
+              <option value="049226">Netgear Inc.</option>
+              <option value="002248">Sony Corp.</option>
+              <option value="00254B">ZTE Corp.</option>
+              <option value="9C28BF">Ubiquiti Inc.</option>
+              <option value="00D068">Ubiquiti Inc.</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mb-3 flex-wrap">
+          <label class="flex items-center gap-2 text-xs">
+            <input type="radio" name="multicast" id="macUnicast" value="unicast" checked>
+            Unicast
+          </label>
+          <label class="flex items-center gap-2 text-xs">
+            <input type="radio" name="multicast" id="macMulticast" value="multicast">
+            Multicast
+          </label>
+          <label class="flex items-center gap-2 text-xs">
+            <input type="checkbox" id="macLocal" class="checkbox checkbox-sm">
+            Locally Administered
+          </label>
+        </div>
+        <button id="btnGenerate" class="btn btn-primary btn-sm w-full">Generate MAC Address</button>
+        <div id="macOutput" class="mt-3">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-medium opacity-60">Hasil:</span>
+            <button id="btnCopyAll" class="btn btn-ghost btn-sm">Copy Semua</button>
+          </div>
+          <table class="table table-sm mb-0"><tbody id="macTableBody"></tbody></table>
+        </div>
+      </div>
+      <div>
+        <div class="mb-3">
+          <h6 class="text-xs font-medium opacity-60 mb-2">Quick Presets</h6>
+          <div class="flex gap-2 flex-wrap">
+            <button class="btn btn-ghost btn-sm preset" data-count="3" data-fmt="colon">3 MAC</button>
+            <button class="btn btn-ghost btn-sm preset" data-count="10" data-fmt="dash">10 MAC Dash</button>
+            <button class="btn btn-ghost btn-sm preset" data-count="5" data-fmt="dot">5 MAC Dot</button>
+            <button class="btn btn-ghost btn-sm preset" data-count="5" data-local="1">Local Admin</button>
+            <button class="btn btn-ghost btn-sm preset" data-count="3" data-vendor="001A2A">Apple MACs</button>
+          </div>
+        </div>
+        <div>
+          <h6 class="text-xs font-medium opacity-60 mb-2">Informasi MAC Address</h6>
+          <div class="text-xs" style="line-height:1.7">
+            <p class="mb-1"><strong>Struktur:</strong> MAC 48-bit terdiri dari 6 octet (12 digit hex).</p>
+            <p class="mb-1"><strong>OUI:</strong> 3 octet pertama adalah <em>Organizationally Unique Identifier</em> — kode vendor pabrik.</p>
+            <p class="mb-1"><strong>Bit 0 (unicast/multicast):</strong> Bit terendah octet pertama. 0 = unicast, 1 = multicast.</p>
+            <p class="mb-0"><strong>Bit 1 (global/local):</strong> Bit kedua octet pertama. 0 = globally unique (pabrik), 1 = locally administered.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="flex flex-wrap gap-4">
-<div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="row gap-2 mb-3">
-<div class="md:w-1/3 w-full"><label class="label-text small font-semibold">Jumlah</label><input type="number" id="macCount" class="input input-bordered w-full" value="5" min="1" max="50"></div>
-<div class="md:w-1/3 w-full"><label class="label-text small font-semibold">Format</label><select id="macFormat" class="select select-bordered w-full">
-<option value="colon">AA:BB:CC:DD:EE:FF</option>
-<option value="dash">AA-BB-CC-DD-EE-FF</option>
-<option value="dot">AABB.CCDD.EEFF</option>
-</select></div>
-<div class="md:w-1/3 w-full"><label class="label-text small font-semibold">Vendor Prefix</label><select id="macVendor" class="select select-bordered w-full">
-<option value="">Random</option>
-<option value="001A2A">Apple Inc.</option>
-<option value="3C22FB">Apple Inc.</option>
-<option value="A483E7">Apple Inc.</option>
-<option value="001B21">Intel Corp.</option>
-<option value="3C970E">Intel Corp.</option>
-<option value="6805CA">Intel Corp.</option>
-<option value="001AA1">Cisco Systems</option>
-<option value="00260B">Cisco Systems</option>
-<option value="005056">VMware</option>
-<option value="001599">Samsung Elec.</option>
-<option value="34C3AC">Samsung Elec.</option>
-<option value="00188B">Dell Inc.</option>
-<option value="3417EB">Dell Inc.</option>
-<option value="B083FE">Dell Inc.</option>
-<option value="0050B6">Dell Inc.</option>
-<option value="001B63">Hewlett-Packard</option>
-<option value="3C5282">Hewlett-Packard</option>
-<option value="00155D">Microsoft Corp.</option>
-<option value="3C0771">Lenovo</option>
-<option value="9C5C8E">Lenovo</option>
-<option value="00163E">Xerox Corp.</option>
-<option value="08002B">DEC/Intel</option>
-<option value="002590">Nokia</option>
-<option value="08EA40">Huawei Tech.</option>
-<option value="346F24">Huawei Tech.</option>
-<option value="A4E731">TP-Link Tech.</option>
-<option value="14CF92">TP-Link Tech.</option>
-<option value="049226">Netgear Inc.</option>
-<option value="002248">Sony Corp.</option>
-<option value="00254B">ZTE Corp.</option>
-<option value="9C28BF">Ubiquiti Inc.</option>
-<option value="00D068">Ubiquiti Inc.</option>
-</select></div>
-</div>
-<div class="row gap-2 mb-3">
-<div class="col-auto"><div class="flex items-center gap-2"><input type="radio" name="multicast" id="macUnicast" value="unicast" checked><label class="flex items-center gap-2-label small ms-1" for="macUnicast">Unicast</label></div></div>
-<div class="col-auto"><div class="flex items-center gap-2"><input type="radio" name="multicast" id="macMulticast" value="multicast"><label class="flex items-center gap-2-label small ms-1" for="macMulticast">Multicast</label></div></div>
-<div class="col-auto" style="border-left:1px solid var(--border);padding-left:12px"><div class="flex items-center gap-2"><input type="checkbox" id="macLocal" class="checkbox"><label class="flex items-center gap-2-label small" for="macLocal">Locally Administered</label></div></div>
-</div>
-<button id="btnGenerate" class="btn btn-primary w-full">Generate MAC Address</button>
-</div>
-<div id="macOutput" class="card shadow-sm border-0 mt-3 p-3">
-<div class="flex justify-between items-center mb-2"><span class="font-semibold small">Hasil:</span><button id="btnCopyAll" class="btn btn-outline btn-sm">Copy Semua</button></div>
-<table class="table table-sm mb-0"><tbody id="macTableBody"></tbody></table>
-</div>
-</div>
-<div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3 mb-3"><h6 class="mb-3">Quick Presets</h6>
-<div class="flex gap-2 flex-wrap">
-<button class="btn btn-outline-primary btn-sm preset" data-count="3" data-fmt="colon">3 MAC</button>
-<button class="btn btn-outline-primary btn-sm preset" data-count="10" data-fmt="dash">10 MAC Dash</button>
-<button class="btn btn-outline-primary btn-sm preset" data-count="5" data-fmt="dot">5 MAC Dot</button>
-<button class="btn btn-outline-primary btn-sm preset" data-count="5" data-local="1">Local Admin</button>
-<button class="btn btn-outline-primary btn-sm preset" data-count="3" data-vendor="001A2A">Apple MACs</button>
-</div>
-</div>
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Informasi MAC Address</h6>
-<div class="small" style="line-height:1.7">
-<p class="mb-1"><strong class="text-primary">Struktur:</strong> MAC 48-bit terdiri dari 6 octet (12 digit hex).</p>
-<p class="mb-1"><strong class="text-primary">OUI:</strong> 3 octet pertama adalah <em>Organizationally Unique Identifier</em> — kode vendor pabrik.</p>
-<p class="mb-1"><strong class="text-primary">Bit 0 (unicast/multicast):</strong> Bit terendah octet pertama. 0 = unicast, 1 = multicast.</p>
-<p class="mb-0"><strong class="text-primary">Bit 1 (global/local):</strong> Bit kedua octet pertama. 0 = globally unique (pabrik), 1 = locally administered.</p>
-</div>
-</div>
-</div></div>
-
-<ToolShell about={aboutText} />
-
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
 
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var cntInp=document.getElementById('macCount'),fmtInp=document.getElementById('macFormat'),venInp=document.getElementById('macVendor');
@@ -160,7 +171,7 @@ function generate(){
   var rows='';
   for(var i=0;i<cnt;i++){
     var mac=formatMAC(generateMAC(),fmt);
-    rows+='<tr><td class="mac-cell">'+(i+1)+'</td><td class="mac-cell font-semibold">'+mac+'</td><td class="text-right"><button class="btn btn-sm btn-outline-secondary copy-single" data-mac="'+mac+'">Copy</button></td></tr>';
+    rows+='<tr><td class="mac-cell">'+(i+1)+'</td><td class="mac-cell font-semibold">'+mac+'</td><td class="text-right"><button class="btn btn-ghost btn-sm copy-single" data-mac="'+mac+'">Copy</button></td></tr>';
   }
   tblBody.innerHTML=rows;
 }
@@ -169,7 +180,7 @@ document.getElementById('btnGenerate').addEventListener('click',generate);
 
 document.getElementById('btnCopyAll').addEventListener('click',function(){
   var lines=[];tblBody.querySelectorAll('.mac-cell.font-semibold').forEach(function(el){lines.push(el.textContent);});
-  navigator.clipboard.writeText(lines.join('\\n')).then(function(){showToast(lines.length+' MAC copied');}).catch(function(){});
+  navigator.clipboard.writeText(lines.join('\n')).then(function(){showToast(lines.length+' MAC copied');}).catch(function(){});
 });
 
 document.addEventListener('click',function(e){
@@ -197,4 +208,3 @@ function showToast(m){
 
 generate();
 </script>
-

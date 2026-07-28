@@ -21,44 +21,50 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#eab308;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div><div><h1 class="h3 mb-0">Color Contrast Checker</h1><p class="opacity-60 small mb-0">Cek rasio kontras antara dua warna dan lihat kelulusan WCAG AA/AAA.</p></div></header>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
 <div class="flex flex-wrap gap-4 mb-4">
-<div class="md:w-1/3 w-full">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Foreground (Text)</h6>
-<input type="color" id="fgColor" class="input input-bordered w-full input input-bordered w-full-color mb-2" value="#1a1a2e">
-<input id="fgHex" class="input input-bordered w-full font-mono" value="#1a1a2e">
-</div></div>
-<div class="md:w-1/3 w-full">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Background</h6>
-<input type="color" id="bgColor" class="input input-bordered w-full input input-bordered w-full-color mb-2" value="#e2e8f0">
-<input id="bgHex" class="input input-bordered w-full font-mono" value="#e2e8f0">
-</div></div>
-<div class="md:w-1/3 w-full">
-<div class="card card-bordered bg-base-100 p-3 h-full">
-<div class="flex items-center justify-center h-full" id="previewBox" style="min-height:160px;border-radius:8px;background:#e2e8f0;"><span id="previewText" style="font-size:1.5rem;font-weight:700;color:#1a1a2e;">Sample Text</span></div>
-</div></div></div>
-<div id="contrastResult" class="card card-bordered bg-base-100 p-4 text-center"><h2 id="ratioDisplay" class="mb-2"> : 1</h2>
-<div class="flex justify-center gap-4 flex-wrap">
-<div><span class="tag-badge" id="aaNorm" style="background:#eef2ff;color:#6366f1;">AA Normal</span></div>
-<div><span class="tag-badge" id="aaLarge" style="background:#eef2ff;color:#6366f1;">AA Large</span></div>
-<div><span class="tag-badge" id="aaaNorm" style="background:#eef2ff;color:#6366f1;">AAA Normal</span></div>
-<div><span class="tag-badge" id="aaaLarge" style="background:#eef2ff;color:#6366f1;">AAA Large</span></div>
-</div></div>
+  <div class="md:w-1/3 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Foreground (Text)</div>
+      <input type="color" id="fgColor" class="input input-bordered w-full input-sm mb-2" value="#1a1a2e">
+      <input id="fgHex" class="input input-bordered w-full input-sm font-mono" value="#1a1a2e">
+    </div>
+  </div>
+  <div class="md:w-1/3 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Background</div>
+      <input type="color" id="bgColor" class="input input-bordered w-full input-sm mb-2" value="#e2e8f0">
+      <input id="bgHex" class="input input-bordered w-full input-sm font-mono" value="#e2e8f0">
+    </div>
+  </div>
+  <div class="md:w-1/3 w-full">
+    <div class="rounded-xl p-5 h-full flex items-center justify-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="w-full" id="previewBox" style="min-height:160px;border-radius:8px;background:#e2e8f0;display:flex;align-items:center;justify-content:center">
+        <span id="previewText" style="font-size:1.5rem;font-weight:700;color:#1a1a2e;">Sample Text</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rounded-xl p-5 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+  <h2 id="ratioDisplay" class="text-lg font-bold mb-2"> : 1</h2>
+  <div class="flex justify-center gap-4 flex-wrap text-xs">
+    <div><span class="px-2 py-1 rounded" id="aaNorm" style="background:#eef2ff;color:#6366f1;">AA Normal</span></div>
+    <div><span class="px-2 py-1 rounded" id="aaLarge" style="background:#eef2ff;color:#6366f1;">AA Large</span></div>
+    <div><span class="px-2 py-1 rounded" id="aaaNorm" style="background:#eef2ff;color:#6366f1;">AAA Normal</span></div>
+    <div><span class="px-2 py-1 rounded" id="aaaLarge" style="background:#eef2ff;color:#6366f1;">AAA Large</span></div>
+  </div>
+</div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
 var fgC=document.getElementById('fgColor'),fgH=document.getElementById('fgHex'),bgC=document.getElementById('bgColor'),bgH=document.getElementById('bgHex'),pB=document.getElementById('previewBox'),pT=document.getElementById('previewText'),rD=document.getElementById('ratioDisplay'),aN=document.getElementById('aaNorm'),aL=document.getElementById('aaLarge'),aaN=document.getElementById('aaaNorm'),aaL=document.getElementById('aaaLarge');
 function lum(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c}).join('');var r=parseInt(h.substr(0,2),16)/255,g=parseInt(h.substr(2,2),16)/255,b=parseInt(h.substr(4,2),16)/255;
 [r,g,b]=[r,g,b].map(function(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)});return 0.2126*r+0.7152*g+0.0722*b}
@@ -71,4 +77,3 @@ fgC.addEventListener('input',function(){fgH.value=this.value;update('fg')});fgH.
 bgC.addEventListener('input',function(){bgH.value=this.value;update('bg')});bgH.addEventListener('input',function(){bgC.value=this.value;update('bg')});
 update('fg');
 </script>
-

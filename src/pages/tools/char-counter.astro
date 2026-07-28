@@ -3,16 +3,16 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Character Counter';
-const description = 'Character counter online. Hitung karakter, kata, kalimat, paragraf, dan baris secara real-time.';
+const description = 'Hitung karakter, kata, kalimat, paragraf, dan baris secara real-time online.';
 const keywords = 'character counter, word counter, character count, word count, text analyzer';
-const aboutText = 'Character Counter Character counter online. Hitung karakter, kata, kalimat, paragraf, dan baris secara real-time.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Character Counter untuk menganalisis teks secara real-time. Hitung jumlah karakter (dengan dan tanpa spasi), kata, kalimat, paragraf, baris, estimasi waktu baca, dan kata unik. Dilengkapi juga dengan fitur top words yang menampilkan kata-kata yang paling sering muncul.';
+const aboutExtra = 'Alat ini sangat berguna bagi penulis, content creator, pelajar, dan siapa pun yang perlu menghitung panjang teks. Fitur karakter tanpa spasi berguna untuk platform yang membatasi karakter tanpa menghitung spasi. Estimasi waktu baca membantu mengetahui berapa lama waktu yang dibutuhkan untuk membaca teks (berdasarkan kecepatan baca 200 kata/menit). Analisis kata unik dan top words membantu memahami keragaman kosakata dalam tulisan Anda.';
 const relatedTools = [
   { slug: 'word-counter', name: 'Word Counter', icon: '⚡' },
   { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
-  { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' }
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
+  { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' },
 ];
-
 ---
 
 <ToolLayout
@@ -21,41 +21,60 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div><div><h1 class="h3 mb-0">Character Counter</h1><p class="opacity-60 small mb-0">Analisis teks secara real-time: karakter, kata, kalimat, paragraf, dan lainnya.</p></div></header>
-<textarea id="textInput" class="input input-bordered w-full font-mono mb-3" rows="8" placeholder="Ketik atau paste teks di sini..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+
+  <textarea id="textInput" class="textarea textarea-bordered w-full text-sm font-mono mt-4" rows="8" placeholder="Ketik atau paste teks di sini..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea>
-<div class="flex flex-wrap gap-3">
-<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="charCount">0</div><small class="opacity-60">Karakter</small></div></div>
-<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="charNoSpace">0</div><small class="opacity-60">Tanpa Spasi</small></div></div>
-<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="wordCount">0</div><small class="opacity-60">Kata</small></div></div>
-<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="sentCount">0</div><small class="opacity-60">Kalimat</small></div></div>
-<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="paraCount">0</div><small class="opacity-60">Paragraf</small></div></div>
-<div class="col-4 col-md-2"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h4 mb-0 font-bold" id="lineCount">0</div><small class="opacity-60">Baris</small></div></div>
-</div>
-<div class="flex flex-wrap gap-3 mt-2">
-<div class="md:w-1/4 w-full"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h5 mb-0 font-bold" id="readTime">0</div><small class="opacity-60">Menit baca</small></div></div>
-<div class="md:w-1/4 w-full"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h5 mb-0 font-bold" id="density">0</div><small class="opacity-60">Kata unik</small></div></div>
-<div class="md:w-1/2 w-full"><div class="card card-bordered bg-base-100 p-3"><small class="opacity-60">Top words:</small><div id="topWords" class="small mt-1"></div></div></div>
-</div>
 
-<ToolShell about={aboutText} />
+  <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mt-4">
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-lg font-bold" id="charCount">0</div>
+      <div class="text-xs opacity-60">Karakter</div>
+    </div>
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-lg font-bold" id="charNoSpace">0</div>
+      <div class="text-xs opacity-60">Tanpa Spasi</div>
+    </div>
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-lg font-bold" id="wordCount">0</div>
+      <div class="text-xs opacity-60">Kata</div>
+    </div>
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-lg font-bold" id="sentCount">0</div>
+      <div class="text-xs opacity-60">Kalimat</div>
+    </div>
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-lg font-bold" id="paraCount">0</div>
+      <div class="text-xs opacity-60">Paragraf</div>
+    </div>
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-lg font-bold" id="lineCount">0</div>
+      <div class="text-xs opacity-60">Baris</div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-3">
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="font-bold" id="readTime">0</div>
+      <div class="text-xs opacity-60">Menit baca</div>
+    </div>
+    <div class="rounded-xl p-4 text-center" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="font-bold" id="density">0</div>
+      <div class="text-xs opacity-60">Kata unik</div>
+    </div>
+    <div class="md:col-span-2 rounded-xl p-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <div class="text-xs opacity-60 mb-1">Top words:</div>
+      <div id="topWords" class="text-xs mt-1"></div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('textInput');
@@ -64,19 +83,18 @@ window.topWords=document.getElementById('topWords');
 function analyze(){
   var t=inp.value;
   charCount.textContent=t.length;
-  charNoSpace.textContent=t.replace(/\\s/g,'').length;
-  wordCount.textContent=t.trim()?t.trim().split(/\\s+/).length:0;
+  charNoSpace.textContent=t.replace(/\s/g,'').length;
+  wordCount.textContent=t.trim()?t.trim().split(/\s+/).length:0;
   sentCount.textContent=t.split(/[.!?]+/).filter(function(s){return s.trim().length>0}).length;
-  paraCount.textContent=t.split(/\\n\\s*\\n/).filter(function(p){return p.trim().length>0}).length;
-  lineCount.textContent=t.split('\\n').length;
-  readTime.textContent=Math.max(1,Math.round((t.trim().split(/\\s+/).length||0)/200))+' menit';
-  var words=t.toLowerCase().match(/\\b\\w+\\b/g)||[];
+  paraCount.textContent=t.split(/\n\s*\n/).filter(function(p){return p.trim().length>0}).length;
+  lineCount.textContent=t.split('\n').length;
+  readTime.textContent=Math.max(1,Math.round((t.trim().split(/\s+/).length||0)/200))+' menit';
+  var words=t.toLowerCase().match(/\b\w+\b/g)||[];
   var uniq={};words.forEach(function(w){uniq[w]=(uniq[w]||0)+1});
   var keys=Object.keys(uniq);
   density.textContent=keys.length;
   var sorted=keys.sort(function(a,b){return uniq[b]-uniq[a]}).slice(0,6);
-  topWords.innerHTML=sorted.map(function(w){return '<span class="badge bg-light text-dark mr-1 mb-1">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'}).join('');
+  topWords.innerHTML=sorted.map(function(w){return '<span class="text-xs px-1 py-0.5 rounded mr-1 mb-1 inline-block" style="background:oklch(0.9 0.005 270);">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'}).join('');
 }
 inp.addEventListener('input',analyze);analyze();
 </script>
-

@@ -5,48 +5,44 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'IP Calculator';
 const description = 'Kalkulator IP address: hitung subnet, CIDR, wildcard mask, network range online gratis.';
 const keywords = 'ip calculator, subnet calculator, cidr, ip address, network calculator';
-const aboutText = 'IP Calculator Kalkulator IP address: hitung subnet, CIDR, wildcard mask, network range online gratis.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'IP calculator online untuk menghitung informasi detail IP Address: representasi biner, heksadesimal, kelas IP, default mask, network range, reverse DNS lookup. Cukup masukkan IP address dan alat ini akan menampilkan semua informasi yang Anda butuhkan untuk analisis jaringan.';
+const aboutExtra = 'IP Calculator menampilkan informasi lengkap dari sebuah alamat IP: nilai desimal 32-bit, representasi biner per oktet, heksadesimal, kelas IP (A/B/C/D/E), default subnet mask berdasarkan kelas, network range, dan reverse DNS pointer (in-addr.arpa). Alat ini sangat membantu network engineer, sysadmin, dan developer dalam debugging jaringan, konfigurasi firewall, dan perencanaan alamat IP. Semua pemrosesan dilakukan 100% di browser, data tidak dikirim ke server mana pun.';
 const relatedTools = [
   { slug: 'subnetting', name: 'Subnetting', icon: '📐' },
   { slug: 'cron-builder', name: 'Cron Builder', icon: '⏰' },
-  { slug: 'mac-address-generator', name: 'Mac Address Generator', icon: '🔗' },
+  { slug: 'mac-address-generator', name: 'MAC Address Generator', icon: '🔗' },
   { slug: 'user-agent-parser', name: 'User Agent Parser', icon: '🖥' }
 ];
-
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#10b981;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">IP Calculator</h1><p class="opacity-60 small mb-0">Informasi detail IP Address  representasi biner, kelas, range, dan reverse lookup.</p></div></header>
-<div class="flex flex-wrap gap-3 mb-4"><div class="md:w-1/2 w-full"><label class="label-text">IP Address</label><input id="ipInput" class="input input-bordered w-full font-mono" value="192.168.1.1"><button id="btnCalc" class="btn btn-primary mt-2">Hitung</button></div></div>
-<div id="ipResult" style="display:none;"><div class="card card-bordered bg-base-100 p-3"><div id="ipInfo" class="flex flex-wrap gap-3"></div></div></div>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #3b82f6;">
+    <div class="mb-4">
+      <label class="text-xs font-medium opacity-60 mb-1 block">IP Address</label>
+      <input id="ipInput" class="input input-bordered w-full input-sm font-mono" value="192.168.1.1">
+      <button id="btnCalc" class="btn btn-primary btn-sm mt-2">Hitung</button>
+    </div>
+    <div id="ipResult" style="display:none;">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="ipInfo"></div>
+    </div>
+  </div>
 
-<ToolShell about={aboutText} />
-
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
 function calc(){var ip=document.getElementById('ipInput').value.trim(),parts=ip.split('.');if(parts.length!==4||parts.some(function(p){var n=parseInt(p,10);return isNaN(n)||n<0||n>255})){document.getElementById('ipResult').innerHTML='<div class="alert alert-error">IP tidak valid</div>';document.getElementById('ipResult').style.display='block';return}
 var nums=parts.map(function(p){return parseInt(p,10)}),long=((nums[0]<<24)+(nums[1]<<16)+(nums[2]<<8)+nums[3])>>>0,binary=nums.map(function(n){return n.toString(2).padStart(8,'0')}).join('.');
 var oct1=nums[0],cls,defMask;if(oct1>=1&&oct1<=126){cls='A';defMask='255.0.0.0'}else if(oct1>=128&&oct1<=191){cls='B';defMask='255.255.0.0'}else if(oct1>=192&&oct1<=223){cls='C';defMask='255.255.255.0'}else if(oct1>=224&&oct1<=239){cls='D (Multicast)';defMask='N/A'}else{cls='E (Experimental)';defMask='N/A'}
 var range=cls==='A'?nums[0]+'.0.0.0 - '+nums[0]+'.255.255.255':cls==='B'?nums[0]+'.'+nums[1]+'.0.0 - '+nums[0]+'.'+nums[1]+'.255.255':cls==='C'?nums[0]+'.'+nums[1]+'.'+nums[2]+'.0 - '+nums[0]+'.'+nums[1]+'.'+nums[2]+'.255':'-';
 var hex='0x'+nums.map(function(n){return n.toString(16).padStart(2,'0')}).join(''),rev='';if(cls==='A'||cls==='B'||cls==='C'){var r=nums.slice().reverse();rev=r.join('.')+'.in-addr.arpa'}
-var h='';function r(l,v){h+='<div class="md:w-1/2 w-full col-lgap-4"><div class="p-3 rounded" style="background:var(--surface-soft)"><small class="opacity-60">'+l+'</small><div class="font-semibold font-mono mt-1">'+v+'</div></div></div>'}
+var h='';function r(l,v){h+='<div class="rounded-lg p-3" style="background:oklch(0.93 0.005 270);"><div class="text-xs font-medium opacity-60 mb-1">'+l+'</div><div class="font-semibold font-mono text-sm">'+v+'</div></div>'}
 r('IP Address',ip);r('Decimal',long);r('Binary',binary);r('Hex',hex);r('Class',cls);r('Default Mask',defMask);r('Network Range',range);r('Reverse DNS',rev);r('Octets',nums.join(' . '));
 document.getElementById('ipInfo').innerHTML=h;document.getElementById('ipResult').style.display='block'}
 document.getElementById('btnCalc').addEventListener('click',calc);calc();
 </script>
-

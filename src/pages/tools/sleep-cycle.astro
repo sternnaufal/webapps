@@ -21,48 +21,55 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div><h1 class="h3 mb-0">Sleep Cycle Calculator</h1><p class="opacity-60 small mb-0">Hitung waktu tidur optimal berdasarkan siklus tidur 90 menit. Bangun di akhir siklus agar segar.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3 mb-3">
-<ul class="nav nav-tabs mb-3"><li class="nav-item"><button class="nav-link active" id="tabWake" data-mode="wake">Saya mau bangun jam...</button></li><li class="nav-item"><button class="nav-link" id="tabSleep" data-mode="sleep">Saya mau tidur jam...</button></li></ul>
-<div id="wakePane"><label class="label-text font-semibold">Waktu Bangun</label><input type="time" id="wakeTime" class="input input-bordered w-full" value="06:00">
-<small class="opacity-60">Kalkulator akan menyarankan waktu tidur optimal</small></div>
-<div id="sleepPane" style="display:none"><label class="label-text font-semibold">Waktu Tidur</label><input type="time" id="sleepTime" class="input input-bordered w-full" value="23:00">
-<small class="opacity-60">Kalkulator akan menyarankan waktu bangun optimal</small></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Tips Tidur</h6>
-<div class="small" style="line-height:1.7">
-<p class="mb-1">? Siklus tidur rata-rata 90 menit</p>
-<p class="mb-1">? Idealnya tidur 5-6 siklus (7.5-9 jam)</p>
-<p class="mb-1">? Bangun di tengah siklus = masih ngantuk</p>
-<p class="mb-0">? Butuh ~14 menit untuk tertidur</p>
-</div></div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-5/12 w-full">
+    <div class="rounded-xl p-5 mb-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="flex gap-4 mb-3 border-b pb-2" style="border-color:oklch(0.9 0.005 270);">
+        <button class="text-xs font-medium pb-2 border-b-2 border-[#14b8a6] text-[#14b8a6] active" id="tabWake" data-mode="wake">Saya mau bangun jam...</button>
+        <button class="text-xs font-medium pb-2 opacity-60 hover:opacity-100" id="tabSleep" data-mode="sleep">Saya mau tidur jam...</button>
+      </div>
+      <div id="wakePane">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Waktu Bangun</label>
+        <input type="time" id="wakeTime" class="input input-bordered w-full input-sm" value="06:00">
+        <span class="text-xs opacity-60 mt-1 block">Kalkulator akan menyarankan waktu tidur optimal</span>
+      </div>
+      <div id="sleepPane" style="display:none">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Waktu Tidur</label>
+        <input type="time" id="sleepTime" class="input input-bordered w-full input-sm" value="23:00">
+        <span class="text-xs opacity-60 mt-1 block">Kalkulator akan menyarankan waktu bangun optimal</span>
+      </div>
+    </div>
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Tips Tidur</div>
+      <div class="text-xs space-y-1 opacity-70">
+        <p class="mb-1">&#128161; Siklus tidur rata-rata 90 menit</p>
+        <p class="mb-1">&#128161; Idealnya tidur 5-6 siklus (7.5-9 jam)</p>
+        <p class="mb-1">&#128161; Bangun di tengah siklus = masih ngantuk</p>
+        <p class="mb-0">&#128161; Butuh ~14 menit untuk tertidur</p>
+      </div>
+    </div>
+  </div>
+  <div class="lg:w-7/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Waktu Optimal</div>
+      <div id="results" class="text-xs"></div>
+    </div>
+  </div>
 </div>
-<div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Waktu Optimal</h6>
-<div id="results" class="small"></div></div>
-</div></div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
-
 <script is:inline>
 var wakePane=document.getElementById('wakePane'),sleepPane=document.getElementById('sleepPane'),wakeInp=document.getElementById('wakeTime'),sleepInp=document.getElementById('sleepTime'),res=document.getElementById('results');
-document.getElementById('tabWake').addEventListener('click',function(){wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');document.getElementById('tabSleep').classList.remove('active');calc();});
-document.getElementById('tabSleep').addEventListener('click',function(){wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');document.getElementById('tabWake').classList.remove('active');calc();});
+document.getElementById('tabWake').addEventListener('click',function(){wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');this.style.borderBottomColor='#14b8a6';this.style.color='#14b8a6';this.style.opacity='1';document.getElementById('tabSleep').classList.remove('active');document.getElementById('tabSleep').style.borderBottomColor='transparent';document.getElementById('tabSleep').style.opacity='0.6';calc();});
+document.getElementById('tabSleep').addEventListener('click',function(){wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');this.style.borderBottomColor='#14b8a6';this.style.color='#14b8a6';this.style.opacity='1';document.getElementById('tabWake').classList.remove('active');document.getElementById('tabWake').style.borderBottomColor='transparent';document.getElementById('tabWake').style.opacity='0.6';calc();});
 
 function fmt(t){
   var h=t.getHours(),m=t.getMinutes();
@@ -78,30 +85,29 @@ function calc(){
   if(mode==='wake'){
     var wp=wakeInp.value.split(':'),wh=parseInt(wp[0]),wm=parseInt(wp[1]);
     var wake=new Date(now);wake.setHours(wh,wm,0,0);if(wake<=now)wake.setDate(wake.getDate()+1);
-    var html='<div class="font-bold mb-3">Jika bangun '+fmt(wake)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Tidur</th><th>Siklus</th><th>Keterangan</th></tr>';
+    var html='<div class="font-medium mb-2">Jika bangun '+fmt(wake)+':</div><table class="table table-sm w-full text-xs mb-0"><tr style="background:oklch(0.55 0.25 270 / 0.08);"><th class="text-left py-1 font-medium">Waktu Tidur</th><th class="text-left py-1 font-medium">Siklus</th><th class="text-left py-1 font-medium">Keterangan</th></tr>';
     for(var c=6;c>=3;c--){
       var sleep=new Date(wake);sleep.setMinutes(sleep.getMinutes()-c*90-14);
       var desc=c+' siklus ('+(c*90+14)+' menit)';
-      var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
-      html+='<tr><td class="font-bold">'+fmt(sleep)+'</td><td>'+desc+'</td><td>'+label+'</td></tr>';
+      var label=c>=5?'&#9989; Optimal':c===4?'&#9989; Cukup':'&#9888; Minimal';
+      html+='<tr><td class="py-1 font-bold">'+fmt(sleep)+'</td><td class="py-1">'+desc+'</td><td class="py-1">'+label+'</td></tr>';
     }
-    html+='</table><div class="text-sm opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
+    html+='</table><div class="text-xs opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
     res.innerHTML=html;
   }else{
     var sp=sleepInp.value.split(':'),sh=parseInt(sp[0]),sm=parseInt(sp[1]);
     var sleep=new Date(now);sleep.setHours(sh,sm,0,0);
-    var html='<div class="font-bold mb-3">Jika tidur '+fmt(sleep)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Bangun</th><th>Siklus</th><th>Keterangan</th></tr>';
+    var html='<div class="font-medium mb-2">Jika tidur '+fmt(sleep)+':</div><table class="table table-sm w-full text-xs mb-0"><tr style="background:oklch(0.55 0.25 270 / 0.08);"><th class="text-left py-1 font-medium">Waktu Bangun</th><th class="text-left py-1 font-medium">Siklus</th><th class="text-left py-1 font-medium">Keterangan</th></tr>';
     for(var c=3;c<=6;c++){
       var wake=new Date(sleep);wake.setMinutes(wake.getMinutes()+c*90+14);
       var desc=c+' siklus ('+(c*90+14)+' menit)';
-      var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
-      html+='<tr><td class="font-bold">'+fmt(wake)+' ('+(wake<=now?'besok':'hari ini')+')</td><td>'+desc+'</td><td>'+label+'</td></tr>';
+      var label=c>=5?'&#9989; Optimal':c===4?'&#9989; Cukup':'&#9888; Minimal';
+      html+='<tr><td class="py-1 font-bold">'+fmt(wake)+' ('+(wake<=now?'besok':'hari ini')+')</td><td class="py-1">'+desc+'</td><td class="py-1">'+label+'</td></tr>';
     }
-    html+='</table><div class="text-sm opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
+    html+='</table><div class="text-xs opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
     res.innerHTML=html;
   }
 }
 [wakeInp,sleepInp].forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc)});
 calc();
 </script>
-

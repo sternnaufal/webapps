@@ -22,7 +22,45 @@ const toolCss = `.sw-time{font-size:3.5rem;font-weight:700;font-variant-numeric:
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">&#9202;</div><div><h1 class="h3 mb-0">Stopwatch</h1><p class="opacity-60 small mb-0">Hitung waktu dengan akurat. Catat lap times dan export hasil.</p></div></header><div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full"><div class="card card-bordered bg-base-100 p-4 text-center"><div class="sw-time" id="display">00:00:00.00</div><div class="flex gap-2 justify-center mt-4"><button id="btnStart" class="btn btn-success px-4">Mulai</button><button id="btnLap" class="btn btn-primary px-4" disabled>Lap</button><button id="btnStop" class="btn btn-warning px-4" disabled>Stop</button><button id="btnReset" class="btn btn-outline-danger px-4">Reset</button></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><div class="flex justify-between items-center mb-2"><h6 class="mb-0">Lap Times</h6><button id="btnCopyLaps" class="btn btn-outline btn-sm">Copy</button></div><div id="lapList" style="max-height:250px;overflow-y:auto"><small class="opacity-60">Belum ada lap</small></div></div></div><div class="lg:w-5/12 w-full"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Ringkasan</h6><table class="table table-sm small mb-0"><tr><td>Total Waktu</td><td class="text-right font-bold" id="totalTimeDisplay">00:00:00.00</td></tr><tr><td>Jumlah Lap</td><td class="text-right" id="lapCountDisplay">0</td></tr><tr><td>Lap Tercepat</td><td class="text-right text-success" id="fastLap">-</td></tr><tr><td>Lap Terlambat</td><td class="text-right text-error" id="slowLap">-</td></tr><tr><td>Rata-rata Lap</td><td class="text-right" id="avgLap">-</td></tr></table></div></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-7/12 w-full">
+    <div class="rounded-xl p-5 mb-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-center">
+        <div class="sw-time" id="display">00:00:00.00</div>
+        <div class="flex gap-2 justify-center mt-4">
+          <button id="btnStart" class="btn btn-primary btn-sm">Mulai</button>
+          <button id="btnLap" class="btn btn-ghost btn-sm" disabled>Lap</button>
+          <button id="btnStop" class="btn btn-ghost btn-sm" disabled>Stop</button>
+          <button id="btnReset" class="btn btn-ghost btn-sm">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-xl p-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-xs font-medium opacity-60">Lap Times</span>
+        <button id="btnCopyLaps" class="btn btn-ghost btn-xs">Copy</button>
+      </div>
+      <div id="lapList" style="max-height:250px;overflow-y:auto"><span class="text-xs opacity-60">Belum ada lap</span></div>
+    </div>
+  </div>
+  <div class="lg:w-5/12 w-full">
+    <div class="rounded-xl p-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Ringkasan</div>
+      <div class="text-sm space-y-2">
+        <div class="flex justify-between"><span class="opacity-60">Total Waktu</span><span class="font-bold" id="totalTimeDisplay">00:00:00.00</span></div>
+        <div class="flex justify-between"><span class="opacity-60">Jumlah Lap</span><span class="font-bold" id="lapCountDisplay">0</span></div>
+        <div class="flex justify-between"><span class="opacity-60">Lap Tercepat</span><span class="font-bold text-green-600" id="fastLap">-</span></div>
+        <div class="flex justify-between"><span class="opacity-60">Lap Terlambat</span><span class="font-bold text-red-600" id="slowLap">-</span></div>
+        <div class="flex justify-between"><span class="opacity-60">Rata-rata Lap</span><span class="font-bold" id="avgLap">-</span></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <ToolShell about={aboutText} />
 
@@ -31,19 +69,7 @@ const toolCss = `.sw-time{font-size:3.5rem;font-weight:700;font-variant-numeric:
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
+var d=document.getElementById('display'),bS=document.getElementById('btnStart'),bL=document.getElementById('btnLap'),bSt=document.getElementById('btnStop'),bR=document.getElementById('btnReset'),lL=document.getElementById('lapList'),tTD=document.getElementById('totalTimeDisplay'),lCD=document.getElementById('lapCountDisplay'),fL=document.getElementById('fastLap'),sL=document.getElementById('slowLap'),aL=document.getElementById('avgLap'),lH=[];var st=0,run=0,intv=null;function fmt(t){var h=Math.floor(t/3600000),m=Math.floor((t%3600000)/60000),s=Math.floor((t%60000)/1000),cs=Math.floor(t%1000/10);return(h+'').padStart(2,'0')+':'+(m+'').padStart(2,'0')+':'+(s+'').padStart(2,'0')+'.'+(cs+'').padStart(2,'0')}function upd(){var n=Date.now()-st+run;d.textContent=fmt(n);tTD.textContent=fmt(n)}function start(){if(intv)return;st=Date.now();intv=setInterval(upd,30);bS.disabled=true;bL.disabled=false;bSt.disabled=false}function stop(){clearInterval(intv);intv=null;run+=Date.now()-st;bS.disabled=false;bL.disabled=true;bSt.disabled=true}function reset(){clearInterval(intv);intv=null;st=0;run=0;d.textContent='00:00:00.00';tTD.textContent='00:00:00.00';lH=[];lL.innerHTML='<span class="text-xs opacity-60">Belum ada lap</span>';lCD.textContent='0';fL.textContent='-';sL.textContent='-';aL.textContent='-';bS.disabled=false;bL.disabled=true;bSt.disabled=true}function lap(){if(!intv)return;var n=Date.now()-st+run;lH.push(n);lL.innerHTML=lH.map(function(t,i){return'<div class="flex justify-between text-xs py-1 border-b"><span>Lap '+(i+1)+'</span><span class="font-bold">'+fmt(t)+'</span></div>'}).join('');lCD.textContent=lH.length;var mn=Math.min.apply(null,lH),mx=Math.max.apply(null,lH),av=lH.reduce(function(a,b){return a+b},0)/lH.length;fL.textContent=fmt(mn);sL.textContent=fmt(mx);aL.textContent=fmt(av)}document.getElementById('btnCopyLaps').addEventListener('click',function(){var t=lH.map(function(t,i){return'Lap '+(i+1)+': '+fmt(t)}).join('\n');navigator.clipboard.writeText(t).catch(function(){})});bS.addEventListener('click',start);bL.addEventListener('click',lap);bSt.addEventListener('click',stop);bR.addEventListener('click',reset);
 </script>
-
-<script is:inline>
-var d=document.getElementById('display'),bS=document.getElementById('btnStart'),bL=document.getElementById('btnLap'),bSt=document.getElementById('btnStop'),bR=document.getElementById('btnReset'),lL=document.getElementById('lapList'),tTD=document.getElementById('totalTimeDisplay'),lCD=document.getElementById('lapCountDisplay'),fL=document.getElementById('fastLap'),sL=document.getElementById('slowLap'),aL=document.getElementById('avgLap'),lH=[];var st=0,run=0,intv=null;function fmt(t){var h=Math.floor(t/3600000),m=Math.floor((t%3600000)/60000),s=Math.floor((t%60000)/1000),cs=Math.floor(t%1000/10);return(h+'').padStart(2,'0')+':'+(m+'').padStart(2,'0')+':'+(s+'').padStart(2,'0')+'.'+(cs+'').padStart(2,'0')}function upd(){var n=Date.now()-st+run;d.textContent=fmt(n);tTD.textContent=fmt(n)}function start(){if(intv)return;st=Date.now();intv=setInterval(upd,30);bS.disabled=true;bL.disabled=false;bSt.disabled=false}function stop(){clearInterval(intv);intv=null;run+=Date.now()-st;bS.disabled=false;bL.disabled=true;bSt.disabled=true}function reset(){clearInterval(intv);intv=null;st=0;run=0;d.textContent='00:00:00.00';tTD.textContent='00:00:00.00';lH=[];lL.innerHTML='<small class="opacity-60">Belum ada lap</small>';lCD.textContent='0';fL.textContent='-';sL.textContent='-';aL.textContent='-';bS.disabled=false;bL.disabled=true;bSt.disabled=true}function lap(){if(!intv)return;var n=Date.now()-st+run;lH.push(n);lL.innerHTML=lH.map(function(t,i){return'<div class="flex justify-between small py-1 border-bottom"><span>Lap '+(i+1)+'</span><span class="font-bold">'+fmt(t)+'</span></div>'}).join('');lCD.textContent=lH.length;var mn=Math.min.apply(null,lH),mx=Math.max.apply(null,lH),av=lH.reduce(function(a,b){return a+b},0)/lH.length;fL.textContent=fmt(mn);sL.textContent=fmt(mx);aL.textContent=fmt(av)}document.getElementById('btnCopyLaps').addEventListener('click',function(){var t=lH.map(function(t,i){return'Lap '+(i+1)+': '+fmt(t)}).join('\\n');navigator.clipboard.writeText(t).catch(function(){})});bS.addEventListener('click',start);bL.addEventListener('click',lap);bSt.addEventListener('click',stop);bR.addEventListener('click',reset);
-</script>
-

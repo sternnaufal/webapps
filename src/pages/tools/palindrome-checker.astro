@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Palindrome Checker';
 const description = 'Cek palindrome online. Periksa apakah kata, kalimat, atau angka adalah palindrome.';
 const keywords = 'palindrome checker, palindrome check, cek palindrome, palindrome test';
-const aboutText = 'Palindrome Checker Cek palindrome online. Periksa apakah kata, kalimat, atau angka adalah palindrome.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Palindrome Checker adalah alat untuk memeriksa apakah sebuah kata, kalimat, atau angka merupakan palindrome — yaitu teks yang dibaca sama dari depan dan belakang. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Palindrome adalah kata, frasa, atau urutan yang membaca sama maju dan mundur, seperti "Kasur ini rusak", "racecar", atau "12321". Palindrome Checker ini mendukung pengecekan dengan atau tanpa case-sensitive, dan secara otomatis mengabaikan spasi serta tanda baca. Dilengkapi dengan contoh-contoh palindrome populer dalam bahasa Indonesia dan Inggris untuk referensi.';
 const relatedTools = [
   { slug: 'anagram-finder', name: 'Anagram Finder', icon: '🔀' },
   { slug: 'reverse-text', name: 'Reverse Text', icon: '↩' },
-  { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' }
+  { slug: 'word-frequency', name: 'Word Frequency Counter', icon: '📊' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' }
 ];
-
 ---
 
 <ToolLayout
@@ -21,44 +21,49 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Palindrome Checker</h1><p class="opacity-60 small mb-0">Periksa apakah kata, kalimat, atau angka adalah palindrome (dibaca sama dari depan dan belakang).</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-8">
-<div class="card card-bordered bg-base-100 p-3">
-<textarea id="textInput" class="input input-bordered w-full font-mono mb-3" rows="3" placeholder="Masukkan teks..." autofocus>Kasur ini rusak</textarea>
-<div class="flex gap-2 flex-wrap mb-3">
-<button id="btnCheck" class="btn btn-primary">Cek Palindrome</button>
-<button id="btnClear" class="btn btn-outline-danger">Clear</button>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
-<div class="flex items-center gap-2 form-switch mb-3"><input type="checkbox" id="caseSensitive" class="checkbox"><label class="flex items-center gap-2-label small" for="caseSensitive">Case sensitive (beda huruf besar/kecil dianggap beda)</label></div>
-<div id="resultArea" class="p-4 rounded text-center" style="display:none"><div class="display-3 mb-2" id="resultIcon">?</div><div class="h4 font-bold" id="resultText"></div><div class="text-sm opacity-60" id="resultDetail"></div></div>
-</div></div>
-<div class="col-lgap-4">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Palindrome</h6>
-<div class="small" style="line-height:2">
-<div style="cursor:pointer" class="example">Kasur ini rusak</div>
-<div style="cursor:pointer" class="example">Ibu Ratna antar ubi</div>
-<div style="cursor:pointer" class="example">Kakak</div>
-<div style="cursor:pointer" class="example">Aku suka rajawali, bapak? Apakah jawab? Aku suka rajawali, ibu?</div>
-<div style="cursor:pointer" class="example">12321</div>
-<div style="cursor:pointer" class="example">racecar</div>
-</div></div>
-</div></div>
 
-<ToolShell about={aboutText} />
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Masukkan Teks</label>
+      <textarea id="textInput" class="textarea textarea-bordered w-full text-sm font-mono mb-3" rows="3" placeholder="Masukkan teks..." autofocus>Kasur ini rusak</textarea>
+      <div class="flex gap-2 mb-3">
+        <button id="btnCheck" class="btn btn-primary btn-sm">Cek Palindrome</button>
+        <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+      </div>
+      <div class="flex items-center gap-2 mb-3">
+        <input type="checkbox" id="caseSensitive" class="checkbox checkbox-sm">
+        <label class="text-xs opacity-60" for="caseSensitive">Case sensitive (beda huruf besar/kecil dianggap beda)</label>
+      </div>
+      <div id="resultArea" class="rounded-xl p-4 text-center" style="display:none;background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-2xl mb-1" id="resultIcon">?</div>
+        <div class="text-sm font-bold" id="resultText"></div>
+        <div class="text-xs opacity-60" id="resultDetail"></div>
+      </div>
+    </div>
+    <div>
+      <div class="rounded-xl p-4" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-xs font-medium opacity-60 mb-2">Contoh Palindrome</div>
+        <div class="text-xs leading-relaxed">
+          <div style="cursor:pointer" class="example hover:opacity-60">Kasur ini rusak</div>
+          <div style="cursor:pointer" class="example hover:opacity-60">Ibu Ratna antar ubi</div>
+          <div style="cursor:pointer" class="example hover:opacity-60">Kakak</div>
+          <div style="cursor:pointer" class="example hover:opacity-60">Aku suka rajawali, bapak? Apakah jawab? Aku suka rajawali, ibu?</div>
+          <div style="cursor:pointer" class="example hover:opacity-60">12321</div>
+          <div style="cursor:pointer" class="example hover:opacity-60">racecar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('textInput'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),cs=document.getElementById('caseSensitive');
@@ -68,7 +73,7 @@ function check(){
   var rev=clean.split('').reverse().join('');
   var isPal=clean===rev;
   res.style.display='block';
-  icon.textContent=isPal?'?':'?';icon.style.color=isPal?'#22c55e':'#ef4444';
+  icon.textContent=isPal?'✓':'✗';icon.style.color=isPal?'#22c55e':'#ef4444';
   txt.textContent=isPal?'Palindrome!':'Bukan Palindrome';
   txt.style.color=isPal?'#22c55e':'#ef4444';
   det.innerHTML='<span class="opacity-60">Setelah difilter: "'+clean+'"<br>Dibalik: "'+rev+'"</span>';
@@ -81,4 +86,3 @@ document.querySelectorAll('.example').forEach(function(el){
 });
 inp.value='Kasur ini rusak';check();
 </script>
-

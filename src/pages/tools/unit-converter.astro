@@ -21,60 +21,53 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<div class="card card-bordered bg-base-100 p-4 shadow-sm">
-        <div class="flex flex-wrap gap-3 mb-3">
-          <div class="md:w-1/3 w-full">
-            <label class="label-text">Kategori</label>
-            <select id="category" class="select select-bordered w-full">
-              <option value="length">Length</option>
-              <option value="weight">Weight</option>
-              <option value="temperature">Temperature</option>
-              <option value="volume">Volume</option>
-              <option value="area">Area</option>
-              <option value="speed">Speed</option>
-              <option value="data">Data</option>
-            </select>
-          </div>
-          <div class="md:w-1/3 w-full">
-            <label for="fromVal" class="label-text">Nilai</label>
-            <input type="number" id="fromVal" class="input input-bordered w-full" value="1" step="any">
-          </div>
-          <div class="col-md-2">
-            <label for="fromUnit" class="label-text">Dari</label>
-            <select id="fromUnit" class="select select-bordered w-full"></select>
-          </div>
-          <div class="col-md-2">
-            <label for="toUnit" class="label-text">Ke</label>
-            <select id="toUnit" class="select select-bordered w-full"></select>
-          </div>
-        </div>
-        <div class="flex flex-wrap gap-3 align-items-end">
-          <div class="md:w-2/3 w-full">
-            <div class="p-3 bg-light rounded border">
-              <div class="h4 mb-0" id="resultDisplay">1 = 1</div>
-            </div>
-          </div>
-          <div class="md:w-1/3 w-full d-grid">
-            <button id="btnSwap" class="btn btn-outline">Swap Units</button>
-          </div>
-        </div>
-      </div>
-    `n
+<header class="mb-5">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</header>
 
-<ToolShell about={aboutText} />
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Kategori</label>
+      <select id="category" class="select select-bordered w-full select-sm">
+        <option value="length">Length</option>
+        <option value="weight">Weight</option>
+        <option value="temperature">Temperature</option>
+        <option value="volume">Volume</option>
+        <option value="area">Area</option>
+        <option value="speed">Speed</option>
+        <option value="data">Data</option>
+      </select>
+    </div>
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Nilai</label>
+      <input type="number" id="fromVal" class="input input-bordered w-full input-sm" value="1" step="any">
+    </div>
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Dari</label>
+      <select id="fromUnit" class="select select-bordered w-full select-sm"></select>
+    </div>
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Ke</label>
+      <select id="toUnit" class="select select-bordered w-full select-sm"></select>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+    <div class="md:col-span-2">
+      <div class="rounded-lg p-3" style="background:oklch(0.95 0.005 270);border:1px solid oklch(0.9 0.005 270);">
+        <div class="text-lg font-semibold" id="resultDisplay">1 = 1</div>
+      </div>
+    </div>
+    <div>
+      <button id="btnSwap" class="btn btn-ghost btn-sm w-full">Swap Units</button>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-</script>
 
 <script is:inline>
 var UNITS = {
@@ -88,11 +81,11 @@ var UNITS = {
   },
   volume: {
     base: 'L',
-    units: { mL: 0.001, L: 1, 'm\\u00B3': 1000, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.236588, floz: 0.0295735 }
+    units: { mL: 0.001, L: 1, 'm\u00B3': 1000, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.236588, floz: 0.0295735 }
   },
   area: {
-    base: 'm\\u00B2',
-    units: { 'mm\\u00B2': 0.000001, 'cm\\u00B2': 0.0001, 'm\\u00B2': 1, ha: 10000, 'km\\u00B2': 1000000, 'in\\u00B2': 0.00064516, 'ft\\u00B2': 0.092903, ac: 4046.86 }
+    base: 'm\u00B2',
+    units: { 'mm\u00B2': 0.000001, 'cm\u00B2': 0.0001, 'm\u00B2': 1, ha: 10000, 'km\u00B2': 1000000, 'in\u00B2': 0.00064516, 'ft\u00B2': 0.092903, ac: 4046.86 }
   },
   speed: {
     base: 'm/s',
@@ -182,4 +175,3 @@ document.getElementById('btnSwap').addEventListener('click', function() {
 
 populateUnits('length');
 </script>
-

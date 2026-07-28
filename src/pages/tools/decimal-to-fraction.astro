@@ -28,62 +28,70 @@ const toolCss = `
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#7c3aed;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><text x="2" y="18" font-size="18">½</text></svg></div><div><h1 class="h3 mb-0">Decimal to Fraction Converter</h1><p class="opacity-60 small mb-0">Ubah angka desimal menjadi pecahan biasa atau campuran dengan akurat.</p></div></header>
-<div class="flex flex-wrap gap-4">
-<div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="row gap-2 mb-3">
-<div class="md:w-1/2 w-full"><label class="label-text small font-semibold">Angka Desimal</label><input type="text" id="decInput" class="input input-bordered w-full input input-bordered w-full-lg" value="0.375" placeholder="Contoh: 0.75, 3.14159, -2.5"></div>
-<div class="md:w-1/4 w-full"><label class="label-text small">Toleransi</label><select id="tolerance" class="select select-bordered w-full"><option value="1e-6">1e-6</option><option value="1e-9" selected>1e-9</option><option value="1e-12">1e-12</option></select></div>
-<div class="md:w-1/4 w-full"><label class="label-text small">Max Penyebut</label><input type="number" id="maxDen" class="input input-bordered w-full" value="1000" min="10" max="100000"></div>
-</div>
-<button id="btnConvert" class="btn btn-primary w-full">Konversi</button>
-</div>
-<div id="fracResult" class="mt-3">
-<div class="frac-output" id="mixedDisplay">0 <span class="frac"><span class="num">3</span><span class="den">8</span></span></div>
-<div class="row gap-2">
-<div class="md:w-1/2 w-full"><div class="p-3 rounded small" style="background:var(--surface-soft);"><span class="font-semibold">Pecahan Biasa:</span> <span id="improperDisplay">3/8</span></div></div>
-<div class="md:w-1/2 w-full"><div class="p-3 rounded small" style="background:var(--surface-soft);"><span class="font-semibold">Nilai Desimal:</span> <span id="decimalDisplay">0.375</span></div></div>
-</div>
-<div id="stepsDisplay" class="mt-2 p-3 rounded small frac-step" style="background:var(--surface-soft);display:none;"><span class="font-semibold">Langkah-langkah:</span><br><span id="stepsContent"></span></div>
-<button id="btnToggleSteps" class="btn btn-outline btn-sm mt-2">Tampilkan Langkah</button>
-</div>
-</div>
-<div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Presets</h6>
-<div class="flex gap-2 flex-wrap">
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.3333333333">⅓</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.25">¼</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.6666666667">⅔</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.125">⅛</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="3.1415926535">π (22/7)</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.8333333333">⅚ (0.833)</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="1.414213562">√2 ≈</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.2">⅕</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.1666666667">⅙</button>
-<button class="btn btn-outline-primary btn-sm preset" data-val="0.1">⅒</button>
-</div>
-</div>
-</div></div>
+<header class="mb-5">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</header>
 
-<ToolShell about={aboutText} />
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+  <div class="lg:col-span-7">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">Angka Desimal</label>
+          <input type="text" id="decInput" class="input input-bordered w-full input-sm" value="0.375" placeholder="Contoh: 0.75, 3.14159, -2.5">
+        </div>
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">Toleransi</label>
+          <select id="tolerance" class="select select-bordered w-full select-sm">
+            <option value="1e-6">1e-6</option>
+            <option value="1e-9" selected>1e-9</option>
+            <option value="1e-12">1e-12</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">Max Penyebut</label>
+          <input type="number" id="maxDen" class="input input-bordered w-full input-sm" value="1000" min="10" max="100000">
+        </div>
+      </div>
+      <button id="btnConvert" class="btn btn-primary btn-sm w-full">Konversi</button>
+    </div>
+    <div id="fracResult" class="mt-4">
+      <div class="frac-output" id="mixedDisplay" style="background:oklch(0.95 0.005 270);">0 <span class="frac"><span class="num">3</span><span class="den">8</span></span></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="rounded-lg p-3 text-xs" style="background:oklch(0.95 0.005 270);"><span class="font-semibold">Pecahan Biasa:</span> <span id="improperDisplay">3/8</span></div>
+        <div class="rounded-lg p-3 text-xs" style="background:oklch(0.95 0.005 270);"><span class="font-semibold">Nilai Desimal:</span> <span id="decimalDisplay">0.375</span></div>
+      </div>
+      <div id="stepsDisplay" class="mt-2 rounded-lg p-3 text-xs frac-step" style="background:oklch(0.95 0.005 270);display:none;"><span class="font-semibold">Langkah-langkah:</span><br><span id="stepsContent"></span></div>
+      <button id="btnToggleSteps" class="btn btn-ghost btn-sm mt-2">Tampilkan Langkah</button>
+    </div>
+  </div>
+  <div class="lg:col-span-5">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+      <div class="text-sm font-semibold mb-3">Presets</div>
+      <div class="flex gap-2 flex-wrap">
+        <button class="btn btn-ghost btn-sm preset" data-val="0.3333333333">⅓</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.25">¼</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.6666666667">⅔</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.125">⅛</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="3.1415926535">π (22/7)</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.8333333333">⅚ (0.833)</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="1.414213562">√2 ≈</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.2">⅕</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.1666666667">⅙</button>
+        <button class="btn btn-ghost btn-sm preset" data-val="0.1">⅒</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} relatedTools={relatedTools} />
 
 </ToolLayout>
 
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var decInp=document.getElementById('decInput'),tolInp=document.getElementById('tolerance'),denInp=document.getElementById('maxDen');
@@ -136,13 +144,13 @@ function decToFrac(decimal,tol,maxDen){
 function convert(){
   var raw=decInp.value.trim().replace(/,/g,'.');
   var val=parseFloat(raw);
-  if(isNaN(val)){mixedDisp.innerHTML='<span class="text-error">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;}
+  if(isNaN(val)){mixedDisp.innerHTML='<span class="text-xs text-red-500">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;}
   var tol=parseFloat(tolInp.value);var maxDen=parseInt(denInp.value)||1000;
   var result=decToFrac(val,tol,maxDen);
   if(result.den===1){mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;}
-  else{mixedDisp.innerHTML=result.mixed.replace(/(\\d+)\\/(\\d+)/g,function(m,n,d){return fracHTML(n,d)});improperDisp.textContent=result.improper;}
+  else{mixedDisp.innerHTML=result.mixed.replace(/(\d+)\/(\d+)/g,function(m,n,d){return fracHTML(n,d)});improperDisp.textContent=result.improper;}
   decimalDisp.textContent=val.toString();
-  stepsContent.innerHTML=result.steps.map(function(s){return s+'\\n'}).join('<br>');
+  stepsContent.innerHTML=result.steps.map(function(s){return s+'\n'}).join('<br>');
   if(stepsVisible)stepsDisp.style.display='block';
 }
 
@@ -157,4 +165,3 @@ document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('c
 decInp.addEventListener('keydown',function(e){if(e.key==='Enter')convert()});
 convert();
 </script>
-

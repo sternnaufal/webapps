@@ -21,49 +21,54 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#ecfdf5;color:#059669;">$</div><div><h1 class="h3 mb-0">Mortgage Calculator</h1><p class="opacity-60 small mb-0">Hitung estimasi cicilan KPR rumah per bulan.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="flex flex-wrap gap-3"><div class="col-6"><label class="label-text small font-semibold">Harga Properti (Rp)</label><input type="number" id="homePrice" class="input input-bordered w-full" value="500000000" min="0" step="1000000"></div>
-<div class="col-6"><label class="label-text small font-semibold">Uang Muka / DP (Rp)</label><input type="number" id="downPayment" class="input input-bordered w-full" value="100000000" min="0" step="1000000"></div></div>
-<div class="flex flex-wrap gap-3 mt-1"><div class="col-6"><label class="label-text small font-semibold">Bunga (%) per tahun</label><input type="number" id="interestRate" class="input input-bordered w-full" value="8" min="0" max="50" step="0.1"></div>
-<div class="col-6"><label class="label-text small font-semibold">Tenor (tahun)</label><select id="loanTerm" class="select select-bordered w-full"><option>5</option><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select></div></div>
-<button id="btnCalc" class="btn btn-primary w-full mt-3">Hitung Cicilan</button>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
-<div class="card card-bordered bg-base-100 p-3 mt-3">
-<div class="flex flex-wrap gap-3 text-center"><div class="col-4"><div class="text-sm opacity-60">Pinjaman</div><div class="font-bold" id="loanAmount">Rp 400.000.000</div></div>
-<div class="col-4"><div class="text-sm opacity-60">Cicilan / Bulan</div><div class="font-bold fs-5 text-primary" id="monthlyPayment">Rp 3.822.942</div></div>
-<div class="col-4"><div class="text-sm opacity-60">Total Bunga</div><div class="font-bold text-error" id="totalInterest">Rp 288.129.640</div></div></div>
-<hr class="my-2">
-<div class="row text-center"><div class="w-full"><div class="text-sm opacity-60">Total Pembayaran</div><div class="font-bold" id="totalPayment" style="font-size:1.1rem">Rp 688.129.640</div></div></div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-7/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Harga Properti (Rp)</label><input type="number" id="homePrice" class="input input-bordered w-full input-sm" value="500000000" min="0" step="1000000"></div>
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Uang Muka / DP (Rp)</label><input type="number" id="downPayment" class="input input-bordered w-full input-sm" value="100000000" min="0" step="1000000"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Bunga (%) per tahun</label><input type="number" id="interestRate" class="input input-bordered w-full input-sm" value="8" min="0" max="50" step="0.1"></div>
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Tenor (tahun)</label>
+          <select id="loanTerm" class="select select-bordered w-full select-sm">
+            <option>5</option><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option>
+          </select>
+        </div>
+      </div>
+      <button id="btnCalc" class="btn btn-primary btn-sm w-full mt-3">Hitung Cicilan</button>
+    </div>
+    <div class="rounded-xl p-5 mt-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="grid grid-cols-3 gap-3 text-center text-xs">
+        <div><span class="opacity-60">Pinjaman</span><div class="text-sm font-bold" id="loanAmount">Rp 400.000.000</div></div>
+        <div><span class="opacity-60">Cicilan / Bulan</span><div class="text-sm font-bold text-blue-500" id="monthlyPayment">Rp 3.822.942</div></div>
+        <div><span class="opacity-60">Total Bunga</span><div class="text-sm font-bold text-red-500" id="totalInterest">Rp 288.129.640</div></div>
+      </div>
+      <hr class="my-2" style="border-color:oklch(0.9 0.005 270);">
+      <div class="text-center text-xs"><span class="opacity-60">Total Pembayaran</span><div class="text-sm font-bold" id="totalPayment">Rp 688.129.640</div></div>
+    </div>
+  </div>
+  <div class="lg:w-5/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Ringkasan</div>
+      <table class="table table-sm w-full text-xs mb-0">
+        <tr><td class="py-1 opacity-60">DP</td><td class="py-1 text-right font-bold" id="dpDisplay">20%</td></tr>
+        <tr><td class="py-1 opacity-60">Bunga Efektif</td><td class="py-1 text-right" id="effRateDisplay">8%</td></tr>
+        <tr><td class="py-1 opacity-60">Jumlah Cicilan</td><td class="py-1 text-right" id="numPayDisplay">180x</td></tr>
+        <tr><td class="py-1 opacity-60">Rasio Cicilan ke Pinjaman</td><td class="py-1 text-right" id="ratioDisplay">0.96%</td></tr>
+      </table>
+    </div>
+  </div>
 </div>
-</div>
-<div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Ringkasan</h6>
-<table class="table table-sm small mb-0">
-<tr><td>DP</td><td class="text-right font-bold" id="dpDisplay">20%</td></tr>
-<tr><td>Bunga Efektif</td><td class="text-right" id="effRateDisplay">8%</td></tr>
-<tr><td>Jumlah Cicilan</td><td class="text-right" id="numPayDisplay">180x</td></tr>
-<tr><td>Rasio Cicilan ke Pinjaman</td><td class="text-right" id="ratioDisplay">0.96%</td></tr>
-</table>
-</div>
-</div></div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var hp=document.getElementById('homePrice'),dp=document.getElementById('downPayment'),ir=document.getElementById('interestRate'),lt=document.getElementById('loanTerm');
@@ -85,4 +90,3 @@ function calc(){
 document.getElementById('btnCalc').addEventListener('click',calc);
 calc();
 </script>
-

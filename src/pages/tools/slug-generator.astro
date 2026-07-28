@@ -22,12 +22,48 @@ const toolCss = `.slug-result{font-family:monospace;font-size:1.4rem;font-weight
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">/</div><div><h1 class="h3 mb-0">Text to Slug Generator</h1><p class="opacity-60 small mb-0">Ubah teks menjadi URL slug yang SEO friendly. Real-time, instant copy.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-8"><div class="card card-bordered bg-base-100 p-3"><div class="mb-3"><label class="label-text font-semibold small">Masukkan Teks</label><input type="text" id="textInput" class="input input-bordered w-full" value="Cara Membuat Kue Bolu Enak dan Lembut" placeholder="Tulis judul di sini..."></div>
-<button id="btnSlugify" class="btn btn-primary mb-3">Buat Slug</button>
-<div class="mb-2"><div class="flex justify-between"><span class="small font-semibold">Hasil Slug</span><button id="btnCopy" class="btn btn-outline btn-sm">Copy</button></div><div id="slugResult" class="slug-result mt-1">cara-membuat-kue-bolu-enak-dan-lembut</div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-3">Opsi Tambahan</h6>
-<div class="flex items-center gap-2 mb-2"><input type="checkbox" id="removeStopWords" class="checkbox"><label class="flex items-center gap-2-label small" for="removeStopWords">Hapus kata umum (dan, di, ke, dari, yang, ini, itu, dengan, untuk, pada, adalah)</label></div>
-<div class="flex gap-2 flex-wrap"><button class="btn btn-outline btn-sm example" data-txt="Tips SEO Website 2026">Tips SEO Website 2026</button><button class="btn btn-outline btn-sm example" data-txt="Cara Memasak Nasi Goreng Spesial">Cara Memasak Nasi Goreng Spesial</button><button class="btn btn-outline btn-sm example" data-txt="Review: Produk Terbaik Bulan Ini!">Review Produk Terbaik Bulan Ini</button></div>
-</div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Penggunaan Slug</h6><div class="small" style="line-height:2"><p class="mb-1"><strong>Judul Artikel:</strong><br>Cara Membuat Kue Bolu</p><p class="mb-1"><strong>URL Slug:</strong><br><code>cara-membuat-kue-bolu</code></p><p class="mb-1"><strong>URL Lengkap:</strong><br><code>blog.com/cara-membuat-kue-bolu</code></p></div></div></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-8/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Masukkan Teks</label>
+        <input type="text" id="textInput" class="input input-bordered w-full input-sm" value="Cara Membuat Kue Bolu Enak dan Lembut" placeholder="Tulis judul di sini...">
+      </div>
+      <button id="btnSlugify" class="btn btn-primary btn-sm mb-3">Buat Slug</button>
+      <div class="mb-2">
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-xs font-medium opacity-60">Hasil Slug</span>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <div id="slugResult" class="slug-result mt-1 text-sm">cara-membuat-kue-bolu-enak-dan-lembut</div>
+      </div>
+    </div>
+    <div class="rounded-xl p-5 mt-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Opsi Tambahan</div>
+      <label class="flex items-center gap-2 text-xs mb-2"><input type="checkbox" id="removeStopWords" class="checkbox checkbox-sm"> Hapus kata umum (dan, di, ke, dari, yang, ini, itu, dengan, untuk, pada, adalah)</label>
+      <div class="flex gap-2 flex-wrap">
+        <button class="btn btn-ghost btn-xs example" data-txt="Tips SEO Website 2026">Tips SEO Website 2026</button>
+        <button class="btn btn-ghost btn-xs example" data-txt="Cara Memasak Nasi Goreng Spesial">Cara Memasak Nasi Goreng Spesial</button>
+        <button class="btn btn-ghost btn-xs example" data-txt="Review: Produk Terbaik Bulan Ini!">Review Produk Terbaik Bulan Ini</button>
+      </div>
+    </div>
+  </div>
+  <div class="lg:w-4/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Contoh Penggunaan Slug</div>
+      <div class="text-xs space-y-2 opacity-70">
+        <p class="mb-1"><strong>Judul Artikel:</strong><br>Cara Membuat Kue Bolu</p>
+        <p class="mb-1"><strong>URL Slug:</strong><br><code class="text-xs">cara-membuat-kue-bolu</code></p>
+        <p class="mb-0"><strong>URL Lengkap:</strong><br><code class="text-xs">blog.com/cara-membuat-kue-bolu</code></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <ToolShell about={aboutText} />
 
@@ -36,19 +72,7 @@ const toolCss = `.slug-result{font-family:monospace;font-size:1.4rem;font-weight
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
+var inp=document.getElementById('textInput'),sR=document.getElementById('slugResult'),rSW=document.getElementById('removeStopWords');var STOP=['dan','di','ke','dari','yang','ini','itu','dengan','untuk','pada','adalah','dalam','akan','telah','sudah','bisa','dapat','tidak','atau','serta'];function slugify(t,r){t=t.toLowerCase().trim();t=t.replace(/[]/g,'a').replace(/[]/g,'e').replace(/[]/g,'i').replace(/[]/g,'o').replace(/[]/g,'u').replace(/[]/g,'n').replace(/[]/g,'c').replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,' ').trim();if(r){var words=t.split(' ');t=words.filter(function(w){return STOP.indexOf(w)===-1}).join(' ')}t=t.replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');return t}function makeSlug(){var t=inp.value;sR.textContent=slugify(t,rSW.checked)||'(kosong)'}document.getElementById('btnSlugify').addEventListener('click',makeSlug);document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(sR.textContent).catch(function(){})});inp.addEventListener('input',makeSlug);rSW.addEventListener('change',makeSlug);document.querySelectorAll('.example').forEach(function(el){el.addEventListener('click',function(){inp.value=this.dataset.txt;makeSlug()})});makeSlug();
 </script>
-
-<script is:inline>
-var inp=document.getElementById('textInput'),sR=document.getElementById('slugResult'),rSW=document.getElementById('removeStopWords');var STOP=['dan','di','ke','dari','yang','ini','itu','dengan','untuk','pada','adalah','dalam','akan','telah','sudah','bisa','dapat','tidak','atau','serta'];function slugify(t,r){t=t.toLowerCase().trim();t=t.replace(/[]/g,'a').replace(/[]/g,'e').replace(/[]/g,'i').replace(/[]/g,'o').replace(/[]/g,'u').replace(/[]/g,'n').replace(/[]/g,'c').replace(/[^a-z0-9\\s-]/g,'').replace(/\\s+/g,' ').trim();if(r){var words=t.split(' ');t=words.filter(function(w){return STOP.indexOf(w)===-1}).join(' ')}t=t.replace(/\\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');return t}function makeSlug(){var t=inp.value;sR.textContent=slugify(t,rSW.checked)||'(kosong)'}document.getElementById('btnSlugify').addEventListener('click',makeSlug);document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(sR.textContent).catch(function(){})});inp.addEventListener('input',makeSlug);rSW.addEventListener('change',makeSlug);document.querySelectorAll('.example').forEach(function(el){el.addEventListener('click',function(){inp.value=this.dataset.txt;makeSlug()})});makeSlug();
-</script>
-

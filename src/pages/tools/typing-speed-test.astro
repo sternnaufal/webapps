@@ -13,7 +13,7 @@ const relatedTools = [
   { slug: 'char-counter', name: 'Char Counter', icon: '#' }
 ];
 
-const toolCss = `.typing-text{font-family:monospace;font-size:1.1rem;line-height:1.8;letter-spacing:0.5px;padding:1rem;border-radius:8px;background:var(--surface-soft);user-select:none;word-break:break-all}.typing-text .correct{color:#22c55e}.typing-text .wrong{color:#ef4444;text-decoration:underline}.typing-text .current{background:#3b82f6;color:#fff;border-radius:2px}.result-stat{text-align:center;padding:0.75rem;border-radius:8px;background:var(--surface-soft)}.result-stat .value{font-size:1.8rem;font-weight:700}.result-stat .label{font-size:0.75rem;text-transform:uppercase;color:var(--opacity-60)}`;
+const toolCss = `.typing-text{font-family:monospace;font-size:1.1rem;line-height:1.8;letter-spacing:0.5px;padding:1rem;border-radius:8px;background:oklch(0.95 0.003 270);user-select:none;word-break:break-all}.typing-text .correct{color:#22c55e}.typing-text .wrong{color:#ef4444;text-decoration:underline}.typing-text .current{background:#3b82f6;color:#fff;border-radius:2px}.result-stat{text-align:center;padding:0.75rem;border-radius:8px;background:oklch(0.95 0.003 270)}.result-stat .value{font-size:1.8rem;font-weight:700}.result-stat .label{font-size:0.75rem;text-transform:uppercase;opacity:0.6}`;
 ---
 
 <ToolLayout
@@ -22,7 +22,54 @@ const toolCss = `.typing-text{font-family:monospace;font-size:1.1rem;line-height
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">WPM</div><div><h1 class="h3 mb-0">Typing Speed Test</h1><p class="opacity-60 small mb-0">Ukur kecepatan mengetik dan akurasi Anda dalam hitungan detik.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-8"><div class="card card-bordered bg-base-100 p-3"><div class="flex justify-between items-center mb-3"><select id="durationSelect" class="select select-bordered w-full select select-bordered w-full-sm w-auto"><option value="15">15 detik</option><option value="30" selected>30 detik</option><option value="60">60 detik</option></select><span class="text-sm opacity-60" id="timerDisplay">30s</span></div><div class="relative"><div class="typing-text" id="textDisplay"></div><textarea id="userInput" class="input input-bordered w-full mt-3 font-mono" rows="2" placeholder="Ketik di sini..." disabled></textarea></div><div class="flex gap-2 mt-3"><button id="btnStart" class="btn btn-primary">Mulai Tes</button><button id="btnReset" class="btn btn-outline-danger">Reset</button></div><div id="resultsArea" class="row gap-2 mt-3" style="display:none"><div class="col-3"><div class="result-stat"><div class="value" id="wpmDisplay">0</div><div class="label">WPM</div></div></div><div class="col-3"><div class="result-stat"><div class="value" id="accDisplay">0%</div><div class="label">Akurasi</div></div></div><div class="col-3"><div class="result-stat"><div class="value" id="timeDisplay">0s</div><div class="label">Waktu</div></div></div><div class="col-3"><div class="result-stat"><div class="value" id="charDisplay">0/0</div><div class="label">Benar/Salah</div></div></div></div></div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Skor WPM</h6><div class="small" style="line-height:2"><div>&lt; 30: <span class="text-error">Lambat</span></div><div>30-40: <span class="text-warning">Rata-rata</span></div><div>40-60: <span class="text-info">Baik</span></div><div>60-80: <span class="text-success">Sangat Baik</span></div><div>80+: <span class="text-primary">Profesional</span></div></div></div></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-8/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="flex justify-between items-center mb-3">
+        <select id="durationSelect" class="select select-bordered select-sm"><option value="15">15 detik</option><option value="30" selected>30 detik</option><option value="60">60 detik</option></select>
+        <span class="text-xs opacity-60" id="timerDisplay">30s</span>
+      </div>
+      <div class="typing-text" id="textDisplay"></div>
+      <textarea id="userInput" class="textarea textarea-bordered w-full text-sm font-mono mt-3" rows="2" placeholder="Ketik di sini..." disabled></textarea>
+      <div class="flex gap-2 mt-3">
+        <button id="btnStart" class="btn btn-primary btn-sm">Mulai Tes</button>
+        <button id="btnReset" class="btn btn-ghost btn-sm">Reset</button>
+      </div>
+      <div id="resultsArea" class="grid grid-cols-4 gap-2 mt-3" style="display:none">
+        <div class="result-stat"><div class="value" id="wpmDisplay">0</div><div class="label">WPM</div></div>
+        <div class="result-stat"><div class="value" id="accDisplay">0%</div><div class="label">Akurasi</div></div>
+        <div class="result-stat"><div class="value" id="timeDisplay">0s</div><div class="label">Waktu</div></div>
+        <div class="result-stat"><div class="value" id="charDisplay">0/0</div><div class="label">Benar/Salah</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="lg:w-4/12 w-full">
+    <div class="rounded-xl p-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Skor WPM</div>
+      <div class="text-xs space-y-1">
+        <div>&lt; 30: <span class="text-red-500">Lambat</span></div>
+        <div>30-40: <span class="text-yellow-500">Rata-rata</span></div>
+        <div>40-60: <span class="text-green-500">Baik</span></div>
+        <div>60-80: <span class="text-green-600">Cepat</span></div>
+        <div>&gt; 80: <span class="text-purple-500">Expert</span></div>
+      </div>
+    </div>
+    <div class="rounded-xl p-4 mt-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Tips</div>
+      <ul class="text-xs space-y-1 opacity-70">
+        <li>Fokus pada akurasi, bukan kecepatan</li>
+        <li>Gunakan semua jari untuk mengetik</li>
+        <li>Posisi tangan rileks di home row</li>
+        <li>Latihan rutin 10 menit per hari</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <ToolShell about={aboutText} />
 
@@ -31,19 +78,7 @@ const toolCss = `.typing-text{font-family:monospace;font-size:1.1rem;line-height
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
+var TEXTS=["Kucing itu duduk di atas tikar sambil menikmati sinar matahari pagi yang hangat.","Belajar coding memang tidak mudah tapi sangat menyenangkan jika sudah terbiasa.","Internet menghubungkan miliaran orang di seluruh dunia dalam hitungan detik.","Kopi hitam tanpa gula adalah minuman favorit para programmer di pagi hari.","Musik klasik dapat membantu meningkatkan konsentrasi saat belajar atau bekerja.","Matahari terbit di timur dan tenggelam di barat setiap hari tanpa henti.","Teknologi blockchain mengubah cara kita bertransaksi dan menyimpan data.","Olahraga teratur baik untuk kesehatan jantung dan kebugaran tubuh secara umum.","Bahasa Indonesia adalah bahasa persatuan yang digunakan di seluruh Nusantara.","Gunung berapi terbentuk dari lelehan batuan panas yang naik ke permukaan bumi.","Pendidikan adalah kunci utama untuk membuka pintu kesempatan di masa depan.","Hewan langka dilindungi oleh undang-undang agar tidak punah dari alam.","Makanan bergizi seimbang penting untuk pertumbuhan dan perkembangan anak-anak.","Awan mendung menandakan bahwa hujan akan turun dalam waktu dekat.","Buku adalah jendela dunia yang membuka wawasan dan pengetahuan tanpa batas."];var dS=document.getElementById('durationSelect'),tD=document.getElementById('timerDisplay'),txD=document.getElementById('textDisplay'),uI=document.getElementById('userInput'),bS=document.getElementById('btnStart'),bR=document.getElementById('btnReset'),rA=document.getElementById('resultsArea'),wD=document.getElementById('wpmDisplay'),aD=document.getElementById('accDisplay'),tiD=document.getElementById('timeDisplay'),cD=document.getElementById('charDisplay');var curText='',pos=0,errors=0,total=0,started=false,finished=false,startTime=0,duration=30,timerInt=null,remaining=0;function pickText(){var i=Math.floor(Math.random()*TEXTS.length);curText=TEXTS[i];txD.innerHTML='';for(var j=0;j<curText.length;j++){var s=document.createElement('span');s.textContent=curText[j];if(j===0)s.className='current';txD.appendChild(s)}if(curText.length>0){var fc=txD.querySelector('.current');if(fc)fc.scrollIntoView({block:'nearest'})}}function resetTest(){clearInterval(timerInt);started=false;finished=false;uI.disabled=true;uI.value='';bS.disabled=false;bS.textContent='Mulai Tes';rA.style.display='none';duration=parseInt(dS.value)||30;remaining=duration;tD.textContent=remaining+'s';pickText();pos=0;errors=0;total=0;uI.focus()}dS.addEventListener('change',function(){if(!started)resetTest()});function startTest(){if(started||finished)return;started=true;uI.disabled=false;uI.focus();startTime=Date.now();bS.disabled=true;bS.textContent='Berlangsung...';remaining=duration;timerInt=setInterval(function(){remaining--;tD.textContent=Math.max(0,remaining)+'s';if(remaining<=0)endTest()},1000)}function endTest(){finished=true;clearInterval(timerInt);uI.disabled=true;bS.textContent='Selesai';var elapsed=(Date.now()-startTime)/1000;var wpm=elapsed>0?Math.round((total/5)/(elapsed/60)):0;var acc=total>0?Math.round((total-errors)/total*100):0;wD.textContent=wpm;aD.textContent=acc+'%';tiD.textContent=elapsed.toFixed(1)+'s';cD.textContent=(total-errors)+'/'+errors;rA.style.display='grid'}uI.addEventListener('input',function(){if(!started)return;var val=this.value,lastIdx=val.length-1;if(lastIdx>=curText.length)return;var spans=txD.querySelectorAll('span');for(var i=0;i<spans.length;i++){if(i<lastIdx){if(spans[i].textContent===val[i]){spans[i].className='correct'}else{spans[i].className='wrong'}}else if(i===lastIdx){if(spans[i].textContent===val[lastIdx]){spans[i].className='correct current'}else{spans[i].className='wrong current';errors++}total++}else if(i>lastIdx){spans[i].className=i===lastIdx+1?'current':''}}if(lastIdx>=0&&val[lastIdx]===curText[lastIdx]){}else if(lastIdx>=0){errors++}total++;pos=lastIdx+1;if(pos>=curText.length)endTest()});bS.addEventListener('click',startTest);bR.addEventListener('click',resetTest);resetTest();
 </script>
-
-<script is:inline>
-var TEXTS=["Kucing itu duduk di atas tikar sambil menikmati sinar matahari pagi yang hangat.","Belajar coding memang tidak mudah tapi sangat menyenangkan jika sudah terbiasa.","Internet menghubungkan miliaran orang di seluruh dunia dalam hitungan detik.","Kopi hitam tanpa gula adalah minuman favorit para programmer di pagi hari.","Musik klasik dapat membantu meningkatkan konsentrasi saat belajar atau bekerja.","Matahari terbit di timur dan tenggelam di barat setiap hari tanpa henti.","Teknologi blockchain mengubah cara kita bertransaksi dan menyimpan data.","Olahraga teratur baik untuk kesehatan jantung dan kebugaran tubuh secara umum.","Bahasa Indonesia adalah bahasa persatuan yang digunakan di seluruh Nusantara.","Gunung berapi terbentuk dari lelehan batuan panas yang naik ke permukaan bumi.","Pendidikan adalah kunci utama untuk membuka pintu kesempatan di masa depan.","Hewan langka dilindungi oleh undang-undang agar tidak punah dari alam.","Makanan bergizi seimbang penting untuk pertumbuhan dan perkembangan anak-anak.","Awan mendung menandakan bahwa hujan akan turun dalam waktu dekat.","Buku adalah jendela dunia yang membuka wawasan dan pengetahuan tanpa batas."];var dS=document.getElementById('durationSelect'),tD=document.getElementById('timerDisplay'),txD=document.getElementById('textDisplay'),uI=document.getElementById('userInput'),bS=document.getElementById('btnStart'),bR=document.getElementById('btnReset'),rA=document.getElementById('resultsArea'),wD=document.getElementById('wpmDisplay'),aD=document.getElementById('accDisplay'),tiD=document.getElementById('timeDisplay'),cD=document.getElementById('charDisplay');var curText='',pos=0,errors=0,total=0,started=false,finished=false,startTime=0,duration=30,timerInt=null,remaining=0;function pickText(){var i=Math.floor(Math.random()*TEXTS.length);curText=TEXTS[i];txD.innerHTML='';for(var j=0;j<curText.length;j++){var s=document.createElement('span');s.textContent=curText[j];if(j===0)s.className='current';txD.appendChild(s)}uI.value='';pos=0;errors=0;total=0;started=false;finished=false;rA.style.display='none';uI.disabled=true;uI.placeholder='Mulai tes dulu...'}function startTest(){duration=parseInt(dS.value);remaining=duration;tD.textContent=remaining+'s';started=true;finished=false;pos=0;errors=0;total=0;startTime=Date.now();uI.value='';uI.disabled=false;uI.focus();rA.style.display='none';bS.disabled=true;timerInt=setInterval(function(){remaining=Math.max(0,Math.ceil((duration*1000-(Date.now()-startTime))/1000));tD.textContent=remaining+'s';if(remaining<=0)endTest()},200)}function endTest(){clearInterval(timerInt);finished=true;started=false;uI.disabled=true;bS.disabled=false;tD.textContent='Selesai!';var timeUsed=Math.max((Date.now()-startTime)/1000,1);var words=total/5;var wpm=Math.round(words/(timeUsed/60));var acc=total>0?Math.round((total-errors)/total*100):0;wD.textContent=wpm;aD.textContent=acc+'%';tiD.textContent=Math.round(timeUsed)+'s';cD.textContent=pos+'/'+errors;rA.style.display='flex'}uI.addEventListener('input',function(e){if(!started)return;var val=uI.value;if(!started&&val.length===1){startTime=Date.now();started=true}var expected=curText.slice(0,val.length);for(var i=0;i<val.length;i++){if(i>=curText.length)break;var sp=txD.children[i];sp.className=val[i]===curText[i]?'correct':'wrong';if(i===val.length-1&&val.length<curText.length){sp.className=(sp.className||'')+' current';if(i>0)txD.children[i-1].className=txD.children[i-1].className.replace(' current','')}}total=val.length;errors=0;for(var i=0;i<val.length;i++)if(val[i]!==curText[i])errors++;if(val.length>=curText.length)endTest()});bS.addEventListener('click',startTest);bR.addEventListener('click',function(){clearInterval(timerInt);tD.textContent='30s';pickText();rA.style.display='none';bS.disabled=false;uI.disabled=true});pickText();
-</script>
-

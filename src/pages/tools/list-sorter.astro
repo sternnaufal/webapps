@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'List Sorter';
 const description = 'Sort list online. Urutkan daftar teks secara ascending, descending, random, atau by length.';
 const keywords = 'list sorter, sort list, urutkan daftar, sort text, alphabetical sorter';
-const aboutText = 'List Sorter Sort list online. Urutkan daftar teks secara ascending, descending, random, atau by length.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'List Sorter adalah alat untuk mengurutkan daftar teks dengan berbagai mode: ascending (A-Z), descending (Z-A), by length, atau acak. Dilengkapi fitur hapus duplikat dan ignore case. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Mengurutkan daftar secara manual rawan error dan memakan waktu, terutama untuk daftar panjang. List Sorter memudahkan Anda mengurutkan item dalam hitungan detik. Berguna untuk mengatur daftar belanja, mengurutkan nama, memproses data teks, menghapus duplikat, mengacak item, dan berbagai keperluan organisasi data lainnya. Cukup paste daftar (satu item per baris), pilih mode sorting, dan dapatkan hasil instan.';
 const relatedTools = [
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
   { slug: 'reverse-text', name: 'Reverse Text', icon: '↩' },
   { slug: 'text-repeater', name: 'Text Repeater', icon: '×' },
-  { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' }
+  { slug: 'word-frequency', name: 'Word Frequency Counter', icon: '📊' }
 ];
-
 ---
 
 <ToolLayout
@@ -21,51 +21,69 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><h1 class="h3 mb-0">List Sorter</h1><p class="opacity-60 small mb-0">Urutkan daftar teks: A-Z, Z-A, acak, by length, hapus duplikat. Satu item per baris.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Input (satu item per baris)</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="8" placeholder="Masukkan daftar, satu per baris..." autofocus>Pisang
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Input (satu item per baris)</label>
+      <textarea id="textInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" placeholder="Masukkan daftar, satu per baris..." autofocus>Pisang
 Apel
 Jeruk
 Mangga
 Anggur
 Durian
 Melon
-Nanas</textarea></div>
-<div class="row gap-2 mb-3"><div class="col-6"><label class="label-text small">Mode</label>
-<select id="modeSelect" class="select select-bordered w-full"><option value="asc">A-Z (Ascending)</option><option value="desc">Z-A (Descending)</option><option value="length">By Length (Pendek)</option><option value="lengthDesc">By Length (Panjang)</option><option value="random">Acak (Random)</option></select></div>
-<div class="col-6"><label class="label-text small">&nbsp;</label>
-<div><div class="flex items-center gap-2"><input type="checkbox" id="uniqueOnly" class="checkbox"><label class="flex items-center gap-2-label small" for="uniqueOnly">Hapus duplikat</label></div>
-<div class="flex items-center gap-2"><input type="checkbox" id="ignoreCase" class="checkbox" checked><label class="flex items-center gap-2-label small" for="ignoreCase">Ignore case</label></div></div></div></div>
-<button id="btnSort" class="btn btn-primary w-full">Urutkan</button>
-</div></div>
-<div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="flex justify-between items-center mb-2"><label class="label-text font-semibold mb-0">Output</label><span id="stats" class="text-sm opacity-60"></span></div>
-<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="8" readonly></textarea>
-<button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
-</div></div></div>
+Nanas</textarea>
+      <div class="grid grid-cols-2 gap-2 mt-3 mb-3">
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">Mode</label>
+          <select id="modeSelect" class="select select-bordered w-full select-sm">
+            <option value="asc">A-Z (Ascending)</option>
+            <option value="desc">Z-A (Descending)</option>
+            <option value="length">By Length (Pendek)</option>
+            <option value="lengthDesc">By Length (Panjang)</option>
+            <option value="random">Acak (Random)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">&nbsp;</label>
+          <div>
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="uniqueOnly" class="checkbox checkbox-sm">
+              <label class="text-xs opacity-60" for="uniqueOnly">Hapus duplikat</label>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="ignoreCase" class="checkbox checkbox-sm" checked>
+              <label class="text-xs opacity-60" for="ignoreCase">Ignore case</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="btnSort" class="btn btn-primary btn-sm w-full">Urutkan</button>
+    </div>
+    <div>
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-medium opacity-60">Output</span>
+        <span id="stats" class="text-xs opacity-60"></span>
+      </div>
+      <textarea id="outputArea" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" readonly></textarea>
+      <button id="btnCopy" class="btn btn-ghost btn-sm mt-2">Copy</button>
+    </div>
+  </div>
+</div>
 
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea'),stats=document.getElementById('stats'),unique=document.getElementById('uniqueOnly'),ic=document.getElementById('ignoreCase');
 function sortList(){
-  var lines=inp.value.split('\\n'),origCount=lines.length;
+  var lines=inp.value.split('\n'),origCount=lines.length;
   if(ic.checked){lines=lines.filter(function(l,i,a){return a.findIndex(function(x){return x.toLowerCase()===l.toLowerCase()})===i})}
   else if(unique.checked)lines=lines.filter(function(l,i,a){return a.indexOf(l)===i});
   else lines=lines.filter(function(l){return l!==undefined});
@@ -75,8 +93,8 @@ function sortList(){
   else if(m==='length')lines.sort(function(a,b){return a.length-b.length});
   else if(m==='lengthDesc')lines.sort(function(a,b){return b.length-a.length});
   else if(m==='random')for(var i=lines.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;}
-  out.value=lines.join('\\n');
-  stats.textContent=origCount+' item ? '+lines.length+' item';
+  out.value=lines.join('\n');
+  stats.textContent=origCount+' item → '+lines.length+' item';
 }
 document.getElementById('btnSort').addEventListener('click',sortList);
 document.getElementById('btnCopy').addEventListener('click',function(){
@@ -86,4 +104,3 @@ document.getElementById('btnCopy').addEventListener('click',function(){
 [inp,mode,unique,ic].forEach(function(el){el.addEventListener('input',sortList);el.addEventListener('change',sortList)});
 sortList();
 </script>
-

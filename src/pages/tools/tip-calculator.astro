@@ -21,48 +21,65 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h1 class="h3 mb-0">Tip Calculator</h1><p class="opacity-60 small mb-0">Hitung tip, bagi bill, dan lihat total per orang.</p></div></header>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
 <div class="flex flex-wrap gap-4">
-<div class="lg:w-5/12 w-full"><div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Total Tagihan</label><div class="input-group"><span class="input-group-text">Rp</span><input type="number" id="billInput" class="input input-bordered w-full" value="500000" step="1000"></div></div>
-<div class="mb-3"><label class="label-text font-semibold">Persentase Tip</label>
-<div class="flex gap-2 flex-wrap" id="tipPresets">
-<button class="btn btn-outline-primary btn-sm" data-pct="5">5%</button>
-<button class="btn btn-outline-primary btn-sm" data-pct="10">10%</button>
-<button class="btn btn-primary btn-sm" data-pct="15">15%</button>
-<button class="btn btn-outline-primary btn-sm" data-pct="20">20%</button>
-<button class="btn btn-outline-primary btn-sm" data-pct="25">25%</button>
+  <div class="lg:w-5/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Total Tagihan</label>
+        <div class="flex"><span class="input-group-text text-xs px-2 flex items-center" style="background:oklch(0.93 0.003 270);border:1px solid oklch(0.9 0.005 270);border-right:0;border-radius:6px 0 0 6px;">Rp</span><input type="number" id="billInput" class="input input-bordered w-full input-sm rounded-l-none" value="500000" step="1000"></div>
+      </div>
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Persentase Tip</label>
+        <div class="flex gap-2 flex-wrap mb-2" id="tipPresets">
+          <button class="btn btn-ghost btn-xs" data-pct="5">5%</button>
+          <button class="btn btn-ghost btn-xs" data-pct="10">10%</button>
+          <button class="btn btn-primary btn-xs" data-pct="15">15%</button>
+          <button class="btn btn-ghost btn-xs" data-pct="20">20%</button>
+          <button class="btn btn-ghost btn-xs" data-pct="25">25%</button>
+        </div>
+        <input type="range" id="tipRange" class="range range-sm w-full" min="0" max="50" value="15">
+        <div class="flex justify-between text-xs opacity-60"><span>0%</span><span id="tipLabel">15%</span><span>50%</span></div>
+      </div>
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Jumlah Orang</label>
+        <div class="flex"><button id="decPeople" class="btn btn-ghost btn-sm rounded-r-none">-</button><input type="number" id="peopleInput" class="input input-bordered w-full input-sm text-center rounded-none" value="1" min="1" max="100"><button id="incPeople" class="btn btn-ghost btn-sm rounded-l-none">+</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="lg:w-7/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Ringkasan</div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div class="p-3 rounded text-center" style="background:oklch(0.95 0.003 270);">
+          <span class="text-xs opacity-60">Tip</span>
+          <div class="text-lg font-bold" id="tipAmount">Rp 75.000</div>
+        </div>
+        <div class="p-3 rounded text-center" style="background:oklch(0.95 0.003 270);">
+          <span class="text-xs opacity-60">Total + Tip</span>
+          <div class="text-lg font-bold" id="totalAmount">Rp 575.000</div>
+        </div>
+        <div class="p-3 rounded text-center" style="background:oklch(0.95 0.003 270);">
+          <span class="text-xs opacity-60">Per Orang (tip)</span>
+          <div class="text-lg font-bold" id="tipPerPerson">Rp 75.000</div>
+        </div>
+        <div class="p-3 rounded text-center" style="background:oklch(0.55 0.25 270 / 0.1);">
+          <span class="text-xs opacity-60">Total Per Orang</span>
+          <div class="text-lg font-bold" id="totalPerPerson" style="color:#6366f1">Rp 575.000</div>
+        </div>
+      </div>
+      <div id="breakdown" class="text-xs"></div>
+    </div>
+  </div>
 </div>
-<div class="mt-2"><input type="range" id="tipRange" class="range range-sm" min="0" max="50" value="15"><div class="flex justify-between text-sm opacity-60"><span>0%</span><span id="tipLabel">15%</span><span>50%</span></div></div></div>
-<div class="mb-3"><label class="label-text font-semibold">Jumlah Orang</label><div class="input-group"><button id="decPeople" class="btn btn-outline">-</button><input type="number" id="peopleInput" class="input input-bordered w-full text-center" value="1" min="1" max="100"><button id="incPeople" class="btn btn-outline">+</button></div></div>
-</div></div>
-<div class="lg:w-7/12 w-full"><div class="card card-bordered bg-base-100 p-3">
-<h6 class="mb-3">Ringkasan</h6>
-<div class="flex flex-wrap gap-3"><div class="col-6"><div class="p-3 bg-light rounded text-center"><small class="opacity-60">Tip</small><div class="h4 mb-0 font-bold" id="tipAmount">Rp 75.000</div></div></div>
-<div class="col-6"><div class="p-3 bg-light rounded text-center"><small class="opacity-60">Total + Tip</small><div class="h4 mb-0 font-bold" id="totalAmount">Rp 575.000</div></div></div>
-<div class="col-6"><div class="p-3 bg-light rounded text-center"><small class="opacity-60">Per Orang (tip)</small><div class="h4 mb-0 font-bold" id="tipPerPerson">Rp 75.000</div></div></div>
-<div class="col-6"><div class="p-3" style="background:#eef2ff;border-radius:8px;text-align:center"><small class="opacity-60">Total Per Orang</small><div class="h4 mb-0 font-bold" id="totalPerPerson" style="color:var(--accent)">Rp 575.000</div></div></div>
-</div>
-<div class="mt-3 p-3 bg-light rounded small">
-<div id="breakdown"></div>
-</div>
-</div></div></div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var bill=document.getElementById('billInput'),tipRange=document.getElementById('tipRange'),tipLabel=document.getElementById('tipLabel'),people=document.getElementById('peopleInput');
@@ -75,11 +92,11 @@ function calc(){
   document.getElementById('tipPerPerson').textContent=fmt(tipPP);
   document.getElementById('totalPerPerson').textContent=fmt(totalPP);
   document.getElementById('breakdown').innerHTML=
-    '<table class="table table-sm small mb-0"><tr><td>Tagihan</td><td class="text-right">'+fmt(b)+'</td></tr>'+
-    '<tr><td>Tip ('+t+'%)</td><td class="text-right">'+fmt(tip)+'</td></tr>'+
-    '<tr class="font-bold"><td>Total</td><td class="text-right">'+fmt(total)+'</td></tr>'+
+    '<table class="table table-sm w-full text-xs mb-0"><tr><td class="py-1 opacity-60">Tagihan</td><td class="py-1 text-right">'+fmt(b)+'</td></tr>'+
+    '<tr><td class="py-1 opacity-60">Tip ('+t+'%)</td><td class="py-1 text-right">'+fmt(tip)+'</td></tr>'+
+    '<tr class="font-bold"><td class="py-1">Total</td><td class="py-1 text-right">'+fmt(total)+'</td></tr>'+
     '<tr><td colspan="2"><hr class="my-1"></td></tr>'+
-    '<tr><td>Dibagi '+p+' orang</td><td class="text-right">'+fmt(totalPP)+'/orang</td></tr></table>';
+    '<tr><td class="py-1">Dibagi '+p+' orang</td><td class="py-1 text-right">'+fmt(totalPP)+'/orang</td></tr></table>';
 }
 bill.addEventListener('input',calc);
 tipRange.addEventListener('input',function(){tipLabel.textContent=this.value+'%';calc();});
@@ -88,11 +105,10 @@ document.getElementById('decPeople').addEventListener('click',function(){people.
 document.getElementById('incPeople').addEventListener('click',function(){people.value=Math.min(100,parseInt(people.value)+1);calc();});
 document.querySelectorAll('#tipPresets .btn').forEach(function(b){
   b.addEventListener('click',function(){
-    document.querySelectorAll('#tipPresets .btn').forEach(function(x){x.className='btn btn-outline-primary btn-sm'});
-    this.className='btn btn-primary btn-sm';
+    document.querySelectorAll('#tipPresets .btn').forEach(function(x){x.className='btn btn-ghost btn-xs'});
+    this.className='btn btn-primary btn-xs';
     tipRange.value=this.dataset.pct;tipLabel.textContent=this.dataset.pct+'%';calc();
   });
 });
 calc();
 </script>
-

@@ -21,68 +21,77 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">%</div><div><h1 class="h3 mb-0">Percentage Calculator</h1><p class="opacity-60 small mb-0">Kalkulator persentase dengan 3 mode: hitung persen, cari persentase, dan hitung perubahan.</p></div></header>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
 <div class="flex flex-wrap gap-4">
-<div class="col-lg-8">
-<div class="card card-bordered bg-base-100 p-3">
-<ul class="nav nav-tabs mb-3" id="pctTabs">
-<li class="nav-item"><button class="nav-link active" data-mode="mode1">X% dari Y</button></li>
-<li class="nav-item"><button class="nav-link" data-mode="mode2">X adalah ?% dari Y</button></li>
-<li class="nav-item"><button class="nav-link" data-mode="mode3">Kenaikan/Penurunan</button></li>
-</ul>
-<div id="mode1" class="tab-pane">
-<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Persen (%)</label><input type="number" id="m1Pct" class="input input-bordered w-full" value="20"></div><div class="col-4"><label class="label-text small">Dari</label><input type="number" id="m1Val" class="input input-bordered w-full" value="500000"></div><div class="col-4 flex align-items-end"><button class="btn btn-primary w-full" data-calc="m1">Hitung</button></div></div>
-<div id="m1Result" class="p-3 bg-light rounded small"></div>
+  <div class="lg:w-8/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="flex gap-4 mb-3 border-b pb-2" style="border-color:oklch(0.9 0.005 270);" id="pctTabs">
+        <button class="text-xs font-medium pb-2 border-b-2 border-[#14b8a6] text-[#14b8a6] active" data-mode="mode1">X% dari Y</button>
+        <button class="text-xs font-medium pb-2 opacity-60 hover:opacity-100" data-mode="mode2">X adalah ?% dari Y</button>
+        <button class="text-xs font-medium pb-2 opacity-60 hover:opacity-100" data-mode="mode3">Kenaikan/Penurunan</button>
+      </div>
+      <div id="mode1" class="tab-pane">
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <div><label class="text-xs font-medium opacity-60 mb-1 block">Persen (%)</label><input type="number" id="m1Pct" class="input input-bordered w-full input-sm" value="20"></div>
+          <div><label class="text-xs font-medium opacity-60 mb-1 block">Dari</label><input type="number" id="m1Val" class="input input-bordered w-full input-sm" value="500000"></div>
+          <div class="flex items-end"><button class="btn btn-primary btn-sm w-full" data-calc="m1">Hitung</button></div>
+        </div>
+        <div id="m1Result" class="p-3 rounded text-xs" style="background:oklch(0.95 0.003 270);"></div>
+      </div>
+      <div id="mode2" class="tab-pane" style="display:none">
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <div><label class="text-xs font-medium opacity-60 mb-1 block">Nilai X</label><input type="number" id="m2X" class="input input-bordered w-full input-sm" value="75000"></div>
+          <div><label class="text-xs font-medium opacity-60 mb-1 block">Dari Y</label><input type="number" id="m2Y" class="input input-bordered w-full input-sm" value="500000"></div>
+          <div class="flex items-end"><button class="btn btn-primary btn-sm w-full" data-calc="m2">Hitung</button></div>
+        </div>
+        <div id="m2Result" class="p-3 rounded text-xs" style="background:oklch(0.95 0.003 270);"></div>
+      </div>
+      <div id="mode3" class="tab-pane" style="display:none">
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <div><label class="text-xs font-medium opacity-60 mb-1 block">Nilai Awal</label><input type="number" id="m3Old" class="input input-bordered w-full input-sm" value="500000"></div>
+          <div><label class="text-xs font-medium opacity-60 mb-1 block">Nilai Akhir</label><input type="number" id="m3New" class="input input-bordered w-full input-sm" value="600000"></div>
+          <div class="flex items-end"><button class="btn btn-primary btn-sm w-full" data-calc="m3">Hitung</button></div>
+        </div>
+        <div id="m3Result" class="p-3 rounded text-xs" style="background:oklch(0.95 0.003 270);"></div>
+      </div>
+    </div>
+  </div>
+  <div class="lg:w-4/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Quick Reference</div>
+      <div class="text-xs space-y-1">
+        <div class="flex justify-between py-1"><span>10%</span><span class="opacity-60">1/10</span></div>
+        <div class="flex justify-between py-1"><span>12.5%</span><span class="opacity-60">1/8</span></div>
+        <div class="flex justify-between py-1"><span>20%</span><span class="opacity-60">1/5</span></div>
+        <div class="flex justify-between py-1"><span>25%</span><span class="opacity-60">1/4</span></div>
+        <div class="flex justify-between py-1"><span>33.3%</span><span class="opacity-60">1/3</span></div>
+        <div class="flex justify-between py-1"><span>50%</span><span class="opacity-60">1/2</span></div>
+        <div class="flex justify-between py-1"><span>66.7%</span><span class="opacity-60">2/3</span></div>
+        <div class="flex justify-between py-1"><span>75%</span><span class="opacity-60">3/4</span></div>
+        <div class="flex justify-between py-1"><span>100%</span><span class="opacity-60">1/1</span></div>
+      </div>
+    </div>
+  </div>
 </div>
-<div id="mode2" class="tab-pane" style="display:none">
-<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Nilai X</label><input type="number" id="m2X" class="input input-bordered w-full" value="75000"></div><div class="col-4"><label class="label-text small">Dari Y</label><input type="number" id="m2Y" class="input input-bordered w-full" value="500000"></div><div class="col-4 flex align-items-end"><button class="btn btn-primary w-full" data-calc="m2">Hitung</button></div></div>
-<div id="m2Result" class="p-3 bg-light rounded small"></div>
-</div>
-<div id="mode3" class="tab-pane" style="display:none">
-<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Nilai Awal</label><input type="number" id="m3Old" class="input input-bordered w-full" value="500000"></div><div class="col-4"><label class="label-text small">Nilai Akhir</label><input type="number" id="m3New" class="input input-bordered w-full" value="600000"></div><div class="col-4 flex align-items-end"><button class="btn btn-primary w-full" data-calc="m3">Hitung</button></div></div>
-<div id="m3Result" class="p-3 bg-light rounded small"></div>
-</div>
-</div>
-</div>
-<div class="col-lgap-4">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Quick Reference</h6>
-<div class="small">
-<div class="flex justify-between py-1"><span>10%</span><span class="opacity-60">1/10</span></div>
-<div class="flex justify-between py-1"><span>12.5%</span><span class="opacity-60">1/8</span></div>
-<div class="flex justify-between py-1"><span>20%</span><span class="opacity-60">1/5</span></div>
-<div class="flex justify-between py-1"><span>25%</span><span class="opacity-60">1/4</span></div>
-<div class="flex justify-between py-1"><span>33.3%</span><span class="opacity-60">1/3</span></div>
-<div class="flex justify-between py-1"><span>50%</span><span class="opacity-60">1/2</span></div>
-<div class="flex justify-between py-1"><span>66.7%</span><span class="opacity-60">2/3</span></div>
-<div class="flex justify-between py-1"><span>75%</span><span class="opacity-60">3/4</span></div>
-<div class="flex justify-between py-1"><span>100%</span><span class="opacity-60">1/1</span></div>
-</div>
-</div>
-</div></div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
-
 <script is:inline>
 function fmt(n){return n.toLocaleString('id-ID',{maximumFractionDigits:2,minimumFractionDigits:2})}
 
-document.querySelectorAll('#pctTabs .nav-link').forEach(function(tab){
+document.querySelectorAll('#pctTabs button').forEach(function(tab){
   tab.addEventListener('click',function(){
-    document.querySelectorAll('#pctTabs .nav-link').forEach(function(t){t.classList.remove('active')});
+    document.querySelectorAll('#pctTabs button').forEach(function(t){t.classList.remove('active');t.style.borderBottomColor='transparent';t.style.color='';t.style.opacity='0.6'});
     this.classList.add('active');
+    this.style.borderBottomColor='#14b8a6';
+    this.style.color='#14b8a6';
+    this.style.opacity='1';
     document.querySelectorAll('.tab-pane').forEach(function(p){p.style.display='none'});
     document.getElementById(this.dataset.mode).style.display='block';
   });
@@ -93,19 +102,18 @@ document.querySelectorAll('[data-calc]').forEach(function(btn){
     var mode=this.dataset.calc,res=document.getElementById(mode+'Result');
     if(mode==='m1'){
       var p=parseFloat(document.getElementById('m1Pct').value)||0,v=parseFloat(document.getElementById('m1Val').value)||0;
-      res.innerHTML='<table class="table table-sm small mb-0"><tr><td>'+fmt(p)+'% dari '+fmt(v)+'</td><td class="font-bold">'+fmt(v*p/100)+'</td></tr><tr><td>Total</td><td class="font-bold">'+fmt(v+v*p/100)+'</td></tr><tr><td>Diskon (jika diskon '+fmt(p)+'%)</td><td class="text-error font-bold">-'+fmt(v*p/100)+'</td></tr></table>';
+      res.innerHTML='<table class="table table-sm w-full text-xs mb-0"><tr><td class="py-1 opacity-60">'+fmt(p)+'% dari '+fmt(v)+'</td><td class="py-1 font-bold text-right">'+fmt(v*p/100)+'</td></tr><tr><td class="py-1 opacity-60">Total</td><td class="py-1 font-bold text-right">'+fmt(v+v*p/100)+'</td></tr><tr><td class="py-1 opacity-60">Diskon (jika diskon '+fmt(p)+'%)</td><td class="py-1 font-bold text-right text-red-500">-'+fmt(v*p/100)+'</td></tr></table>';
     }else if(mode==='m2'){
       var x=parseFloat(document.getElementById('m2X').value)||0,y=parseFloat(document.getElementById('m2Y').value)||0;
       var pct=y?x/y*100:0;
-      res.innerHTML='<table class="table table-sm small mb-0"><tr><td>'+fmt(x)+' adalah</td><td class="font-bold">'+fmt(pct)+'%</td></tr><tr><td>dari '+fmt(y)+'</td><td></td></tr></table>';
+      res.innerHTML='<table class="table table-sm w-full text-xs mb-0"><tr><td class="py-1 opacity-60">'+fmt(x)+' adalah</td><td class="py-1 font-bold text-right">'+fmt(pct)+'%</td></tr><tr><td class="py-1 opacity-60">dari '+fmt(y)+'</td><td class="py-1 text-right"></td></tr></table>';
     }else if(mode==='m3'){
       var o=parseFloat(document.getElementById('m3Old').value)||0,n=parseFloat(document.getElementById('m3New').value)||0;
       var diff=n-o,pct=o?diff/o*100:0;
-      res.innerHTML='<table class="table table-sm small mb-0"><tr><td>Perubahan</td><td class="font-bold'+(diff<0?' text-error':' text-success')+'">'+(diff>=0?'+':'')+fmt(diff)+'</td></tr><tr><td>Persentase</td><td class="font-bold'+(pct<0?' text-error':' text-success')+'">'+(pct>=0?'+':'')+fmt(pct)+'%</td></tr><tr><td>Dari</td><td>'+fmt(o)+' &rarr; '+fmt(n)+'</td></tr></table>';
+      res.innerHTML='<table class="table table-sm w-full text-xs mb-0"><tr><td class="py-1 opacity-60">Perubahan</td><td class="py-1 font-bold text-right '+(diff<0?'text-red-500':'text-green-600')+'">'+(diff>=0?'+':'')+fmt(diff)+'</td></tr><tr><td class="py-1 opacity-60">Persentase</td><td class="py-1 font-bold text-right '+(pct<0?'text-red-500':'text-green-600')+'">'+(pct>=0?'+':'')+fmt(pct)+'%</td></tr><tr><td class="py-1 opacity-60">Dari</td><td class="py-1 text-right">'+fmt(o)+' &rarr; '+fmt(n)+'</td></tr></table>';
     }
   });
 });
 // Trigger initial calculation
 document.querySelector('[data-calc="m1"]').click();
 </script>
-

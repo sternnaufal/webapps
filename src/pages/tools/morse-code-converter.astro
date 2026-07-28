@@ -5,12 +5,13 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Morse Code Converter';
 const description = 'Morse code converter online. Ubah teks ke kode Morse dan sebaliknya. Lengkap dengan alfabet Morse, audio, dan copy hasil.';
 const keywords = 'morse code converter, kode morse, text to morse, morse translator, sandi morse, sandi';
-const aboutText = 'Morse Code Converter Morse code converter online. Ubah teks ke kode Morse dan sebaliknya. Lengkap dengan alfabet Morse, audio, dan copy hasil.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Morse Code Converter adalah alat untuk mengkonversi teks ke kode Morse dan sebaliknya. Dilengkapi referensi alfabet Morse, visualisasi dot-dash, dan pemutar audio. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Kode Morse adalah sistem representasi huruf, angka, dan tanda baca menggunakan sinyal titik (dot) dan garis (dash). Diciptakan oleh Samuel Morse pada tahun 1830-an, kode Morse masih digunakan hingga sekarang dalam komunikasi radio amatir, sinyal darurat (SOS), dan pembelajaran sejarah telekomunikasi. Morse Code Converter ini mendukung konversi dua arah, visualisasi simbol Morse, dan pemutaran audio untuk belajar mengenali bunyi kode Morse.';
 const relatedTools = [
-  { slug: 'ascii-table', name: 'Ascii Table', icon: 'A' },
+  { slug: 'ascii-table', name: 'ASCII Table', icon: 'A' },
   { slug: 'char-counter', name: 'Char Counter', icon: '#' },
   { slug: 'word-counter', name: 'Word Counter', icon: '⚡' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' }
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' }
 ];
 
 const toolCss = `.morse-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--text);margin:0 4px}.morse-dash{display:inline-block;width:32px;height:12px;border-radius:6px;background:var(--text);margin:0 4px}.morse-char{display:inline-block;margin:0 6px;vertical-align:middle}.morse-space{display:inline-block;width:16px}`;
@@ -22,38 +23,50 @@ const toolCss = `.morse-dot{display:inline-block;width:12px;height:12px;border-r
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f5f3ff;color:#7c3aed;">-.--</div><div><h1 class="h3 mb-0">Morse Code Converter</h1><p class="opacity-60 small mb-0">Ubah teks ke kode Morse dan sebaliknya secara instan.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-8">
-<div class="card card-bordered bg-base-100 p-3"><ul class="nav nav-tabs nav-justified mb-3" id="modeTab"><li class="nav-item"><button class="nav-link active" id="tabText" data-mode="text">Teks ke Morse</button></li><li class="nav-item"><button class="nav-link" id="tabMorse" data-mode="morse">Morse ke Teks</button></li></ul>
-<div class="mb-3"><textarea id="inputText" class="input input-bordered w-full font-mono" rows="3" placeholder="Masukkan teks...">SOS</textarea></div>
-<div class="flex gap-2 mb-3"><button id="btnConvert" class="btn btn-primary">Convert</button><button id="btnCopy" class="btn btn-outline">Copy</button><button id="btnPlay" class="btn btn-outline">Play Audio</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div>
-<div class="p-3 rounded bg-light"><div class="small font-semibold mb-2">Hasil:</div><div id="outputText" class="font-monospace" style="font-size:1.1rem;line-height:1.8;word-break:break-all">... --- ...</div></div>
-<div id="visualMorse" class="mt-3 flex flex-wrap items-center"></div>
-</div></div>
-<div class="col-lgap-4">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Referensi Morse</h6>
-<div class="small" id="morseRef" style="line-height:2;column-count:2">Memuat...</div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
-</div></div>
 
-<ToolShell about={aboutText} />
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <div class="flex gap-1 mb-3">
+        <button class="btn btn-sm btn-primary tab-active" id="tabText" data-mode="text">Teks ke Morse</button>
+        <button class="btn btn-sm btn-ghost" id="tabMorse" data-mode="morse">Morse ke Teks</button>
+      </div>
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+        <textarea id="inputText" class="textarea textarea-bordered w-full text-sm font-mono" rows="3" placeholder="Masukkan teks...">SOS</textarea>
+      </div>
+      <div class="flex gap-2 mb-3 flex-wrap">
+        <button id="btnConvert" class="btn btn-primary btn-sm">Convert</button>
+        <button id="btnCopy" class="btn btn-ghost btn-sm">Copy</button>
+        <button id="btnPlay" class="btn btn-ghost btn-sm">Play Audio</button>
+        <button id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
+      </div>
+      <div class="rounded-xl p-3" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-xs font-medium opacity-60 mb-2">Hasil:</div>
+        <div id="outputText" class="text-sm font-mono leading-relaxed break-all" style="word-break:break-all">... --- ...</div>
+      </div>
+      <div id="visualMorse" class="mt-2 flex flex-wrap items-center"></div>
+    </div>
+    <div>
+      <div class="rounded-xl p-4" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-xs font-medium opacity-60 mb-2">Referensi Morse</div>
+        <div class="text-xs leading-relaxed columns-2" id="morseRef">Memuat...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',
@@ -65,8 +78,8 @@ var mode='text',inp=document.getElementById('inputText'),out=document.getElement
 var refHtml='';var keys=Object.keys(MORSE).filter(function(k){return k.match(/[A-Z0-9]/)});
 for(var i=0;i<keys.length;i++){var c=keys[i];refHtml+='<div><b>'+c+'</b>: '+MORSE[c]+'</div>'}
 ref.innerHTML=refHtml;
-document.getElementById('tabText').addEventListener('click',function(){mode='text';this.classList.add('active');document.getElementById('tabMorse').classList.remove('active');convert()});
-document.getElementById('tabMorse').addEventListener('click',function(){mode='morse';this.classList.add('active');document.getElementById('tabText').classList.remove('active');convert()});
+document.getElementById('tabText').addEventListener('click',function(){mode='text';this.className='btn btn-sm btn-primary';document.getElementById('tabMorse').className='btn btn-sm btn-ghost';convert()});
+document.getElementById('tabMorse').addEventListener('click',function(){mode='morse';this.className='btn btn-sm btn-primary';document.getElementById('tabText').className='btn btn-sm btn-ghost';convert()});
 function convert(){
   var txt=inp.value.trim(),res='';
   if(!txt){out.textContent='';vis.innerHTML='';return}
@@ -128,11 +141,10 @@ var examples=['SOS','HELLO WORLD','LAMPUNG','INDONESIA','123'];
 var exDiv=document.createElement('div');exDiv.className='mt-2';
 exDiv.innerHTML='<small class="opacity-60">Contoh: </small>';
 for(var i=0;i<examples.length;i++){(function(e){
-  var a=document.createElement('a');a.href='#';a.className='small mr-2';a.textContent=e;
+  var a=document.createElement('a');a.href='#';a.className='text-xs mr-2 opacity-60 hover:opacity-100';a.textContent=e;
   a.addEventListener('click',function(ev){ev.preventDefault();inp.value=e;mode='text';document.getElementById('tabText').click();convert()});
   exDiv.appendChild(a);
 })(examples[i])}
-document.querySelector('.card.shadow-sm.border-0.p-3 ul').after(exDiv);
+document.querySelector('.rounded-xl.p-5 > .grid > div:first-child > .rounded-xl.p-3').after(exDiv);
 convert();
 </script>
-

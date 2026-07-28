@@ -3,14 +3,15 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Random Number Generator';
-const description = 'Random number generator online. Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat. Generator nomor acak untuk undian, giveaway, togel, dan eksperimen.';
+const description = 'Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat. Generator nomor acak untuk undian, giveaway, togel, dan eksperimen.';
 const keywords = 'random number generator, angka acak, generator nomor, random generator, undian acak, number randomizer';
-const aboutText = 'Random Number Generator Random number generator online. Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat. Generator nomor acak untuk undian, giveaway, togel, dan eksperimen.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Random Number Generator untuk menghasilkan angka acak dalam rentang tertentu. Fitur mencakup pengaturan nilai minimum dan maksimum, jumlah angka yang dihasilkan, dan opsi untuk menghindari duplikat. Cocok untuk undian, giveaway, eksperimen, atau kebutuhan angka acak lainnya.';
+const aboutExtra = 'Angka acak banyak digunakan dalam berbagai skenario: undian berhadiah, giveaway media sosial, pemilihan sampel, simulasi, game, pengambilan keputusan, dan eksperimen ilmiah. Generator ini menggunakan Math.random() yang cukup untuk keperluan non-kriptografi. Untuk pengambilan keputusan sederhana, Anda juga bisa menggunakan preset Dadu (1-6) atau Coin (0-1).';
 const relatedTools = [
   { slug: 'dice-roller', name: 'Dice Roller', icon: '🎲' },
   { slug: 'decision-maker', name: 'Decision Maker', icon: '🎲' },
   { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' },
-  { slug: 'char-counter', name: 'Char Counter', icon: '#' }
+  { slug: 'char-counter', name: 'Character Counter', icon: '#' },
 ];
 
 const toolCss = `.num-badge{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:8px;background:var(--surface-soft);font-weight:700;font-size:1.1rem;margin:4px}`;
@@ -22,57 +23,67 @@ const toolCss = `.num-badge{display:inline-flex;align-items:center;justify-conte
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef3c7;color:#d97706;">#</div><div><h1 class="h3 mb-0">Random Number Generator</h1><p class="opacity-60 small mb-0">Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="flex flex-wrap gap-3">
-<div class="col-6"><label class="label-text small font-semibold">Min</label><input type="number" id="minVal" class="input input-bordered w-full" value="1"></div>
-<div class="col-6"><label class="label-text small font-semibold">Max</label><input type="number" id="maxVal" class="input input-bordered w-full" value="100"></div>
-</div>
-<div class="flex flex-wrap gap-3 mt-1">
-<div class="col-6"><label class="label-text small font-semibold">Jumlah</label><input type="number" id="countVal" class="input input-bordered w-full" value="1" min="1" max="1000"></div>
-<div class="col-6 flex align-items-end pb-2"><div class="flex items-center gap-2"><input type="checkbox" id="uniqueOnly" class="checkbox" checked><label class="flex items-center gap-2-label small" for="uniqueOnly">Unik (tanpa duplikat)</label></div></div>
-</div>
-<div class="flex gap-2 mt-2">
-<button id="btnGenerate" class="btn btn-primary">Generate</button>
-<button id="btnCopy" class="btn btn-outline">Copy</button>
-</div>
-</div>
-<div id="resultArea" class="card card-bordered bg-base-100 p-3 mt-3">
-<div class="flex gap-2 flex-wrap" id="numDisplay"><span class="num-badge">?</span></div>
-</div>
-</div>
-<div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Quick Presets</h6>
-<div class="flex gap-2 flex-wrap">
-<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="6">Dadu (1-6)</button>
-<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="10">1-10</button>
-<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="50">1-50</button>
-<button class="btn btn-outline-primary btn-sm preset" data-min="0" data-max="1">Coin (0-1)</button>
-<button class="btn btn-outline-primary btn-sm preset" data-min="1" data-max="12">1-12</button>
-<button class="btn btn-outline-primary btn-sm preset" data-min="100" data-max="999">100-999</button>
-</div>
-</div>
-</div></div>
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 
-<ToolShell about={aboutText} />
+  <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
+    <div class="lg:col-span-4">
+      <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-medium opacity-60 mb-1 block">Min</label>
+            <input type="number" id="minVal" class="input input-bordered w-full input-sm" value="1">
+          </div>
+          <div>
+            <label class="text-xs font-medium opacity-60 mb-1 block">Max</label>
+            <input type="number" id="maxVal" class="input input-bordered w-full input-sm" value="100">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mt-3">
+          <div>
+            <label class="text-xs font-medium opacity-60 mb-1 block">Jumlah</label>
+            <input type="number" id="countVal" class="input input-bordered w-full input-sm" value="1" min="1" max="1000">
+          </div>
+          <div class="flex items-end pb-2">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="uniqueOnly" class="checkbox checkbox-xs" checked>
+              <label for="uniqueOnly" class="text-xs">Unik (tanpa duplikat)</label>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2 mt-3">
+          <button id="btnGenerate" class="btn btn-primary btn-sm">Generate</button>
+          <button id="btnCopy" class="btn btn-ghost btn-sm">Copy</button>
+        </div>
+      </div>
+
+      <div class="rounded-xl p-5 mt-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+        <div class="flex gap-2 flex-wrap" id="numDisplay"><span class="num-badge">?</span></div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-3">
+      <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+        <div class="font-bold text-sm mb-3">Quick Presets</div>
+        <div class="flex gap-2 flex-wrap">
+          <button class="btn btn-ghost btn-sm preset" data-min="1" data-max="6">Dadu (1-6)</button>
+          <button class="btn btn-ghost btn-sm preset" data-min="1" data-max="10">1-10</button>
+          <button class="btn btn-ghost btn-sm preset" data-min="1" data-max="50">1-50</button>
+          <button class="btn btn-ghost btn-sm preset" data-min="0" data-max="1">Coin (0-1)</button>
+          <button class="btn btn-ghost btn-sm preset" data-min="1" data-max="12">1-12</button>
+          <button class="btn btn-ghost btn-sm preset" data-min="100" data-max="999">100-999</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
 <style is:inline>
-{toolCss}
+  {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var minInp=document.getElementById('minVal'),maxInp=document.getElementById('maxVal'),cntInp=document.getElementById('countVal'),uniq=document.getElementById('uniqueOnly'),disp=document.getElementById('numDisplay');
@@ -84,11 +95,10 @@ function generate(){
 }
 document.getElementById('btnGenerate').addEventListener('click',generate);
 document.getElementById('btnCopy').addEventListener('click',function(){
-  var txt=disp.textContent.replace(/\\s+/g,', ');navigator.clipboard.writeText(txt).catch(function(){});
+  var txt=disp.textContent.replace(/\s+/g,', ');navigator.clipboard.writeText(txt).catch(function(){});
 });
 document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
   minInp.value=this.dataset.min;maxInp.value=this.dataset.max;cntInp.value=1;generate();
 })});
 generate();
 </script>
-

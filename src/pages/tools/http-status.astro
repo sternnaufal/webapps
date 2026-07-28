@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'HTTP Status Codes';
 const description = 'Referensi HTTP status codes lengkap. 1xx, 2xx, 3xx, 4xx, 5xx beserta penjelasan.';
 const keywords = 'http status codes, http status, error codes, 404, 500, 200, 301';
-const aboutText = 'HTTP Status Codes Referensi HTTP status codes lengkap. 1xx, 2xx, 3xx, 4xx, 5xx beserta penjelasan.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Referensi lengkap kode status HTTP. Mencakup kategori Informational (1xx), Success (2xx), Redirection (3xx), Client Error (4xx), dan Server Error (5xx). Cari kode atau deskripsi dengan fitur pencarian real-time.';
+const aboutExtra = 'HTTP status codes adalah standar respons dari server web. Memahami kode-kode ini penting bagi web developer, system administrator, dan siapa pun yang bekerja dengan web. Kode 200 berarti sukses, 404 berarti tidak ditemukan, 500 berarti error server, dan masih banyak lagi. Alat ini membantu Anda mencari dan memahami setiap kode dengan cepat.';
 const relatedTools = [
   { slug: 'subnetting', name: 'Subnetting', icon: '📐' },
-  { slug: 'ip-calculator', name: 'Ip Calculator', icon: '🔌' },
+  { slug: 'ip-calculator', name: 'IP Calculator', icon: '🔌' },
   { slug: 'user-agent-parser', name: 'User Agent Parser', icon: '🖥' },
-  { slug: 'url-encode', name: 'Url Encode', icon: '%' }
+  { slug: 'url-encode', name: 'URL Encode/Decode', icon: '%' },
 ];
-
 ---
 
 <ToolLayout
@@ -21,25 +21,18 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div><h1 class="h3 mb-0">HTTP Status Codes</h1><p class="opacity-60 small mb-0">Referensi lengkap kode status HTTP. Cari berdasarkan kode atau deskripsi.</p></div></header>
-<div class="mb-3"><input type="text" id="statusSearch" class="input input-bordered w-full" placeholder="Cari kode atau deskripsi..." style="max-width:400px;"></div>
-<div id="statusList" class="flex flex-wrap gap-3"></div>
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 
-<ToolShell about={aboutText} />
+  <div class="mb-4 mt-4">
+    <input type="text" id="statusSearch" class="input input-bordered w-full input-sm" placeholder="Cari kode atau deskripsi..." style="max-width:400px;">
+  </div>
+
+  <div id="statusList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var statuses=[
@@ -73,15 +66,14 @@ function render(q){
   var list=document.getElementById('statusList');list.innerHTML='';
   statuses.forEach(function(s){
     if(q&&!String(s.code).includes(q)&&!s.label.toLowerCase().includes(q)&&!s.cat.toLowerCase().includes(q)&&!s.desc.toLowerCase().includes(q))return;
-    var col=document.createElement('div');col.className='md:w-1/3 w-full sm:w-1/2 w-full';
-    col.innerHTML='<div class="card shadow-sm border-0 h-full p-3">'+
-      '<div class="flex items-center gap-2 mb-1"><span class="badge" style="background:'+(catColors[s.cat]||'#6b7280')+'">'+s.code+'</span><span class="font-semibold small">'+s.label+'</span></div>'+
-      '<div class="text-sm opacity-60">'+s.desc+'</div>'+
-      '<div class="mt-1"><span class="badge bg-light text-dark" style="font-size:0.6rem;">'+s.cat+'</span></div></div>';
+    var col=document.createElement('div');
+    col.innerHTML='<div class="rounded-xl p-4 h-full" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid '+(catColors[s.cat]||'#6b7280')+';">'+
+      '<div class="flex items-center gap-2 mb-1"><span class="text-xs px-2 py-0.5 rounded font-bold" style="background:'+(catColors[s.cat]||'#6b7280')+';color:#fff;">'+s.code+'</span><span class="text-sm font-semibold">'+s.label+'</span></div>'+
+      '<div class="text-xs opacity-60">'+s.desc+'</div>'+
+      '<div class="mt-1"><span class="text-xs opacity-40">'+s.cat+'</span></div></div>';
     list.appendChild(col);
   });
 }
 render();
 document.getElementById('statusSearch').addEventListener('input',function(){render(this.value)});
 </script>
-

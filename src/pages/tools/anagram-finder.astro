@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Anagram Finder';
 const description = 'Cek anagram online. Periksa apakah dua kata atau kalimat adalah anagram.';
 const keywords = 'anagram checker, anagram finder, cek anagram, word game, anagram';
-const aboutText = 'Anagram Finder Cek anagram online. Periksa apakah dua kata atau kalimat adalah anagram.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Anagram Finder adalah alat untuk memeriksa apakah dua kata atau kalimat merupakan anagram — yaitu kata yang memiliki huruf-huruf yang sama jika disusun ulang. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Anagram adalah fenomena linguistik di mana dua kata atau frasa terdiri dari huruf yang persis sama namun dalam urutan berbeda. Contoh populer: "listen" dan "silent", "earth" dan "heart". Anagram Finder ini membantu Anda mengecek anagram dengan cepat, dilengkapi perbandingan huruf terurut dan contoh-contoh anagram. Berguna untuk word games, teka-teki, pembelajaran bahasa, dan konten kreatif.';
 const relatedTools = [
   { slug: 'palindrome-checker', name: 'Palindrome Checker', icon: '↔' },
-  { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
+  { slug: 'word-frequency', name: 'Word Frequency Counter', icon: '📊' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' }
 ];
-
 ---
 
 <ToolLayout
@@ -21,43 +21,52 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Aa</div><div><h1 class="h3 mb-0">Anagram Finder</h1><p class="opacity-60 small mb-0">Periksa apakah dua kata/kalimat adalah anagram. Anagram adalah kata yang memiliki huruf yang sama jika disusun ulang.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Teks 1</label><textarea id="text1" class="input input-bordered w-full font-mono" rows="2" placeholder="Masukkan teks pertama..." autofocus>listen</textarea></div>
-<div class="mb-3"><label class="label-text font-semibold">Teks 2</label><textarea id="text2" class="input input-bordered w-full font-mono" rows="2" placeholder="Masukkan teks kedua...">silent</textarea></div>
-<button id="btnCheck" class="btn btn-primary w-full">Cek Anagram</button>
-<div id="resultArea" class="mt-3 p-4 rounded text-center" style="display:none"><div class="display-3 mb-2" id="resultIcon">?</div><div class="h4 font-bold" id="resultText"></div><div id="resultDetail" class="text-sm opacity-60"></div></div>
-</div></div>
-<div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Anagram</h6>
-<div class="small" style="line-height:2.2">
-<div style="cursor:pointer" class="example" data-a="listen" data-b="silent">listen ? silent</div>
-<div style="cursor:pointer" class="example" data-a="earth" data-b="heart">earth ? heart</div>
-<div style="cursor:pointer" class="example" data-a="tar" data-b="rat">tar ? rat</div>
-<div style="cursor:pointer" class="example" data-a="dusty" data-b="study">dusty ? study</div>
-<div style="cursor:pointer" class="example" data-a="elvis" data-b="lives">elvis ? lives</div>
-<div style="cursor:pointer" class="example" data-a="tea" data-b="eat">tea ? eat</div>
-</div></div>
-<div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-3">Huruf Sama</h6>
-<div id="letterCompare" class="small"></div></div>
-</div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
 
-<ToolShell about={aboutText} />
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Teks 1</label>
+        <textarea id="text1" class="textarea textarea-bordered w-full text-sm font-mono" rows="2" placeholder="Masukkan teks pertama..." autofocus>listen</textarea>
+      </div>
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Teks 2</label>
+        <textarea id="text2" class="textarea textarea-bordered w-full text-sm font-mono" rows="2" placeholder="Masukkan teks kedua...">silent</textarea>
+      </div>
+      <button id="btnCheck" class="btn btn-primary btn-sm w-full">Cek Anagram</button>
+      <div id="resultArea" class="mt-3 rounded-xl p-4 text-center" style="display:none;background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-2xl mb-1" id="resultIcon">?</div>
+        <div class="text-sm font-bold" id="resultText"></div>
+        <div id="resultDetail" class="text-xs opacity-60"></div>
+      </div>
+    </div>
+    <div>
+      <div class="rounded-xl p-4 mb-3" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-xs font-medium opacity-60 mb-2">Contoh Anagram</div>
+        <div class="text-xs leading-relaxed">
+          <div style="cursor:pointer" class="example hover:opacity-60" data-a="listen" data-b="silent">listen ↔ silent</div>
+          <div style="cursor:pointer" class="example hover:opacity-60" data-a="earth" data-b="heart">earth ↔ heart</div>
+          <div style="cursor:pointer" class="example hover:opacity-60" data-a="tar" data-b="rat">tar ↔ rat</div>
+          <div style="cursor:pointer" class="example hover:opacity-60" data-a="dusty" data-b="study">dusty ↔ study</div>
+          <div style="cursor:pointer" class="example hover:opacity-60" data-a="elvis" data-b="lives">elvis ↔ lives</div>
+          <div style="cursor:pointer" class="example hover:opacity-60" data-a="tea" data-b="eat">tea ↔ eat</div>
+        </div>
+      </div>
+      <div class="rounded-xl p-4" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+        <div class="text-xs font-medium opacity-60 mb-2">Huruf Sama</div>
+        <div id="letterCompare" class="text-xs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var t1=document.getElementById('text1'),t2=document.getElementById('text2'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),lc=document.getElementById('letterCompare');
@@ -67,12 +76,12 @@ function check(){
   var sortA=a.split('').sort().join(''),sortB=b.split('').sort().join('');
   var isAna=sortA===sortB;
   res.style.display='block';
-  icon.textContent=isAna?'?':'?';icon.style.color=isAna?'#22c55e':'#ef4444';
+  icon.textContent=isAna?'✓':'✗';icon.style.color=isAna?'#22c55e':'#ef4444';
   txt.textContent=isAna?'Anagram!':'Bukan Anagram';
   txt.style.color=isAna?'#22c55e':'#ef4444';
   det.innerHTML='<span>Teks 1: "'+a+'"<br>Teks 2: "'+b+'"</span>';
   var sortedA=a.split('').sort().join(', '),sortedB=b.split('').sort().join(', ');
-  lc.innerHTML='<div class="font-bold mb-1">Perbandingan huruf:</div><table class="table table-sm small mb-0"><tr><td>'+t1.value.trim()+'</td><td class="font-mono">['+sortedA+']</td></tr><tr><td>'+t2.value.trim()+'</td><td class="font-mono">['+sortedB+']</td></tr></table>';
+  lc.innerHTML='<div class="font-bold mb-1">Perbandingan huruf:</div><div class="text-xs"><div>'+t1.value.trim()+': ['+sortedA+']</div><div>'+t2.value.trim()+': ['+sortedB+']</div></div>';
 }
 document.getElementById('btnCheck').addEventListener('click',check);
 t1.addEventListener('input',check);t2.addEventListener('input',check);
@@ -81,4 +90,3 @@ document.querySelectorAll('.example').forEach(function(el){
 });
 check();
 </script>
-

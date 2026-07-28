@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Lorem Ipsum Generator';
 const description = 'Generate teks lorem ipsum untuk dummy content. Lorem ipsum generator dengan berbagai opsi panjang.';
 const keywords = 'lorem ipsum, dummy text, placeholder text, lorem generator, sample text';
-const aboutText = 'Lorem Ipsum Generator Generate teks lorem ipsum untuk dummy content. Lorem ipsum generator dengan berbagai opsi panjang.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Lorem Ipsum Generator adalah alat untuk menghasilkan teks lorem ipsum sebagai placeholder atau dummy content dalam desain web, percetakan, dan pengembangan aplikasi. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Teks lorem ipsum adalah teks standar yang digunakan dalam industri percetakan dan typesetting sejak tahun 1500-an. Lorem ipsum generator ini memungkinkan Anda menghasilkan teks dalam berbagai format: paragraf, kalimat, atau kata-kata individual. Sangat berguna untuk mockup desain website, pembuatan template, prototyping aplikasi, dan pengujian layout. Cukup tentukan jumlah yang diinginkan dan pilih tipe output.';
 const relatedTools = [
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
   { slug: 'word-counter', name: 'Word Counter', icon: '⚡' },
   { slug: 'char-counter', name: 'Char Counter', icon: '#' },
-  { slug: 'md-preview', name: 'Md Preview', icon: 'MD' }
+  { slug: 'md-preview', name: 'Markdown Previewer', icon: 'MD' }
 ];
-
 ---
 
 <ToolLayout
@@ -21,55 +21,50 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<form id="loremForm" class="flex flex-wrap gap-3 mb-4">
-        <div class="md:w-1/3 w-full">
-          <label class="label-text">Jumlah</label>
-          <input type="number" id="amount" class="input input-bordered w-full" min="1" value="3">
-        </div>
-        <div class="md:w-1/3 w-full">
-          <label class="label-text">Tipe</label>
-          <select id="type" class="select select-bordered w-full">
-            <option value="paragraphs">Paragraf</option>
-            <option value="sentences">Kalimat</option>
-            <option value="words">Kata</option>
-          </select>
-        </div>
-        <div class="md:w-1/3 w-full flex align-items-end">
-          <button type="submit" class="btn btn-success w-full">Generate</button>
-        </div>
-      </form>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
 
-      <div class="card card-bordered bg-base-100 p-3">
-        <div class="flex justify-between items-center mb-2">
-          <h5 class="mb-0">Hasil:</h5>
-          <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
-        </div>
-        <div id="output"></div>
-      </div>
-    `n
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <form id="loremForm" class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Jumlah</label>
+      <input type="number" id="amount" class="input input-bordered w-full input-sm" min="1" value="3">
+    </div>
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Tipe</label>
+      <select id="type" class="select select-bordered w-full select-sm">
+        <option value="paragraphs">Paragraf</option>
+        <option value="sentences">Kalimat</option>
+        <option value="words">Kata</option>
+      </select>
+    </div>
+    <div class="flex items-end">
+      <button type="submit" class="btn btn-primary btn-sm w-full">Generate</button>
+    </div>
+  </form>
 
-<ToolShell about={aboutText} />
+  <div class="rounded-xl p-4" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs font-medium opacity-60">Hasil</span>
+      <button id="copyBtn" class="btn btn-ghost btn-sm">Copy</button>
+    </div>
+    <div id="output" class="text-sm whitespace-pre-wrap"></div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-</script>
-
-<script is:inline>
-var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\\n\\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\\n\\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\\n\\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\\n\\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
+var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\n\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\n\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\n\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\n\nCurabitur pharetra molestie nunc, at tincidunt urna suscipit sed. Mauris malesuada vulputate risus in fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dolor nunc, tristique sit amet lorem eget, vestibulum porttitor tortor. Pellentesque arcu orci, fringilla a venenatis vitae, volutpat in ipsum. Proin non leo a nisl imperdiet scelerisque in id libero.';
 
 function generateLorem(amount, type) {
-  var words = loremText.split(/\\s+/);
-  var sentences = loremText.split(/(?<=[.!?])\\s+/);
-  var paragraphs = loremText.split(/\\n\\s*\\n/);
+  var words = loremText.split(/\s+/);
+  var sentences = loremText.split(/(?<=[.!?])\s+/);
+  var paragraphs = loremText.split(/\n\s*\n/);
   var result = '';
 
   if (type === 'words') {
@@ -85,7 +80,7 @@ function generateLorem(amount, type) {
   } else {
     for (var i = 0; i < amount; i++) {
       var randomIndex = Math.floor(Math.random() * paragraphs.length);
-      result += paragraphs[randomIndex] + '\\n\\n';
+      result += paragraphs[randomIndex] + '\n\n';
     }
   }
 
@@ -107,4 +102,3 @@ document.getElementById('copyBtn').addEventListener('click', function() {
   });
 });
 </script>
-

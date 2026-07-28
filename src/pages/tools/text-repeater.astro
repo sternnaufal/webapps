@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Text Repeater';
 const description = 'Text repeater online. Ulangi teks sebanyak N kali dengan separator kustom.';
 const keywords = 'text repeater, repeat text, repeat string, teks berulang';
-const aboutText = 'Text Repeater Text repeater online. Ulangi teks sebanyak N kali dengan separator kustom.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Text Repeater adalah alat untuk mengulang teks sebanyak N kali dengan berbagai opsi separator, prefix, dan suffix. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Mengulang teks secara manual sangat membosankan dan rawan error. Text Repeater memudahkan Anda menghasilkan teks berulang dalam hitungan detik. Berguna untuk generate data testing, membuat template, mengisi placeholder konten, pembuatan pola teks berulang, dan berbagai kebutuhan pengembangan lainnya. Tersedia pilihan separator seperti baris baru, spasi, koma, atau separator kustom.';
 const relatedTools = [
   { slug: 'reverse-text', name: 'Reverse Text', icon: '↩' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' },
-  { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' }
+  { slug: 'lorem-ipsum', name: 'Lorem Ipsum Generator', icon: '¶' }
 ];
-
 ---
 
 <ToolLayout
@@ -21,36 +21,52 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;">Aa</div><div><h1 class="h3 mb-0">Text Repeater</h1><p class="opacity-60 small mb-0">Ulangi teks sebanyak yang Anda mau. Lengkap dengan separator dan prefix/suffix.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Teks</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="3" placeholder="Teks yang akan diulang..." autofocus>Hello!</textarea></div>
-<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Jumlah</label><input type="number" id="countInput" class="input input-bordered w-full" value="5" min="1" max="10000"></div>
-<div class="col-8"><label class="label-text small">Separator</label><select id="separator" class="select select-bordered w-full"><option value="\n">Baris baru</option><option value=" ">Spasi</option><option value=",">Koma</option><option value=", ">Koma + spasi</option><option value="">Tanpa separator</option><option value="custom">Kustom...</option></select><input type="text" id="customSep" class="input input-bordered w-full mt-1" style="display:none" placeholder="Separator kustom..."></div></div>
-<button id="btnGenerate" class="btn btn-primary w-full">Generate</button>
-</div></div>
-<div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="flex justify-between items-center mb-2"><label class="label-text font-semibold mb-0">Output</label><span id="outputStats" class="text-sm opacity-60"></span></div>
-<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea>
-<button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
-</div></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
 
-<ToolShell about={aboutText} />
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <div class="mb-3">
+        <label class="text-xs font-medium opacity-60 mb-1 block">Teks</label>
+        <textarea id="textInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="3" placeholder="Teks yang akan diulang..." autofocus>Hello!</textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mb-3">
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">Jumlah</label>
+          <input type="number" id="countInput" class="input input-bordered w-full input-sm" value="5" min="1" max="10000">
+        </div>
+        <div>
+          <label class="text-xs font-medium opacity-60 mb-1 block">Separator</label>
+          <select id="separator" class="select select-bordered w-full select-sm">
+            <option value="\n">Baris baru</option>
+            <option value=" ">Spasi</option>
+            <option value=",">Koma</option>
+            <option value=", ">Koma + spasi</option>
+            <option value="">Tanpa separator</option>
+            <option value="custom">Kustom...</option>
+          </select>
+          <input type="text" id="customSep" class="input input-bordered w-full input-sm mt-1" style="display:none" placeholder="Separator kustom...">
+        </div>
+      </div>
+      <button id="btnGenerate" class="btn btn-primary btn-sm w-full">Generate</button>
+    </div>
+    <div>
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-medium opacity-60">Output</span>
+        <span id="outputStats" class="text-xs opacity-60"></span>
+      </div>
+      <textarea id="outputArea" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" readonly></textarea>
+      <button id="btnCopy" class="btn btn-ghost btn-sm mt-2">Copy</button>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('textInput'),cnt=document.getElementById('countInput'),sep=document.getElementById('separator'),cst=document.getElementById('customSep'),out=document.getElementById('outputArea'),stats=document.getElementById('outputStats');
@@ -58,7 +74,7 @@ sep.addEventListener('change',function(){cst.style.display=this.value==='custom'
 document.getElementById('btnGenerate').addEventListener('click',function(){
   var t=inp.value,n=parseInt(cnt.value)||1,s=sep.value;
   if(s==='custom')s=cst.value;
-  else if(s==='\\\\n')s='\\n';
+  else if(s==='\\n')s='\n';
   var result=Array(n).fill(t).join(s);
   out.value=result;
   stats.textContent=result.length+' chars, '+n+'x repeat';
@@ -69,4 +85,3 @@ document.getElementById('btnCopy').addEventListener('click',function(){
 });
 document.getElementById('btnGenerate').click();
 </script>
-

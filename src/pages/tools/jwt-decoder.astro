@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'JWT Decoder';
 const description = 'Decode JWT token online. Lihat header, payload, dan verifikasi signature secara lokal.';
 const keywords = 'jwt decoder, jwt token, json web token, jwt debugger';
-const aboutText = 'JWT Decoder Decode JWT token online. Lihat header, payload, dan verifikasi signature secara lokal.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'JWT Decoder untuk membaca dan memverifikasi token JWT (JSON Web Token) secara lokal di browser. Token tidak pernah dikirim ke server. Lihat isi header dan payload yang sudah di-decode, serta verifikasi signature HMAC menggunakan secret key yang Anda masukkan.';
+const aboutExtra = 'JWT banyak digunakan dalam autentikasi API modern dan sistem otorisasi. Token JWT terdiri dari tiga bagian yang dipisahkan oleh titik: header (berisi algoritma dan tipe token), payload (berisi klaim/data), dan signature (untuk verifikasi integritas). Decoder ini membantu developer untuk debug token JWT dengan cepat dan aman tanpa mengirim data sensitif ke layanan pihak ketiga.';
 const relatedTools = [
   { slug: 'hash-generator', name: 'Hash Generator', icon: '#' },
-  { slug: 'rsa-generator', name: 'Rsa Generator', icon: '🔒' },
-  { slug: 'base64-coded', name: 'Base64 Coded', icon: 'B64' },
-  { slug: 'uuid-generator', name: 'Uuid Generator', icon: '🆔' }
+  { slug: 'rsa-generator', name: 'RSA Key Generator', icon: '🔒' },
+  { slug: 'base64-coded', name: 'Base64 Encoder', icon: 'B64' },
+  { slug: 'uuid-generator', name: 'UUID Generator', icon: '🆔' },
 ];
-
 ---
 
 <ToolLayout
@@ -21,32 +21,45 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#dc2626;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><h1 class="h3 mb-0">JWT Decoder</h1><p class="opacity-60 small mb-0">Decode JWT token secara lokal di browser. Data tidak dikirim ke server.</p></div></header>
-<div class="mb-3"><label class="label-text font-semibold">Token</label>
-<textarea id="jwtInput" class="input input-bordered w-full font-mono" rows="2" placeholder="Paste JWT token...">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5hdWZhbCBSYWtoYSIsImlhdCI6MTUxNjIzOTAyMn0</textarea>
-<div id="statusMsg" class="small mt-1"></div></div>
-<div class="flex flex-wrap gap-3 mb-3"><div class="md:w-1/2 w-full"><label class="label-text font-semibold small">Header</label><pre id="headerOut" class="bg-light p-2 rounded border"></pre></div><div class="md:w-1/2 w-full"><label class="label-text font-semibold small">Payload</label><pre id="payloadOut" class="bg-light p-2 rounded border"></pre></div></div>
-<div id="verifySection" class="card card-bordered bg-base-100 p-3 mb-3"><div class="row gap-2 align-items-end">
-<div class="md:w-1/3 w-full"><label class="label-text font-semibold small">Secret / Public Key <small class="opacity-60">(untuk verifikasi)</small></label><input type="text" id="secretKey" class="input input-bordered w-full font-mono" placeholder="Rahasia..." style="font-size:0.8rem"></div>
-<div class="col-md-2"><label class="label-text font-semibold small">&nbsp;</label><button id="btnVerify" class="btn btn-primary w-full">Verify</button></div>
-<div class="md:w-1/2 w-full"><label class="label-text font-semibold small">Hasil Verifikasi</label><div id="verifyResult" class="text-sm opacity-60" style="padding:6px 0">Masukkan secret lalu klik Verify.</div></div>
-</div></div>
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 
-<ToolShell about={aboutText} />
+  <div class="rounded-xl p-5 mt-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+    <label class="text-xs font-medium opacity-60 mb-1 block">Token</label>
+    <textarea id="jwtInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="2" placeholder="Paste JWT token...">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5hdWZhbCBSYWtoYSIsImlhdCI6MTUxNjIzOTAyMn0</textarea>
+    <div id="statusMsg" class="text-xs mt-1"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <label class="text-xs font-medium opacity-60 mb-1 block">Header</label>
+      <pre id="headerOut" class="text-sm font-mono opacity-70" style="background:oklch(0.95 0.005 270);padding:8px;border-radius:6px;"></pre>
+    </div>
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+      <label class="text-xs font-medium opacity-60 mb-1 block">Payload</label>
+      <pre id="payloadOut" class="text-sm font-mono opacity-70" style="background:oklch(0.95 0.005 270);padding:8px;border-radius:6px;"></pre>
+    </div>
+  </div>
+
+  <div class="rounded-xl p-5 mt-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #10b981;">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Secret / Public Key <span class="opacity-60">(untuk verifikasi)</span></label>
+        <input type="text" id="secretKey" class="input input-bordered w-full input-sm font-mono" placeholder="Rahasia...">
+      </div>
+      <div>
+        <button id="btnVerify" class="btn btn-primary btn-sm w-full">Verify</button>
+      </div>
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Hasil Verifikasi</label>
+        <div id="verifyResult" class="text-sm opacity-60" style="padding:6px 0">Masukkan secret lalu klik Verify.</div>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('jwtInput'),hdr=document.getElementById('headerOut'),pay=document.getElementById('payloadOut'),msg=document.getElementById('statusMsg'),sec=document.getElementById('secretKey'),vres=document.getElementById('verifyResult');
@@ -59,11 +72,11 @@ function decode(){
     var payload=JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
     hdr.textContent=JSON.stringify(header,null,2);
     pay.textContent=JSON.stringify(payload,null,2);
-    msg.innerHTML='<span class="text-success">? Valid JWT format</span>';
-    inp.className='input input-bordered w-full font-mono valid';
+    msg.innerHTML='<span class="text-success">✓ Valid JWT format</span>';
+    inp.className='textarea textarea-bordered w-full text-sm font-mono';
   }catch(e){
-    hdr.textContent='Error: '+e.message;pay.textContent='';msg.innerHTML='<span class="text-error">? Invalid JWT format</span>';
-    inp.className='input input-bordered w-full font-mono invalid';
+    hdr.textContent='Error: '+e.message;pay.textContent='';msg.innerHTML='<span class="text-error">✗ Invalid JWT format</span>';
+    inp.className='textarea textarea-bordered w-full text-sm font-mono';
   }
 }
 inp.addEventListener('input',decode);decode();
@@ -72,20 +85,19 @@ function b64url(s){return s.replace(/-/g,'+').replace(/_/g,'/')}
 function toU8(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
 document.getElementById('btnVerify').addEventListener('click',async function(){
   var t=inp.value.trim(),s=sec.value.trim();
-  if(!t||!s){vres.textContent='Token dan secret harus diisi.';vres.className='small text-error';return;}
+  if(!t||!s){vres.textContent='Token dan secret harus diisi.';vres.className='text-xs text-error';return;}
   var parts=t.split('.');
-  if(parts.length<3){vres.textContent='Token tidak valid.';vres.className='small text-error';return;}
+  if(parts.length<3){vres.textContent='Token tidak valid.';vres.className='text-xs text-error';return;}
   vres.textContent='Memverifikasi...';vres.className='text-sm opacity-60';
   try{
     var key=toU8(b64url(btoa(s))).buffer;
     var alg={name:'HMAC',hash:{name:'SHA-256'}};
     var sig=await crypto.subtle.importKey('raw',key,alg,false,['verify']);
     var ok=await crypto.subtle.verify(alg,sig,toU8(b64url(parts[2])),new TextEncoder().encode(parts[0]+'.'+parts[1]));
-    vres.textContent=ok?'? Signature valid!':'? Signature TIDAK valid (secret salah?)';
-    vres.className='small '+(ok?'text-success':'text-error');
+    vres.textContent=ok?'✓ Signature valid!':'✗ Signature TIDAK valid (secret salah?)';
+    vres.className='text-xs '+(ok?'text-success':'text-error');
   }catch(e){
-    vres.textContent='Gagal verifikasi. Mungkin bukan HS256 atau format salah.';vres.className='small text-warning';
+    vres.textContent='Gagal verifikasi. Mungkin bukan HS256 atau format salah.';vres.className='text-xs text-warning';
   }
 });
 </script>
-

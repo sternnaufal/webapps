@@ -21,44 +21,54 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h1 class="h3 mb-0">Savings Calculator</h1><p class="opacity-60 small mb-0">Hitung tabungan dengan bunga majemuk. Lihat simulasi pertumbuhan uang Anda.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Jumlah Awal (Rp)</label><input type="number" id="initialAmount" class="input input-bordered w-full" value="1000000" step="100000"></div>
-<div class="mb-3"><label class="label-text font-semibold">Setoran Bulanan (Rp)</label><input type="number" id="monthlyAmount" class="input input-bordered w-full" value="500000" step="50000"></div>
-<div class="mb-3"><label class="label-text font-semibold">Bunga per Tahun (%)</label><input type="number" id="interestRate" class="input input-bordered w-full" value="6" step="0.1"></div>
-<div class="row gap-2 mb-3"><div class="col-6"><label class="label-text small">Jangka Waktu</label><input type="number" id="years" class="input input-bordered w-full" value="5" min="1" max="50"></div>
-<div class="col-6"><label class="label-text small">Frekuensi Bunga</label><select id="compoundFreq" class="select select-bordered w-full"><option value="12">Bulanan</option><option value="4">Kuartalan</option><option value="1" selected>Tahunan</option></select></div></div>
-<button id="btnCalc" class="btn btn-primary w-full">Hitung</button>
-</div></div>
-<div class="lg:w-7/12 w-full">
-<div class="card card-bordered bg-base-100 p-3 mb-3">
-<h6 class="mb-3">Hasil Simulasi</h6>
-<div class="flex flex-wrap gap-3"><div class="col-4"><div class="p-3 rounded text-center" style="background:#eef2ff"><small class="opacity-60">Total Setoran</small><div class="h5 mb-0 font-bold" id="totalContrib" style="color:#6366f1">Rp0</div></div></div>
-<div class="col-4"><div class="p-3 rounded text-center" style="background:#f0fdf4"><small class="opacity-60">Bunga</small><div class="h5 mb-0 font-bold" id="totalInterest" style="color:#16a34a">Rp0</div></div></div>
-<div class="col-4"><div class="p-3 rounded text-center" style="background:#fefce8"><small class="opacity-60">Total Akhir</small><div class="h5 mb-0 font-bold" id="totalFinal" style="color:#ca8a04">Rp0</div></div></div></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
-<div class="card card-bordered bg-base-100 p-3">
-<h6 class="mb-3">Detail per Tahun</h6>
-<div class="overflow-x-auto" style="max-height:300px;overflow-y:auto"><table class="table table-sm small mb-0"><thead><tr><th>Tahun</th><th>Setoran</th><th>Bunga</th><th>Saldo</th></tr></thead><tbody id="yearlyTable"></tbody></table></div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-5/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="mb-3"><label class="text-xs font-medium opacity-60 mb-1 block">Jumlah Awal (Rp)</label><input type="number" id="initialAmount" class="input input-bordered w-full input-sm" value="1000000" step="100000"></div>
+      <div class="mb-3"><label class="text-xs font-medium opacity-60 mb-1 block">Setoran Bulanan (Rp)</label><input type="number" id="monthlyAmount" class="input input-bordered w-full input-sm" value="500000" step="50000"></div>
+      <div class="mb-3"><label class="text-xs font-medium opacity-60 mb-1 block">Bunga per Tahun (%)</label><input type="number" id="interestRate" class="input input-bordered w-full input-sm" value="6" step="0.1"></div>
+      <div class="grid grid-cols-2 gap-2 mb-3">
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Jangka Waktu</label><input type="number" id="years" class="input input-bordered w-full input-sm" value="5" min="1" max="50"></div>
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Frekuensi Bunga</label>
+          <select id="compoundFreq" class="select select-bordered w-full select-sm">
+            <option value="12">Bulanan</option>
+            <option value="4">Kuartalan</option>
+            <option value="1" selected>Tahunan</option>
+          </select>
+        </div>
+      </div>
+      <button id="btnCalc" class="btn btn-primary btn-sm w-full">Hitung</button>
+    </div>
+  </div>
+  <div class="lg:w-7/12 w-full">
+    <div class="rounded-xl p-5 mb-3" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Hasil Simulasi</div>
+      <div class="grid grid-cols-3 gap-3">
+        <div class="p-3 rounded text-center" style="background:oklch(0.55 0.25 270 / 0.1);"><span class="text-xs opacity-60">Total Setoran</span><div class="text-sm font-bold" id="totalContrib" style="color:#6366f1">Rp0</div></div>
+        <div class="p-3 rounded text-center" style="background:oklch(0.6 0.18 150 / 0.1);"><span class="text-xs opacity-60">Bunga</span><div class="text-sm font-bold" id="totalInterest" style="color:#16a34a">Rp0</div></div>
+        <div class="p-3 rounded text-center" style="background:oklch(0.8 0.18 85 / 0.1);"><span class="text-xs opacity-60">Total Akhir</span><div class="text-sm font-bold" id="totalFinal" style="color:#ca8a04">Rp0</div></div>
+      </div>
+    </div>
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Detail per Tahun</div>
+      <div class="overflow-x-auto" style="max-height:300px;overflow-y:auto">
+        <table class="table table-sm w-full text-xs mb-0">
+          <thead><tr><th class="text-left opacity-60 font-medium pb-1">Tahun</th><th class="text-right opacity-60 font-medium pb-1">Setoran</th><th class="text-right opacity-60 font-medium pb-1">Bunga</th><th class="text-right opacity-60 font-medium pb-1">Saldo</th></tr></thead>
+          <tbody id="yearlyTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-</div></div>
 
 <ToolShell about={aboutText} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var initial=document.getElementById('initialAmount'),monthly=document.getElementById('monthlyAmount'),rate=document.getElementById('interestRate'),years=document.getElementById('years'),freq=document.getElementById('compoundFreq');
@@ -78,7 +88,7 @@ document.getElementById('btnCalc').addEventListener('click',function(){
     var yearInterest=balance-prevBalance-annualContrib;
     totalInterest+=yearInterest;
     prevBalance=balance;
-    rows+='<tr><td>'+year+'</td><td>'+fmt(totalContrib)+'</td><td>'+fmt(totalInterest)+'</td><td class="font-bold">'+fmt(balance)+'</td></tr>';
+    rows+='<tr><td class="py-1">'+year+'</td><td class="py-1 text-right">'+fmt(totalContrib)+'</td><td class="py-1 text-right">'+fmt(totalInterest)+'</td><td class="py-1 font-bold text-right">'+fmt(balance)+'</td></tr>';
   }
 
   document.getElementById('totalContrib').textContent=fmt(totalContrib);
@@ -88,4 +98,3 @@ document.getElementById('btnCalc').addEventListener('click',function(){
 });
 document.getElementById('btnCalc').click();
 </script>
-

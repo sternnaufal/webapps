@@ -21,109 +21,84 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<!-- Navbar khusus mobile -->
-      
+<header class="mb-5">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</header>
 
-      
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- Desimal -->
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+    <div class="text-sm font-semibold mb-3">Desimal <span class="text-xs opacity-40 ml-1">basis 10</span></div>
+    <div class="flex gap-2 mb-2">
+      <input id="dec" class="input input-bordered w-full input-sm" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
+      <button class="btn btn-ghost btn-sm" data-copy="dec" title="Salin">📋</button>
+    </div>
+    <div class="text-xs opacity-40">Karakter valid: 0-9, opsional tanda minus.</div>
+    <div class="mt-2 flex justify-between">
+      <span class="text-xs opacity-40" id="decInfo"></span>
+    </div>
+    <div class="text-xs text-red-500 mt-1" id="decErr"></div>
+  </div>
 
-      <div class="flex flex-wrap gap-4">
-        <!-- Desimal -->
-        <div class="md:w-1/2 w-full">
-          <div class="card shadow-sm h-full">
-            <div class="card-body">
-              <h5 class="card-title">Desimal <span class="badge bg-primary">basis 10</span></h5>
-              <div class="input-group mb-2">
-                <input id="dec" class="input input-bordered w-full" inputmode="numeric" placeholder="Misal: 1337 atau -42" />
-                <button class="btn btn-outline" data-copy="dec" title="Salin">??</button>
-              </div>
-              <div class="text-sm opacity-60">Karakter valid: 09, opsional tanda minus.</div>
-              <div class="mt-2 flex justify-between">
-                <span class="badge bg-secondary" id="decInfo"></span>
-              </div>
-              <div class="text-error small mt-1" id="decErr"></div>
-            </div>
-          </div>
-        </div>
+  <!-- Hex -->
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+    <div class="text-sm font-semibold mb-3">Heksadesimal <span class="text-xs opacity-40 ml-1">basis 16</span></div>
+    <div class="flex gap-2 mb-2">
+      <input id="hex" class="input input-bordered w-full input-sm" placeholder="Misal: 1A3F atau -ff" />
+      <button class="btn btn-ghost btn-sm" data-copy="hex" title="Salin">📋</button>
+    </div>
+    <div class="flex items-center gap-2 mb-2">
+      <input class="checkbox checkbox-sm" type="checkbox" id="hexUpper">
+      <label class="text-xs opacity-60" for="hexUpper">Uppercase</label>
+    </div>
+    <div class="text-xs opacity-40">Karakter valid: 0-9, a-f. Gunakan tanda minus untuk negatif.</div>
+    <div class="mt-2 flex justify-between">
+      <span class="text-xs opacity-40" id="hexInfo"></span>
+    </div>
+    <div class="text-xs text-red-500 mt-1" id="hexErr"></div>
+  </div>
 
-        <!-- Hex -->
-        <div class="md:w-1/2 w-full">
-          <div class="card shadow-sm h-full">
-            <div class="card-body">
-              <h5 class="card-title">Hexadesimal <span class="badge bg-primary">basis 16</span></h5>
-              <div class="input-group mb-2">
-                <input id="hex" class="input input-bordered w-full" placeholder="Misal: 1A3F atau -ff" />
-                <button class="btn btn-outline" data-copy="hex" title="Salin">??</button>
-              </div>
-              <div class="flex items-center gap-2 form-switch mb-2">
-                <input class="checkbox" type="checkbox" id="hexUpper">
-                <label class="flex items-center gap-2-label" for="hexUpper">Uppercase</label>
-              </div>
-              <div class="text-sm opacity-60">Karakter valid: 09, af. Gunakan tanda minus untuk negatif.</div>
-              <div class="mt-2 flex justify-between">
-                <span class="badge bg-secondary" id="hexInfo"></span>
-              </div>
-              <div class="text-error small mt-1" id="hexErr"></div>
-            </div>
-          </div>
-        </div>
+  <!-- Biner -->
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+    <div class="text-sm font-semibold mb-3">Biner <span class="text-xs opacity-40 ml-1">basis 2</span></div>
+    <div class="flex gap-2 mb-2">
+      <input id="bin" class="input input-bordered w-full input-sm" placeholder="Misal: 101010 atau -1111" />
+      <button class="btn btn-ghost btn-sm" data-copy="bin" title="Salin">📋</button>
+    </div>
+    <div class="flex items-center gap-2 mb-2">
+      <input class="checkbox checkbox-sm" type="checkbox" id="binGroup" checked>
+      <label class="text-xs opacity-60" for="binGroup">Kelompok 4-bit</label>
+    </div>
+    <div class="text-xs opacity-40">Karakter valid: 0 atau 1. Min untuk negatif.</div>
+    <div class="mt-2 flex justify-between">
+      <span class="text-xs opacity-40" id="binInfo"></span>
+    </div>
+    <div class="text-xs text-red-500 mt-1" id="binErr"></div>
+  </div>
 
-        <!-- Biner -->
-        <div class="md:w-1/2 w-full">
-          <div class="card shadow-sm h-full">
-            <div class="card-body">
-              <h5 class="card-title">Biner <span class="badge bg-primary">basis 2</span></h5>
-              <div class="input-group mb-2">
-                <input id="bin" class="input input-bordered w-full" placeholder="Misal: 101010 atau -1111" />
-                <button class="btn btn-outline" data-copy="bin" title="Salin">??</button>
-              </div>
-              <div class="flex items-center gap-2 form-switch mb-2">
-                <input class="checkbox" type="checkbox" id="binGroup" checked>
-                <label class="flex items-center gap-2-label" for="binGroup">Kelompok 4-bit</label>
-              </div>
-              <div class="text-sm opacity-60">Karakter valid: 0 atau 1. Min untuk negatif.</div>
-              <div class="mt-2 flex justify-between">
-                <span class="badge bg-secondary" id="binInfo"></span>
-              </div>
-              <div class="text-error small mt-1" id="binErr"></div>
-            </div>
-          </div>
-        </div>
+  <!-- Oktal -->
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #8b5cf6;">
+    <div class="text-sm font-semibold mb-3">Oktal <span class="text-xs opacity-40 ml-1">basis 8</span></div>
+    <div class="flex gap-2 mb-2">
+      <input id="oct" class="input input-bordered w-full input-sm" placeholder="Misal: 755 atau -17" />
+      <button class="btn btn-ghost btn-sm" data-copy="oct" title="Salin">📋</button>
+    </div>
+    <div class="text-xs opacity-40">Karakter valid: 0-7. Min untuk negatif.</div>
+    <div class="mt-2 flex justify-between">
+      <span class="text-xs opacity-40" id="octInfo"></span>
+    </div>
+    <div class="text-xs text-red-500 mt-1" id="octErr"></div>
+  </div>
+</div>
 
-        <!-- Oktal -->
-        <div class="md:w-1/2 w-full">
-          <div class="card shadow-sm h-full">
-            <div class="card-body">
-              <h5 class="card-title">Oktal <span class="badge bg-primary">basis 8</span></h5>
-              <div class="input-group mb-2">
-                <input id="oct" class="input input-bordered w-full" placeholder="Misal: 755 atau -17" />
-                <button class="btn btn-outline" data-copy="oct" title="Salin">??</button>
-              </div>
-              <div class="text-sm opacity-60">Karakter valid: 07. Min untuk negatif.</div>
-              <div class="mt-2 flex justify-between">
-                <span class="badge bg-secondary" id="octInfo"></span>
-              </div>
-              <div class="text-error small mt-1" id="octErr"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+<p class="text-xs opacity-40 mt-4">
+  💡 Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
+</p>
 
-      <p class="opacity-60 small mt-4">
-        ?? Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
-      </p>
-    `n
-
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
 <script is:inline>
 const el = id => document.getElementById(id);
@@ -135,7 +110,7 @@ const RE = {
   oct: /^-?[0-7]+$/
 };
 
-function stripGrouping(s){ return s.replace(/\\s+/g, ""); }
+function stripGrouping(s){ return s.replace(/\s+/g, ""); }
 
 function parseToBigInt(str, base){
   let neg = false;
@@ -182,10 +157,10 @@ function setInfo(){
   const hex = el('hex').value.trim();
   const bin = el('bin').value.trim();
   const oct = el('oct').value.trim();
-  el('decInfo').textContent = dec ? \`\${dec.length} digit\` : '';
-  el('hexInfo').textContent = hex ? \`\${stripGrouping(hex).length} digit\` : '';
-  el('binInfo').textContent = bin ? \`\${stripGrouping(bin).replace(/^-/, '').replace(/\\s+/g,'').length} bit\` : '';
-  el('octInfo').textContent = oct ? \`\${stripGrouping(oct).length} digit\` : '';
+  el('decInfo').textContent = dec ? `${dec.length} digit` : '';
+  el('hexInfo').textContent = hex ? `${stripGrouping(hex).length} digit` : '';
+  el('binInfo').textContent = bin ? `${stripGrouping(bin).replace(/^-/, '').replace(/\s+/g,'').length} bit` : '';
+  el('octInfo').textContent = oct ? `${stripGrouping(oct).length} digit` : '';
 }
 
 function showError(which, msg){ el(which+'Err').textContent = msg || ''; }
@@ -249,8 +224,8 @@ document.querySelectorAll('[data-copy]').forEach(btn=>{
     const id = btn.getAttribute('data-copy');
     const val = el(id).value;
     if (!val) return;
-    try{ await navigator.clipboard.writeText(val); btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); }
-    catch{ btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); }
+    try{ await navigator.clipboard.writeText(val); btn.textContent='✅'; setTimeout(()=>btn.textContent='📋', 900); }
+    catch{ btn.textContent='❌'; setTimeout(()=>btn.textContent='📋', 900); }
   });
 });
 
@@ -266,4 +241,3 @@ el('btnSample').addEventListener('click', ()=>{
 
 setInfo();
 </script>
-

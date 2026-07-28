@@ -3,37 +3,64 @@ import ToolLayout from "../../layouts/ToolLayout.astro";
 import ToolShell from "../../components/ToolShell.astro";
 
 const title = 'Markdown to HTML Converter';
-const desc = 'Konversi Markdown ke HTML secara instan. Editor dengan preview real-time dan copy HTML output.';
+const description = 'Konversi Markdown ke HTML secara instan. Editor dengan preview real-time dan copy HTML output.';
 const keywords = 'markdown to html, md to html, markdown converter, md converter, html generator';
-const aboutText = 'Markdown to HTML Converter Markdown to HTML Converter online. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Markdown to HTML Converter mengubah teks Markdown menjadi kode HTML secara instan. Lengkap dengan live preview, HTML source output, dan fitur auto-convert. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Markdown to HTML Converter sangat berguna bagi penulis teknis, developer, dan content creator yang sering bekerja dengan Markdown dan membutuhkan output HTML. Mendukung sintaks Markdown lengkap: heading, bold, italic, strikethrough, link, gambar, code blocks, blockquote, list, dan horizontal rule. Fitur auto-convert memungkinkan preview real-time saat Anda mengetik, dan tombol copy memudahkan Anda mengambil hasil HTML.';
 const relatedTools = [
-  { slug: 'md-preview', name: 'Md Preview', icon: 'MD' },
-  { slug: 'html-preview', name: 'Html Preview', icon: '</>' },
-  { slug: 'html-entity', name: 'Html Entity', icon: '&' },
-  { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' }
+  { slug: 'md-preview', name: 'Markdown Previewer', icon: 'MD' },
+  { slug: 'html-preview', name: 'HTML Preview', icon: '</>' },
+  { slug: 'html-entity', name: 'HTML Entity', icon: '&' },
+  { slug: 'lorem-ipsum', name: 'Lorem Ipsum Generator', icon: '¶' }
 ];
-
 ---
 
-<ToolLayout title={title} description=&#123;desc&#125; keywords={keywords}>
-inline\
+<ToolLayout title={title} description={description} keywords={keywords}>
 
-<ToolShell about={aboutText} />
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
+
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Markdown Input</label>
+      <textarea id="mhIn" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" placeholder="# Hello&#10;Markdown **text** here..."># Hello World
+
+This is **bold** and *italic* text.
+
+- List item 1
+- List item 2
+
+[Link](https://example.com)</textarea>
+    </div>
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">HTML Output</label>
+      <textarea id="mhOut" class="textarea textarea-bordered w-full text-sm font-mono" rows="6" readonly></textarea>
+      <div class="mt-2 flex gap-2 items-center">
+        <button id="mhBtn" class="btn btn-primary btn-sm">Convert</button>
+        <button id="mhCopy" class="btn btn-ghost btn-sm">Copy HTML</button>
+        <label class="flex items-center gap-1 text-xs opacity-60 ml-auto">
+          <input type="checkbox" id="mhAuto" class="checkbox checkbox-sm" checked>
+          Auto convert
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="rounded-xl p-4" style="background:oklch(0.99 0.001 270);border:1px solid oklch(0.93 0.005 270);">
+    <div class="text-xs font-medium opacity-60 mb-2">Preview</div>
+    <div id="mhPrev" class="text-sm"></div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float{position:fixed;bottom:24px;right:24px;z-index:9999;background:#ff6b6b;color:#fff;border-radius:50px;padding:10px 20px 10px 16px;text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(255,107,107,0.4);transition:all .3s ease;font-family:"Inter",sans-serif}
-.saweria-float:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,107,107,0.6);color:#fff}
-.saweria-float svg{animation:pulse 1.5s ease infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-@media(max-width:576px){.saweria-float{bottom:16px;right:16px;padding:8px 14px 8px 10px;font-size:12px}}
-</style>
-
 <script is:inline>
-function md2html(md){let h=md.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");h=h.replace(/^##### (.+)$/gm,"<h5>$1</h5>").replace(/^#### (.+)$/gm,"<h4>$1</h4>").replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");h=h.replace(/^---$/gm,"<hr>");h=h.replace(/^> (.+)$/gm,"<blockquote>$1</blockquote>");h=h.replace(/\`\`\`([\s\S]*?)\`\`\`/g,"<pre><code>$1</code></pre>");h=h.replace(/\`([^\`]+)\`/g,"<code>$1</code>");h=h.replace(/\*\*\*(.+?)\*\*\*/g,"<strong><em>$1</em></strong>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");h=h.replace(/~~(.+?)~~/g,"<del>$1</del>");h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');h=h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" style="max-width:100%">');h=h.replace(/^\* (.+)$/gm,"<li>$1</li>").replace(/^- (.+)$/gm,"<li>$1</li>");h=h.replace(/^\d+\. (.+)$/gm,"<li>$1</li>");return h}
+function md2html(md){let h=md.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");h=h.replace(/^##### (.+)$/gm,"<h5>$1</h5>").replace(/^#### (.+)$/gm,"<h4>$1</h4>").replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");h=h.replace(/^---$/gm,"<hr>");h=h.replace(/^> (.+)$/gm,"<blockquote>$1</blockquote>");h=h.replace(/```([\s\S]*?)```/g,"<pre><code>$1</code></pre>");h=h.replace(/`([^`]+)`/g,"<code>$1</code>");h=h.replace(/\*\*\*(.+?)\*\*\*/g,"<strong><em>$1</em></strong>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");h=h.replace(/~~(.+?)~~/g,"<del>$1</del>");h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');h=h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" style="max-width:100%">');h=h.replace(/^\* (.+)$/gm,"<li>$1</li>").replace(/^- (.+)$/gm,"<li>$1</li>");h=h.replace(/^\d+\. (.+)$/gm,"<li>$1</li>");return h}
 function mh(){const md=document.getElementById("mhIn").value;const h=md2html(md);document.getElementById("mhOut").value=h;document.getElementById("mhPrev").innerHTML=h}
 document.getElementById("mhBtn").onclick=mh;document.getElementById("mhCopy").onclick=()=>navigator.clipboard.writeText(document.getElementById("mhOut").value);
 document.getElementById("mhIn").oninput=function(){if(document.getElementById("mhAuto").checked)mh()};mh();
 </script>
-

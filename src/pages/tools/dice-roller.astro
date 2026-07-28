@@ -13,7 +13,7 @@ const relatedTools = [
   { slug: 'char-counter', name: 'Char Counter', icon: '#' }
 ];
 
-const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:3px;background:var(--surface-soft);transition:all .2s}.dice-icon.rolling{animation:shake .3s}@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}`;
+const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:3px;background:oklch(0.93 0.003 270);transition:all .2s}.dice-icon.rolling{animation:shake .3s}@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}`;
 ---
 
 <ToolLayout
@@ -22,28 +22,43 @@ const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-ra
   keywords={keywords}
 >
 
-<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">D6</div><div><h1 class="h3 mb-0">Dice Roller</h1><p class="opacity-60 small mb-0">Virtual dice roller dengan berbagai jenis dadu. D4, D6, D8, D10, D12, D20, D100.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-8">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="flex flex-wrap gap-3 align-items-end mb-3">
-<div class="col-4"><label class="label-text small font-semibold">Jenis Dadu</label><select id="diceType" class="select select-bordered w-full"><option value="4">D4</option><option value="6" selected>D6</option><option value="8">D8</option><option value="10">D10</option><option value="12">D12</option><option value="20">D20</option><option value="100">D100</option></select></div>
-<div class="col-4"><label class="label-text small font-semibold">Jumlah</label><select id="diceCount" class="select select-bordered w-full"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>10</option></select></div>
-<div class="col-4"><button id="btnRoll" class="btn btn-primary w-full">Roll!</button></div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
 </div>
-<div id="diceResult" class="flex flex-wrap justify-center gap-2 mb-3 py-3 rounded bg-light"></div>
-<div class="row text-center small gap-2">
-<div class="col-4"><span class="opacity-60">Total</span><br><span class="font-bold fs-5" id="totalDisplay">0</span></div>
-<div class="col-4"><span class="opacity-60">Tertinggi</span><br><span class="font-bold fs-5" id="maxDisplay">0</span></div>
-<div class="col-4"><span class="opacity-60">Terendah</span><br><span class="font-bold fs-5" id="minDisplay">0</span></div>
+
+<div class="flex flex-wrap gap-4">
+  <div class="lg:w-8/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="grid grid-cols-3 gap-3 items-end mb-3">
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Jenis Dadu</label>
+          <select id="diceType" class="select select-bordered w-full select-sm">
+            <option value="4">D4</option><option value="6" selected>D6</option><option value="8">D8</option><option value="10">D10</option><option value="12">D12</option><option value="20">D20</option><option value="100">D100</option>
+          </select>
+        </div>
+        <div><label class="text-xs font-medium opacity-60 mb-1 block">Jumlah</label>
+          <select id="diceCount" class="select select-bordered w-full select-sm">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>10</option>
+          </select>
+        </div>
+        <div><button id="btnRoll" class="btn btn-primary btn-sm w-full">Roll!</button></div>
+      </div>
+      <div id="diceResult" class="flex flex-wrap justify-center gap-2 mb-3 py-3 rounded" style="background:oklch(0.95 0.003 270);"></div>
+      <div class="grid grid-cols-3 gap-2 text-center text-xs">
+        <div><span class="opacity-60">Total</span><br><span class="text-sm font-bold" id="totalDisplay">0</span></div>
+        <div><span class="opacity-60">Tertinggi</span><br><span class="text-sm font-bold" id="maxDisplay">0</span></div>
+        <div><span class="opacity-60">Terendah</span><br><span class="text-sm font-bold" id="minDisplay">0</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="lg:w-4/12 w-full">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-3">Riwayat</div>
+      <div id="historyList" style="max-height:240px;overflow-y:auto" class="text-xs"><span class="opacity-60">Belum ada lemparan</span></div>
+      <button id="btnClearHistory" class="btn btn-ghost btn-xs w-full mt-2">Hapus Riwayat</button>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-<div class="col-lgap-4">
-<div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Riwayat</h6>
-<div id="historyList" style="max-height:240px;overflow-y:auto"><small class="opacity-60">Belum ada lemparan</small></div>
-<button id="btnClearHistory" class="btn btn-outline-danger btn-sm mt-2 w-full">Hapus Riwayat</button>
-</div>
-</div></div>
 
 <ToolShell about={aboutText} />
 
@@ -52,17 +67,6 @@ const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-ra
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var dt=document.getElementById('diceType'),dc=document.getElementById('diceCount'),dr=document.getElementById('diceResult'),td=document.getElementById('totalDisplay'),mxd=document.getElementById('maxDisplay'),mnd=document.getElementById('minDisplay'),hl=document.getElementById('historyList'),history=[];
@@ -78,10 +82,9 @@ function roll(){
   td.textContent=total;mxd.textContent=Math.max.apply(null,vals);mnd.textContent=Math.min.apply(null,vals);
   var label='D'+sides+' x'+cnt+': ['+vals.join(', ')+'] = '+total;
   history.unshift(label);if(history.length>20)history.pop();
-  hl.innerHTML=history.map(function(h){return'<div class="small py-1 border-bottom">'+h+'</div>'}).join('');
+  hl.innerHTML=history.map(function(h){return'<div class="py-1 border-b text-xs">'+h+'</div>'}).join('');
 }
 document.getElementById('btnRoll').addEventListener('click',roll);
-document.getElementById('btnClearHistory').addEventListener('click',function(){history=[];hl.innerHTML='<small class="opacity-60">Belum ada lemparan</small>'});
+document.getElementById('btnClearHistory').addEventListener('click',function(){history=[];hl.innerHTML='<span class="opacity-60 text-xs">Belum ada lemparan</span>'});
 roll();
 </script>
-

@@ -5,14 +5,14 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Markdown Previewer';
 const description = 'Preview markdown secara real-time online. Editor markdown dengan live preview dan HTML output.';
 const keywords = 'markdown previewer, markdown editor, md to html, markdown online';
-const aboutText = 'Markdown Previewer Preview markdown secara real-time online. Editor markdown dengan live preview dan HTML output.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Markdown Previewer adalah editor markdown dengan live preview real-time. Tulis markdown di panel kiri dan lihat hasil HTML yang sudah dirender di panel kanan secara instan. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutExtra = 'Markdown adalah bahasa markup ringan yang banyak digunakan untuk dokumentasi, README GitHub, forum diskusi, catatan, dan blogging. Markdown Previewer ini mendukung sintaks markdown lengkap termasuk heading, bold, italic, list, link, code blocks dengan syntax highlighting, tabel, dan blockquote. Sangat berguna bagi developer, penulis teknis, dan siapapun yang bekerja dengan markdown untuk melihat hasil rendering secara instan.';
 const relatedTools = [
-  { slug: 'html-preview', name: 'Html Preview', icon: '</>' },
-  { slug: 'markdown-to-html', name: 'Markdown To Html', icon: '▶' },
-  { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' },
-  { slug: 'textcase', name: 'Textcase', icon: 'Aa' }
+  { slug: 'html-preview', name: 'HTML Preview', icon: '</>' },
+  { slug: 'markdown-to-html', name: 'Markdown to HTML', icon: '▶' },
+  { slug: 'lorem-ipsum', name: 'Lorem Ipsum Generator', icon: '¶' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' }
 ];
-
 ---
 
 <ToolLayout
@@ -21,54 +21,51 @@ const relatedTools = [
   keywords={keywords}
 >
 
-<div class="flex flex-wrap gap-4">
-        <div class="md:w-1/2 w-full">
-          <label for="editor" class="label-text">Markdown Input</label>
-          <textarea id="editor" class="input input-bordered w-full" placeholder="# Judul&#10;Teks **bold** dan *italic*&#10;- List item 1&#10;- List item 2"></textarea>
-        </div>
-        <div class="md:w-1/2 w-full">
-          <div class="flex justify-between items-center mb-2">
-            <label class="label-text mb-0">Live Preview</label>
-            <button id="copyBtn" class="btn btn-sm btn-outline-primary">?? Copy HTML</button>
-          </div>
-          <div id="preview"></div>
-        </div>
-      </div>
+<div class="mb-6">
+  <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+  <p class="text-sm opacity-50 mt-0.5">{description}</p>
+</div>
 
-      <div class="mt-5">
-        <h5>?? Markdown Cheat Sheet</h5>
-        <table class="table table-bordered table-striped table-sm table-md mt-3">
-          <thead class="table-light">
-            <tr><th>Simbol</th><th>Fungsi</th><th>Contoh</th><th>Hasil</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>#</td><td>Heading 1</td><td><code># Judul</code></td><td><h1>Judul</h1></td></tr>
-            <tr><td>##</td><td>Heading 2</td><td><code>## Subjudul</code></td><td><h2>Subjudul</h2></td></tr>
-            <tr><td>**teks**</td><td>Bold</td><td><code>**teks tebal**</code></td><td><b>teks tebal</b></td></tr>
-            <tr><td>*teks*</td><td>Italic</td><td><code>*teks miring*</code></td><td><i>teks miring</i></td></tr>
-            <tr><td>- item</td><td>List</td><td><code>- satu<br>- dua</code></td><td><ul><li>satu</li><li>dua</li></ul></td></tr>
-            <tr><td>[teks](url)</td><td>Link</td><td><code>[Google](https://google.com)</code></td><td><a href="https://google.com">Google</a></td></tr>
-            <tr><td>`kode`</td><td>Inline Code</td><td><code>`console.log("Hi")`</code></td><td><code>console.log("Hi")</code></td></tr>
-            <tr><td>```</td><td>Code Block</td><td><code>```js<br>console.log("Hi")<br>```</code></td><td><pre><code>console.log("Hi")</code></pre></td></tr>
-          </tbody>
-        </table>
+<div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div>
+      <label class="text-xs font-medium opacity-60 mb-1 block">Markdown Input</label>
+      <textarea id="editor" class="textarea textarea-bordered w-full text-sm font-mono" rows="12" placeholder="# Judul&#10;Teks **bold** dan *italic*&#10;- List item 1&#10;- List item 2"></textarea>
+    </div>
+    <div>
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-medium opacity-60">Live Preview</span>
+        <button id="copyBtn" class="btn btn-ghost btn-sm">Copy HTML</button>
       </div>
-    `n
+      <div id="preview" class="text-sm"></div>
+    </div>
+  </div>
 
-<ToolShell about={aboutText} />
+  <div class="mt-5">
+    <div class="text-xs font-medium opacity-60 mb-2">Markdown Cheat Sheet</div>
+    <div class="overflow-x-auto text-xs">
+      <table class="table table-sm w-full">
+        <thead>
+          <tr class="opacity-60"><th class="font-normal">Simbol</th><th class="font-normal">Fungsi</th><th class="font-normal">Contoh</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code class="font-mono">#</code></td><td>Heading 1</td><td><code class="font-mono"># Judul</code></td></tr>
+          <tr><td><code class="font-mono">##</code></td><td>Heading 2</td><td><code class="font-mono">## Subjudul</code></td></tr>
+          <tr><td><code class="font-mono">**teks**</code></td><td>Bold</td><td><code class="font-mono">**teks tebal**</code></td></tr>
+          <tr><td><code class="font-mono">*teks*</code></td><td>Italic</td><td><code class="font-mono">*teks miring*</code></td></tr>
+          <tr><td><code class="font-mono">- item</code></td><td>List</td><td><code class="font-mono">- satu<br>- dua</code></td></tr>
+          <tr><td><code class="font-mono">[teks](url)</code></td><td>Link</td><td><code class="font-mono">[Google](https://google.com)</code></td></tr>
+          <tr><td><code class="font-mono">`kode`</code></td><td>Inline Code</td><td><code class="font-mono">`console.log("Hi")`</code></td></tr>
+          <tr><td><code class="font-mono">```</code></td><td>Code Block</td><td><code class="font-mono">```js<br>console.log("Hi")<br>```</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
-
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
-<script is:inline>
-</script>
 
 <script is:inline>
 marked.setOptions({
@@ -92,12 +89,11 @@ editor.addEventListener('input', updatePreview);
 copyBtn.addEventListener('click', function() {
   navigator.clipboard.writeText(preview.innerHTML)
     .then(function() {
-      copyBtn.textContent = '? Copied!';
-      setTimeout(function() { copyBtn.textContent = '?? Copy HTML'; }, 1500);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(function() { copyBtn.textContent = 'Copy HTML'; }, 1500);
     });
 });
 
-editor.value = '# Selamat Datang ??\\n\\nIni **Markdown Previewer**!\\n\\n- Tulisan *italic*\\n- Tulisan **bold**\\n- Link: [Web Naufal Rakha](https://naufalrakha.my.id)\\n\\n\`\`\`js\\nconsole.log(\\'Hello World\\');\\n\`\`\`';
+editor.value = '# Selamat Datang\n\nIni **Markdown Previewer**!\n\n- Tulisan *italic*\n- Tulisan **bold**\n- Link: [Web Naufal Rakha](https://naufalrakha.my.id)\n\n```js\nconsole.log(\'Hello World\');\n```';
 updatePreview();
 </script>
-
