@@ -68,7 +68,7 @@ function render(q){
     if(q&&!String(s.code).includes(q)&&!s.label.toLowerCase().includes(q)&&!s.cat.toLowerCase().includes(q)&&!s.desc.toLowerCase().includes(q))return;
     var col=document.createElement('div');
     col.innerHTML='<div class="rounded-xl p-4 h-full" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid '+(catColors[s.cat]||'#6b7280')+';">'+
-      '<div class="flex items-center gap-2 mb-1"><span class="text-xs px-2 py-0.5 rounded font-bold" style="background:'+(catColors[s.cat]||'#6b7280')+';color:#fff;">'+s.code+'</span><span class="text-sm font-semibold">'+s.label+'</span></div>'+
+      '<div class="flex items-center gap-2 mb-1"><span class="text-xs px-2 py-0.5 rounded font-bold" style="background:'+(catColors[s.cat]||'#6b7280')+';color:oklch(1 0 0);">'+s.code+'</span><span class="text-sm font-semibold">'+s.label+'</span></div>'+
       '<div class="text-xs opacity-60">'+s.desc+'</div>'+
       '<div class="mt-1"><span class="text-xs opacity-40">'+s.cat+'</span></div></div>';
     list.appendChild(col);

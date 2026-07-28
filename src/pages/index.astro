@@ -7,6 +7,18 @@ const catCount = tools.categories.length;
 const featured = ['password-generator', 'qr-generator', 'json-formatter', 'color-picker', 'subnetting', 'hash-generator', 'uuid-generator', 'regex-tester', 'typing-speed-test', 'unit-converter'];
 const featuredTools = featured.map(s => allTools.find(t => t.slug === s)).filter(Boolean);
 
+const catAccent: Record<string, string> = {
+  'Developer Tools': '#6366f1',
+  'Network & URL': '#3b82f6',
+  'Text & Media': '#f59e0b',
+  'Generators': '#10b981',
+  'Converters': '#8b5cf6',
+  'Utilities': '#14b8a6',
+};
+const slugCat: Record<string, string> = {};
+tools.categories.forEach(c => c.tools.forEach(t => { slugCat[t.slug] = c.name; }));
+function catColor(slug: string): string { return catAccent[slugCat[slug]] || '#6366f1'; }
+
 const iconMap: Record<string, string> = {
   'password-generator': '🔑', 'qr-generator': '▐▌', 'json-formatter': '{}', 'subnetting': '📐',
   'color-picker': '🎨', 'hash-generator': '#', 'uuid-generator': '🆔', 'regex-tester': '.*',
@@ -101,7 +113,7 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
     </h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5">
       {featuredTools.map(t => (
-        <a href={`/tools/${t.slug}`} class="tool-card" data-slug={t.slug}>
+        <a href={`/tools/${t.slug}`} class="tool-card" data-slug={t.slug} style={`border-top:3px solid ${catColor(t.slug)}`}>
           <div class="tool-card-icon" style={`background:${col(t.slug)}15;color:${col(t.slug)}`}>{icon(t.slug)}</div>
           <div class="min-w-0 flex-1">
             <div class="tool-card-name">{t.name}</div>
@@ -122,7 +134,7 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5">
           {cat.tools.map(t => (
-            <a href={`/tools/${t.slug}`} class="tool-card" data-slug={t.slug}>
+            <a href={`/tools/${t.slug}`} class="tool-card" data-slug={t.slug} style={`border-top:3px solid ${catColor(t.slug)}`}>
               <div class="tool-card-icon" style={`background:${col(t.slug)}15;color:${col(t.slug)}`}>{icon(t.slug)}</div>
               <div class="min-w-0 flex-1">
                 <div class="tool-card-name">{t.name}</div>

@@ -23,7 +23,7 @@ const relatedTools = [
 
   <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #f59e0b;">
     <!-- Preview -->
-    <div id="previewBox" class="preview-box mb-5" style="background:#3498db;color:#fff;">#3498DB</div>
+    <div id="previewBox" class="preview-box mb-5" style="background:#3498db;">#3498DB</div>
 
     <!-- Color Input -->
     <div class="text-center mb-4">
@@ -163,7 +163,7 @@ function updateValues(from) {
 
   var preview = document.getElementById('previewBox');
   preview.style.background = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
-  preview.style.color = (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000' : '#fff';
+  preview.style.color = (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? 'oklch(0 0 0)' : 'oklch(1 0 0)';
   preview.textContent = hex + ' (' + Math.round(alpha * 100) + '%)';
 
   document.getElementById('colorInput').value = hex;

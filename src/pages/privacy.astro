@@ -1,12 +1,60 @@
 ---
 import ToolLayout from '../layouts/ToolLayout.astro';
+
+const title = 'Kebijakan Privasi - WebApps';
+const description = 'Data Anda aman. Semua alat WebApps berjalan 100% di browser — tidak ada data dikirim ke server. Tidak ada cookie pelacakan atau penyimpanan data pribadi.';
+const keywords = 'kebijakan privasi, privacy policy, data aman, no tracking, client-side only, local storage, webapps privacy';
 ---
 
-<ToolLayout title="Kebijakan Privasi" description="Data tidak dikumpulkan. Semua alat berjalan di browser.">
-  <div class="prose prose-base max-w-3xl">
-    <h1 class="text-2xl font-bold mb-4">Kebijakan Privasi</h1>
-    <p>Semua alat berjalan <strong>100% di sisi klien</strong> (browser). Data tidak pernah dikirim ke server. Tidak ada cookie pelacakan.</p>
-    <p><strong>Penyimpanan Lokal:</strong> Fitur pin tool menggunakan <code>localStorage</code> — data hanya di perangkat Anda.</p>
-    <p><strong>Hosting:</strong> WebApps dihosting di Vercel yang dapat mengumpulkan log standar (IP, browser).</p>
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">Komitmen kami terhadap privasi dan keamanan data Anda.</p>
+  </div>
+
+  <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #6366f1;">
+    <div>
+      <h3 class="text-sm font-semibold mb-2">100% Client-Side</h3>
+      <p class="text-sm leading-relaxed opacity-70">Semua alat di WebApps berjalan <strong>100% di sisi klien (browser)</strong>. Data yang Anda masukkan — teks, gambar, angka, atau file apa pun — tidak pernah dikirim ke server. Semua pemrosesan terjadi langsung di perangkat Anda.</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Tidak Ada Pelacakan</h3>
+      <p class="text-sm leading-relaxed opacity-70">Kami tidak menggunakan cookie pelacakan, analytics pihak ketiga, atau alat monitoring yang mengumpulkan data pribadi. WebApps tidak memiliki database pengguna, tidak memerlukan registrasi, dan tidak menyimpan informasi identitas pribadi.</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Penyimpanan Lokal (localStorage)</h3>
+      <p class="text-sm leading-relaxed opacity-70">Beberapa fitur, seperti pin tool, menyimpan pengaturan menggunakan <code class="bg-base-300 px-1 rounded text-xs">localStorage</code> browser. Data ini hanya disimpan di perangkat Anda dan tidak pernah dikirim ke server. Anda dapat menghapusnya kapan saja melalui pengaturan browser.</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Hosting & Log Server</h3>
+      <p class="text-sm leading-relaxed opacity-70">WebApps dihosting di Vercel, yang dapat mengumpulkan log standar seperti alamat IP, tipe browser, dan halaman yang dikunjungi. Log ini bersifat anonim dan digunakan semata-mata untuk tujuan operasional (monitoring, keamanan, dan optimasi performa).</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Tautan Eksternal</h3>
+      <p class="text-sm leading-relaxed opacity-70">WebApps mungkin berisi tautan ke situs eksternal. Kami tidak bertanggung jawab atas praktik privasi situs-situs tersebut. Kami menyarankan untuk membaca kebijakan privasi masing-masing situs.</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Perubahan Kebijakan</h3>
+      <p class="text-sm leading-relaxed opacity-70">Kebijakan privasi ini dapat diperbarui sewaktu-waktu. Perubahan akan diumumkan di halaman ini. Dengan terus menggunakan WebApps, Anda menyetujui kebijakan privasi ini.</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Kontak</h3>
+      <p class="text-sm leading-relaxed opacity-70">Jika ada pertanyaan tentang kebijakan privasi, silakan hubungi <a href="mailto:naufalrakha2712@gmail.com" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">naufalrakha2712@gmail.com</a>.</p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Alat Terkait</h3>
+      <div class="flex gap-2 flex-wrap">
+        <a href="/" class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">🏠 Beranda</a>
+        <a href="/about" class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">ℹ️ Tentang</a>
+        <a href="/contact" class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">✉️ Kontak</a>
+      </div>
+    </div>
   </div>
 </ToolLayout>

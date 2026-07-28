@@ -1,25 +1,49 @@
 ---
 import ToolLayout from '../layouts/ToolLayout.astro';
+
+const title = 'Tentang WebApps';
+const description = 'Koleksi 86+ online tools gratis untuk developer. 100% client-side, privacy first, tanpa server.';
+const keywords = 'tentang webapps, online tools, web tools gratis, developer tools, privacy tools';
+const aboutText = 'WebApps adalah koleksi 86+ alat online gratis untuk developer dan masyarakat umum. Semua alat berjalan 100% di browser — data tidak pernah dikirim ke server.';
 ---
 
-<ToolLayout title="Tentang WebApps" description="Koleksi 86+ online tools gratis.">
-  <div class="prose prose-base max-w-3xl">
-    <h1 class="text-2xl font-bold mb-4">Tentang WebApps</h1>
-    <p>Koleksi <strong>86+ alat online gratis</strong> untuk developer: kalkulator, konverter, generator, utility, dan alat teks. Semua berjalan 100% di browser — data <strong>tidak pernah</strong> dikirim ke server.</p>
-    <p>Dibuat oleh <a href="https://naufalrakha.my.id" class="link link-primary">Naufal Rakha Putra</a>.</p>
-    <h3 class="mt-6 font-semibold mb-2">Fitur</h3>
-    <ul class="list-disc list-inside space-y-1">
-      <li>86+ alat gratis, tanpa registrasi</li>
-      <li>100% client-side — privacy first</li>
-      <li>Mode gelap (dark mode)</li>
-      <li>Responsif desktop & mobile</li>
-      <li>SEO optimized</li>
-    </ul>
-    <h3 class="mt-6 font-semibold mb-2">Jelajahi Jaringan</h3>
-    <ul class="list-disc list-inside space-y-1">
-      <li><a href="https://naufalrakha.my.id" class="link link-primary">naufalrakha.my.id</a> — Website Utama</li>
-      <li><a href="https://digital.naufalrakha.my.id" class="link link-primary">digital.naufalrakha.my.id</a> — Digital Gallery</li>
-      <li><a href="https://demo.naufalrakha.my.id" class="link link-primary">demo.naufalrakha.my.id</a> — Demo Artstyle</li>
-    </ul>
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">Koleksi 86+ alat online gratis — 100% di browser, data aman.</p>
+  </div>
+
+  <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #6366f1;">
+    <p class="text-sm leading-relaxed opacity-70">Koleksi <strong>86+ alat online gratis</strong> untuk developer: kalkulator, konverter, generator, utility, dan alat teks. Semua berjalan 100% di browser — data <strong>tidak pernah</strong> dikirim ke server.</p>
+    <p class="text-sm leading-relaxed opacity-70">Dibuat oleh <a href="https://naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Naufal Rakha Putra</a>.</p>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Fitur</h3>
+      <ul class="text-sm space-y-1 opacity-70 list-disc list-inside">
+        <li>86+ alat gratis, tanpa registrasi</li>
+        <li>100% client-side — privacy first</li>
+        <li>Mode gelap (dark mode)</li>
+        <li>Responsif desktop & mobile</li>
+        <li>SEO optimized</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Jelajahi Jaringan</h3>
+      <ul class="text-sm space-y-1.5">
+        <li><a href="https://naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">naufalrakha.my.id</a> <span class="opacity-40">— Website Utama</span></li>
+        <li><a href="https://digital.naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">digital.naufalrakha.my.id</a> <span class="opacity-40">— Digital Gallery</span></li>
+        <li><a href="https://demo.naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">demo.naufalrakha.my.id</a> <span class="opacity-40">— Demo Artstyle</span></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Alat Terkait</h3>
+      <div class="flex gap-2 flex-wrap">
+        <a href="/" class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">🏠 Beranda</a>
+        <a href="/contact" class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">✉️ Kontak</a>
+        <a href="/privacy" class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">🔒 Privasi</a>
+      </div>
+    </div>
   </div>
 </ToolLayout>

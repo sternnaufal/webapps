@@ -148,7 +148,7 @@ body { font-family: 'Inter', system-ui, sans-serif; }
 .preview-box {
   height: 120px; border-radius: 12px; display: flex; align-items: center;
   justify-content: center; font-weight: 700; font-size: 18px;
-  background: #6366f1; color: #fff; transition: all 0.2s;
+  background: #6366f1; color: oklch(1 0 0); transition: all 0.2s;
 }
 
 /* ─── Saved Colors ─── */
@@ -169,7 +169,7 @@ body { font-family: 'Inter', system-ui, sans-serif; }
 
 /* ─── QR ─── */
 #qrcode img, #qrcode canvas { max-width: 100%; height: auto; }
-#qrWrap { background: #fff; border-radius: 12px; }
+#qrWrap { background: var(--color-base-100); border-radius: 12px; }
 
 /* ─── Color Input ─── */
 input[type="color"].input-bordered { padding: 2px; height: 48px; cursor: pointer; }
@@ -177,7 +177,7 @@ input[type="color"].input-bordered { padding: 2px; height: 48px; cursor: pointer
 /* ─── Toast ─── */
 .tool-toast {
   position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-  background: oklch(0.11 0.01 270 / 0.95); color: #fff;
+  background: oklch(0.11 0.01 270 / 0.95); color: oklch(1 0 0);
   padding: 12px 24px; border-radius: 8px; font-size: 14px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
   display: flex; align-items: center; gap: 8px;

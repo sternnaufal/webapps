@@ -27,7 +27,7 @@ const relatedTools = [
 </header>
 
 <div class="flex gap-2 mb-4">
-  <button class="btn btn-sm active-tab" data-tab="epoch" style="background:#8b5cf6;color:#fff;border:none;border-radius:8px;">Epoch Converter</button>
+  <button class="btn btn-sm active-tab" data-tab="epoch" style="background:#8b5cf6;color:oklch(1 0 0);border:none;border-radius:8px;">Epoch Converter</button>
   <button class="btn btn-sm" data-tab="tz" style="background:oklch(0.93 0.008 270);color:oklch(0.3 0.02 270);border:none;border-radius:8px;">Timezone Converter</button>
 </div>
 
@@ -103,7 +103,7 @@ const relatedTools = [
 // Tabs
 document.querySelectorAll('[data-tab]').forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();
 document.querySelectorAll('[data-tab]').forEach(function(x){x.style.background='oklch(0.93 0.008 270)';x.style.color='oklch(0.3 0.02 270)';});
-this.style.background='#8b5cf6';this.style.color='#fff';
+this.style.background='#8b5cf6';this.style.color='oklch(1 0 0)';
 var tab=this.getAttribute('data-tab');document.getElementById('tabEpoch').style.display=tab==='epoch'?'block':'none';document.getElementById('tabTZ').style.display=tab==='tz'?'block':'none'})});
 // Epoch
 var eInp=document.getElementById('epochInput'),dInp=document.getElementById('dateInput'),dUTC=document.getElementById('dispUTC'),dLoc=document.getElementById('dispLocal'),dISO=document.getElementById('dispISO'),dRel=document.getElementById('dispRelative');
