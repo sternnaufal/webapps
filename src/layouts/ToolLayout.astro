@@ -150,7 +150,17 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
       if (!sidebar) return;
       const isCollapsed = sidebar.classList.toggle('collapsed');
       localStorage.setItem('sidebarCollapsed', isCollapsed);
+      // flip chevron direction
+      const svg = collapseBtn.querySelector('svg');
+      if (svg) svg.style.transform = isCollapsed ? 'rotate(180deg)' : '';
+      collapseBtn.title = isCollapsed ? 'Buka sidebar' : 'Tutup sidebar';
     });
+    // set initial chevron if collapsed
+    if (saved === 'true' && collapseBtn) {
+      const svg = collapseBtn.querySelector('svg');
+      if (svg) svg.style.transform = 'rotate(180deg)';
+      collapseBtn.title = 'Buka sidebar';
+    }
 
     // Sync sidebar theme toggle
     const sToggle = document.getElementById('themeToggleSidebar');

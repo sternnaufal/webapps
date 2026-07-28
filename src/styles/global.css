@@ -92,12 +92,16 @@ body { font-family: 'Inter', system-ui, sans-serif; }
 .sidebar-desktop {
   transition: width 0.2s ease;
 }
-.sidebar-desktop.collapsed { width: 4rem !important; overflow: hidden; }
+.sidebar-desktop.collapsed { width: 4.5rem !important; overflow: hidden; }
 .sidebar-desktop.collapsed .sidebar-label,
 .sidebar-desktop.collapsed .sidebar-search,
-.sidebar-desktop.collapsed .menu-title > *:nth-child(2),
-.sidebar-desktop.collapsed .menu li a span:last-child { display: none; }
-.sidebar-desktop.collapsed .menu li a { justify-content: center; padding: 10px 0; }
+.sidebar-desktop.collapsed .category-toggle span:not(:first-child),
+.sidebar-desktop.collapsed .nav-cat-list { display: none; }
+.sidebar-desktop.collapsed .category-toggle { justify-content: center; padding: 8px 0; }
+.sidebar-desktop.collapsed .sidebar-header { justify-content: center; padding: 12px 0; }
+.sidebar-desktop.collapsed .sidebar-header > a { margin: 0; }
+.sidebar-desktop.collapsed #expandLabel { display: flex; }
+#expandLabel { display: none; }
 
 /* ─── Tool Cards ─── */
 .tool-card {
