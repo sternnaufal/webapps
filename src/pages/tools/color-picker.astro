@@ -8,79 +8,73 @@ const keywords = 'color picker, color converter, hex to rgb, rgb to hex, web col
 const aboutText = 'Color picker online lengkap dengan dukungan format warna HEX, RGB, HSL, dan CMYK. Alat ini membantu desainer grafis, web developer, dan siapa pun yang bekerja dengan warna untuk memilih, mengkonversi, dan mendapatkan kode warna secara presisi. Cukup klik pada color wheel atau masukkan nilai warna pada salah satu format, dan semua format lainnya akan terkonversi secara otomatis secara real-time.';
 const aboutExtra = 'Konversi warna antar format sangat penting dalam workflow desain: desainer web menggunakan HEX dan RGB untuk CSS, desainer cetak menggunakan CMYK, dan desainer UI sering bekerja dengan HSL untuk kemudahan readability dan adjustability. Color picker ini juga menampilkan preview warna dalam bentuk swatch besar, kode HEX lengkap dengan hash, nilai RGB desimal, dan persentase CMYK. Cocok digunakan untuk desain website, pembuatan konten visual, ilustrasi digital, dan pengembangan aplikasi.';
 const relatedTools = [
-  { slug: 'gradient-generator', name: 'Gradient Generator', icon: '🌈' },
+  { slug: 'gradient-generator', name: 'CSS Gradient', icon: '◐' },
   { slug: 'contrast-checker', name: 'Contrast Checker', icon: '◐' },
   { slug: 'css-unit', name: 'CSS Unit Converter', icon: '⇄' },
-  { slug: 'image-to-base64', name: 'Image to Base64', icon: '🖼' },
+  { slug: 'color-converter', name: 'Color Converter', icon: '🌈' },
 ];
-const extraHtml = `
-<div class="mt-3 pt-2 flex gap-2 justify-center items-center">
-<span class="text-sm opacity-60 mr-2">Bagikan:</span>
-<a href="https://twitter.com/intent/tweet?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Twitter/X">&nearr;</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="LinkedIn">in</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="Facebook">f</a>
-<a href="https://api.whatsapp.com/send?text=" onclick="this.href+=encodeURIComponent(location.href)" target="_blank" rel="noopener" class="btn btn-outline btn-sm rounded-full" title="WhatsApp">wa</a>
-</div>
-<div class="mt-4 pt-2"><div class="small font-semibold mb-2 opacity-60">Alat Terkait</div><div class="flex gap-2 flex-wrap"><a href="gradient-generator" class="btn btn-outline btn-sm rounded-full">Gradient Generator</a><a href="contrast-checker" class="btn btn-outline btn-sm rounded-full">Contrast Checker</a><a href="css-unit" class="btn btn-outline btn-sm rounded-full">CSS Unit Converter</a><a href="image-to-base64" class="btn btn-outline btn-sm rounded-full">Image to Base64</a></div>`;
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-  <div class="card card-bordered bg-base-200/50">
-    <div class="card-body">
-      <div id="previewBox" class="preview-box mb-4">Preview</div>
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <!-- Preview -->
+    <div id="previewBox" class="preview-box mb-5" style="background:#3498db;color:#fff;">#3498DB</div>
 
-      <div class="text-center mb-3">
-        <input type="color" id="colorInput" value="#3498db"
-               class="input input-bordered w-32 h-32 mx-auto cursor-pointer">
+    <!-- Color Input -->
+    <div class="text-center mb-4">
+      <input type="color" id="colorInput" value="#3498db"
+             class="input input-bordered w-28 h-28 mx-auto cursor-pointer rounded-xl">
+    </div>
+
+    <!-- Alpha -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-medium opacity-60">Transparansi</span>
+        <span class="text-xs opacity-40" id="alphaLabel">100%</span>
       </div>
+      <input type="range" class="range range-sm w-full" min="0" max="1" step="0.01" id="alphaRange" value="1">
+    </div>
 
-      <div class="mb-3">
-        <label for="alphaRange" class="label-text text-sm">Transparansi (Alpha)</label>
-        <input type="range" class="range range-sm w-full" min="0" max="1" step="0.01" id="alphaRange" value="1">
+    <!-- Values Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div>
+        <label class="text-xs font-medium opacity-50 mb-1 block">HEX</label>
+        <input type="text" id="hexValue" class="input input-bordered w-full input-sm font-mono text-xs copyable cursor-pointer" readonly>
       </div>
+      <div>
+        <label class="text-xs font-medium opacity-50 mb-1 block">RGB</label>
+        <input type="text" id="rgbValue" class="input input-bordered w-full input-sm font-mono text-xs copyable cursor-pointer" readonly>
+      </div>
+      <div>
+        <label class="text-xs font-medium opacity-50 mb-1 block">HSL</label>
+        <input type="text" id="hslValue" class="input input-bordered w-full input-sm font-mono text-xs copyable cursor-pointer" readonly>
+      </div>
+      <div>
+        <label class="text-xs font-medium opacity-50 mb-1 block">CMYK</label>
+        <input type="text" id="cmykValue" class="input input-bordered w-full input-sm font-mono text-xs copyable cursor-pointer" readonly>
+      </div>
+    </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-        <div>
-          <div class="text-xs font-bold mb-1">HEX</div>
-          <input type="text" id="hexValue" class="input input-bordered w-full input-sm copyable">
-        </div>
-        <div>
-          <div class="text-xs font-bold mb-1">RGB</div>
-          <input type="text" id="rgbValue" class="input input-bordered w-full input-sm copyable">
-        </div>
-        <div>
-          <div class="text-xs font-bold mb-1">HSL</div>
-          <input type="text" id="hslValue" class="input input-bordered w-full input-sm copyable">
-        </div>
-        <div>
-          <div class="text-xs font-bold mb-1">CMYK</div>
-          <input type="text" id="cmykValue" class="input input-bordered w-full input-sm copyable">
-        </div>
-      </div>
+    <!-- Actions -->
+    <div class="flex gap-2 mt-4">
+      <button class="btn btn-primary btn-sm" id="btnRandom">🎲 Random</button>
+      <button class="btn btn-secondary btn-sm" id="btnSave">💾 Save</button>
+    </div>
 
-      <div class="flex gap-2 mt-4">
-        <button class="btn btn-secondary btn-sm" id="btnRandom">🎲 Random</button>
-        <button class="btn btn-success btn-sm" id="btnSave">💾 Save</button>
-      </div>
-
-      <div class="mt-4">
-        <div class="text-sm font-bold mb-2">Saved Colors</div>
-        <div id="savedColors" class="flex gap-2 flex-wrap saved-colors"></div>
-      </div>
+    <!-- Saved Colors -->
+    <div class="mt-4">
+      <div class="text-xs font-medium opacity-50 mb-2">Saved Colors</div>
+      <div id="savedColors" class="flex gap-2 flex-wrap saved-colors"></div>
     </div>
   </div>
 
   <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
-
 </ToolLayout>
-
-<script is:inline>
-</script>
 
 <script is:inline>
 function hexToRgb(hex) {
@@ -89,11 +83,9 @@ function hexToRgb(hex) {
   var bigint = parseInt(hex, 16);
   return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
 }
-
 function rgbToHex(r, g, b) {
   return '#' + [r, g, b].map(function(x) { return x.toString(16).padStart(2, '0'); }).join('').toUpperCase();
 }
-
 function rgbToHsl(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -111,7 +103,6 @@ function rgbToHsl(r, g, b) {
   }
   return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
 }
-
 function rgbToCmyk(r, g, b) {
   var c = 1 - r/255, m = 1 - g/255, y = 1 - b/255;
   var k = Math.min(c, m, y);
@@ -123,7 +114,6 @@ function rgbToCmyk(r, g, b) {
     Math.round(k * 100)
   ];
 }
-
 function hslToRgb(h, s, l) {
   s /= 100; l /= 100; h /= 360;
   var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
@@ -136,6 +126,7 @@ function updateValues(from) {
   if (from === undefined) from = 'picker';
   var hex, r, g, b, h, s, l, c, m, y, k;
   var alpha = parseFloat(document.getElementById('alphaRange').value);
+  document.getElementById('alphaLabel').textContent = Math.round(alpha * 100) + '%';
 
   if (from === 'hex') {
     hex = document.getElementById('hexValue').value;
@@ -173,20 +164,20 @@ function updateValues(from) {
   var preview = document.getElementById('previewBox');
   preview.style.background = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
   preview.style.color = (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000' : '#fff';
-  preview.textContent = hex + ' (' + alpha + ')';
+  preview.textContent = hex + ' (' + Math.round(alpha * 100) + '%)';
 
   document.getElementById('colorInput').value = hex;
 }
 
 function copyOnClick(e) {
   navigator.clipboard.writeText(e.target.value);
-  e.target.classList.add('border-success');
-  setTimeout(function() { e.target.classList.remove('border-success'); }, 500);
+  var orig = e.target.style.borderColor;
+  e.target.style.borderColor = '#22c55e';
+  setTimeout(function() { e.target.style.borderColor = orig; }, 400);
 }
 
 function randomColor() {
-  var rand = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-  document.getElementById('colorInput').value = rand;
+  document.getElementById('colorInput').value = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
   updateValues();
 }
 
@@ -223,4 +214,3 @@ document.getElementById('btnSave').addEventListener('click', saveColor);
 updateValues();
 renderSaved();
 </script>
-

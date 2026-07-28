@@ -1,107 +1,185 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 @plugin "daisyui";
 
-@theme {
-  --color-primary: #6366f1;
-  --color-primary-content: #fff;
-  --color-accent: #8b5cf6;
-  --color-accent-content: #fff;
+/* ─── Custom Light Theme (Cal.com-inspired) ─── */
+@plugin "daisyui/theme" {
+  name: "naufal";
+  default: true;
+  color-scheme: light;
+
+  --color-base-100: oklch(1 0 0);
+  --color-base-200: oklch(0.97 0.003 270);
+  --color-base-300: oklch(0.92 0.005 270);
+  --color-base-content: oklch(0.11 0.01 270);
+
+  --color-primary: oklch(0.11 0.01 270);
+  --color-primary-content: oklch(1 0 0);
+
+  --color-secondary: oklch(0.55 0.25 270);
+  --color-secondary-content: oklch(1 0 0);
+
+  --color-accent: oklch(0.55 0.25 270);
+  --color-accent-content: oklch(1 0 0);
+
+  --color-neutral: oklch(0.4 0.02 270);
+  --color-neutral-content: oklch(0.95 0 0);
+
+  --color-info: oklch(0.65 0.15 220);
+  --color-info-content: oklch(0.98 0 0);
+  --color-success: oklch(0.6 0.18 150);
+  --color-success-content: oklch(0.98 0 0);
+  --color-warning: oklch(0.8 0.18 85);
+  --color-warning-content: oklch(0.2 0.02 85);
+  --color-error: oklch(0.6 0.22 25);
+  --color-error-content: oklch(0.98 0 0);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
+/* ─── Custom Dark Theme ─── */
+@plugin "daisyui/theme" {
+  name: "naufal-dark";
+  color-scheme: dark;
+
+  --color-base-100: oklch(0.12 0.01 270);
+  --color-base-200: oklch(0.15 0.015 270);
+  --color-base-300: oklch(0.2 0.02 270);
+  --color-base-content: oklch(0.92 0.01 270);
+
+  --color-primary: oklch(0.98 0 0);
+  --color-primary-content: oklch(0.12 0.01 270);
+
+  --color-secondary: oklch(0.6 0.25 270);
+  --color-secondary-content: oklch(1 0 0);
+
+  --color-accent: oklch(0.6 0.25 270);
+  --color-accent-content: oklch(1 0 0);
+
+  --color-neutral: oklch(0.35 0.02 270);
+  --color-neutral-content: oklch(0.95 0 0);
+
+  --color-info: oklch(0.6 0.15 220);
+  --color-info-content: oklch(0.98 0 0);
+  --color-success: oklch(0.55 0.18 150);
+  --color-success-content: oklch(0.98 0 0);
+  --color-warning: oklch(0.7 0.18 85);
+  --color-warning-content: oklch(0.2 0.02 85);
+  --color-error: oklch(0.55 0.22 25);
+  --color-error-content: oklch(0.98 0 0);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+/* ─── Base ─── */
 body { font-family: 'Inter', system-ui, sans-serif; }
 
-/* ===== SIDEBAR ===== */
-.sidebar-desktop.collapsed { width: 3.5rem !important; overflow: hidden; }
-.sidebar-desktop.collapsed .sidebar-label { display: none; }
-.sidebar-desktop.collapsed .sidebar-search { display: none; }
-.sidebar-desktop.collapsed .sidebar-nav .menu-title > *:nth-child(2) { display: none; }
-.sidebar-desktop.collapsed .sidebar-nav .menu li a span:last-child { display: none; }
-.sidebar-desktop.collapsed .sidebar-nav .menu li a { justify-content: center; padding: 8px 0; }
+/* ─── Sidebar ─── */
+.sidebar-desktop {
+  transition: width 0.2s ease;
+}
+.sidebar-desktop.collapsed { width: 4rem !important; overflow: hidden; }
+.sidebar-desktop.collapsed .sidebar-label,
+.sidebar-desktop.collapsed .sidebar-search,
+.sidebar-desktop.collapsed .menu-title > *:nth-child(2),
+.sidebar-desktop.collapsed .menu li a span:last-child { display: none; }
+.sidebar-desktop.collapsed .menu li a { justify-content: center; padding: 10px 0; }
 
-@layer utilities {
-  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
-  .scrollbar-thin::-webkit-scrollbar-thumb { background: oklch(0.7 0 0 / 0.3); border-radius: 99px; }
-  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+/* ─── Tool Cards ─── */
+.tool-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem; border-radius: 0.75rem;
+  background: oklch(0.97 0.003 270);
+  border: 1px solid oklch(0.9 0.005 270);
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+.tool-card:hover {
+  border-color: oklch(0.55 0.25 270);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+:root[data-theme="naufal-dark"] .tool-card {
+  background: oklch(0.15 0.015 270);
+  border-color: oklch(0.25 0.02 270);
+}
+:root[data-theme="naufal-dark"] .tool-card:hover {
+  border-color: oklch(0.6 0.25 270);
+  box-shadow: 0 4px 12px rgb(99 102 241 / 0.15);
+}
+.tool-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; flex-shrink: 0;
+}
+.tool-card-name {
+  font-size: 0.8125rem; font-weight: 600; line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.tool-card-desc {
+  font-size: 0.6875rem; color: oklch(0.5 0.02 270 / 0.7); line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
-/* ===== TOOL COMMON STYLES ===== */
+/* ─── Tool Icon Badge ─── */
 .tool-icon {
-  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
   border-radius: 10px; font-size: 16px; font-weight: 700; flex-shrink: 0;
 }
 
-/* Preview box (color picker etc) */
+/* ─── Preview Box ─── */
 .preview-box {
-  height: 100px; border-radius: 12px; display: flex; align-items: center;
+  height: 120px; border-radius: 12px; display: flex; align-items: center;
   justify-content: center; font-weight: 700; font-size: 18px;
-  background: #3498db; color: #fff; transition: all 0.2s;
+  background: #6366f1; color: #fff; transition: all 0.2s;
 }
 
-/* Saved colors swatches */
+/* ─── Saved Colors ─── */
 .saved-colors > div {
-  width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
-  border: 2px solid oklch(0.7 0 0 / 0.2); transition: transform 0.15s;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+  border: 2px solid oklch(0.8 0 0 / 0.15); transition: transform 0.15s;
 }
-.saved-colors > div:hover { transform: scale(1.15); }
+.saved-colors > div:hover { transform: scale(1.2); }
 
-/* Password strength bar */
+/* ─── Password Strength ─── */
 .strength-bar {
-  height: 8px; background: oklch(0.9 0 0 / 0.3); border-radius: 99px; overflow: hidden;
+  height: 8px; background: oklch(0.85 0 0 / 0.2); border-radius: 99px; overflow: hidden;
 }
 .strength-fill {
   height: 100%; border-radius: 99px; transition: width 0.3s, background 0.3s; width: 0%;
-}
-.strength-fill { background: linear-gradient(90deg, #ff6b6b, #ffd166); }
-
-/* Password output table */
-.pwd-output code {
-  font-family: 'Courier New', monospace; user-select: all; font-size: 13px;
-  word-break: break-all;
+  background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e);
 }
 
-/* QR code preview */
-#qrWrap { background: #fff; }
-:root[data-theme="naufal-dark"] #qrWrap { background: #fff; } /* QR tetap bg putih */
+/* ─── QR ─── */
 #qrcode img, #qrcode canvas { max-width: 100%; height: auto; }
+#qrWrap { background: #fff; border-radius: 12px; }
 
-/* Color picker input */
-input[type="color"].input-bordered {
-  padding: 2px; height: 48px; cursor: pointer;
-}
+/* ─── Color Input ─── */
+input[type="color"].input-bordered { padding: 2px; height: 48px; cursor: pointer; }
 
-/* Copyable inputs */
-.copyable { cursor: pointer; }
-
-/* Toast notification */
+/* ─── Toast ─── */
 .tool-toast {
-  position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-  background: oklch(0.2 0.1 260 / 0.95); color: #fff;
-  padding: 10px 20px; border-radius: 8px; font-size: 14px;
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  background: oklch(0.11 0.01 270 / 0.95); color: #fff;
+  padding: 12px 24px; border-radius: 8px; font-size: 14px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
   display: flex; align-items: center; gap: 8px;
 }
 
-/* ===== BOOTSTRAP LEGACY COMPAT ===== */
-/* Fix Bootstrap classes that leaked from legacy HTML */
-.small { font-size: 0.875rem; }
-.fw-bold { font-weight: 700; }
-.fw-normal { font-weight: 400; }
-.fst-italic { font-style: italic; }
-.text-center { text-align: center; }
-.text-end { text-align: right; }
-.text-success { color: var(--color-success, #22c55e) !important; }
-.text-error { color: var(--color-error, #ef4444) !important; }
-.text-muted { opacity: 0.6; }
-
-/* Legacy grid fallback */
-.row { display: flex; flex-wrap: wrap; }
-.col-lg-6, .col-6, .col-md-4 { width: 100%; }
-@media (min-width: 768px) {
-  .col-md-4 { width: 33.333%; }
-  .col-6 { width: 50%; }
-}
-@media (min-width: 1024px) {
-  .col-lg-6 { width: 50%; }
-}
+/* ─── Scrollbar ─── */
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: oklch(0.7 0 0 / 0.15); border-radius: 99px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }

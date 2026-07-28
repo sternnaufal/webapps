@@ -17,12 +17,13 @@ const colors: Record<string, string> = {
   'default': '#6366f1'
 };
 const bgColor = colors[tool.slug] || colors.default;
+const ico = tool.slug.includes('password') ? '🔑' : tool.slug.includes('qr') ? '▐▌' : tool.slug.includes('json') ? '{}' : tool.slug.includes('color') ? '🎨' : '⚡';
 ---
 
-<a href={`/tools/${tool.slug}`} class="tool-card-sm" data-slug={tool.slug}>
-  <div class="tc-icon" style={`background:${bgColor}15;color:${bgColor}`}>{tool.slug.includes('password')?'🔑':tool.slug.includes('qr')?'▐▌':tool.slug.includes('json')?'{}':tool.slug.includes('color')?'🎨':'⚡'}</div>
-  <div class="flex-1 min-w-0">
-    <div class="tc-name">{tool.name}</div>
-    <div class="tc-desc">{tool.desc}</div>
+<a href={`/tools/${tool.slug}`} class="tool-card" data-slug={tool.slug}>
+  <div class="tool-card-icon" style={`background:${bgColor}15;color:${bgColor}`}>{ico}</div>
+  <div class="min-w-0 flex-1">
+    <div class="tool-card-name">{tool.name}</div>
+    <div class="tool-card-desc">{tool.desc}</div>
   </div>
 </a>
