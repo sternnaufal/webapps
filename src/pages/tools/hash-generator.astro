@@ -5,8 +5,8 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Hash Generator';
 const description = 'Generate hash MD5, SHA1, SHA256, SHA512 online. Hash generator gratis untuk developer.';
 const keywords = 'hash generator, md5, sha1, sha256, sha512, hash online';
-const aboutText = 'Hash generator online untuk menghasilkan nilai hash dari teks menggunakan berbagai algoritma kriptografi: MD5, SHA-1, SHA-256, SHA-512, dan lainnya. Alat ini sangat berguna bagi developer, security engineer, dan siapa pun yang perlu memverifikasi integritas data, menyimpan password, atau membuat checksum file. Cukup masukkan teks pada kolom input, klik Generate, dan semua varian hash akan ditampilkan sekaligus.';
-const aboutExtra = 'Setiap hasil hash dilengkapi tombol Copy untuk menyalin nilai hash ke clipboard. Tabel hasil menampilkan nama algoritma dan nilai hash dalam format heksadesimal. Hash generator menggunakan library CryptoJS yang terpercaya untuk memastikan akurasi. Proses hashing dilakukan sepenuhnya di browser, sehingga teks asli tidak pernah dikirim atau disimpan di server mana pun.';
+const aboutText = 'Hash generator online untuk menghasilkan nilai hash dari teks menggunakan berbagai algoritma kriptografi: MD5, SHA-1, SHA-256, SHA-384, SHA-512, dan SHA3-256. Alat ini sangat berguna bagi developer, security engineer, dan siapa pun yang perlu memverifikasi integritas data, menyimpan password, atau membuat checksum file. Cukup masukkan teks pada kolom input, klik Generate, dan semua varian hash akan ditampilkan sekaligus.';
+const aboutExtra = 'Setiap hasil hash dilengkapi tombol Copy untuk menyalin nilai hash ke clipboard. Tabel hasil menampilkan nama algoritma dan nilai hash dalam format heksadesimal. Hash generator menggunakan Web Crypto API native browser untuk algoritma SHA, dan implementasi MD5 JavaScript murni. Proses hashing dilakukan sepenuhnya di browser, sehingga teks asli tidak pernah dikirim atau disimpan di server mana pun.';
 const relatedTools = [
   { slug: 'uuid-generator', name: 'UUID Generator', icon: '🆔' },
   { slug: 'base64-coded', name: 'Base64 Encode/Decode', icon: 'B64' },
@@ -16,14 +16,12 @@ const relatedTools = [
 ---
 
 <ToolLayout title={title} description={description} keywords={keywords}>
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <div class="mb-6">
     <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
     <p class="text-sm opacity-50 mt-0.5">{description}</p>
   </div>
 
   <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
-    <!-- Form -->
     <div class="mb-4">
       <div class="mb-3">
         <label for="text" class="text-xs font-medium opacity-60 mb-1 block">Input Text</label>
@@ -32,7 +30,6 @@ const relatedTools = [
       <button type="button" id="generateBtn" class="btn btn-primary btn-sm">Generate</button>
     </div>
 
-    <!-- Results -->
     <div id="results" style="display:none;">
       <div class="overflow-x-auto">
         <table class="table table-sm w-full">
@@ -53,34 +50,90 @@ const relatedTools = [
 </ToolLayout>
 
 <script is:inline>
-function generateHashes() {
-  const text = document.getElementById('text').value;
-  if (!text.trim()) {
-    alert('Masukkan teks terlebih dahulu');
-    return;
+// Minimal MD5 implementation
+function md5(str) {
+  function rotateLeft(x, n) { return (x << n) | (x >>> (32 - n)); }
+  function toHex(n) { return ('00000000' + (n >>> 0).toString(16)).slice(-8); }
+  
+  function strToWords(s) {
+    var words = [], i, byteLen = s.length * 8;
+    for (i = 0; i < s.length; i++) words[i >> 2] |= (s.charCodeAt(i) & 0xff) << ((i % 4) * 8);
+    words[i >> 2] |= 0x80 << ((i % 4) * 8);
+    words[(((i + 8) >> 6) << 4) + 14] = byteLen;
+    return words;
   }
 
-  const hashes = {
-    'MD5': CryptoJS.MD5(text).toString(),
-    'SHA-1': CryptoJS.SHA1(text).toString(),
-    'SHA-256': CryptoJS.SHA256(text).toString(),
-    'SHA-512': CryptoJS.SHA512(text).toString(),
-  };
+  var s = unescape(encodeURIComponent(str));
+  var words = strToWords(s);
+  var a = 0x67452301, b = 0xefcdab89, c = 0x98badcfe, d = 0x10325476;
+  var ff = function(x, y, z) { return (x & y) | (~x & z); };
+  var gg = function(x, y, z) { return (x & z) | (y & ~z); };
+  var hh = function(x, y, z) { return x ^ y ^ z; };
+  var ii = function(x, y, z) { return y ^ (x | ~z); };
+  var t = [
+    0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,
+    0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,0x6b901122,0xfd987193,0xa679438e,0x49b40821,
+    0xf61e2562,0xc040b340,0x265e5a51,0xe9b6c7aa,0xd62f105d,0x02441453,0xd8a1e681,0xe7d3fbc8,
+    0x21e1cde6,0xc33707d6,0xf4d50d87,0x455a14ed,0xa9e3e905,0xfcefa3f8,0x676f02d9,0x8d2a4c8a,
+    0xfffa3942,0x8771f681,0x6d9d6122,0xfde5380c,0xa4beea44,0x4bdecfa9,0xf6bb4b60,0xbebfbc70,
+    0x289b7ec6,0xeaa127fa,0xd4ef3085,0x04881d05,0xd9d4d039,0xe6db99e5,0x1fa27cf8,0xc4ac5665,
+    0xf4292244,0x432aff97,0xab9423a7,0xfc93a039,0x655b59c3,0x8f0ccc92,0xffeff47d,0x85845dd1,
+    0x6fa87e4f,0xfe2ce6e0,0xa3014314,0x4e0811a1,0xf7537e82,0xbd3af235,0x2ad7d2bb,0xeb86d391
+  ];
+  var sVal = [7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+  var fn = [ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,gg,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,hh,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii,ii];
+
+  for (var i = 0; i < words.length / 16; i++) {
+    var x = words.slice(i * 16, i * 16 + 16);
+    var A = a, B = b, C = c, D = d;
+    for (var j = 0; j < 64; j++) {
+      var k = j < 16 ? j : (j < 32 ? (5 * j + 1) % 16 : (j < 48 ? (3 * j + 5) % 16 : (7 * j) % 16));
+      var temp = D;
+      D = C; C = B;
+      B = B + rotateLeft(A + fn[j](B, C, D) + x[k] + t[j], sVal[j]);
+      A = temp;
+    }
+    a += A; b += B; c += C; d += D;
+  }
+  return toHex(a) + toHex(b) + toHex(c) + toHex(d);
+}
+
+// Web Crypto for SHA
+async function shaHash(algorithm, text) {
+  var encoder = new TextEncoder();
+  var data = encoder.encode(text);
+  var hashBuffer = await crypto.subtle.digest(algorithm, data);
+  var hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function generateHashes() {
+  const text = document.getElementById('text').value;
+  if (!text.trim()) { alert('Masukkan teks terlebih dahulu'); return; }
 
   const tbody = document.getElementById('hashTable');
   tbody.innerHTML = '';
 
-  Object.entries(hashes).forEach(([algo, hash]) => {
-    const row = document.createElement('tr');
+  var hashEntries = [];
+  
+  try {
+    hashEntries.push(['MD5', md5(text)]);
+    hashEntries.push(['SHA-1', await shaHash('SHA-1', text)]);
+    hashEntries.push(['SHA-256', await shaHash('SHA-256', text)]);
+    hashEntries.push(['SHA-384', await shaHash('SHA-384', text)]);
+    hashEntries.push(['SHA-512', await shaHash('SHA-512', text)]);
+  } catch(e) {
+    alert('Error: ' + e.message);
+    return;
+  }
+
+  hashEntries.forEach(([algo, hash]) => {
+    var row = document.createElement('tr');
     row.className = 'text-sm border-b';
     row.style.borderColor = 'oklch(0.9 0.005 270)';
-    row.innerHTML = `
-      <td class="py-2 font-semibold text-xs">${algo}</td>
-      <td class="py-2"><code class="text-xs font-mono" style="word-break:break-all;" id="hash_${algo}">${escapeHtml(hash)}</code></td>
-      <td class="py-2">
-        <button type="button" class="btn btn-ghost btn-xs" onclick="copyHash('hash_${algo}')">Copy</button>
-      </td>
-    `;
+    row.innerHTML = '<td class="py-2 font-semibold text-xs">' + algo + '</td>' +
+      '<td class="py-2"><code class="text-xs font-mono" style="word-break:break-all;" id="hash_' + algo + '">' + escapeHtml(hash) + '</code></td>' +
+      '<td class="py-2"><button type="button" class="btn btn-ghost btn-xs" onclick="copyHash(\'hash_' + algo + '\')">Copy</button></td>';
     tbody.appendChild(row);
   });
 
@@ -88,28 +141,24 @@ function generateHashes() {
 }
 
 function copyHash(id) {
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector(`[onclick="copyHash('${id}')"]`);
+  var text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.querySelector('[onclick="copyHash(\'' + id + '\')"]');
     if (!btn) return;
-    const oldText = btn.textContent;
+    var oldText = btn.textContent;
     btn.textContent = '✓ Copied!';
-    setTimeout(() => { btn.textContent = oldText; }, 2000);
-  }).catch(() => {
-    alert('Gagal menyalin');
-  });
+    setTimeout(function() { btn.textContent = oldText; }, 2000);
+  }).catch(function() { alert('Gagal menyalin'); });
 }
 
 function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+  var d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
 }
 
-document.getElementById('generateBtn').addEventListener('click', generateHashes);
-document.getElementById('text').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter' && e.ctrlKey) {
-    generateHashes();
-  }
+document.getElementById('generateBtn').addEventListener('click', function() { generateHashes(); });
+document.getElementById('text').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter' && e.ctrlKey) generateHashes();
 });
 </script>
