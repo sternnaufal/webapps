@@ -12,10 +12,7 @@ const relatedTools = [
   { slug: 'mac-address-generator', name: 'Mac Address Generator', icon: '🔗' },
   { slug: 'user-agent-parser', name: 'User Agent Parser', icon: '🖥' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#10b981;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">IP Calculator</h1><p class="opacity-60 small mb-0">Informasi detail IP Address  representasi biner, kelas, range, dan reverse lookup.</p></div></header>
-<div class="flex flex-wrap gap-3 mb-4"><div class="md:w-1/2 w-full"><label class="label-text">IP Address</label><input id="ipInput" class="input input-bordered w-full font-mono" value="192.168.1.1"><button id="btnCalc" class="btn btn-primary mt-2">Hitung</button></div></div>
-<div id="ipResult" style="display:none;"><div class="card card-bordered bg-base-100 p-3"><div id="ipInfo" class="flex flex-wrap gap-3"></div></div></div>
-`;
+
 ---
 
 <ToolLayout
@@ -24,9 +21,11 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
   keywords={keywords}
 >
 
-<Fragment set:html={bodyHtml} />
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#10b981;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h1 class="h3 mb-0">IP Calculator</h1><p class="opacity-60 small mb-0">Informasi detail IP Address  representasi biner, kelas, range, dan reverse lookup.</p></div></header>
+<div class="flex flex-wrap gap-3 mb-4"><div class="md:w-1/2 w-full"><label class="label-text">IP Address</label><input id="ipInput" class="input input-bordered w-full font-mono" value="192.168.1.1"><button id="btnCalc" class="btn btn-primary mt-2">Hitung</button></div></div>
+<div id="ipResult" style="display:none;"><div class="card card-bordered bg-base-100 p-3"><div id="ipInfo" class="flex flex-wrap gap-3"></div></div></div>
 
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -40,14 +39,14 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
-function calc(){var ip=document.getElementById('ipInput').value.trim(),parts=ip.split('.');if(parts.length!==4||parts.some(function(p){var n=parseInt(p,10);return isNaN(n)||n<0||n>255})){document.getElementById('ipResult').innerHTML='<div class="alert alert-error">IP tidak valid</div>';document.getElementById('ipResult').style.display='block';return}
-var nums=parts.map(function(p){return parseInt(p,10)}),long=((nums[0]<<24)+(nums[1]<<16)+(nums[2]<<8)+nums[3])>>>0,binary=nums.map(function(n){return n.toString(2).padStart(8,'0')}).join('.');
-var oct1=nums[0],cls,defMask;if(oct1>=1&&oct1<=126){cls='A';defMask='255.0.0.0'}else if(oct1>=128&&oct1<=191){cls='B';defMask='255.255.0.0'}else if(oct1>=192&&oct1<=223){cls='C';defMask='255.255.255.0'}else if(oct1>=224&&oct1<=239){cls='D (Multicast)';defMask='N/A'}else{cls='E (Experimental)';defMask='N/A'}
+function calc()&#123;var ip=document.getElementById('ipInput').value.trim(),parts=ip.split('.');if(parts.length!==4||parts.some(function(p)&#123;var n=parseInt(p,10);return isNaN(n)||n<0||n>255&#125;))&#123;document.getElementById('ipResult').innerHTML='<div class="alert alert-error">IP tidak valid</div>';document.getElementById('ipResult').style.display='block';return&#125;
+var nums=parts.map(function(p)&#123;return parseInt(p,10)&#125;),long=((nums[0]<<24)+(nums[1]<<16)+(nums[2]<<8)+nums[3])>>>0,binary=nums.map(function(n)&#123;return n.toString(2).padStart(8,'0')&#125;).join('.');
+var oct1=nums[0],cls,defMask;if(oct1>=1&&oct1<=126)&#123;cls='A';defMask='255.0.0.0'&#125;else if(oct1>=128&&oct1<=191)&#123;cls='B';defMask='255.255.0.0'&#125;else if(oct1>=192&&oct1<=223)&#123;cls='C';defMask='255.255.255.0'&#125;else if(oct1>=224&&oct1<=239)&#123;cls='D (Multicast)';defMask='N/A'&#125;else&#123;cls='E (Experimental)';defMask='N/A'&#125;
 var range=cls==='A'?nums[0]+'.0.0.0 - '+nums[0]+'.255.255.255':cls==='B'?nums[0]+'.'+nums[1]+'.0.0 - '+nums[0]+'.'+nums[1]+'.255.255':cls==='C'?nums[0]+'.'+nums[1]+'.'+nums[2]+'.0 - '+nums[0]+'.'+nums[1]+'.'+nums[2]+'.255':'-';
-var hex='0x'+nums.map(function(n){return n.toString(16).padStart(2,'0')}).join(''),rev='';if(cls==='A'||cls==='B'||cls==='C'){var r=nums.slice().reverse();rev=r.join('.')+'.in-addr.arpa'}
-var h='';function r(l,v){h+='<div class="md:w-1/2 w-full col-lgap-4"><div class="p-3 rounded" style="background:var(--surface-soft)"><small class="opacity-60">'+l+'</small><div class="font-semibold font-mono mt-1">'+v+'</div></div></div>'}
+var hex='0x'+nums.map(function(n)&#123;return n.toString(16).padStart(2,'0')&#125;).join(''),rev='';if(cls==='A'||cls==='B'||cls==='C')&#123;var r=nums.slice().reverse();rev=r.join('.')+'.in-addr.arpa'&#125;
+var h='';function r(l,v)&#123;h+='<div class="md:w-1/2 w-full col-lgap-4"><div class="p-3 rounded" style="background:var(--surface-soft)"><small class="opacity-60">'+l+'</small><div class="font-semibold font-mono mt-1">'+v+'</div></div></div>'&#125;
 r('IP Address',ip);r('Decimal',long);r('Binary',binary);r('Hex',hex);r('Class',cls);r('Default Mask',defMask);r('Network Range',range);r('Reverse DNS',rev);r('Octets',nums.join(' . '));
-document.getElementById('ipInfo').innerHTML=h;document.getElementById('ipResult').style.display='block'}
+document.getElementById('ipInfo').innerHTML=h;document.getElementById('ipResult').style.display='block'&#125;
 document.getElementById('btnCalc').addEventListener('click',calc);calc();
 </script>
 

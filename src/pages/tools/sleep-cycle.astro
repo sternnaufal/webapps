@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'countdown', name: 'Countdown', icon: '⏳' },
   { slug: 'age-calculator', name: 'Age Calculator', icon: '🎂' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div><h1 class="h3 mb-0">Sleep Cycle Calculator</h1><p class="opacity-60 small mb-0">Hitung waktu tidur optimal berdasarkan siklus tidur 90 menit. Bangun di akhir siklus agar segar.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div><h1 class="h3 mb-0">Sleep Cycle Calculator</h1><p class="opacity-60 small mb-0">Hitung waktu tidur optimal berdasarkan siklus tidur 90 menit. Bangun di akhir siklus agar segar.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
 <div class="card card-bordered bg-base-100 p-3 mb-3">
 <ul class="nav nav-tabs mb-3"><li class="nav-item"><button class="nav-link active" id="tabWake" data-mode="wake">Saya mau bangun jam...</button></li><li class="nav-item"><button class="nav-link" id="tabSleep" data-mode="sleep">Saya mau tidur jam...</button></li></ul>
@@ -33,18 +42,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Waktu Optimal</h6>
 <div id="results" class="small"></div></div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -62,47 +61,47 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var wakePane=document.getElementById('wakePane'),sleepPane=document.getElementById('sleepPane'),wakeInp=document.getElementById('wakeTime'),sleepInp=document.getElementById('sleepTime'),res=document.getElementById('results');
-document.getElementById('tabWake').addEventListener('click',function(){wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');document.getElementById('tabSleep').classList.remove('active');calc();});
-document.getElementById('tabSleep').addEventListener('click',function(){wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');document.getElementById('tabWake').classList.remove('active');calc();});
+document.getElementById('tabWake').addEventListener('click',function()&#123;wakePane.style.display='block';sleepPane.style.display='none';this.classList.add('active');document.getElementById('tabSleep').classList.remove('active');calc();&#125;);
+document.getElementById('tabSleep').addEventListener('click',function()&#123;wakePane.style.display='none';sleepPane.style.display='block';this.classList.add('active');document.getElementById('tabWake').classList.remove('active');calc();&#125;);
 
-function fmt(t){
+function fmt(t)&#123;
   var h=t.getHours(),m=t.getMinutes();
   return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
-}
-function fmtLong(t){
+&#125;
+function fmtLong(t)&#123;
   var days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
   return days[t.getDay()]+', '+fmt(t);
-}
+&#125;
 
-function calc(){
+function calc()&#123;
   var mode=wakePane.style.display!=='none'?'wake':'sleep',now=new Date();
-  if(mode==='wake'){
+  if(mode==='wake')&#123;
     var wp=wakeInp.value.split(':'),wh=parseInt(wp[0]),wm=parseInt(wp[1]);
     var wake=new Date(now);wake.setHours(wh,wm,0,0);if(wake<=now)wake.setDate(wake.getDate()+1);
     var html='<div class="font-bold mb-3">Jika bangun '+fmt(wake)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Tidur</th><th>Siklus</th><th>Keterangan</th></tr>';
-    for(var c=6;c>=3;c--){
+    for(var c=6;c>=3;c--)&#123;
       var sleep=new Date(wake);sleep.setMinutes(sleep.getMinutes()-c*90-14);
       var desc=c+' siklus ('+(c*90+14)+' menit)';
       var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
       html+='<tr><td class="font-bold">'+fmt(sleep)+'</td><td>'+desc+'</td><td>'+label+'</td></tr>';
-    }
+    &#125;
     html+='</table><div class="text-sm opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
     res.innerHTML=html;
-  }else{
+  &#125;else&#123;
     var sp=sleepInp.value.split(':'),sh=parseInt(sp[0]),sm=parseInt(sp[1]);
     var sleep=new Date(now);sleep.setHours(sh,sm,0,0);
     var html='<div class="font-bold mb-3">Jika tidur '+fmt(sleep)+':</div><table class="table table-sm small mb-0"><tr class="table-primary"><th>Waktu Bangun</th><th>Siklus</th><th>Keterangan</th></tr>';
-    for(var c=3;c<=6;c++){
+    for(var c=3;c<=6;c++)&#123;
       var wake=new Date(sleep);wake.setMinutes(wake.getMinutes()+c*90+14);
       var desc=c+' siklus ('+(c*90+14)+' menit)';
       var label=c>=5?'? Optimal':c===4?'? Cukup':'? Minimal';
       html+='<tr><td class="font-bold">'+fmt(wake)+' ('+(wake<=now?'besok':'hari ini')+')</td><td>'+desc+'</td><td>'+label+'</td></tr>';
-    }
+    &#125;
     html+='</table><div class="text-sm opacity-60 mt-2">* Termasuk 14 menit untuk tertidur</div>';
     res.innerHTML=html;
-  }
-}
-[wakeInp,sleepInp].forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc)});
+  &#125;
+&#125;
+[wakeInp,sleepInp].forEach(function(el)&#123;el.addEventListener('input',calc);el.addEventListener('change',calc)&#125;);
 calc();
 </script>
 

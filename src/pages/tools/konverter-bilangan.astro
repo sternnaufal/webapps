@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'roman-numeral', name: 'Roman Numeral', icon: 'IV' },
   { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' }
 ];
-const bodyHtml = `<!-- Navbar khusus mobile -->
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<!-- Navbar khusus mobile -->
       
 
       
@@ -102,18 +111,9 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
       <p class="opacity-60 small mt-4">
         ?? Tip: tekan <kbd>Tab</kbd> untuk berpindah bidang. Semua konversi dilakukan lokal di browser, tanpa internet.
       </p>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -128,72 +128,72 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
 <script is:inline>
 const el = id => document.getElementById(id);
 
-const RE = {
+const RE = &#123;
   dec: /^-?[0-9]+$/i,
   hex: /^-?[0-9a-f]+$/i,
   bin: /^-?[01]+$/,
   oct: /^-?[0-7]+$/
-};
+&#125;;
 
-function stripGrouping(s){ return s.replace(/\\s+/g, ""); }
+function stripGrouping(s)&#123; return s.replace(/\\s+/g, ""); &#125;
 
-function parseToBigInt(str, base){
+function parseToBigInt(str, base)&#123;
   let neg = false;
   let s = stripGrouping(String(str).trim());
   if (!s) return null;
-  if (s[0] === '-') { neg = true; s = s.slice(1); }
+  if (s[0] === '-') &#123; neg = true; s = s.slice(1); &#125;
   let bi;
-  if (base === 10) {
+  if (base === 10) &#123;
     bi = BigInt(s);
-  } else if (base === 16) {
+  &#125; else if (base === 16) &#123;
     bi = BigInt('0x' + s);
-  } else if (base === 2) {
+  &#125; else if (base === 2) &#123;
     bi = BigInt('0b' + s);
-  } else if (base === 8) {
+  &#125; else if (base === 8) &#123;
     bi = BigInt('0o' + s);
-  } else {
-    bi = [...s].reduce((acc, ch)=>{
+  &#125; else &#123;
+    bi = [...s].reduce((acc, ch)=>&#123;
       const d = parseInt(ch, 36);
       if (Number.isNaN(d) || d >= base) throw new Error('invalid');
       return acc * BigInt(base) + BigInt(d);
-    }, 0n);
-  }
+    &#125;, 0n);
+  &#125;
   return neg ? -bi : bi;
-}
+&#125;
 
-function toBaseString(bi, base, {uppercase=false}={}){
+function toBaseString(bi, base, &#123;uppercase=false&#125;=&#123;&#125;)&#123;
   let s = bi.toString(base);
   if (uppercase) s = s.toUpperCase();
   return s;
-}
+&#125;
 
-function groupBinary(s){
+function groupBinary(s)&#123;
   const neg = s.startsWith('-');
   if (neg) s = s.slice(1);
   const pad = (4 - (s.length % 4)) % 4;
   s = '0'.repeat(pad) + s;
-  const parts = s.match(/.{1,4}/g) || [s];
+  const parts = s.match(/.&#123;1,4&#125;/g) || [s];
   const out = parts.join(' ');
   return (neg?'-':'') + out;
-}
+&#125;
 
-function setInfo(){
+function setInfo()&#123;
   const dec = el('dec').value.trim();
   const hex = el('hex').value.trim();
   const bin = el('bin').value.trim();
   const oct = el('oct').value.trim();
-  el('decInfo').textContent = dec ? \`\${dec.length} digit\` : '';
-  el('hexInfo').textContent = hex ? \`\${stripGrouping(hex).length} digit\` : '';
-  el('binInfo').textContent = bin ? \`\${stripGrouping(bin).replace(/^-/, '').replace(/\\s+/g,'').length} bit\` : '';
-  el('octInfo').textContent = oct ? \`\${stripGrouping(oct).length} digit\` : '';
-}
+  el('decInfo').textContent = dec ? \`\$&#123;dec.length&#125; digit\` : '';
+  el('hexInfo').textContent = hex ? \`\$&#123;stripGrouping(hex).length&#125; digit\` : '';
+  el('binInfo').textContent = bin ? \`\$&#123;stripGrouping(bin).replace(/^-/, '').replace(/\\s+/g,'').length&#125; bit\` : '';
+  el('octInfo').textContent = oct ? \`\$&#123;stripGrouping(oct).length&#125; digit\` : '';
+&#125;
 
-function showError(which, msg){ el(which+'Err').textContent = msg || ''; }
-function clearErrors(){ ['dec','hex','bin','oct'].forEach(x=>showError(x,'')); }
+function showError(which, msg)&#123; el(which+'Err').textContent = msg || ''; &#125;
+function clearErrors()&#123; ['dec','hex','bin','oct'].forEach(x=>showError(x,'')); &#125;
 
 let editing = null;
 
-function updateFrom(source){
+function updateFrom(source)&#123;
   if (editing && editing !== source) return;
   editing = source;
   clearErrors();
@@ -204,65 +204,65 @@ function updateFrom(source){
   const raw = el(source).value.trim();
   const valid = RE[source].test(stripGrouping(raw));
 
-  if (!raw){
-    ['dec','hex','bin','oct'].forEach(id=>{ el(id).value=''; });
+  if (!raw)&#123;
+    ['dec','hex','bin','oct'].forEach(id=>&#123; el(id).value=''; &#125;);
     setInfo(); editing=null; return;
-  }
+  &#125;
 
-  if (!valid){
+  if (!valid)&#123;
     showError(source, 'Input tidak valid untuk basis ini.');
     editing=null; return;
-  }
+  &#125;
 
-  try{
-    const base = {dec:10, hex:16, bin:2, oct:8}[source];
+  try&#123;
+    const base = &#123;dec:10, hex:16, bin:2, oct:8&#125;[source];
     const bi = parseToBigInt(raw, base);
 
     el('dec').value = bi.toString(10);
-    el('hex').value = toBaseString(bi, 16, {uppercase: optsUpper});
+    el('hex').value = toBaseString(bi, 16, &#123;uppercase: optsUpper&#125;);
     let bin = toBaseString(bi, 2);
     el('bin').value = optsGroup ? groupBinary(bin) : bin;
     el('oct').value = toBaseString(bi, 8);
     setInfo();
-  } catch(e){
+  &#125; catch(e)&#123;
     showError(source, 'Terjadi kesalahan saat konversi.');
-  } finally{
+  &#125; finally&#123;
     editing=null;
-  }
-}
+  &#125;
+&#125;
 
-['dec','hex','bin','oct'].forEach(id=>{
+['dec','hex','bin','oct'].forEach(id=>&#123;
   el(id).addEventListener('input', ()=>updateFrom(id));
   el(id).addEventListener('blur', setInfo);
-});
+&#125;);
 
-el('hexUpper').addEventListener('change', ()=>{
+el('hexUpper').addEventListener('change', ()=>&#123;
   if (el('hex').value.trim()) updateFrom('hex');
-});
-el('binGroup').addEventListener('change', ()=>{
+&#125;);
+el('binGroup').addEventListener('change', ()=>&#123;
   if (el('bin').value.trim()) updateFrom('bin');
   else if (el('dec').value.trim()) updateFrom('dec');
-});
+&#125;);
 
-document.querySelectorAll('[data-copy]').forEach(btn=>{
-  btn.addEventListener('click', async ()=>{
+document.querySelectorAll('[data-copy]').forEach(btn=>&#123;
+  btn.addEventListener('click', async ()=>&#123;
     const id = btn.getAttribute('data-copy');
     const val = el(id).value;
     if (!val) return;
-    try{ await navigator.clipboard.writeText(val); btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); }
-    catch{ btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); }
-  });
-});
+    try&#123; await navigator.clipboard.writeText(val); btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); &#125;
+    catch&#123; btn.textContent='?'; setTimeout(()=>btn.textContent='??', 900); &#125;
+  &#125;);
+&#125;);
 
-el('btnClear').addEventListener('click', ()=>{
+el('btnClear').addEventListener('click', ()=>&#123;
   ['dec','hex','bin','oct'].forEach(id=>el(id).value='');
   clearErrors(); setInfo(); el('dec').focus();
-});
+&#125;);
 
-el('btnSample').addEventListener('click', ()=>{
+el('btnSample').addEventListener('click', ()=>&#123;
   el('hexUpper').checked = true; el('binGroup').checked = true;
   el('dec').value = '2025'; updateFrom('dec');
-});
+&#125;);
 
 setInfo();
 </script>

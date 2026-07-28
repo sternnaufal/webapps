@@ -12,21 +12,7 @@ const relatedTools = [
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' },
   { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;">Aa</div><div><h1 class="h3 mb-0">Text Repeater</h1><p class="opacity-60 small mb-0">Ulangi teks sebanyak yang Anda mau. Lengkap dengan separator dan prefix/suffix.</p></div></header>
-<div class="flex flex-wrap gap-4"><div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="mb-3"><label class="label-text font-semibold">Teks</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="3" placeholder="Teks yang akan diulang..." autofocus>Hello!</textarea></div>
-<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Jumlah</label><input type="number" id="countInput" class="input input-bordered w-full" value="5" min="1" max="10000"></div>
-<div class="col-8"><label class="label-text small">Separator</label><select id="separator" class="select select-bordered w-full"><option value="\\n">Baris baru</option><option value=" ">Spasi</option><option value=",">Koma</option><option value=", ">Koma + spasi</option><option value="">Tanpa separator</option><option value="custom">Kustom...</option></select><input type="text" id="customSep" class="input input-bordered w-full mt-1" style="display:none" placeholder="Separator kustom..."></div></div>
-<button id="btnGenerate" class="btn btn-primary w-full">Generate</button>
-</div></div>
-<div class="col-lg-6">
-<div class="card card-bordered bg-base-100 p-3">
-<div class="flex justify-between items-center mb-2"><label class="label-text font-semibold mb-0">Output</label><span id="outputStats" class="text-sm opacity-60"></span></div>
-<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea>
-<button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
-</div></div></div>
-`;
+
 ---
 
 <ToolLayout
@@ -35,9 +21,22 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
   keywords={keywords}
 >
 
-<Fragment set:html={bodyHtml} />
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;">Aa</div><div><h1 class="h3 mb-0">Text Repeater</h1><p class="opacity-60 small mb-0">Ulangi teks sebanyak yang Anda mau. Lengkap dengan separator dan prefix/suffix.</p></div></header>
+<div class="flex flex-wrap gap-4"><div class="col-lg-6">
+<div class="card card-bordered bg-base-100 p-3">
+<div class="mb-3"><label class="label-text font-semibold">Teks</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="3" placeholder="Teks yang akan diulang..." autofocus>Hello!</textarea></div>
+<div class="row gap-2 mb-3"><div class="col-4"><label class="label-text small">Jumlah</label><input type="number" id="countInput" class="input input-bordered w-full" value="5" min="1" max="10000"></div>
+<div class="col-8"><label class="label-text small">Separator</label><select id="separator" class="select select-bordered w-full"><option value="\n">Baris baru</option><option value=" ">Spasi</option><option value=",">Koma</option><option value=", ">Koma + spasi</option><option value="">Tanpa separator</option><option value="custom">Kustom...</option></select><input type="text" id="customSep" class="input input-bordered w-full mt-1" style="display:none" placeholder="Separator kustom..."></div></div>
+<button id="btnGenerate" class="btn btn-primary w-full">Generate</button>
+</div></div>
+<div class="col-lg-6">
+<div class="card card-bordered bg-base-100 p-3">
+<div class="flex justify-between items-center mb-2"><label class="label-text font-semibold mb-0">Output</label><span id="outputStats" class="text-sm opacity-60"></span></div>
+<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea>
+<button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
+</div></div></div>
 
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -55,19 +54,19 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),cnt=document.getElementById('countInput'),sep=document.getElementById('separator'),cst=document.getElementById('customSep'),out=document.getElementById('outputArea'),stats=document.getElementById('outputStats');
-sep.addEventListener('change',function(){cst.style.display=this.value==='custom'?'block':'none'});
-document.getElementById('btnGenerate').addEventListener('click',function(){
+sep.addEventListener('change',function()&#123;cst.style.display=this.value==='custom'?'block':'none'&#125;);
+document.getElementById('btnGenerate').addEventListener('click',function()&#123;
   var t=inp.value,n=parseInt(cnt.value)||1,s=sep.value;
   if(s==='custom')s=cst.value;
   else if(s==='\\\\n')s='\\n';
   var result=Array(n).fill(t).join(s);
   out.value=result;
   stats.textContent=result.length+' chars, '+n+'x repeat';
-});
-document.getElementById('btnCopy').addEventListener('click',function(){
+&#125;);
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
-});
+  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
+&#125;);
 document.getElementById('btnGenerate').click();
 </script>
 

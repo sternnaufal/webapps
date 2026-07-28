@@ -73,20 +73,33 @@ const allTools = tools.categories.flatMap(c => c.tools);
 </div>
 
 <script is:inline>
-  // Category toggles
-  document.querySelectorAll('.category-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = document.getElementById(btn.dataset.target);
-      if (target) target.style.display = target.style.display === 'none' ? 'block' : 'none';
+  // Category toggles - event delegation on each sidebar
+  document.querySelectorAll('.sidebar-nav').forEach(nav => {
+    nav.addEventListener('click', e => {
+      const btn = e.target.closest('.category-toggle');
+      if (!btn) return;
+      const wrapper = btn.closest('.px-2');
+      if (!wrapper) return;
+      const list = wrapper.querySelector('.nav-cat-list');
+      if (list) {
+        list.style.display = list.style.display === 'none' ? 'block' : 'none';
+      }
     });
   });
 
-  // Sidebar search
-  document.getElementById('sidebarSearch')?.addEventListener('input', function() {
-    const q = this.value.toLowerCase().trim();
-    document.querySelectorAll('.sidebar-nav [id^="cat-"]').forEach(list => {
-      list.querySelectorAll('a').forEach(a => {
-        a.style.display = (!q || a.textContent.toLowerCase().includes(q)) ? '' : 'none';
+  // Sidebar search - scoped per sidebar
+  document.querySelectorAll('.sidebar-search input').forEach(inp => {
+    inp.addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      const nav = this.closest('.flex').querySelector('.sidebar-nav');
+      if (!nav) return;
+      nav.querySelectorAll('.nav-cat-list').forEach(list => {
+        let hasVisible = false;
+        list.querySelectorAll('a').forEach(a => {
+          const ok = !q || a.textContent.toLowerCase().includes(q);
+          a.style.display = ok ? '' : 'none';
+          if (ok) hasVisible = true;
+        });
       });
     });
   });

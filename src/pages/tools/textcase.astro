@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' },
   { slug: 'slug-generator', name: 'Slug Generator', icon: '🔗' }
 ];
-const bodyHtml = `<div class="flex flex-wrap gap-3 mb-4">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<div class="flex flex-wrap gap-3 mb-4">
         <div class="w-full">
           <label for="text" class="label-text">Masukkan Teks</label>
           <textarea id="text" class="input input-bordered w-full" rows="4" placeholder="Masukkan teks di sini..."></textarea>
@@ -43,18 +52,9 @@ const bodyHtml = `<div class="flex flex-wrap gap-3 mb-4">
           </div>
         </div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -70,15 +70,15 @@ const bodyHtml = `<div class="flex flex-wrap gap-3 mb-4">
 </script>
 
 <script is:inline>
-function convert(action) {
+function convert(action) &#123;
   var input = document.getElementById('text').value;
-  if (!input.trim()) {
+  if (!input.trim()) &#123;
     alert('Masukkan teks terlebih dahulu');
     return;
-  }
+  &#125;
 
   var result = '';
-  switch (action) {
+  switch (action) &#123;
     case 'upper':
       result = input.toUpperCase();
       break;
@@ -86,34 +86,34 @@ function convert(action) {
       result = input.toLowerCase();
       break;
     case 'title':
-      result = input.toLowerCase().replace(/\\b\\w/g, function(c) { return c.toUpperCase(); });
+      result = input.toLowerCase().replace(/\\b\\w/g, function(c) &#123; return c.toUpperCase(); &#125;);
       break;
     case 'snake':
       result = input.toLowerCase().trim().replace(/\\s+/g, '_');
       break;
     case 'camel':
-      result = input.toLowerCase().replace(/\\b\\w/g, function(c) { return c.toUpperCase(); }).replace(/\\s+/g, '').replace(/^./, function(c) { return c.toLowerCase(); });
+      result = input.toLowerCase().replace(/\\b\\w/g, function(c) &#123; return c.toUpperCase(); &#125;).replace(/\\s+/g, '').replace(/^./, function(c) &#123; return c.toLowerCase(); &#125;);
       break;
-  }
+  &#125;
 
   document.getElementById('resultText').textContent = result;
   document.getElementById('resultContainer').style.display = 'block';
-}
+&#125;
 
-document.querySelectorAll('.convert-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
+document.querySelectorAll('.convert-btn').forEach(function(btn) &#123;
+  btn.addEventListener('click', function() &#123;
     convert(this.getAttribute('data-action'));
-  });
-});
+  &#125;);
+&#125;);
 
-document.getElementById('copyResultBtn').addEventListener('click', function() {
+document.getElementById('copyResultBtn').addEventListener('click', function() &#123;
   var text = document.getElementById('resultText').textContent;
   if (!text) return;
-  navigator.clipboard.writeText(text).then(function() {
+  navigator.clipboard.writeText(text).then(function() &#123;
     var btn = document.getElementById('copyResultBtn');
     btn.textContent = '? Copied!';
-    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
-  });
-});
+    setTimeout(function() &#123; btn.textContent = 'Copy'; &#125;, 2000);
+  &#125;);
+&#125;);
 </script>
 

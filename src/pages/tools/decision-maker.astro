@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'palindrome-checker', name: 'Palindrome Checker', icon: '↔' },
   { slug: 'anagram-finder', name: 'Anagram Finder', icon: '🔀' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.5 2L2 9.5 9.5 17 17 9.5z"/><path d="M9.5 17L17 9.5 22 14.5 14.5 22z"/></svg></div><div><h1 class="h3 mb-0">Decision Maker</h1><p class="opacity-60 small mb-0">Bantu ambil keputusan: acak pilihan, lempar koin, dadu, Magic 8 Ball, dan ya/tidak.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#a855f7;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.5 2L2 9.5 9.5 17 17 9.5z"/><path d="M9.5 17L17 9.5 22 14.5 14.5 22z"/></svg></div><div><h1 class="h3 mb-0">Decision Maker</h1><p class="opacity-60 small mb-0">Bantu ambil keputusan: acak pilihan, lempar koin, dadu, Magic 8 Ball, dan ya/tidak.</p></div></header>
 <div class="flex flex-wrap gap-4">
 <div class="md:w-1/2 w-full">
 <div class="card card-bordered bg-base-100 p-3 mb-3"><h6 class="mb-3">Random Picker</h6>
@@ -41,18 +50,8 @@ Pizza</textarea>
 <div class="eight-ball" id="eightBall"><div class="eight-ball-inner" id="eightText">8</div></div>
 <div id="eightMsg" class="text-sm opacity-60 mt-2">Klik bola untuk bertanya</div>
 </div></div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -69,39 +68,39 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script is:inline>
-document.getElementById('btnPick').addEventListener('click',function(){
-  var lines=document.getElementById('pickerInput').value.split('\\n').filter(function(l){return l.trim()});
-  if(!lines.length){document.getElementById('pickResult').textContent='Masukkan pilihan dulu!';return}
+document.getElementById('btnPick').addEventListener('click',function()&#123;
+  var lines=document.getElementById('pickerInput').value.split('\\n').filter(function(l)&#123;return l.trim()&#125;);
+  if(!lines.length)&#123;document.getElementById('pickResult').textContent='Masukkan pilihan dulu!';return&#125;
   document.getElementById('pickResult').textContent=lines[Math.floor(Math.random()*lines.length)];
-});
-document.getElementById('btnYN').addEventListener('click',function(){
+&#125;);
+document.getElementById('btnYN').addEventListener('click',function()&#123;
   var answers=['Ya!','Tidak.','Mungkin','Coba lagi nanti','Pasti!','Jangan dulu','Terserah kamu','Iya sih','Kayaknya nggak deh','100% Ya!','No way!','Kenapa nggak?'];
   var el=document.getElementById('ynResult');el.textContent=answers[Math.floor(Math.random()*answers.length)];
-  el.style.transform='scale(1.2)';setTimeout(function(){el.style.transform='scale(1)'},200);
-});
+  el.style.transform='scale(1.2)';setTimeout(function()&#123;el.style.transform='scale(1)'&#125;,200);
+&#125;);
 var coinFaces=['?','?'];
-document.getElementById('btnCoin').addEventListener('click',function(){
+document.getElementById('btnCoin').addEventListener('click',function()&#123;
   document.getElementById('coinResult').textContent=coinFaces[Math.floor(Math.random()*2)];
-});
+&#125;);
 var dice=[1,2,3,4,5,6];
-document.getElementById('btnDice').addEventListener('click',function(){
+document.getElementById('btnDice').addEventListener('click',function()&#123;
   var el=document.getElementById('diceResult');el.textContent=dice[Math.floor(Math.random()*6)];
-  el.style.transform='rotate(360deg)';setTimeout(function(){el.style.transform='rotate(0)'},300);
-});
+  el.style.transform='rotate(360deg)';setTimeout(function()&#123;el.style.transform='rotate(0)'&#125;,300);
+&#125;);
 var eightAnswers=['It is certain','It is decidedly so','Without a doubt','Yes definitely','You may rely on it','As I see it, yes','Most likely','Outlook good','Yes','Signs point to yes','Reply hazy try again','Ask again later','Better not tell you now','Cannot predict now','Concentrate and ask again','Don\\'t count on it','My reply is no','My sources say no','Outlook not so good','Very doubtful'];
-document.getElementById('eightBall').addEventListener('click',function(){
+document.getElementById('eightBall').addEventListener('click',function()&#123;
   var el=document.getElementById('eightText'),msg=document.getElementById('eightMsg');
   el.textContent='?';msg.textContent='...';
   var ball=this;ball.classList.add('shake');
-  setTimeout(function(){
+  setTimeout(function()&#123;
     el.textContent=Math.floor(Math.random()*20+1);
     ball.classList.remove('shake');
-  },300);
-  setTimeout(function(){
+  &#125;,300);
+  setTimeout(function()&#123;
     var answer=eightAnswers[Math.floor(Math.random()*eightAnswers.length)];
     el.textContent='';msg.textContent=answer;
     el.innerHTML='<span style="font-size:0.7rem;padding:4px">'+answer+'</span>';
-  },600);
-});
+  &#125;,600);
+&#125;);
 </script>
 

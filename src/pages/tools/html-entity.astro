@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'html-preview', name: 'Html Preview', icon: '</>' },
   { slug: 'slug-generator', name: 'Slug Generator', icon: '🔗' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">&amp;</div><div><h1 class="h3 mb-0">HTML Entity Encoder / Decoder</h1><p class="opacity-60 small mb-0">Encode atau decode karakter khusus HTML seperti &lt;, &gt;, &amp;, &quot; menjadi entity HTML.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">&amp;</div><div><h1 class="h3 mb-0">HTML Entity Encoder / Decoder</h1><p class="opacity-60 small mb-0">Encode atau decode karakter khusus HTML seperti &lt;, &gt;, &amp;, &quot; menjadi entity HTML.</p></div></header>
 <div class="flex flex-wrap gap-4">
 <div class="col-lg-6"><label class="label-text font-semibold">Input</label>
 <textarea id="inputArea" class="input input-bordered w-full font-mono" rows="8" placeholder="Paste teks..." autofocus>&lt;div class="container"&gt;
@@ -36,18 +45,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Referensi Cepat HTML Entities</h6>
 <div class="overflow-x-auto"><table class="table table-sm small mb-0"><thead><tr><th>Karakter</th><th>Entity</th><th>Deskripsi</th><th>Karakter</th><th>Entity</th><th>Deskripsi</th></tr></thead><tbody id="entityTable"></tbody></table></div></div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -66,57 +65,57 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
 
-var namedEntities={
+var namedEntities=&#123;
   '&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&nbsp;':'\\xa0','&copy;':'','&reg;':'','&trade;':'','&euro;':'','&pound;':'','&yen;':'','&cent;':'','&sect;':'','&deg;':'','&plusmn;':'','&times;':'','&divide;':'','&micro;':'','&middot;':'','&bull;':'','&hellip;':'','&prime;':''','&Prime;':'?','&larr;':'?','&rarr;':'?','&uarr;':'?','&darr;':'?','&harr;':'?','&spades;':'?','&clubs;':'?','&hearts;':'?','&diams;':'?','&there4;':'?','&permil;':'','&sum;':'?','&prod;':'?','&radic;':'v','&infin;':'8','&int;':'?','&asymp;':'','&ne;':'?','&equiv;':'=','&le;':'=','&ge;':'=','&nabla;':'?','&alpha;':'a','&beta;':'','&gamma;':'?','&delta;':'d','&pi;':'p','&omega;':'?',
-};
-var namedToChar={};for(var k in namedEntities)namedToChar[namedEntities[k]]=k;
+&#125;;
+var namedToChar=&#123;&#125;;for(var k in namedEntities)namedToChar[namedEntities[k]]=k;
 
-function getMode(){return document.querySelector('input[name=encodeMode]:checked').id}
+function getMode()&#123;return document.querySelector('input[name=encodeMode]:checked').id&#125;
 
-function encode(){
+function encode()&#123;
   var t=inp.value,mode=getMode();
   var r='';
-  for(var i=0;i<t.length;i++){
+  for(var i=0;i<t.length;i++)&#123;
     var c=t[i],code=t.charCodeAt(i);
-    if(c==='&'){r+='&amp;';continue}
-    if(c==='<'){r+='&lt;';continue}
-    if(c==='>'){r+='&gt;';continue}
-    if(c==='"'){r+='&quot;';continue}
-    if(c==="'"){r+='&apos;';continue}
-    if(code>127||code<32){
-      if(mode==='modeNamed'&&namedToChar[c]){r+=namedToChar[c];continue}
-      if(mode==='modeNumeric'){r+='&#'+code+';';continue}
-      if(mode==='modeHex'){r+='&#x'+code.toString(16).toUpperCase()+';';continue}
-    }
+    if(c==='&')&#123;r+='&amp;';continue&#125;
+    if(c==='<')&#123;r+='&lt;';continue&#125;
+    if(c==='>')&#123;r+='&gt;';continue&#125;
+    if(c==='"')&#123;r+='&quot;';continue&#125;
+    if(c==="'")&#123;r+='&apos;';continue&#125;
+    if(code>127||code<32)&#123;
+      if(mode==='modeNamed'&&namedToChar[c])&#123;r+=namedToChar[c];continue&#125;
+      if(mode==='modeNumeric')&#123;r+='&#'+code+';';continue&#125;
+      if(mode==='modeHex')&#123;r+='&#x'+code.toString(16).toUpperCase()+';';continue&#125;
+    &#125;
     r+=c;
-  }
+  &#125;
   out.value=r;
-}
+&#125;
 
-function decode(){
+function decode()&#123;
   var t=inp.value;
   t=t.replace(/&amp;/g,'&');
   t=t.replace(/&lt;/g,'<');
   t=t.replace(/&gt;/g,'>');
   t=t.replace(/&quot;/g,'"');
   t=t.replace(/&apos;/g,"'");
-  t=t.replace(/&#x([0-9a-fA-F]+);/g,function(m,h){return String.fromCodePoint(parseInt(h,16))});
-  t=t.replace(/&#(\\d+);/g,function(m,d){return String.fromCodePoint(parseInt(d))});
-  for(var e in namedEntities){
+  t=t.replace(/&#x([0-9a-fA-F]+);/g,function(m,h)&#123;return String.fromCodePoint(parseInt(h,16))&#125;);
+  t=t.replace(/&#(\\d+);/g,function(m,d)&#123;return String.fromCodePoint(parseInt(d))&#125;);
+  for(var e in namedEntities)&#123;
     t=t.split(e).join(namedEntities[e]);
-  }
+  &#125;
   out.value=t;
-}
+&#125;
 
 document.getElementById('btnEncode').addEventListener('click',encode);
 document.getElementById('btnDecode').addEventListener('click',decode);
-document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
-document.getElementById('btnSwap').addEventListener('click',function(){var t=inp.value;inp.value=out.value;out.value=t});
-document.getElementById('btnCopy').addEventListener('click',function(){
+document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.value=''&#125;);
+document.getElementById('btnSwap').addEventListener('click',function()&#123;var t=inp.value;inp.value=out.value;out.value=t&#125;);
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
-});
-document.querySelectorAll('input[name=encodeMode]').forEach(function(r){r.addEventListener('change',encode)});
+  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
+&#125;);
+document.querySelectorAll('input[name=encodeMode]').forEach(function(r)&#123;r.addEventListener('change',encode)&#125;);
 
 var refs=[['&amp;','&','&lt;','<','&gt;','>','&quot;','"','&apos;','&#39;',"'",'&nbsp;',' '],
   ['&copy;','','&reg;','','&trade;','','&euro;','','&pound;','','&yen;','','&cent;',''],
@@ -125,8 +124,8 @@ var refs=[['&amp;','&','&lt;','<','&gt;','>','&quot;','"','&apos;','&#39;',"'",'
   ['&spades;','?','&clubs;','?','&hearts;','?','&diams;','?','&sum;','?','&prod;','?','&radic;','v'],
   ['&infin;','8','&asymp;','','&ne;','?','&equiv;','=','&le;','=','&ge;','=','&alpha;','a']];
 var et=document.getElementById('entityTable');
-refs.forEach(function(r){
+refs.forEach(function(r)&#123;
   et.innerHTML+='<tr><td class="font-mono">'+r[1]+'</td><td class="font-mono">'+r[0]+'</td><td>'+r[0].slice(1,-1)+'</td><td class="font-mono">'+r[3]+'</td><td class="font-mono">'+r[2]+'</td><td>'+r[2].slice(1,-1)+'</td></tr>';
-});
+&#125;);
 </script>
 

@@ -12,13 +12,22 @@ const relatedTools = [
   { slug: 'json-to-typescript', name: 'Json To Typescript', icon: 'TS' },
   { slug: 'csv-viewer', name: 'Csv Viewer', icon: '📊' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h12"/></svg></div><div><h1 class="h3 mb-0">JSON ? CSV Converter</h1><p class="opacity-60 small mb-0">Konversi data antara JSON dan CSV. Upload file atau paste langsung.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h12"/></svg></div><div><h1 class="h3 mb-0">JSON ? CSV Converter</h1><p class="opacity-60 small mb-0">Konversi data antara JSON dan CSV. Upload file atau paste langsung.</p></div></header>
 <div class="flex flex-wrap gap-4 mb-3">
 <div class="col-lg-6"><label class="label-text font-semibold">Input</label>
 <textarea id="inputArea" class="input input-bordered w-full font-mono" rows="10" placeholder="Paste JSON atau CSV...">[
-  {"nama":"Naufal","usia":25,"kota":"Jakarta","pekerjaan":"Developer"},
-  {"nama":"Rakha","usia":28,"kota":"Bandung","pekerjaan":"Designer"},
-  {"nama":"Putra","usia":22,"kota":"Surabaya","pekerjaan":"Student"}
+  &#123;"nama":"Naufal","usia":25,"kota":"Jakarta","pekerjaan":"Developer"&#125;,
+  &#123;"nama":"Rakha","usia":28,"kota":"Bandung","pekerjaan":"Designer"&#125;,
+  &#123;"nama":"Putra","usia":22,"kota":"Surabaya","pekerjaan":"Student"&#125;
 ]</textarea>
 <div class="flex gap-2 mt-2 flex-wrap">
 <button id="btnToCsv" class="btn btn-primary">JSON ? CSV</button>
@@ -30,18 +39,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea>
 <div class="mt-2"><button id="btnDownload" class="btn btn-sm btn-outline-primary">Download</button></div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -59,70 +58,70 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
-function escapeCSV(v){if(v==null)return '';v=String(v);if(v.includes(',')||v.includes('"')||v.includes('\\n')){v=v.replace(/"/g,'""');v='"'+v+'"'}return v}
-function toCSV(){
-  try{
+function escapeCSV(v)&#123;if(v==null)return '';v=String(v);if(v.includes(',')||v.includes('"')||v.includes('\\n'))&#123;v=v.replace(/"/g,'""');v='"'+v+'"'&#125;return v&#125;
+function toCSV()&#123;
+  try&#123;
     var data=JSON.parse(inp.value);
-    if(!Array.isArray(data)||!data.length){out.value='Error: Input harus array JSON';return}
+    if(!Array.isArray(data)||!data.length)&#123;out.value='Error: Input harus array JSON';return&#125;
     var headers=Object.keys(data[0]);
     var rows=[headers.join(',')];
-    data.forEach(function(row){
-      rows.push(headers.map(function(h){return escapeCSV(row[h])}).join(','));
-    });
+    data.forEach(function(row)&#123;
+      rows.push(headers.map(function(h)&#123;return escapeCSV(row[h])&#125;).join(','));
+    &#125;);
     out.value=rows.join('\\n');
-  }catch(e){out.value='Error: '+e.message}
-}
-function toJSON(){
-  try{
+  &#125;catch(e)&#123;out.value='Error: '+e.message&#125;
+&#125;
+function toJSON()&#123;
+  try&#123;
     var lines=inp.value.trim().split('\\n');
-    if(lines.length<2){out.value='Error: CSV harus punya header + minimal 1 baris data';return}
-    var headers=lines[0].split(',').map(function(h){return h.trim()});
+    if(lines.length<2)&#123;out.value='Error: CSV harus punya header + minimal 1 baris data';return&#125;
+    var headers=lines[0].split(',').map(function(h)&#123;return h.trim()&#125;);
     var result=[];
-    for(var i=1;i<lines.length;i++){
+    for(var i=1;i<lines.length;i++)&#123;
       if(!lines[i].trim())continue;
       var vals=parseCSVLine(lines[i]);
       if(vals.length!==headers.length)continue;
-      var obj={};
-      headers.forEach(function(h,j){obj[h]=vals[j]});
+      var obj=&#123;&#125;;
+      headers.forEach(function(h,j)&#123;obj[h]=vals[j]&#125;);
       result.push(obj);
-    }
+    &#125;
     out.value=JSON.stringify(result,null,2);
-  }catch(e){out.value='Error: '+e.message}
-}
-function parseCSVLine(line){
+  &#125;catch(e)&#123;out.value='Error: '+e.message&#125;
+&#125;
+function parseCSVLine(line)&#123;
   var result=[],cur='',inQuotes=false;
-  for(var i=0;i<line.length;i++){
+  for(var i=0;i<line.length;i++)&#123;
     var c=line[i];
-    if(inQuotes){
-      if(c=='"'){if(line[i+1]=='"'){cur+='"';i++}else{inQuotes=false}}
+    if(inQuotes)&#123;
+      if(c=='"')&#123;if(line[i+1]=='"')&#123;cur+='"';i++&#125;else&#123;inQuotes=false&#125;&#125;
       else cur+=c;
-    }else{
-      if(c=='"'){inQuotes=true}
-      else if(c==','){result.push(cur.trim());cur=''}
+    &#125;else&#123;
+      if(c=='"')&#123;inQuotes=true&#125;
+      else if(c==',')&#123;result.push(cur.trim());cur=''&#125;
       else cur+=c;
-    }
-  }
+    &#125;
+  &#125;
   result.push(cur.trim());
   return result;
-}
+&#125;
 document.getElementById('btnToCsv').addEventListener('click',toCSV);
 document.getElementById('btnToJson').addEventListener('click',toJSON);
-document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
-document.getElementById('btnCopy').addEventListener('click',function(){
+document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.value=''&#125;);
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
-});
-document.getElementById('fileInput').addEventListener('change',function(e){
+  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
+&#125;);
+document.getElementById('fileInput').addEventListener('change',function(e)&#123;
   var f=e.target.files[0];if(!f)return;
   var r=new FileReader();
-  r.onload=function(){inp.value=r.result};
+  r.onload=function()&#123;inp.value=r.result&#125;;
   r.readAsText(f);
-});
-document.getElementById('btnDownload').addEventListener('click',function(){
+&#125;);
+document.getElementById('btnDownload').addEventListener('click',function()&#123;
   if(!out.value)return;
-  var isCSV=out.value.startsWith('{')||out.value.startsWith('[');
-  var blob=new Blob([out.value],{type:isCSV?'application/json':'text/csv'});
+  var isCSV=out.value.startsWith('&#123;')||out.value.startsWith('[');
+  var blob=new Blob([out.value],&#123;type:isCSV?'application/json':'text/csv'&#125;);
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='output.'+(isCSV?'json':'csv');a.click();
-});
+&#125;);
 </script>
 

@@ -12,7 +12,17 @@ const relatedTools = [
   { slug: 'random-color-generator', name: 'Random Color Generator', icon: '🎰' },
   { slug: 'char-counter', name: 'Char Counter', icon: '#' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">D6</div><div><h1 class="h3 mb-0">Dice Roller</h1><p class="opacity-60 small mb-0">Virtual dice roller dengan berbagai jenis dadu. D4, D6, D8, D10, D12, D20, D100.</p></div></header>
+
+const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:3px;background:var(--surface-soft);transition:all .2s}.dice-icon.rolling{animation:shake .3s}@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">D6</div><div><h1 class="h3 mb-0">Dice Roller</h1><p class="opacity-60 small mb-0">Virtual dice roller dengan berbagai jenis dadu. D4, D6, D8, D10, D12, D20, D100.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-8">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="flex flex-wrap gap-3 align-items-end mb-3">
@@ -34,19 +44,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <button id="btnClearHistory" class="btn btn-outline-danger btn-sm mt-2 w-full">Hapus Riwayat</button>
 </div>
 </div></div>
-`;
-const toolCss = `.dice-icon{display:inline-flex;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:3px;background:var(--surface-soft);transition:all .2s}.dice-icon.rolling{animation:shake .3s}@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -67,22 +66,22 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var dt=document.getElementById('diceType'),dc=document.getElementById('diceCount'),dr=document.getElementById('diceResult'),td=document.getElementById('totalDisplay'),mxd=document.getElementById('maxDisplay'),mnd=document.getElementById('minDisplay'),hl=document.getElementById('historyList'),history=[];
-function roll(){
+function roll()&#123;
   var sides=parseInt(dt.value),cnt=parseInt(dc.value),vals=[];
   for(var i=0;i<cnt;i++)vals.push(Math.floor(Math.random()*sides)+1);
-  dr.innerHTML='';vals.forEach(function(v,i){
+  dr.innerHTML='';vals.forEach(function(v,i)&#123;
     var el=document.createElement('span');el.className='dice-icon rolling';el.textContent=v;
-    setTimeout(function(){el.classList.remove('rolling')},300);
+    setTimeout(function()&#123;el.classList.remove('rolling')&#125;,300);
     dr.appendChild(el);
-  });
-  var total=vals.reduce(function(a,b){return a+b},0);
+  &#125;);
+  var total=vals.reduce(function(a,b)&#123;return a+b&#125;,0);
   td.textContent=total;mxd.textContent=Math.max.apply(null,vals);mnd.textContent=Math.min.apply(null,vals);
   var label='D'+sides+' x'+cnt+': ['+vals.join(', ')+'] = '+total;
   history.unshift(label);if(history.length>20)history.pop();
-  hl.innerHTML=history.map(function(h){return'<div class="small py-1 border-bottom">'+h+'</div>'}).join('');
-}
+  hl.innerHTML=history.map(function(h)&#123;return'<div class="small py-1 border-bottom">'+h+'</div>'&#125;).join('');
+&#125;
 document.getElementById('btnRoll').addEventListener('click',roll);
-document.getElementById('btnClearHistory').addEventListener('click',function(){history=[];hl.innerHTML='<small class="opacity-60">Belum ada lemparan</small>'});
+document.getElementById('btnClearHistory').addEventListener('click',function()&#123;history=[];hl.innerHTML='<small class="opacity-60">Belum ada lemparan</small>'&#125;);
 roll();
 </script>
 

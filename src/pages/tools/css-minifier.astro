@@ -12,11 +12,11 @@ const relatedTools = [
   { slug: 'sql-formatter', name: 'Sql Formatter', icon: 'SQL' },
   { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
 ];
-const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full"><div class="flex gap-2 flex-wrap">\n    <button id="cssMin" class="btn btn-warning">Minify</button>\n    <button id="cssBeaut" class="btn btn-outline-primary">Beautify</button>\n    <button id="cssCopy" class="btn btn-outline">Copy</button>\n    <button id="cssClear" class="btn btn-outline">Clear</button>\n    <span id="cssStats" class="ml-auto text-sm opacity-60 flex items-center">---</span>\n  </div></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Input</label><textarea id="cssIn" class="input input-bordered w-full font-mono" rows="16" placeholder="Tempel CSS di sini...">body { background: #fff; color: #333; font-family: system-ui; margin: 0; padding: 2rem; }</textarea></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Output</label><textarea id="cssOut" class="input input-bordered w-full font-mono" rows="16" readonly></textarea></div>\n</div>';
+const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full"><div class="flex gap-2 flex-wrap">\n    <button id="cssMin" class="btn btn-warning">Minify</button>\n    <button id="cssBeaut" class="btn btn-outline-primary">Beautify</button>\n    <button id="cssCopy" class="btn btn-outline">Copy</button>\n    <button id="cssClear" class="btn btn-outline">Clear</button>\n    <span id="cssStats" class="ml-auto text-sm opacity-60 flex items-center">---</span>\n  </div></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Input</label><textarea id="cssIn" class="input input-bordered w-full font-mono" rows="16" placeholder="Tempel CSS di sini...">body &#123; background: #fff; color: #333; font-family: system-ui; margin: 0; padding: 2rem; &#125;</textarea></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Output</label><textarea id="cssOut" class="input input-bordered w-full font-mono" rows="16" readonly></textarea></div>\n</div>';
 ---
 
-<ToolLayout title={title} description={desc} keywords={keywords}>
-<Fragment set:html={bodyHtml} />
+<ToolLayout title={title} description=&#123;desc&#125; keywords={keywords}>
+<Fragment set:html=&#123;bodyHtml&#125; />
 
   <ToolShell about={aboutText} />
 
@@ -31,10 +31,10 @@ const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full"><div
 </style>
 
 <script is:inline>
-document.getElementById("cssMin").onclick=()=>{const i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,"").replace(/\s+/g," ").replace(/\s*{\s*/g,"{").replace(/\s*}\s*/g,"}").replace(/;}/g,"}").replace(/\s*:\s*/g,":").replace(/\s*;\s*/g,";").replace(/\s*,\s*/g,",").trim();document.getElementById("cssOut").value=o;cssStats(i,o)};
-document.getElementById("cssBeaut").onclick=()=>{let i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,m=>m+"\n").replace(/\s+/g," ").replace(/{/g," {\n  ").replace(/;/g,";\n  ").replace(/}/g,"\n}\n").replace(/,\s*/g,", ").replace(/:\s*/g,": ").replace(/^\s+|\s+$/gm,"").replace(/\n{3,}/g,"\n\n").trim();document.getElementById("cssOut").value=o;cssStats(i,o)};
+document.getElementById("cssMin").onclick=()=>&#123;const i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,"").replace(/\s+/g," ").replace(/\s*&#123;\s*/g,"&#123;").replace(/\s*&#125;\s*/g,"&#125;").replace(/;&#125;/g,"&#125;").replace(/\s*:\s*/g,":").replace(/\s*;\s*/g,";").replace(/\s*,\s*/g,",").trim();document.getElementById("cssOut").value=o;cssStats(i,o)&#125;;
+document.getElementById("cssBeaut").onclick=()=>&#123;let i=document.getElementById("cssIn").value;const o=i.replace(/\/\*[\s\S]*?\*\//g,m=>m+"\n").replace(/\s+/g," ").replace(/&#123;/g," &#123;\n  ").replace(/;/g,";\n  ").replace(/&#125;/g,"\n&#125;\n").replace(/,\s*/g,", ").replace(/:\s*/g,": ").replace(/^\s+|\s+$/gm,"").replace(/\n&#123;3,&#125;/g,"\n\n").trim();document.getElementById("cssOut").value=o;cssStats(i,o)&#125;;
 document.getElementById("cssCopy").onclick=()=>navigator.clipboard.writeText(document.getElementById("cssOut").value);
-document.getElementById("cssClear").onclick=()=>{document.getElementById("cssIn").value="";document.getElementById("cssOut").value="";document.getElementById("cssStats").textContent="---"};
-function cssStats(i,o){const ib=new TextEncoder().encode(i).length,ob=new TextEncoder().encode(o).length;const saved=((ib-ob)/ib*100).toFixed(1);document.getElementById("cssStats").innerHTML=ib+" B &rarr; "+ob+" B ("+saved+"%)"}
+document.getElementById("cssClear").onclick=()=>&#123;document.getElementById("cssIn").value="";document.getElementById("cssOut").value="";document.getElementById("cssStats").textContent="---"&#125;;
+function cssStats(i,o)&#123;const ib=new TextEncoder().encode(i).length,ob=new TextEncoder().encode(o).length;const saved=((ib-ob)/ib*100).toFixed(1);document.getElementById("cssStats").innerHTML=ib+" B &rarr; "+ob+" B ("+saved+"%)"&#125;
 </script>
 

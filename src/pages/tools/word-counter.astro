@@ -9,11 +9,7 @@ const aboutText = 'Word Counter Word counter online. Hitung jumlah kata, karakte
 const relatedTools = [
 
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">W</div><div><h1 class="h3 mb-0">Word Counter</h1><p class="opacity-60 small mb-0">Hitung kata, karakter, kalimat, paragraf, dan waktu baca/bicara.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-8"><div class="card card-bordered bg-base-100 p-3"><textarea id="textInput" class="input input-bordered w-full font-mono" rows="10" placeholder="Masukkan teks..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea></div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><div class="row gap-2"><div class="col-6"><div class="stat-card"><div class="num" id="wordCount">0</div><div class="lbl">Kata</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="charCount">0</div><div class="lbl">Karakter</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="charNoSpace">0</div><div class="lbl">Karakter (no spasi)</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="sentenceCount">0</div><div class="lbl">Kalimat</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="paraCount">0</div><div class="lbl">Paragraf</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="avgWordLen">0</div><div class="lbl">Rata-rata huruf/kata</div></div></div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-2">Waktu Baca</h6><p class="mb-1">Membaca: <span class="font-bold" id="readTime">0</span></p><p class="mb-0">Berbicara: <span class="font-bold" id="speakTime">0</span></p></div></div></div>`;
 const toolCss = `.stat-card{text-align:center;padding:0.75rem;border-radius:8px;background:var(--surface-soft)}.stat-card .num{font-size:1.8rem;font-weight:700}.stat-card .lbl{font-size:0.7rem;text-transform:uppercase;color:var(--opacity-60)}`;
 ---
 
@@ -23,9 +19,13 @@ const toolCss = `.stat-card{text-align:center;padding:0.75rem;border-radius:8px;
   keywords={keywords}
 >
 
-<Fragment set:html={bodyHtml} />
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fff7ed;color:#ea580c;">W</div><div><h1 class="h3 mb-0">Word Counter</h1><p class="opacity-60 small mb-0">Hitung kata, karakter, kalimat, paragraf, dan waktu baca/bicara.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-8"><div class="card card-bordered bg-base-100 p-3"><textarea id="textInput" class="input input-bordered w-full font-mono" rows="10" placeholder="Masukkan teks..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-  <ToolShell about={aboutText} />
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea></div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><div class="row gap-2"><div class="col-6"><div class="stat-card"><div class="num" id="wordCount">0</div><div class="lbl">Kata</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="charCount">0</div><div class="lbl">Karakter</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="charNoSpace">0</div><div class="lbl">Karakter (no spasi)</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="sentenceCount">0</div><div class="lbl">Kalimat</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="paraCount">0</div><div class="lbl">Paragraf</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="avgWordLen">0</div><div class="lbl">Rata-rata huruf/kata</div></div></div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-2">Waktu Baca</h6><p class="mb-1">Membaca: <span class="font-bold" id="readTime">0</span></p><p class="mb-0">Berbicara: <span class="font-bold" id="speakTime">0</span></p></div></div></div>
+
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -45,6 +45,6 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script is:inline>
-var inp=document.getElementById('textInput');function count(){var t=inp.value,words=t.trim()?t.trim().split(/\\s+/).length:0,chars=t.length,charsNs=t.replace(/\\s/g,'').length,sents=t.split(/[.!?]+/).filter(function(s){return s.trim().length>0}).length,paras=t.split(/\\n\\s*\\n/).filter(function(p){return p.trim().length>0}).length||(t.trim()?1:0),avg=words>0?Math.round(charsNs/words):0,rt=Math.ceil(words/200)+' menit',st=Math.ceil(words/150)+' menit';document.getElementById('wordCount').textContent=words.toLocaleString();document.getElementById('charCount').textContent=chars.toLocaleString();document.getElementById('charNoSpace').textContent=charsNs.toLocaleString();document.getElementById('sentenceCount').textContent=sents;document.getElementById('paraCount').textContent=paras;document.getElementById('avgWordLen').textContent=avg+' huruf';document.getElementById('readTime').textContent=rt;document.getElementById('speakTime').textContent=st}inp.addEventListener('input',count);count();
+var inp=document.getElementById('textInput');function count()&#123;var t=inp.value,words=t.trim()?t.trim().split(/\\s+/).length:0,chars=t.length,charsNs=t.replace(/\\s/g,'').length,sents=t.split(/[.!?]+/).filter(function(s)&#123;return s.trim().length>0&#125;).length,paras=t.split(/\\n\\s*\\n/).filter(function(p)&#123;return p.trim().length>0&#125;).length||(t.trim()?1:0),avg=words>0?Math.round(charsNs/words):0,rt=Math.ceil(words/200)+' menit',st=Math.ceil(words/150)+' menit';document.getElementById('wordCount').textContent=words.toLocaleString();document.getElementById('charCount').textContent=chars.toLocaleString();document.getElementById('charNoSpace').textContent=charsNs.toLocaleString();document.getElementById('sentenceCount').textContent=sents;document.getElementById('paraCount').textContent=paras;document.getElementById('avgWordLen').textContent=avg+' huruf';document.getElementById('readTime').textContent=rt;document.getElementById('speakTime').textContent=st&#125;inp.addEventListener('input',count);count();
 </script>
 

@@ -12,13 +12,7 @@ const relatedTools = [
   { slug: 'sql-formatter', name: 'Sql Formatter', icon: 'SQL' },
   { slug: 'html-entity', name: 'Html Entity', icon: '&' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div><h1 class="h3 mb-0">YAML ? JSON Converter</h1><p class="opacity-60 small mb-0">Konversi YAML ke JSON atau JSON ke YAML. Paste data, pilih arah, dan konversi.</p></div></header>
-<div class="flex flex-wrap gap-4 mb-4">
-<div class="col-lg-6"><label class="label-text font-semibold">Input</label><textarea id="inputArea" class="input input-bordered w-full font-mono" rows="10" placeholder="Paste YAML atau JSON..."></textarea>
-<div class="flex gap-2 mt-2"><button id="btnToJson" class="btn btn-primary">YAML ? JSON</button><button id="btnToYaml" class="btn btn-success">JSON ? YAML</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div>
-<div class="col-lg-6"><div class="flex justify-between items-center mb-1"><label class="label-text font-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
-<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea></div></div>
-`;
+
 ---
 
 <ToolLayout
@@ -27,9 +21,14 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
   keywords={keywords}
 >
 
-<Fragment set:html={bodyHtml} />
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div><h1 class="h3 mb-0">YAML ? JSON Converter</h1><p class="opacity-60 small mb-0">Konversi YAML ke JSON atau JSON ke YAML. Paste data, pilih arah, dan konversi.</p></div></header>
+<div class="flex flex-wrap gap-4 mb-4">
+<div class="col-lg-6"><label class="label-text font-semibold">Input</label><textarea id="inputArea" class="input input-bordered w-full font-mono" rows="10" placeholder="Paste YAML atau JSON..."></textarea>
+<div class="flex gap-2 mt-2"><button id="btnToJson" class="btn btn-primary">YAML ? JSON</button><button id="btnToYaml" class="btn btn-success">JSON ? YAML</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div>
+<div class="col-lg-6"><div class="flex justify-between items-center mb-1"><label class="label-text font-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
+<textarea id="outputArea" class="input input-bordered w-full font-mono" rows="10" readonly></textarea></div></div>
 
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -47,11 +46,11 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');
-function toJson(){try{var d=jsyaml.load(inp.value);out.value=JSON.stringify(d,null,2)}catch(e){out.value='Error: '+e.message}}
-function toYaml(){try{var d=JSON.parse(inp.value);out.value=jsyaml.dump(d,{indent:2})}catch(e){out.value='Error: '+e.message}}
+function toJson()&#123;try&#123;var d=jsyaml.load(inp.value);out.value=JSON.stringify(d,null,2)&#125;catch(e)&#123;out.value='Error: '+e.message&#125;&#125;
+function toYaml()&#123;try&#123;var d=JSON.parse(inp.value);out.value=jsyaml.dump(d,&#123;indent:2&#125;)&#125;catch(e)&#123;out.value='Error: '+e.message&#125;&#125;
 document.getElementById('btnToJson').addEventListener('click',toJson);
 document.getElementById('btnToYaml').addEventListener('click',toYaml);
-document.getElementById('btnClear').addEventListener('click',function(){inp.value='';out.value=''});
-document.getElementById('btnCopy').addEventListener('click',function(){if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});
+document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';out.value=''&#125;);
+document.getElementById('btnCopy').addEventListener('click',function()&#123;if(!out.value)return;var b=this;navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;)&#125;);
 </script>
 

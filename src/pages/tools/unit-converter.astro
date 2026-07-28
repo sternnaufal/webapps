@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'date-calculator', name: 'Date Calculator', icon: '📅' },
   { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
 ];
-const bodyHtml = `<div class="card card-bordered bg-base-100 p-4 shadow-sm">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<div class="card card-bordered bg-base-100 p-4 shadow-sm">
         <div class="flex flex-wrap gap-3 mb-3">
           <div class="md:w-1/3 w-full">
             <label class="label-text">Kategori</label>
@@ -50,18 +59,9 @@ const bodyHtml = `<div class="card card-bordered bg-base-100 p-4 shadow-sm">
           </div>
         </div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -77,38 +77,38 @@ const bodyHtml = `<div class="card card-bordered bg-base-100 p-4 shadow-sm">
 </script>
 
 <script is:inline>
-var UNITS = {
-  length: {
+var UNITS = &#123;
+  length: &#123;
     base: 'm',
-    units: { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344 }
-  },
-  weight: {
+    units: &#123; mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344 &#125;
+  &#125;,
+  weight: &#123;
     base: 'kg',
-    units: { mg: 0.000001, g: 0.001, kg: 1, ton: 1000, oz: 0.0283495, lb: 0.453592 }
-  },
-  volume: {
+    units: &#123; mg: 0.000001, g: 0.001, kg: 1, ton: 1000, oz: 0.0283495, lb: 0.453592 &#125;
+  &#125;,
+  volume: &#123;
     base: 'L',
-    units: { mL: 0.001, L: 1, 'm\\u00B3': 1000, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.236588, floz: 0.0295735 }
-  },
-  area: {
+    units: &#123; mL: 0.001, L: 1, 'm\\u00B3': 1000, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.236588, floz: 0.0295735 &#125;
+  &#125;,
+  area: &#123;
     base: 'm\\u00B2',
-    units: { 'mm\\u00B2': 0.000001, 'cm\\u00B2': 0.0001, 'm\\u00B2': 1, ha: 10000, 'km\\u00B2': 1000000, 'in\\u00B2': 0.00064516, 'ft\\u00B2': 0.092903, ac: 4046.86 }
-  },
-  speed: {
+    units: &#123; 'mm\\u00B2': 0.000001, 'cm\\u00B2': 0.0001, 'm\\u00B2': 1, ha: 10000, 'km\\u00B2': 1000000, 'in\\u00B2': 0.00064516, 'ft\\u00B2': 0.092903, ac: 4046.86 &#125;
+  &#125;,
+  speed: &#123;
     base: 'm/s',
-    units: { 'm/s': 1, 'km/h': 0.277778, 'mph': 0.44704, knot: 0.514444, 'ft/s': 0.3048 }
-  },
-  data: {
+    units: &#123; 'm/s': 1, 'km/h': 0.277778, 'mph': 0.44704, knot: 0.514444, 'ft/s': 0.3048 &#125;
+  &#125;,
+  data: &#123;
     base: 'B',
-    units: { B: 1, KB: 1000, MB: 1000000, GB: 1000000000, TB: 1000000000000, KiB: 1024, MiB: 1048576, GiB: 1073741824 }
-  }
-};
+    units: &#123; B: 1, KB: 1000, MB: 1000000, GB: 1000000000, TB: 1000000000000, KiB: 1024, MiB: 1048576, GiB: 1073741824 &#125;
+  &#125;
+&#125;;
 
 // Temperature special case
-UNITS.temperature = {
+UNITS.temperature = &#123;
   base: 'C',
-  units: { C: 'c', F: 'f', K: 'k' },
-  convert: function(val, from, to) {
+  units: &#123; C: 'c', F: 'f', K: 'k' &#125;,
+  convert: function(val, from, to) &#123;
     var c;
     if (from === 'C') c = val;
     else if (from === 'F') c = (val - 32) * 5/9;
@@ -117,8 +117,8 @@ UNITS.temperature = {
     if (to === 'C') return c;
     if (to === 'F') return c * 9/5 + 32;
     return c + 273.15;
-  }
-};
+  &#125;
+&#125;;
 
 var category = document.getElementById('category');
 var fromUnit = document.getElementById('fromUnit');
@@ -126,17 +126,17 @@ var toUnit = document.getElementById('toUnit');
 var fromVal = document.getElementById('fromVal');
 var resultDisplay = document.getElementById('resultDisplay');
 
-function populateUnits(cat) {
+function populateUnits(cat) &#123;
   fromUnit.innerHTML = '';
   toUnit.innerHTML = '';
   var units = UNITS[cat];
   var keys;
-  if (cat === 'temperature') {
+  if (cat === 'temperature') &#123;
     keys = ['C', 'F', 'K'];
-  } else {
+  &#125; else &#123;
     keys = Object.keys(units.units);
-  }
-  keys.forEach(function(k, i) {
+  &#125;
+  keys.forEach(function(k, i) &#123;
     var opt1 = document.createElement('option');
     opt1.value = k;
     opt1.textContent = k;
@@ -145,40 +145,40 @@ function populateUnits(cat) {
     opt2.value = k;
     opt2.textContent = k;
     toUnit.appendChild(opt2);
-  });
+  &#125;);
   if (keys.length > 1) toUnit.value = keys[1];
   convert();
-}
+&#125;
 
-function convert() {
+function convert() &#123;
   var cat = category.value;
   var val = parseFloat(fromVal.value) || 0;
   var from = fromUnit.value;
   var to = toUnit.value;
 
   var result;
-  if (cat === 'temperature') {
+  if (cat === 'temperature') &#123;
     result = UNITS.temperature.convert(val, from, to);
-  } else {
+  &#125; else &#123;
     var u = UNITS[cat].units;
     var baseVal = val * u[from];
     result = baseVal / u[to];
-  }
+  &#125;
 
   resultDisplay.textContent = val + ' ' + from + ' = ' + result.toPrecision(10).replace(/\.?0+$/, '') + ' ' + to;
-}
+&#125;
 
-category.addEventListener('change', function() { populateUnits(this.value); });
+category.addEventListener('change', function() &#123; populateUnits(this.value); &#125;);
 fromUnit.addEventListener('change', convert);
 toUnit.addEventListener('change', convert);
 fromVal.addEventListener('input', convert);
 
-document.getElementById('btnSwap').addEventListener('click', function() {
+document.getElementById('btnSwap').addEventListener('click', function() &#123;
   var tmp = fromUnit.value;
   fromUnit.value = toUnit.value;
   toUnit.value = tmp;
   convert();
-});
+&#125;);
 
 populateUnits('length');
 </script>

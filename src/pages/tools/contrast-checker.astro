@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'gradient-generator', name: 'Gradient Generator', icon: '◐' },
   { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#eab308;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div><div><h1 class="h3 mb-0">Color Contrast Checker</h1><p class="opacity-60 small mb-0">Cek rasio kontras antara dua warna dan lihat kelulusan WCAG AA/AAA.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#eab308;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div><div><h1 class="h3 mb-0">Color Contrast Checker</h1><p class="opacity-60 small mb-0">Cek rasio kontras antara dua warna dan lihat kelulusan WCAG AA/AAA.</p></div></header>
 <div class="flex flex-wrap gap-4 mb-4">
 <div class="md:w-1/3 w-full">
 <div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Foreground (Text)</h6>
@@ -35,18 +44,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div><span class="tag-badge" id="aaaNorm" style="background:#eef2ff;color:#6366f1;">AAA Normal</span></div>
 <div><span class="tag-badge" id="aaaLarge" style="background:#eef2ff;color:#6366f1;">AAA Large</span></div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -61,15 +60,15 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
 var fgC=document.getElementById('fgColor'),fgH=document.getElementById('fgHex'),bgC=document.getElementById('bgColor'),bgH=document.getElementById('bgHex'),pB=document.getElementById('previewBox'),pT=document.getElementById('previewText'),rD=document.getElementById('ratioDisplay'),aN=document.getElementById('aaNorm'),aL=document.getElementById('aaLarge'),aaN=document.getElementById('aaaNorm'),aaL=document.getElementById('aaaLarge');
-function lum(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c}).join('');var r=parseInt(h.substr(0,2),16)/255,g=parseInt(h.substr(2,2),16)/255,b=parseInt(h.substr(4,2),16)/255;
-[r,g,b]=[r,g,b].map(function(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)});return 0.2126*r+0.7152*g+0.0722*b}
-function contrast(f,b){var l1=lum(f),l2=lum(b),ml=Math.max(l1,l2),mn=Math.min(l1,l2);return(ml+0.05)/(mn+0.05)}
-function update(from){var f=fgH.value.trim(),b=bgH.value.trim();if(!/^#[0-9a-f]{3,6}$/i.test(f)||!/^#[0-9a-f]{3,6}$/i.test(b))return;
-if(from!=='fg'){fgC.value=f}if(from!=='bg'){bgC.value=b}var r=contrast(f,b);rD.textContent=r.toFixed(2)+':1';
-pB.style.background=b;pT.style.color=f;function s(el,pass){el.textContent=pass?'PASS':'FAIL';el.style.background=pass?'#d4edda':'#f8d7da';el.style.color=pass?'#155724':'#721c24'}
-s(aN,r>=4.5);s(aL,r>=3);s(aaN,r>=7);s(aaL,r>=4.5)}
-fgC.addEventListener('input',function(){fgH.value=this.value;update('fg')});fgH.addEventListener('input',function(){fgC.value=this.value;update('fg')});
-bgC.addEventListener('input',function(){bgH.value=this.value;update('bg')});bgH.addEventListener('input',function(){bgC.value=this.value;update('bg')});
+function lum(h)&#123;h=h.replace('#','');if(h.length===3)h=h.split('').map(function(c)&#123;return c+c&#125;).join('');var r=parseInt(h.substr(0,2),16)/255,g=parseInt(h.substr(2,2),16)/255,b=parseInt(h.substr(4,2),16)/255;
+[r,g,b]=[r,g,b].map(function(c)&#123;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)&#125;);return 0.2126*r+0.7152*g+0.0722*b&#125;
+function contrast(f,b)&#123;var l1=lum(f),l2=lum(b),ml=Math.max(l1,l2),mn=Math.min(l1,l2);return(ml+0.05)/(mn+0.05)&#125;
+function update(from)&#123;var f=fgH.value.trim(),b=bgH.value.trim();if(!/^#[0-9a-f]&#123;3,6&#125;$/i.test(f)||!/^#[0-9a-f]&#123;3,6&#125;$/i.test(b))return;
+if(from!=='fg')&#123;fgC.value=f&#125;if(from!=='bg')&#123;bgC.value=b&#125;var r=contrast(f,b);rD.textContent=r.toFixed(2)+':1';
+pB.style.background=b;pT.style.color=f;function s(el,pass)&#123;el.textContent=pass?'PASS':'FAIL';el.style.background=pass?'#d4edda':'#f8d7da';el.style.color=pass?'#155724':'#721c24'&#125;
+s(aN,r>=4.5);s(aL,r>=3);s(aaN,r>=7);s(aaL,r>=4.5)&#125;
+fgC.addEventListener('input',function()&#123;fgH.value=this.value;update('fg')&#125;);fgH.addEventListener('input',function()&#123;fgC.value=this.value;update('fg')&#125;);
+bgC.addEventListener('input',function()&#123;bgH.value=this.value;update('bg')&#125;);bgH.addEventListener('input',function()&#123;bgC.value=this.value;update('bg')&#125;);
 update('fg');
 </script>
 

@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'url-encode', name: 'Url Encode', icon: '%' },
   { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' }
 ];
-const bodyHtml = `<!-- Navbar khusus mobile -->
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<!-- Navbar khusus mobile -->
       
 
       
@@ -41,18 +50,9 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
           </div>
         </div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -67,55 +67,55 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
 <script is:inline>
 let currentResult = '';
 
-function encode() {
+function encode() &#123;
   const input = document.getElementById('text').value;
-  if (!input.trim()) {
+  if (!input.trim()) &#123;
     alert('Masukkan teks terlebih dahulu');
     return;
-  }
-  try {
+  &#125;
+  try &#123;
     currentResult = btoa(unescape(encodeURIComponent(input)));
-    showResult(\`<p><strong>Encoded:</strong></p><pre class='bg-light p-3 border rounded'>\${escapeHtml(currentResult)}</pre>\`);
-  } catch (e) {
+    showResult(\`<p><strong>Encoded:</strong></p><pre class='bg-light p-3 border rounded'>\$&#123;escapeHtml(currentResult)&#125;</pre>\`);
+  &#125; catch (e) &#123;
     alert('Gagal encode: ' + e.message);
-  }
-}
+  &#125;
+&#125;
 
-function decode() {
+function decode() &#123;
   const input = document.getElementById('text').value;
-  if (!input.trim()) {
+  if (!input.trim()) &#123;
     alert('Masukkan Base64 terlebih dahulu');
     return;
-  }
-  try {
+  &#125;
+  try &#123;
     currentResult = decodeURIComponent(escape(atob(input)));
-    showResult(\`<p><strong>Decoded:</strong></p><pre class='bg-light p-3 border rounded'>\${escapeHtml(currentResult)}</pre>\`);
-  } catch (e) {
+    showResult(\`<p><strong>Decoded:</strong></p><pre class='bg-light p-3 border rounded'>\$&#123;escapeHtml(currentResult)&#125;</pre>\`);
+  &#125; catch (e) &#123;
     alert('Input bukan Base64 yang valid!');
-  }
-}
+  &#125;
+&#125;
 
-function showResult(html) {
+function showResult(html) &#123;
   document.getElementById('resultContent').innerHTML = html;
   document.getElementById('results').style.display = 'block';
-}
+&#125;
 
-function escapeHtml(text) {
+function escapeHtml(text) &#123;
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
-}
+&#125;
 
-function copyResult() {
-  navigator.clipboard.writeText(currentResult).then(() => {
+function copyResult() &#123;
+  navigator.clipboard.writeText(currentResult).then(() => &#123;
     const btn = document.getElementById('copyBtn');
     const oldText = btn.textContent;
     btn.textContent = '? Copied!';
-    setTimeout(() => { btn.textContent = oldText; }, 2000);
-  }).catch(() => {
+    setTimeout(() => &#123; btn.textContent = oldText; &#125;, 2000);
+  &#125;).catch(() => &#123;
     alert('Gagal menyalin');
-  });
-}
+  &#125;);
+&#125;
 
 document.getElementById('encodeBtn').addEventListener('click', encode);
 document.getElementById('decodeBtn').addEventListener('click', decode);

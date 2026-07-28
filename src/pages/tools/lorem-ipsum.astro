@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'char-counter', name: 'Char Counter', icon: '#' },
   { slug: 'md-preview', name: 'Md Preview', icon: 'MD' }
 ];
-const bodyHtml = `<form id="loremForm" class="flex flex-wrap gap-3 mb-4">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<form id="loremForm" class="flex flex-wrap gap-3 mb-4">
         <div class="md:w-1/3 w-full">
           <label class="label-text">Jumlah</label>
           <input type="number" id="amount" class="input input-bordered w-full" min="1" value="3">
@@ -37,18 +46,9 @@ const bodyHtml = `<form id="loremForm" class="flex flex-wrap gap-3 mb-4">
         </div>
         <div id="output"></div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -66,45 +66,45 @@ const bodyHtml = `<form id="loremForm" class="flex flex-wrap gap-3 mb-4">
 <script is:inline>
 var loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum mollis ante, in euismod eros. Donec ex metus, ornare eget interdum sed, auctor quis ligula. Sed dictum, tellus eget molestie finibus, orci nibh fringilla tortor, ac finibus dolor ipsum varius mi. Sed erat est, interdum id lacus id, convallis pellentesque leo. Aliquam placerat arcu sem, vel dictum neque malesuada non. Maecenas et magna turpis. Cras sit amet finibus lectus, sit amet volutpat nisi. Fusce vehicula viverra orci, ac molestie mi luctus at. Nunc luctus porta tellus, sed bibendum metus. Morbi blandit ligula in mi finibus ullamcorper. Nullam vestibulum dui eget odio accumsan euismod. Ut ornare non ante non tincidunt. Integer neque leo, semper sed justo eget, maximus imperdiet neque.\\n\\nMauris pharetra augue ut cursus commodo. Suspendisse potenti. Sed ullamcorper bibendum nunc, ac pharetra risus faucibus at. Quisque tellus leo, vehicula volutpat semper et, volutpat vel turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin accumsan lorem feugiat quam pretium efficitur. Quisque aliquam hendrerit purus, in pulvinar nunc auctor dictum.\\n\\nQuisque dignissim tempus suscipit. Vestibulum lacinia volutpat velit. Suspendisse ut arcu cursus, aliquet velit non, suscipit quam. Curabitur lobortis tincidunt felis, eget commodo elit lobortis vitae. Ut ligula elit, consequat a posuere vel, sodales ac enim. In cursus quis ex quis fringilla. Aenean elementum dictum magna, nec ultricies nunc finibus sed. Nulla eu faucibus quam. In vitae arcu vehicula orci ultrices cursus.\\n\\nPraesent nec metus dolor. Curabitur accumsan, tellus ac malesuada varius, ligula massa vulputate magna, in porta diam mauris et ipsum. Pellentesque egestas elementum eleifend. Donec quis dolor dui. Quisque vel consectetur eros, vel porta magna. Duis ut volutpat mi. Integer neque urna, aliquam a commodo non, tempus ut purus.\\n\\nCurabitur pharetra molestie nunc, at tempor tellus dapibus at. In pharetra pretium mi ut dictum. Pellentesque rutrum, purus a convallis scelerisque, ante velit fermentum urna, et lobortis dolor enim vel eros. Morbi iaculis ornare imperdiet. Sed et malesuada eros. Donec convallis eu ex vel varius. Ut sem nulla, tempus sed bibendum sit amet, ultrices vitae ex. Quisque vel quam ac enim scelerisque hendrerit vel vel nibh.';
 
-function generateLorem(amount, type) {
+function generateLorem(amount, type) &#123;
   var words = loremText.split(/\\s+/);
   var sentences = loremText.split(/(?<=[.!?])\\s+/);
   var paragraphs = loremText.split(/\\n\\s*\\n/);
   var result = '';
 
-  if (type === 'words') {
-    for (var i = 0; i < amount; i++) {
+  if (type === 'words') &#123;
+    for (var i = 0; i < amount; i++) &#123;
       var randomIndex = Math.floor(Math.random() * words.length);
       result += words[randomIndex] + ' ';
-    }
-  } else if (type === 'sentences') {
-    for (var i = 0; i < amount; i++) {
+    &#125;
+  &#125; else if (type === 'sentences') &#123;
+    for (var i = 0; i < amount; i++) &#123;
       var randomIndex = Math.floor(Math.random() * sentences.length);
       result += sentences[randomIndex] + ' ';
-    }
-  } else {
-    for (var i = 0; i < amount; i++) {
+    &#125;
+  &#125; else &#123;
+    for (var i = 0; i < amount; i++) &#123;
       var randomIndex = Math.floor(Math.random() * paragraphs.length);
       result += paragraphs[randomIndex] + '\\n\\n';
-    }
-  }
+    &#125;
+  &#125;
 
   return result.trim();
-}
+&#125;
 
-document.getElementById('loremForm').addEventListener('submit', function(e) {
+document.getElementById('loremForm').addEventListener('submit', function(e) &#123;
   e.preventDefault();
   var amount = parseInt(document.getElementById('amount').value);
   var type = document.getElementById('type').value;
   document.getElementById('output').textContent = generateLorem(amount, type);
-});
+&#125;);
 
-document.getElementById('copyBtn').addEventListener('click', function() {
+document.getElementById('copyBtn').addEventListener('click', function() &#123;
   var text = document.getElementById('output').textContent;
   if (!text) return;
-  navigator.clipboard.writeText(text).then(function() {
+  navigator.clipboard.writeText(text).then(function() &#123;
     alert('Hasil berhasil dicopy!');
-  });
-});
+  &#125;);
+&#125;);
 </script>
 

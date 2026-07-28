@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'html-entity', name: 'Html Entity', icon: '&' },
   { slug: 'slug-generator', name: 'Slug Generator', icon: '🔗' }
 ];
-const bodyHtml = `<div class="card card-bordered bg-base-100 p-4 shadow-sm">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<div class="card card-bordered bg-base-100 p-4 shadow-sm">
         <div class="mb-3">
           <label for="inputText" class="label-text">Input</label>
           <textarea id="inputText" class="input input-bordered w-full" placeholder="Masukkan teks atau URL encoded string...">https://example.com/search?q=hello world&lang=id&page=1</textarea>
@@ -29,18 +38,9 @@ const bodyHtml = `<div class="card card-bordered bg-base-100 p-4 shadow-sm">
           <textarea id="outputText" class="input input-bordered w-full" readonly></textarea>
         </div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -59,20 +59,20 @@ const bodyHtml = `<div class="card card-bordered bg-base-100 p-4 shadow-sm">
 var inp = document.getElementById('inputText');
 var out = document.getElementById('outputText');
 
-document.getElementById('btnEncComponent').addEventListener('click', function() {
-  try { out.value = encodeURIComponent(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
-});
-document.getElementById('btnEncURI').addEventListener('click', function() {
-  try { out.value = encodeURI(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
-});
-document.getElementById('btnDecode').addEventListener('click', function() {
-  try { out.value = decodeURIComponent(inp.value); } catch (e) { out.value = 'Error: ' + e.message; }
-});
-document.getElementById('btnSwap').addEventListener('click', function() {
+document.getElementById('btnEncComponent').addEventListener('click', function() &#123;
+  try &#123; out.value = encodeURIComponent(inp.value); &#125; catch (e) &#123; out.value = 'Error: ' + e.message; &#125;
+&#125;);
+document.getElementById('btnEncURI').addEventListener('click', function() &#123;
+  try &#123; out.value = encodeURI(inp.value); &#125; catch (e) &#123; out.value = 'Error: ' + e.message; &#125;
+&#125;);
+document.getElementById('btnDecode').addEventListener('click', function() &#123;
+  try &#123; out.value = decodeURIComponent(inp.value); &#125; catch (e) &#123; out.value = 'Error: ' + e.message; &#125;
+&#125;);
+document.getElementById('btnSwap').addEventListener('click', function() &#123;
   var tmp = inp.value;
   inp.value = out.value;
   out.value = tmp;
-});
-document.getElementById('btnClear').addEventListener('click', function() { inp.value = ''; out.value = ''; });
+&#125;);
+document.getElementById('btnClear').addEventListener('click', function() &#123; inp.value = ''; out.value = ''; &#125;);
 </script>
 

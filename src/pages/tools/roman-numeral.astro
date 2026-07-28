@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'decimal-to-fraction', name: 'Decimal To Fraction', icon: '½' },
   { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">IV</div><div><h1 class="h3 mb-0">Roman Numeral Converter</h1><p class="opacity-60 small mb-0">Konversi angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fefce8;color:#ca8a04;">IV</div><div><h1 class="h3 mb-0">Roman Numeral Converter</h1><p class="opacity-60 small mb-0">Konversi angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full">
 <div class="card card-bordered bg-base-100 p-3 mb-3">
 <div class="btn-group mb-3 w-full" role="group"><button id="modeToRoman" class="btn btn-primary w-50">Desimal ? Romawi</button><button id="modeToDecimal" class="btn btn-outline-primary w-50">Romawi ? Desimal</button></div>
@@ -62,18 +71,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div id="yearList" class="small"></div>
 </div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -90,71 +89,71 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script is:inline>
-function toRoman(n){
+function toRoman(n)&#123;
   if(n<1||n>3999)return '';
   var vals=[1000,900,500,400,100,90,50,40,10,9,5,4,1],nums=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'],r='';
-  for(var i=0;i<vals.length;i++){while(n>=vals[i]){r+=nums[i];n-=vals[i]}}
+  for(var i=0;i<vals.length;i++)&#123;while(n>=vals[i])&#123;r+=nums[i];n-=vals[i]&#125;&#125;
   return r;
-}
-function fromRoman(r){
-  var m={I:1,V:5,X:10,L:50,C:100,D:500,M:1000},total=0;
-  for(var i=0;i<r.length;i++){
+&#125;
+function fromRoman(r)&#123;
+  var m=&#123;I:1,V:5,X:10,L:50,C:100,D:500,M:1000&#125;,total=0;
+  for(var i=0;i<r.length;i++)&#123;
     var cur=m[r[i]]||0,next=m[r[i+1]]||0;
-    if(cur<next){total-=cur}else{total+=cur}
-  }
+    if(cur<next)&#123;total-=cur&#125;else&#123;total+=cur&#125;
+  &#125;
   return total;
-}
+&#125;
 
 var mode='roman';
-document.getElementById('modeToRoman').addEventListener('click',function(){
+document.getElementById('modeToRoman').addEventListener('click',function()&#123;
   mode='roman';this.className='btn btn-primary w-50';
   document.getElementById('modeToDecimal').className='btn btn-outline-primary w-50';
   document.getElementById('toRomanPane').style.display='block';
   document.getElementById('toDecimalPane').style.display='none';
-});
-document.getElementById('modeToDecimal').addEventListener('click',function(){
+&#125;);
+document.getElementById('modeToDecimal').addEventListener('click',function()&#123;
   mode='decimal';this.className='btn btn-primary w-50';
   document.getElementById('modeToRoman').className='btn btn-outline-primary w-50';
   document.getElementById('toRomanPane').style.display='none';
   document.getElementById('toDecimalPane').style.display='block';
-});
+&#125;);
 
-document.getElementById('btnToRoman').addEventListener('click',function(){
+document.getElementById('btnToRoman').addEventListener('click',function()&#123;
   var v=parseInt(document.getElementById('decimalInput').value)||0;
   document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'<span class="text-error">Invalid</span>')+'</div>';
-});
-document.getElementById('btnToDecimal').addEventListener('click',function(){
+&#125;);
+document.getElementById('btnToDecimal').addEventListener('click',function()&#123;
   var v=document.getElementById('romanInput').value.toUpperCase().replace(/[^IVXLCDM]/g,'');
   document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
-});
-document.getElementById('decimalInput').addEventListener('input',function(){
+&#125;);
+document.getElementById('decimalInput').addEventListener('input',function()&#123;
   var v=parseInt(this.value)||0;
   document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+(toRoman(v)||'')+'</div>';
-});
-document.getElementById('romanInput').addEventListener('input',function(){
+&#125;);
+document.getElementById('romanInput').addEventListener('input',function()&#123;
   var v=this.value.toUpperCase().replace(/[^IVXLCDM]/g,'');
   document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+fromRoman(v)+'</div>';
-});
+&#125;);
 
-document.querySelectorAll('[data-val]').forEach(function(b){
-  b.addEventListener('click',function(){
+document.querySelectorAll('[data-val]').forEach(function(b)&#123;
+  b.addEventListener('click',function()&#123;
     var v=parseInt(this.dataset.val),r=toRoman(v);
-    if(mode==='roman'){document.getElementById('decimalInput').value=v;document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+r+'</div>'}
-    else{document.getElementById('romanInput').value=r;document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+v+'</div>'}
-  });
-});
+    if(mode==='roman')&#123;document.getElementById('decimalInput').value=v;document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+r+'</div>'&#125;
+    else&#123;document.getElementById('romanInput').value=r;document.getElementById('decimalResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1">'+v+'</div>'&#125;
+  &#125;);
+&#125;);
 
 var yearsHtml='';
-[1990,2000,2010,2020,2024,2025,2026,2027,2045,2050].forEach(function(y){
+[1990,2000,2010,2020,2024,2025,2026,2027,2045,2050].forEach(function(y)&#123;
   yearsHtml+='<span class="badge bg-light text-dark mr-1 mb-1" style="cursor:pointer" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span> ';
-});
+&#125;);
 document.getElementById('yearList').innerHTML=yearsHtml;
-document.querySelectorAll('[data-yr]').forEach(function(el){
-  el.addEventListener('click',function(){
+document.querySelectorAll('[data-yr]').forEach(function(el)&#123;
+  el.addEventListener('click',function()&#123;
     var y=parseInt(this.dataset.yr);
     document.getElementById('decimalInput').value=y;
     document.getElementById('romanResult').innerHTML='<div class="text-3xl font-bold font-bold" style="color:#6366f1;letter-spacing:4px">'+toRoman(y)+'</div>';
-  });
-});
+  &#125;);
+&#125;);
 </script>
 

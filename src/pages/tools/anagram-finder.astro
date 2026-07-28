@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Aa</div><div><h1 class="h3 mb-0">Anagram Finder</h1><p class="opacity-60 small mb-0">Periksa apakah dua kata/kalimat adalah anagram. Anagram adalah kata yang memiliki huruf yang sama jika disusun ulang.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">Aa</div><div><h1 class="h3 mb-0">Anagram Finder</h1><p class="opacity-60 small mb-0">Periksa apakah dua kata/kalimat adalah anagram. Anagram adalah kata yang memiliki huruf yang sama jika disusun ulang.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-6">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="mb-3"><label class="label-text font-semibold">Teks 1</label><textarea id="text1" class="input input-bordered w-full font-mono" rows="2" placeholder="Masukkan teks pertama..." autofocus>listen</textarea></div>
@@ -33,18 +42,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-3">Huruf Sama</h6>
 <div id="letterCompare" class="small"></div></div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -62,9 +61,9 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var t1=document.getElementById('text1'),t2=document.getElementById('text2'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),lc=document.getElementById('letterCompare');
-function check(){
+function check()&#123;
   var a=t1.value.trim().toLowerCase().replace(/[^a-z]/g,''),b=t2.value.trim().toLowerCase().replace(/[^a-z]/g,'');
-  if(!a||!b){res.style.display='none';lc.innerHTML='';return}
+  if(!a||!b)&#123;res.style.display='none';lc.innerHTML='';return&#125;
   var sortA=a.split('').sort().join(''),sortB=b.split('').sort().join('');
   var isAna=sortA===sortB;
   res.style.display='block';
@@ -74,12 +73,12 @@ function check(){
   det.innerHTML='<span>Teks 1: "'+a+'"<br>Teks 2: "'+b+'"</span>';
   var sortedA=a.split('').sort().join(', '),sortedB=b.split('').sort().join(', ');
   lc.innerHTML='<div class="font-bold mb-1">Perbandingan huruf:</div><table class="table table-sm small mb-0"><tr><td>'+t1.value.trim()+'</td><td class="font-mono">['+sortedA+']</td></tr><tr><td>'+t2.value.trim()+'</td><td class="font-mono">['+sortedB+']</td></tr></table>';
-}
+&#125;
 document.getElementById('btnCheck').addEventListener('click',check);
 t1.addEventListener('input',check);t2.addEventListener('input',check);
-document.querySelectorAll('.example').forEach(function(el){
-  el.addEventListener('click',function(){t1.value=this.dataset.a;t2.value=this.dataset.b;check()});
-});
+document.querySelectorAll('.example').forEach(function(el)&#123;
+  el.addEventListener('click',function()&#123;t1.value=this.dataset.a;t2.value=this.dataset.b;check()&#125;);
+&#125;);
 check();
 </script>
 

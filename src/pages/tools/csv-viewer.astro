@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' },
   { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#6366f1;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M3 18h18M3 6h18"/></svg></div><div><h1 class="h3 mb-0">CSV / TSV Viewer</h1><p class="opacity-60 small mb-0">Paste data CSV/TSV, atur delimiter, dan lihat sebagai tabel interaktif.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#6366f1;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M3 18h18M3 6h18"/></svg></div><div><h1 class="h3 mb-0">CSV / TSV Viewer</h1><p class="opacity-60 small mb-0">Paste data CSV/TSV, atur delimiter, dan lihat sebagai tabel interaktif.</p></div></header>
 <div class="flex flex-wrap gap-3 mb-3">
 <div class="md:w-2/3 w-full"><label class="label-text">Data</label><textarea id="csvInput" class="input input-bordered w-full font-mono" rows="8" placeholder="name,email,role&#10;Naufal,naufal@example.com,Admin&#10;Rakha,rakha@example.com,User">name,email,role
 Naufal,naufal@example.com,Admin
@@ -24,18 +33,8 @@ Rakha,rakha@example.com,User</textarea></div>
 <button id="btnClear" class="btn btn-outline-danger w-full mt-2">Clear</button>
 </div></div>
 <div id="tableContainer" style="display:none;"><div class="card shadow-sm"><div class="overflow-x-auto"><table id="csvTable" class="table table-sm table-zebra table-striped mb-0"></table></div></div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -50,8 +49,8 @@ Rakha,rakha@example.com,User</textarea></div>
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
 var inp=document.getElementById('csvInput'),delim=document.getElementById('delimiter'),hasHdr=document.getElementById('hasHeader'),con=document.getElementById('tableContainer'),tbl=document.getElementById('csvTable');
-function parse(){var t=inp.value.trim();if(!t)return;var d=delim.value,r=t.split('\\n').map(function(l){return l.split(d)}),h=hasHdr.checked&&r.length>0?r.shift():null,s='<thead class="table-light">';if(h){s+='<tr>';for(var i=0;i<h.length;i++)s+='<th>'+esc(h[i])+'</th>';s+='</tr>'}s+='</thead><tbody>';for(var i=0;i<r.length;i++){s+='<tr>';for(var j=0;j<r[i].length;j++)s+='<td>'+esc(r[i][j])+'</td>';s+='</tr>'}s+='</tbody>';tbl.innerHTML=s;con.style.display='block'}
-function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function(){inp.value='';con.style.display='none'});
+function parse()&#123;var t=inp.value.trim();if(!t)return;var d=delim.value,r=t.split('\\n').map(function(l)&#123;return l.split(d)&#125;),h=hasHdr.checked&&r.length>0?r.shift():null,s='<thead class="table-light">';if(h)&#123;s+='<tr>';for(var i=0;i<h.length;i++)s+='<th>'+esc(h[i])+'</th>';s+='</tr>'&#125;s+='</thead><tbody>';for(var i=0;i<r.length;i++)&#123;s+='<tr>';for(var j=0;j<r[i].length;j++)s+='<td>'+esc(r[i][j])+'</td>';s+='</tr>'&#125;s+='</tbody>';tbl.innerHTML=s;con.style.display='block'&#125;
+function esc(s)&#123;var d=document.createElement('div');d.textContent=s;return d.innerHTML&#125;
+document.getElementById('btnParse').addEventListener('click',parse);document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';con.style.display='none'&#125;);
 </script>
 

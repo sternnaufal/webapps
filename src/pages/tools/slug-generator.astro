@@ -12,12 +12,7 @@ const relatedTools = [
   { slug: 'html-entity', name: 'Html Entity', icon: '&' },
   { slug: 'meta-tag-generator', name: 'Meta Tag Generator', icon: '🏷' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">/</div><div><h1 class="h3 mb-0">Text to Slug Generator</h1><p class="opacity-60 small mb-0">Ubah teks menjadi URL slug yang SEO friendly. Real-time, instant copy.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-8"><div class="card card-bordered bg-base-100 p-3"><div class="mb-3"><label class="label-text font-semibold small">Masukkan Teks</label><input type="text" id="textInput" class="input input-bordered w-full" value="Cara Membuat Kue Bolu Enak dan Lembut" placeholder="Tulis judul di sini..."></div>
-<button id="btnSlugify" class="btn btn-primary mb-3">Buat Slug</button>
-<div class="mb-2"><div class="flex justify-between"><span class="small font-semibold">Hasil Slug</span><button id="btnCopy" class="btn btn-outline btn-sm">Copy</button></div><div id="slugResult" class="slug-result mt-1">cara-membuat-kue-bolu-enak-dan-lembut</div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-3">Opsi Tambahan</h6>
-<div class="flex items-center gap-2 mb-2"><input type="checkbox" id="removeStopWords" class="checkbox"><label class="flex items-center gap-2-label small" for="removeStopWords">Hapus kata umum (dan, di, ke, dari, yang, ini, itu, dengan, untuk, pada, adalah)</label></div>
-<div class="flex gap-2 flex-wrap"><button class="btn btn-outline btn-sm example" data-txt="Tips SEO Website 2026">Tips SEO Website 2026</button><button class="btn btn-outline btn-sm example" data-txt="Cara Memasak Nasi Goreng Spesial">Cara Memasak Nasi Goreng Spesial</button><button class="btn btn-outline btn-sm example" data-txt="Review: Produk Terbaik Bulan Ini!">Review Produk Terbaik Bulan Ini</button></div>
-</div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Penggunaan Slug</h6><div class="small" style="line-height:2"><p class="mb-1"><strong>Judul Artikel:</strong><br>Cara Membuat Kue Bolu</p><p class="mb-1"><strong>URL Slug:</strong><br><code>cara-membuat-kue-bolu</code></p><p class="mb-1"><strong>URL Lengkap:</strong><br><code>blog.com/cara-membuat-kue-bolu</code></p></div></div></div></div>`;
+
 const toolCss = `.slug-result{font-family:monospace;font-size:1.4rem;font-weight:600;padding:1rem;border-radius:8px;background:#f0fdf4;color:#16a34a;word-break:break-all}`;
 ---
 
@@ -27,9 +22,14 @@ const toolCss = `.slug-result{font-family:monospace;font-size:1.4rem;font-weight
   keywords={keywords}
 >
 
-<Fragment set:html={bodyHtml} />
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">/</div><div><h1 class="h3 mb-0">Text to Slug Generator</h1><p class="opacity-60 small mb-0">Ubah teks menjadi URL slug yang SEO friendly. Real-time, instant copy.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-8"><div class="card card-bordered bg-base-100 p-3"><div class="mb-3"><label class="label-text font-semibold small">Masukkan Teks</label><input type="text" id="textInput" class="input input-bordered w-full" value="Cara Membuat Kue Bolu Enak dan Lembut" placeholder="Tulis judul di sini..."></div>
+<button id="btnSlugify" class="btn btn-primary mb-3">Buat Slug</button>
+<div class="mb-2"><div class="flex justify-between"><span class="small font-semibold">Hasil Slug</span><button id="btnCopy" class="btn btn-outline btn-sm">Copy</button></div><div id="slugResult" class="slug-result mt-1">cara-membuat-kue-bolu-enak-dan-lembut</div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-3">Opsi Tambahan</h6>
+<div class="flex items-center gap-2 mb-2"><input type="checkbox" id="removeStopWords" class="checkbox"><label class="flex items-center gap-2-label small" for="removeStopWords">Hapus kata umum (dan, di, ke, dari, yang, ini, itu, dengan, untuk, pada, adalah)</label></div>
+<div class="flex gap-2 flex-wrap"><button class="btn btn-outline btn-sm example" data-txt="Tips SEO Website 2026">Tips SEO Website 2026</button><button class="btn btn-outline btn-sm example" data-txt="Cara Memasak Nasi Goreng Spesial">Cara Memasak Nasi Goreng Spesial</button><button class="btn btn-outline btn-sm example" data-txt="Review: Produk Terbaik Bulan Ini!">Review Produk Terbaik Bulan Ini</button></div>
+</div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Contoh Penggunaan Slug</h6><div class="small" style="line-height:2"><p class="mb-1"><strong>Judul Artikel:</strong><br>Cara Membuat Kue Bolu</p><p class="mb-1"><strong>URL Slug:</strong><br><code>cara-membuat-kue-bolu</code></p><p class="mb-1"><strong>URL Lengkap:</strong><br><code>blog.com/cara-membuat-kue-bolu</code></p></div></div></div></div>
 
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -49,6 +49,6 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script is:inline>
-var inp=document.getElementById('textInput'),sR=document.getElementById('slugResult'),rSW=document.getElementById('removeStopWords');var STOP=['dan','di','ke','dari','yang','ini','itu','dengan','untuk','pada','adalah','dalam','akan','telah','sudah','bisa','dapat','tidak','atau','serta'];function slugify(t,r){t=t.toLowerCase().trim();t=t.replace(/[]/g,'a').replace(/[]/g,'e').replace(/[]/g,'i').replace(/[]/g,'o').replace(/[]/g,'u').replace(/[]/g,'n').replace(/[]/g,'c').replace(/[^a-z0-9\\s-]/g,'').replace(/\\s+/g,' ').trim();if(r){var words=t.split(' ');t=words.filter(function(w){return STOP.indexOf(w)===-1}).join(' ')}t=t.replace(/\\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');return t}function makeSlug(){var t=inp.value;sR.textContent=slugify(t,rSW.checked)||'(kosong)'}document.getElementById('btnSlugify').addEventListener('click',makeSlug);document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(sR.textContent).catch(function(){})});inp.addEventListener('input',makeSlug);rSW.addEventListener('change',makeSlug);document.querySelectorAll('.example').forEach(function(el){el.addEventListener('click',function(){inp.value=this.dataset.txt;makeSlug()})});makeSlug();
+var inp=document.getElementById('textInput'),sR=document.getElementById('slugResult'),rSW=document.getElementById('removeStopWords');var STOP=['dan','di','ke','dari','yang','ini','itu','dengan','untuk','pada','adalah','dalam','akan','telah','sudah','bisa','dapat','tidak','atau','serta'];function slugify(t,r)&#123;t=t.toLowerCase().trim();t=t.replace(/[]/g,'a').replace(/[]/g,'e').replace(/[]/g,'i').replace(/[]/g,'o').replace(/[]/g,'u').replace(/[]/g,'n').replace(/[]/g,'c').replace(/[^a-z0-9\\s-]/g,'').replace(/\\s+/g,' ').trim();if(r)&#123;var words=t.split(' ');t=words.filter(function(w)&#123;return STOP.indexOf(w)===-1&#125;).join(' ')&#125;t=t.replace(/\\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');return t&#125;function makeSlug()&#123;var t=inp.value;sR.textContent=slugify(t,rSW.checked)||'(kosong)'&#125;document.getElementById('btnSlugify').addEventListener('click',makeSlug);document.getElementById('btnCopy').addEventListener('click',function()&#123;navigator.clipboard.writeText(sR.textContent).catch(function()&#123;&#125;)&#125;);inp.addEventListener('input',makeSlug);rSW.addEventListener('change',makeSlug);document.querySelectorAll('.example').forEach(function(el)&#123;el.addEventListener('click',function()&#123;inp.value=this.dataset.txt;makeSlug()&#125;)&#125;);makeSlug();
 </script>
 

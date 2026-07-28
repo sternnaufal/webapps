@@ -12,7 +12,17 @@ const relatedTools = [
   { slug: 'word-counter', name: 'Word Counter', icon: '⚡' },
   { slug: 'char-counter', name: 'Char Counter', icon: '#' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">Aa</div><div><h1 class="h3 mb-0">Number to Words</h1><p class="opacity-60 small mb-0">Konversi angka ke huruf (terbilang) Bahasa Indonesia.</p></div></header>
+
+const toolCss = `.word-result{font-size:1.15rem;font-weight:600;line-height:1.7;padding:1rem;border-radius:8px;background:var(--surface-soft)}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eff6ff;color:#2563eb;">Aa</div><div><h1 class="h3 mb-0">Number to Words</h1><p class="opacity-60 small mb-0">Konversi angka ke huruf (terbilang) Bahasa Indonesia.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-8">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="mb-3"><label class="label-text font-semibold small">Masukkan Angka</label>
@@ -34,19 +44,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div>
 </div></div>
-`;
-const toolCss = `.word-result{font-size:1.15rem;font-weight:600;line-height:1.7;padding:1rem;border-radius:8px;background:var(--surface-soft)}`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -71,26 +70,26 @@ var sat=['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembila
 var belas=['sepuluh','sebelas','dua belas','tiga belas','empat belas','lima belas','enam belas','tujuh belas','delapan belas','sembilan belas'];
 var puluh=['','','dua puluh','tiga puluh','empat puluh','lima puluh','enam puluh','tujuh puluh','delapan puluh','sembilan puluh'];
 var ribuan=['','ribu','juta','milyar','trilyun'];
-function terbilang(n){
+function terbilang(n)&#123;
   if(n===0)return'nol';var r='',i=0;
-  while(n>0){var g=n%1000;if(g>0){var s='';
-    if(g>=100){var h=Math.floor(g/100);s+=(h===1?'seratus':sat[h]+' ratus')+' ';g%=100}
-    if(g>=20){s+=puluh[Math.floor(g/10)]+' ';g%=10}
-    if(g>=1){if(g<10)s+=sat[g]+' ';else s+=belas[gap-10]+' '}
+  while(n>0)&#123;var g=n%1000;if(g>0)&#123;var s='';
+    if(g>=100)&#123;var h=Math.floor(g/100);s+=(h===1?'seratus':sat[h]+' ratus')+' ';g%=100&#125;
+    if(g>=20)&#123;s+=puluh[Math.floor(g/10)]+' ';g%=10&#125;
+    if(g>=1)&#123;if(g<10)s+=sat[g]+' ';else s+=belas[gap-10]+' '&#125;
     if(i===1&&Math.floor(n/1000)%1000===1&&n<2000)s='seribu ';else r=s+ribuan[i]+' '+r
-  }n=Math.floor(n/1000);i++}
+  &#125;n=Math.floor(n/1000);i++&#125;
   return r.trim();
-}
-function convert(){
-  var raw=inp.value.replace(/[^0-9,.]/g,'').replace(',','.');if(!raw){res.textContent='';return}
+&#125;
+function convert()&#123;
+  var raw=inp.value.replace(/[^0-9,.]/g,'').replace(',','.');if(!raw)&#123;res.textContent='';return&#125;
   var parts=raw.split('.');var intp=parseInt(parts[0])||0;var txt=terbilang(intp);
-  if(parts[1]&&parts[1].length>0){txt+=' koma '+parts[1].split('').map(function(d){return sat[parseInt(d)]||'?'}).join(' ')}
+  if(parts[1]&&parts[1].length>0)&#123;txt+=' koma '+parts[1].split('').map(function(d)&#123;return sat[parseInt(d)]||'?'&#125;).join(' ')&#125;
   res.textContent=txt||'nol';
   inf.textContent='Angka: '+parts[0]+(parts[1]?'.'+parts[1]:'')+' | '+intp.toLocaleString('id-ID')+(parts[1]?','+parts[1]:'')+' digit';
-}
-document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(res.textContent).catch(function(){})});
+&#125;
+document.getElementById('btnCopy').addEventListener('click',function()&#123;navigator.clipboard.writeText(res.textContent).catch(function()&#123;&#125;)&#125;);
 inp.addEventListener('input',convert);
-document.querySelectorAll('.sampel').forEach(function(el){el.addEventListener('click',function(){inp.value=this.dataset.n;convert()})});
+document.querySelectorAll('.sampel').forEach(function(el)&#123;el.addEventListener('click',function()&#123;inp.value=this.dataset.n;convert()&#125;)&#125;);
 convert();
 </script>
 

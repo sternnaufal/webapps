@@ -77,33 +77,33 @@ const relatedTools = [
 </ToolLayout>
 
 <script is:inline>
-function hexToRgb(hex) {
+function hexToRgb(hex) &#123;
   hex = hex.replace(/^#/, '');
-  if (hex.length === 3) hex = hex.split('').map(function(c) { return c + c; }).join('');
+  if (hex.length === 3) hex = hex.split('').map(function(c) &#123; return c + c; &#125;).join('');
   var bigint = parseInt(hex, 16);
   return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
-}
-function rgbToHex(r, g, b) {
-  return '#' + [r, g, b].map(function(x) { return x.toString(16).padStart(2, '0'); }).join('').toUpperCase();
-}
-function rgbToHsl(r, g, b) {
+&#125;
+function rgbToHex(r, g, b) &#123;
+  return '#' + [r, g, b].map(function(x) &#123; return x.toString(16).padStart(2, '0'); &#125;).join('').toUpperCase();
+&#125;
+function rgbToHsl(r, g, b) &#123;
   r /= 255; g /= 255; b /= 255;
   var max = Math.max(r, g, b), min = Math.min(r, g, b);
   var h, s, l = (max + min) / 2;
-  if (max === min) { h = s = 0; }
-  else {
+  if (max === min) &#123; h = s = 0; &#125;
+  else &#123;
     var d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
+    switch (max) &#123;
       case r: h = (g - b) / d + (g < b ? 6 : 0); break;
       case g: h = (b - r) / d + 2; break;
       case b: h = (r - g) / d + 4; break;
-    }
+    &#125;
     h /= 6;
-  }
+  &#125;
   return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
-}
-function rgbToCmyk(r, g, b) {
+&#125;
+function rgbToCmyk(r, g, b) &#123;
   var c = 1 - r/255, m = 1 - g/255, y = 1 - b/255;
   var k = Math.min(c, m, y);
   if (k === 1) return [0, 0, 0, 100];
@@ -113,43 +113,43 @@ function rgbToCmyk(r, g, b) {
     Math.round(((y - k) / (1 - k)) * 100),
     Math.round(k * 100)
   ];
-}
-function hslToRgb(h, s, l) {
+&#125;
+function hslToRgb(h, s, l) &#123;
   s /= 100; l /= 100; h /= 360;
   var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
   var p = 2 * l - q;
-  function f(t) { if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1/6) return p + (q - p) * 6 * t; if (t < 1/2) return q; if (t < 2/3) return p + (q - p) * (2/3 - t) * 6; return p; }
+  function f(t) &#123; if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1/6) return p + (q - p) * 6 * t; if (t < 1/2) return q; if (t < 2/3) return p + (q - p) * (2/3 - t) * 6; return p; &#125;
   return [Math.round(f(h + 1/3) * 255), Math.round(f(h) * 255), Math.round(f(h - 1/3) * 255)];
-}
+&#125;
 
-function updateValues(from) {
+function updateValues(from) &#123;
   if (from === undefined) from = 'picker';
   var hex, r, g, b, h, s, l, c, m, y, k;
   var alpha = parseFloat(document.getElementById('alphaRange').value);
   document.getElementById('alphaLabel').textContent = Math.round(alpha * 100) + '%';
 
-  if (from === 'hex') {
+  if (from === 'hex') &#123;
     hex = document.getElementById('hexValue').value;
-    if (!/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(hex)) return;
+    if (!/^#([0-9A-Fa-f]&#123;3&#125;|[0-9A-Fa-f]&#123;6&#125;)$/.test(hex)) return;
     var rgb = hexToRgb(hex);
     r = rgb[0]; g = rgb[1]; b = rgb[2];
-  } else if (from === 'rgb') {
+  &#125; else if (from === 'rgb') &#123;
     var match = document.getElementById('rgbValue').value.match(/\d+/g);
     if (!match) return;
     r = Number(match[0]); g = Number(match[1]); b = Number(match[2]);
     hex = rgbToHex(r, g, b);
-  } else if (from === 'hsl') {
+  &#125; else if (from === 'hsl') &#123;
     var match = document.getElementById('hslValue').value.match(/\d+/g);
     if (!match) return;
     h = Number(match[0]); s = Number(match[1]); l = Number(match[2]);
     var rgb2 = hslToRgb(h, s, l);
     r = rgb2[0]; g = rgb2[1]; b = rgb2[2];
     hex = rgbToHex(r, g, b);
-  } else {
+  &#125; else &#123;
     hex = document.getElementById('colorInput').value;
     var rgb = hexToRgb(hex);
     r = rgb[0]; g = rgb[1]; b = rgb[2];
-  }
+  &#125;
 
   var hsl = rgbToHsl(r, g, b);
   h = hsl[0]; s = hsl[1]; l = hsl[2];
@@ -167,47 +167,47 @@ function updateValues(from) {
   preview.textContent = hex + ' (' + Math.round(alpha * 100) + '%)';
 
   document.getElementById('colorInput').value = hex;
-}
+&#125;
 
-function copyOnClick(e) {
+function copyOnClick(e) &#123;
   navigator.clipboard.writeText(e.target.value);
   var orig = e.target.style.borderColor;
   e.target.style.borderColor = '#22c55e';
-  setTimeout(function() { e.target.style.borderColor = orig; }, 400);
-}
+  setTimeout(function() &#123; e.target.style.borderColor = orig; &#125;, 400);
+&#125;
 
-function randomColor() {
+function randomColor() &#123;
   document.getElementById('colorInput').value = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
   updateValues();
-}
+&#125;
 
-function saveColor() {
+function saveColor() &#123;
   var hex = document.getElementById('hexValue').value;
   var saved = JSON.parse(localStorage.getItem('savedColors') || '[]');
   if (!saved.includes(hex)) saved.push(hex);
   localStorage.setItem('savedColors', JSON.stringify(saved));
   renderSaved();
-}
+&#125;
 
-function renderSaved() {
+function renderSaved() &#123;
   var saved = JSON.parse(localStorage.getItem('savedColors') || '[]');
   var container = document.getElementById('savedColors');
   container.innerHTML = '';
-  saved.forEach(function(hex) {
+  saved.forEach(function(hex) &#123;
     var box = document.createElement('div');
     box.style.background = hex;
     box.title = hex;
-    box.onclick = function() { document.getElementById('hexValue').value = hex; updateValues('hex'); };
+    box.onclick = function() &#123; document.getElementById('hexValue').value = hex; updateValues('hex'); &#125;;
     container.appendChild(box);
-  });
-}
+  &#125;);
+&#125;
 
-document.getElementById('colorInput').addEventListener('input', function() { updateValues(); });
-document.getElementById('alphaRange').addEventListener('input', function() { updateValues(); });
-document.getElementById('hexValue').addEventListener('input', function() { updateValues('hex'); });
-document.getElementById('rgbValue').addEventListener('input', function() { updateValues('rgb'); });
-document.getElementById('hslValue').addEventListener('input', function() { updateValues('hsl'); });
-document.querySelectorAll('.copyable').forEach(function(el) { el.addEventListener('click', copyOnClick); });
+document.getElementById('colorInput').addEventListener('input', function() &#123; updateValues(); &#125;);
+document.getElementById('alphaRange').addEventListener('input', function() &#123; updateValues(); &#125;);
+document.getElementById('hexValue').addEventListener('input', function() &#123; updateValues('hex'); &#125;);
+document.getElementById('rgbValue').addEventListener('input', function() &#123; updateValues('rgb'); &#125;);
+document.getElementById('hslValue').addEventListener('input', function() &#123; updateValues('hsl'); &#125;);
+document.querySelectorAll('.copyable').forEach(function(el) &#123; el.addEventListener('click', copyOnClick); &#125;);
 document.getElementById('btnRandom').addEventListener('click', randomColor);
 document.getElementById('btnSave').addEventListener('click', saveColor);
 

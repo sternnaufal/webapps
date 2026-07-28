@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'epoch-converter', name: 'Epoch Converter', icon: '⏱' },
   { slug: 'timer', name: 'Timer', icon: '⏱' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#ef4444;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h1 class="h3 mb-0">Cron Expression Builder</h1><p class="opacity-60 small mb-0">Buat cron expression dengan GUI. Copy-paste ke crontab, scheduler, atau GitHub Actions.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef2f2;color:#ef4444;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h1 class="h3 mb-0">Cron Expression Builder</h1><p class="opacity-60 small mb-0">Buat cron expression dengan GUI. Copy-paste ke crontab, scheduler, atau GitHub Actions.</p></div></header>
 <div class="flex flex-wrap gap-3 mb-4">
 <div class="md:w-2/3 w-full"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Preset</h6>
 <div class="flex gap-2 flex-wrap mb-3">
@@ -34,18 +43,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div id="cronDesc" class="mt-2 text-sm opacity-60"></div></div></div>
 <div class="md:w-1/3 w-full"><div class="card card-bordered bg-base-100 p-3"><h6 class="mb-3">Legend</h6>
 <table class="table table-sm small mb-0"><tr><td class="opacity-60">min</td><td>0-59</td></tr><tr><td class="opacity-60">hour</td><td>0-23</td></tr><tr><td class="opacity-60">day</td><td>1-31</td></tr><tr><td class="opacity-60">month</td><td>1-12</td></tr><tr><td class="opacity-60">weekday</td><td>0-7 (0/7=Sun)</td></tr></table></div></div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -60,13 +59,13 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <script is:inline>
 document.getElementById('year').textContent=new Date().getFullYear();
 var inp=document.getElementById('cronExpr'),desc=document.getElementById('cronDesc');
-var PRESETS={'@yearly':'0 0 1 1 *','@annually':'0 0 1 1 *','@monthly':'0 0 1 * *','@weekly':'0 0 * * 0','@daily':'0 0 * * *','@midnight':'0 0 * * *','@hourly':'0 * * * *'};
-function describe(e){e=e.trim();if(PRESETS[e])e=PRESETS[e];var p=e.split(/\\s+/);if(p.length!==5){desc.textContent='Expression tidak valid. Gunakan 5 field atau @preset.';return}
+var PRESETS=&#123;'@yearly':'0 0 1 1 *','@annually':'0 0 1 1 *','@monthly':'0 0 1 * *','@weekly':'0 0 * * 0','@daily':'0 0 * * *','@midnight':'0 0 * * *','@hourly':'0 * * * *'&#125;;
+function describe(e)&#123;e=e.trim();if(PRESETS[e])e=PRESETS[e];var p=e.split(/\\s+/);if(p.length!==5)&#123;desc.textContent='Expression tidak valid. Gunakan 5 field atau @preset.';return&#125;
 var labels=[['minute','minutes'],['hour','hours'],['day','days'],['month','months'],['weekday','weekdays']];
-var parts=[];for(var i=0;i<5;i++){var f=p[i];if(f==='*')parts.push('every '+labels[i][1]);else if(f.startsWith('*/'))parts.push('every '+f.slice(2)+' '+labels[i][1]);else parts.push(f+' '+labels[i][0])}
-desc.textContent=parts.join(', ')}
-inp.addEventListener('input',function(){describe(inp.value)});describe(inp.value);
-document.querySelectorAll('.preset').forEach(function(b){b.addEventListener('click',function(){inp.value=this.getAttribute('data-cron');describe(inp.value)})});
-document.getElementById('btnCopy').addEventListener('click',function(){var b=this;navigator.clipboard.writeText(inp.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)})});
+var parts=[];for(var i=0;i<5;i++)&#123;var f=p[i];if(f==='*')parts.push('every '+labels[i][1]);else if(f.startsWith('*/'))parts.push('every '+f.slice(2)+' '+labels[i][1]);else parts.push(f+' '+labels[i][0])&#125;
+desc.textContent=parts.join(', ')&#125;
+inp.addEventListener('input',function()&#123;describe(inp.value)&#125;);describe(inp.value);
+document.querySelectorAll('.preset').forEach(function(b)&#123;b.addEventListener('click',function()&#123;inp.value=this.getAttribute('data-cron');describe(inp.value)&#125;)&#125;);
+document.getElementById('btnCopy').addEventListener('click',function()&#123;var b=this;navigator.clipboard.writeText(inp.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;)&#125;);
 </script>
 

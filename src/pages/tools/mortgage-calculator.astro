@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'discount-calculator', name: 'Discount Calculator', icon: '🏷' },
   { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#ecfdf5;color:#059669;">$</div><div><h1 class="h3 mb-0">Mortgage Calculator</h1><p class="opacity-60 small mb-0">Hitung estimasi cicilan KPR rumah per bulan.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#ecfdf5;color:#059669;">$</div><div><h1 class="h3 mb-0">Mortgage Calculator</h1><p class="opacity-60 small mb-0">Hitung estimasi cicilan KPR rumah per bulan.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="flex flex-wrap gap-3"><div class="col-6"><label class="label-text small font-semibold">Harga Properti (Rp)</label><input type="number" id="homePrice" class="input input-bordered w-full" value="500000000" min="0" step="1000000"></div>
@@ -39,18 +48,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </table>
 </div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -68,8 +67,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var hp=document.getElementById('homePrice'),dp=document.getElementById('downPayment'),ir=document.getElementById('interestRate'),lt=document.getElementById('loanTerm');
-function fmt(x){if(x>=1e12)return'Rp '+(x/1e12).toFixed(1)+' T';return'Rp '+Math.round(x).toLocaleString('id-ID')}
-function calc(){
+function fmt(x)&#123;if(x>=1e12)return'Rp '+(x/1e12).toFixed(1)+' T';return'Rp '+Math.round(x).toLocaleString('id-ID')&#125;
+function calc()&#123;
   var h=Math.max(0,parseFloat(hp.value)||0),d=Math.max(0,parseFloat(dp.value)||0),i=Math.max(0,parseFloat(ir.value)||0)/100/12,t=Math.max(1,parseInt(lt.value)||1)*12;
   var loan=Math.max(0,h-d);
   var monthly=i>0?loan*i*Math.pow(1+i,t)/(Math.pow(1+i,t)-1):loan/t;
@@ -82,7 +81,7 @@ function calc(){
   document.getElementById('effRateDisplay').textContent=ir.value+'%';
   document.getElementById('numPayDisplay').textContent=t+'x';
   document.getElementById('ratioDisplay').textContent=loan>0?(monthly/loan*100).toFixed(2)+'%':'-';
-}
+&#125;
 document.getElementById('btnCalc').addEventListener('click',calc);
 calc();
 </script>

@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'text-repeater', name: 'Text Repeater', icon: '×' },
   { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><h1 class="h3 mb-0">List Sorter</h1><p class="opacity-60 small mb-0">Urutkan daftar teks: A-Z, Z-A, acak, by length, hapus duplikat. Satu item per baris.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><h1 class="h3 mb-0">List Sorter</h1><p class="opacity-60 small mb-0">Urutkan daftar teks: A-Z, Z-A, acak, by length, hapus duplikat. Satu item per baris.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-6">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="mb-3"><label class="label-text font-semibold">Input (satu item per baris)</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="8" placeholder="Masukkan daftar, satu per baris..." autofocus>Pisang
@@ -36,18 +45,8 @@ Nanas</textarea></div>
 <textarea id="outputArea" class="input input-bordered w-full font-mono" rows="8" readonly></textarea>
 <button id="btnCopy" class="btn btn-sm btn-outline-secondary mt-2">Copy</button>
 </div></div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -65,26 +64,26 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea'),stats=document.getElementById('stats'),unique=document.getElementById('uniqueOnly'),ic=document.getElementById('ignoreCase');
-function sortList(){
+function sortList()&#123;
   var lines=inp.value.split('\\n'),origCount=lines.length;
-  if(ic.checked){lines=lines.filter(function(l,i,a){return a.findIndex(function(x){return x.toLowerCase()===l.toLowerCase()})===i})}
-  else if(unique.checked)lines=lines.filter(function(l,i,a){return a.indexOf(l)===i});
-  else lines=lines.filter(function(l){return l!==undefined});
+  if(ic.checked)&#123;lines=lines.filter(function(l,i,a)&#123;return a.findIndex(function(x)&#123;return x.toLowerCase()===l.toLowerCase()&#125;)===i&#125;)&#125;
+  else if(unique.checked)lines=lines.filter(function(l,i,a)&#123;return a.indexOf(l)===i&#125;);
+  else lines=lines.filter(function(l)&#123;return l!==undefined&#125;);
   var m=mode.value;
-  if(m==='asc')lines.sort(function(a,b){var x=a.toLowerCase(),y=b.toLowerCase();return x<y?-1:x>y?1:0});
-  else if(m==='desc')lines.sort(function(a,b){var x=a.toLowerCase(),y=b.toLowerCase();return x<y?1:x>y?-1:0});
-  else if(m==='length')lines.sort(function(a,b){return a.length-b.length});
-  else if(m==='lengthDesc')lines.sort(function(a,b){return b.length-a.length});
-  else if(m==='random')for(var i=lines.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;}
+  if(m==='asc')lines.sort(function(a,b)&#123;var x=a.toLowerCase(),y=b.toLowerCase();return x<y?-1:x>y?1:0&#125;);
+  else if(m==='desc')lines.sort(function(a,b)&#123;var x=a.toLowerCase(),y=b.toLowerCase();return x<y?1:x>y?-1:0&#125;);
+  else if(m==='length')lines.sort(function(a,b)&#123;return a.length-b.length&#125;);
+  else if(m==='lengthDesc')lines.sort(function(a,b)&#123;return b.length-a.length&#125;);
+  else if(m==='random')for(var i=lines.length-1;i>0;i--)&#123;var j=Math.floor(Math.random()*(i+1));var t=lines[i];lines[i]=lines[j];lines[j]=t;&#125;
   out.value=lines.join('\\n');
   stats.textContent=origCount+' item ? '+lines.length+' item';
-}
+&#125;
 document.getElementById('btnSort').addEventListener('click',sortList);
-document.getElementById('btnCopy').addEventListener('click',function(){
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
-});
-[inp,mode,unique,ic].forEach(function(el){el.addEventListener('input',sortList);el.addEventListener('change',sortList)});
+  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
+&#125;);
+[inp,mode,unique,ic].forEach(function(el)&#123;el.addEventListener('input',sortList);el.addEventListener('change',sortList)&#125;);
 sortList();
 </script>
 

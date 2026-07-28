@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'mac-address-generator', name: 'Mac Address Generator', icon: '🔗' },
   { slug: 'user-agent-parser', name: 'User Agent Parser', icon: '🖥' }
 ];
-const bodyHtml = `<form id="subnetForm" class="flex flex-wrap gap-3 mb-4">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<form id="subnetForm" class="flex flex-wrap gap-3 mb-4">
         <div class="md:w-1/3 w-full">
           <label for="ip" class="label-text">IP Address</label>
           <input type="text" id="ip" class="input input-bordered w-full" placeholder="192.168.10.0" required>
@@ -35,18 +44,9 @@ const bodyHtml = `<form id="subnetForm" class="flex flex-wrap gap-3 mb-4">
       </form>
 
       <div id="results"></div>
-    `;
----
+    
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -62,66 +62,66 @@ const bodyHtml = `<form id="subnetForm" class="flex flex-wrap gap-3 mb-4">
 </script>
 
 <script is:inline>
-function ip2long(ip) {
-  return ip.split('.').reduce(function(acc, oct) {
+function ip2long(ip) &#123;
+  return ip.split('.').reduce(function(acc, oct) &#123;
     return (acc << 8) + parseInt(oct, 10);
-  }, 0) >>> 0;
-}
+  &#125;, 0) >>> 0;
+&#125;
 
-function long2ip(long) {
+function long2ip(long) &#123;
   return [
     (long >>> 24) & 0xFF,
     (long >>> 16) & 0xFF,
     (long >>> 8) & 0xFF,
     long & 0xFF
   ].join('.');
-}
+&#125;
 
-function getIPClass(firstOctet) {
-  if (firstOctet >= 1 && firstOctet <= 126) return { name: 'A', defaultPrefix: 8 };
-  if (firstOctet >= 128 && firstOctet <= 191) return { name: 'B', defaultPrefix: 16 };
-  if (firstOctet >= 192 && firstOctet <= 223) return { name: 'C', defaultPrefix: 24 };
-  if (firstOctet >= 224 && firstOctet <= 239) return { name: 'D (Multicast)', defaultPrefix: null };
-  return { name: 'E (Experimental)', defaultPrefix: null };
-}
+function getIPClass(firstOctet) &#123;
+  if (firstOctet >= 1 && firstOctet <= 126) return &#123; name: 'A', defaultPrefix: 8 &#125;;
+  if (firstOctet >= 128 && firstOctet <= 191) return &#123; name: 'B', defaultPrefix: 16 &#125;;
+  if (firstOctet >= 192 && firstOctet <= 223) return &#123; name: 'C', defaultPrefix: 24 &#125;;
+  if (firstOctet >= 224 && firstOctet <= 239) return &#123; name: 'D (Multicast)', defaultPrefix: null &#125;;
+  return &#123; name: 'E (Experimental)', defaultPrefix: null &#125;;
+&#125;
 
-function escapeHtml(text) {
+function escapeHtml(text) &#123;
   var div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
-}
+&#125;
 
-function calculate(e) {
+function calculate(e) &#123;
   e.preventDefault();
 
   var ip = document.getElementById('ip').value.trim();
   var prefix = parseInt(document.getElementById('prefix').value, 10);
   var newprefix = parseInt(document.getElementById('newprefix').value, 10);
 
-  if (!ip || !prefix || !newprefix) {
+  if (!ip || !prefix || !newprefix) &#123;
     document.getElementById('results').innerHTML = '<div class="alert alert-error">Lengkapi semua field.</div>';
     return;
-  }
+  &#125;
 
-  var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+  var ipPattern = /^(\d&#123;1,3&#125;)\.(\d&#123;1,3&#125;)\.(\d&#123;1,3&#125;)\.(\d&#123;1,3&#125;)$/;
   var match = ip.match(ipPattern);
-  if (!match) {
+  if (!match) &#123;
     document.getElementById('results').innerHTML = '<div class="alert alert-error">IP tidak valid.</div>';
     return;
-  }
+  &#125;
 
-  for (var i = 1; i <= 4; i++) {
+  for (var i = 1; i <= 4; i++) &#123;
     var oct = parseInt(match[i], 10);
-    if (oct < 0 || oct > 255) {
+    if (oct < 0 || oct > 255) &#123;
       document.getElementById('results').innerHTML = '<div class="alert alert-error">IP tidak valid.</div>';
       return;
-    }
-  }
+    &#125;
+  &#125;
 
-  if (prefix < 1 || prefix > 32 || newprefix < prefix || newprefix > 32) {
+  if (prefix < 1 || prefix > 32 || newprefix < prefix || newprefix > 32) &#123;
     document.getElementById('results').innerHTML = '<div class="alert alert-error">Prefix tidak valid. Pastikan prefix baru &ge; prefix awal.</div>';
     return;
-  }
+  &#125;
 
   var ipLong = ip2long(ip);
   var mask = (-1 << (32 - prefix)) >>> 0;
@@ -143,10 +143,10 @@ function calculate(e) {
   html += '<ul class="list-none">';
   html += '<li><strong>IP Address:</strong> ' + escapeHtml(ip) + '/' + prefix + '</li>';
   html += '<li><strong>Kelas:</strong> ' + ipClass.name + '</li>';
-  if (ipClass.defaultPrefix) {
+  if (ipClass.defaultPrefix) &#123;
     var defMask = (-1 << (32 - ipClass.defaultPrefix)) >>> 0;
     html += '<li><strong>Default Mask:</strong> /' + ipClass.defaultPrefix + ' (' + long2ip(defMask) + ')</li>';
-  }
+  &#125;
   html += '<li><strong>Subnet Mask:</strong> ' + subnetMask + '</li>';
   html += '<li><strong>Wildcard Mask:</strong> ' + wildcard + '</li>';
   html += '<li><strong>Network Address:</strong> ' + long2ip(network) + '</li>';
@@ -160,16 +160,16 @@ function calculate(e) {
   var step = Math.pow(2, 32 - newprefix);
   var maxSubnets = 4096;
 
-  if (subnetCount > maxSubnets) {
+  if (subnetCount > maxSubnets) &#123;
     html += '<div class="alert alert-warning">Jumlah subnet (' + subnetCount + ') terlalu besar. Maksimal hanya ' + maxSubnets + ' subnet ditampilkan.</div>';
-  } else {
+  &#125; else &#123;
     html += '<div class="card card-bordered bg-base-100 p-3">';
     html += '<h5 class="mb-3">Hasil Pemotongan (' + subnetCount + ' subnet)</h5>';
     html += '<div class="overflow-x-auto">';
     html += '<table class="table table-bordered table-sm">';
     html += '<thead><tr><th>#</th><th>Network</th><th>First Host</th><th>Last Host</th><th>Broadcast</th><th>Hosts</th><th>CIDR</th></tr></thead><tbody>';
 
-    for (var i = 0; i < subnetCount; i++) {
+    for (var i = 0; i < subnetCount; i++) &#123;
       var subNet = network + (i * step);
       var subBroadcast = subNet + step - 1;
       var subFirst = (newprefix < 31) ? long2ip(subNet + 1) : 'N/A';
@@ -185,18 +185,18 @@ function calculate(e) {
       html += '<td>' + subHosts + '</td>';
       html += '<td>/' + newprefix + '</td>';
       html += '</tr>';
-    }
+    &#125;
 
     html += '</tbody></table></div></div>';
-  }
+  &#125;
 
   document.getElementById('results').innerHTML = html;
-}
+&#125;
 
-(function init() {
+(function init() &#123;
   var prefixSelect = document.getElementById('prefix');
   var newprefixSelect = document.getElementById('newprefix');
-  for (var i = 1; i <= 32; i++) {
+  for (var i = 1; i <= 32; i++) &#123;
     var opt1 = document.createElement('option');
     opt1.value = i;
     opt1.textContent = '/' + i;
@@ -206,8 +206,8 @@ function calculate(e) {
     opt2.value = i;
     opt2.textContent = '/' + i;
     newprefixSelect.appendChild(opt2);
-  }
+  &#125;
   document.getElementById('subnetForm').addEventListener('submit', calculate);
-})();
+&#125;)();
 </script>
 

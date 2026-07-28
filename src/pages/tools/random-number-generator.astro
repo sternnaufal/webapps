@@ -12,7 +12,17 @@ const relatedTools = [
   { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' },
   { slug: 'char-counter', name: 'Char Counter', icon: '#' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef3c7;color:#d97706;">#</div><div><h1 class="h3 mb-0">Random Number Generator</h1><p class="opacity-60 small mb-0">Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat.</p></div></header>
+
+const toolCss = `.num-badge{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:8px;background:var(--surface-soft);font-weight:700;font-size:1.1rem;margin:4px}`;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#fef3c7;color:#d97706;">#</div><div><h1 class="h3 mb-0">Random Number Generator</h1><p class="opacity-60 small mb-0">Hasilkan angka acak antara 2 nilai, multiple numbers, tanpa duplikat.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="lg:w-7/12 w-full">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="flex flex-wrap gap-3">
@@ -44,19 +54,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div>
 </div></div>
-`;
-const toolCss = `.num-badge{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:8px;background:var(--surface-soft);font-weight:700;font-size:1.1rem;margin:4px}`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -77,19 +76,19 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var minInp=document.getElementById('minVal'),maxInp=document.getElementById('maxVal'),cntInp=document.getElementById('countVal'),uniq=document.getElementById('uniqueOnly'),disp=document.getElementById('numDisplay');
-function generate(){
+function generate()&#123;
   var min=parseInt(minInp.value)||0,max=parseInt(maxInp.value)||100,cnt=parseInt(cntInp.value)||1,arr=[];
   if(!uniq.checked) for(var i=0;i<cnt;i++) arr.push(Math.floor(Math.random()*(max-min+1))+min);
-  else{var range=max-min+1;if(cnt>range){disp.innerHTML='<span class="text-error">Jumlah melebihi rentang angka yang tersedia</span>';return}var pool=[];for(var i=min;i<=max;i++)pool.push(i);for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t}arr=pool.slice(0,cnt)}
-  disp.innerHTML=arr.map(function(n){return'<span class="num-badge">'+n+'</span>'}).join('');
-}
+  else&#123;var range=max-min+1;if(cnt>range)&#123;disp.innerHTML='<span class="text-error">Jumlah melebihi rentang angka yang tersedia</span>';return&#125;var pool=[];for(var i=min;i<=max;i++)pool.push(i);for(var i=pool.length-1;i>0;i--)&#123;var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t&#125;arr=pool.slice(0,cnt)&#125;
+  disp.innerHTML=arr.map(function(n)&#123;return'<span class="num-badge">'+n+'</span>'&#125;).join('');
+&#125;
 document.getElementById('btnGenerate').addEventListener('click',generate);
-document.getElementById('btnCopy').addEventListener('click',function(){
-  var txt=disp.textContent.replace(/\\s+/g,', ');navigator.clipboard.writeText(txt).catch(function(){});
-});
-document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
+  var txt=disp.textContent.replace(/\\s+/g,', ');navigator.clipboard.writeText(txt).catch(function()&#123;&#125;);
+&#125;);
+document.querySelectorAll('.preset').forEach(function(el)&#123;el.addEventListener('click',function()&#123;
   minInp.value=this.dataset.min;maxInp.value=this.dataset.max;cntInp.value=1;generate();
-})});
+&#125;)&#125;);
 generate();
 </script>
 

@@ -12,13 +12,13 @@ const relatedTools = [
   { slug: 'html-entity', name: 'Html Entity', icon: '&' },
   { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' }
 ];
-const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full"><div class="flex gap-2 flex-wrap">\n    <button id="mhBtn" class="btn btn-warning">Convert</button>\n    <button id="mhCopy" class="btn btn-outline">Copy HTML</button>\n    <div class="flex items-center gap-2 form-switch flex items-center ml-auto"><input class="checkbox" type="checkbox" id="mhAuto" checked><label class="flex items-center gap-2-label small" for="mhAuto">Auto</label></div>\n  </div></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">Markdown</label><textarea id="mhIn" class="input input-bordered w-full font-mono" rows="16" placeholder="Tulis Markdown..."># Hello World\n\nThis is **Markdown** to **HTML**.\n\n## Features\n- Bold, *Italic*\n- [Links](https://example.com)\n- Code \\`inline\\`\n\n> Blockquote</textarea></div>\n  <div class="md:w-1/2 w-full"><label class="label-text font-semibold">HTML Output</label><textarea id="mhOut" class="input input-bordered w-full font-mono" rows="16" readonly></textarea></div>\n  <div class="w-full"><label class="label-text font-semibold">Preview</label><div id="mhPrev" class="card card-bordered bg-base-100 p-4 border"></div></div>\n</div>';
+
 ---
 
-<ToolLayout title={title} description={desc} keywords={keywords}>
-<Fragment set:html={bodyHtml} />
+<ToolLayout title={title} description=&#123;desc&#125; keywords={keywords}>
+inline\
 
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -31,9 +31,9 @@ const bodyHtml = '<div class="flex flex-wrap gap-4">\n  <div class="w-full"><div
 </style>
 
 <script is:inline>
-function md2html(md){let h=md.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");h=h.replace(/^##### (.+)$/gm,"<h5>$1</h5>").replace(/^#### (.+)$/gm,"<h4>$1</h4>").replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");h=h.replace(/^---$/gm,"<hr>");h=h.replace(/^> (.+)$/gm,"<blockquote>$1</blockquote>");h=h.replace(/\`\`\`([\s\S]*?)\`\`\`/g,"<pre><code>$1</code></pre>");h=h.replace(/\`([^\`]+)\`/g,"<code>$1</code>");h=h.replace(/\*\*\*(.+?)\*\*\*/g,"<strong><em>$1</em></strong>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");h=h.replace(/~~(.+?)~~/g,"<del>$1</del>");h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');h=h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" style="max-width:100%">');h=h.replace(/^\* (.+)$/gm,"<li>$1</li>").replace(/^- (.+)$/gm,"<li>$1</li>");h=h.replace(/^\d+\. (.+)$/gm,"<li>$1</li>");return h}
-function mh(){const md=document.getElementById("mhIn").value;const h=md2html(md);document.getElementById("mhOut").value=h;document.getElementById("mhPrev").innerHTML=h}
+function md2html(md)&#123;let h=md.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");h=h.replace(/^##### (.+)$/gm,"<h5>$1</h5>").replace(/^#### (.+)$/gm,"<h4>$1</h4>").replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");h=h.replace(/^---$/gm,"<hr>");h=h.replace(/^> (.+)$/gm,"<blockquote>$1</blockquote>");h=h.replace(/\`\`\`([\s\S]*?)\`\`\`/g,"<pre><code>$1</code></pre>");h=h.replace(/\`([^\`]+)\`/g,"<code>$1</code>");h=h.replace(/\*\*\*(.+?)\*\*\*/g,"<strong><em>$1</em></strong>").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");h=h.replace(/~~(.+?)~~/g,"<del>$1</del>");h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');h=h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" style="max-width:100%">');h=h.replace(/^\* (.+)$/gm,"<li>$1</li>").replace(/^- (.+)$/gm,"<li>$1</li>");h=h.replace(/^\d+\. (.+)$/gm,"<li>$1</li>");return h&#125;
+function mh()&#123;const md=document.getElementById("mhIn").value;const h=md2html(md);document.getElementById("mhOut").value=h;document.getElementById("mhPrev").innerHTML=h&#125;
 document.getElementById("mhBtn").onclick=mh;document.getElementById("mhCopy").onclick=()=>navigator.clipboard.writeText(document.getElementById("mhOut").value);
-document.getElementById("mhIn").oninput=function(){if(document.getElementById("mhAuto").checked)mh()};mh();
+document.getElementById("mhIn").oninput=function()&#123;if(document.getElementById("mhAuto").checked)mh()&#125;;mh();
 </script>
 

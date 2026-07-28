@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'html-entity', name: 'Html Entity', icon: '&' },
   { slug: 'css-minifier', name: 'Css Minifier', icon: 'CSS' }
 ];
-const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg-light">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<div class="flex items-center gap-2 px-3 py-2 border-bottom bg-light">
   <div class="tool-icon" style="background:#f0fdf4;color:#16a34a;width:28px;height:28px;font-size:0.7rem;">&lt;/&gt;</div>
   <h1 class="h6 mb-0 font-bold">HTML Live Preview</h1>
   <span class="badge bg-success ml-auto">Real-time</span>
@@ -22,9 +31,9 @@ const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg
 <textarea id="htmlInput" class="input input-bordered w-full h-full border-0 p-3 font-mono" placeholder="&lt;h1&gt;Hello World&lt;/h1&gt;">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;&lt;style&gt;
-  body { font-family: system-ui; padding: 2rem; background: #f8fafc; }
-  h1 { color: #2563eb; }
-  .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  body &#123; font-family: system-ui; padding: 2rem; background: #f8fafc; &#125;
+  h1 &#123; color: #2563eb; &#125;
+  .card &#123; background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); &#125;
 &lt;/style&gt;&lt;/head&gt;
 &lt;body&gt;
   &lt;div class="card"&gt;
@@ -35,18 +44,8 @@ const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
 </div><div class="md:w-1/2 w-full p-0"><iframe id="preview" srcdoc=" "></iframe></div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -60,7 +59,7 @@ const bodyHtml = `<div class="flex items-center gap-2 px-3 py-2 border-bottom bg
 
 <script is:inline>
 var inp=document.getElementById('htmlInput'),pre=document.getElementById('preview');
-function update(){pre.srcdoc=inp.value;}
+function update()&#123;pre.srcdoc=inp.value;&#125;
 inp.addEventListener('input',update);
 document.getElementById('btnRun').addEventListener('click',update);
 update();

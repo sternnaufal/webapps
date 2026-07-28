@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'password-generator', name: 'Password Generator', icon: '🔑' },
   { slug: 'qr-generator', name: 'Qr Generator', icon: '▐▌' }
 ];
-const bodyHtml = `<!-- Navbar khusus mobile -->
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<!-- Navbar khusus mobile -->
       
 
       <header class="flex items-center justify-between mb-4">
@@ -55,7 +64,7 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
             </div>
             <div class="flex items-center gap-2">
               <input class="checkbox" type="checkbox" id="format_braces">
-              <label class="flex items-center gap-2-label" for="format_braces">{braces}</label>
+              <label class="flex items-center gap-2-label" for="format_braces">&#123;braces&#125;</label>
             </div>
           </div>
         </div>
@@ -78,18 +87,9 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
       </form>
 
       <div id="results"></div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -102,16 +102,16 @@ const bodyHtml = `<!-- Navbar khusus mobile -->
 </style>
 
 <script is:inline>
-const NAMESPACES = {
+const NAMESPACES = &#123;
   'dns': '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
   'url': '6ba7b811-9dad-11d1-80b4-00c04fd430c8',
   'oid': '6ba7b812-9dad-11d1-80b4-00c04fd430c8',
   'x500': '6ba7b814-9dad-11d1-80b4-00c04fd430c8'
-};
+&#125;;
 
 let generatedUUIDs = [];
 
-function uuidV1() {
+function uuidV1() &#123;
   const now = Date.now();
   const time = (now + 12219292800000) * 10000 + Math.floor(Math.random() * 10000);
   const timeLow = (time >>> 0).toString(16).padStart(8, '0');
@@ -124,32 +124,32 @@ function uuidV1() {
 
   const node = Math.floor(Math.random() * 0xffffffffffff).toString(16).padStart(12, '0');
 
-  return \`\${timeLow}-\${timeMid}-\${timeHiVersion}-\${clockSeqHi}\${clockSeqLow}-\${node}\`;
-}
+  return \`\$&#123;timeLow&#125;-\$&#123;timeMid&#125;-\$&#123;timeHiVersion&#125;-\$&#123;clockSeqHi&#125;\$&#123;clockSeqLow&#125;-\$&#123;node&#125;\`;
+&#125;
 
-function uuidV4() {
+function uuidV4() &#123;
   const bytes = new Uint8Array(16);
   crypto.getRandomValues(bytes);
   bytes[6] = (bytes[6] & 0x0f) | 0x40;
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
   const h = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
-  return \`\${h.slice(0,8)}-\${h.slice(8,12)}-\${h.slice(12,16)}-\${h.slice(16,20)}-\${h.slice(20)}\`;
-}
+  return \`\$&#123;h.slice(0,8)&#125;-\$&#123;h.slice(8,12)&#125;-\$&#123;h.slice(12,16)&#125;-\$&#123;h.slice(16,20)&#125;-\$&#123;h.slice(20)&#125;\`;
+&#125;
 
-function hexToBinary(hex) {
+function hexToBinary(hex) &#123;
   const binary = [];
-  for (let i = 0; i < hex.length; i += 2) {
+  for (let i = 0; i < hex.length; i += 2) &#123;
     binary.push(parseInt(hex.substr(i, 2), 16));
-  }
+  &#125;
   return new Uint8Array(binary);
-}
+&#125;
 
-function binaryToHex(arr) {
+function binaryToHex(arr) &#123;
   return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
-}
+&#125;
 
-function uuidFromHash(name, namespace, version) {
-  const nsClean = namespace.replace(/[-{}]/g, '');
+function uuidFromHash(name, namespace, version) &#123;
+  const nsClean = namespace.replace(/[-&#123;&#125;]/g, '');
   if (nsClean.length !== 32) return null;
 
   const nsBinary = hexToBinary(nsClean);
@@ -159,11 +159,11 @@ function uuidFromHash(name, namespace, version) {
   combined.set(nameBytes, nsBinary.length);
 
   let hash;
-  if (version === 3) {
+  if (version === 3) &#123;
     hash = CryptoJS.MD5(binaryToHex(combined)).toString();
-  } else {
+  &#125; else &#123;
     hash = CryptoJS.SHA1(binaryToHex(combined)).toString();
-  }
+  &#125;
 
   const timeLow = hash.substr(0, 8);
   const timeMid = hash.substr(8, 4);
@@ -175,16 +175,16 @@ function uuidFromHash(name, namespace, version) {
   timeHiVersion = ((parseInt(timeHiVersion, 16) & 0x0fff) | (version << 12)).toString(16).padStart(4, '0');
   clockSeqHi = ((parseInt(clockSeqHi, 16) & 0x3f) | 0x80).toString(16).padStart(2, '0');
 
-  return \`\${timeLow}-\${timeMid}-\${timeHiVersion}-\${clockSeqHi}\${clockSeqLow}-\${node}\`;
-}
+  return \`\$&#123;timeLow&#125;-\$&#123;timeMid&#125;-\$&#123;timeHiVersion&#125;-\$&#123;clockSeqHi&#125;\$&#123;clockSeqLow&#125;-\$&#123;node&#125;\`;
+&#125;
 
-function formatUUID(uuid, uppercase, braces) {
+function formatUUID(uuid, uppercase, braces) &#123;
   let result = uppercase ? uuid.toUpperCase() : uuid.toLowerCase();
-  if (braces) result = '{' + result + '}';
+  if (braces) result = '&#123;' + result + '&#125;';
   return result;
-}
+&#125;
 
-function generateUUIDs() {
+function generateUUIDs() &#123;
   const version = document.getElementById('version').value;
   const count = Math.min(50, Math.max(1, parseInt(document.getElementById('count').value)));
   const upper = document.getElementById('format_upper').checked;
@@ -197,84 +197,84 @@ function generateUUIDs() {
   generatedUUIDs = [];
   const results = [];
 
-  if ((version === 'v3' || version === 'v5') && name && !isValidNamespace(namespace)) {
+  if ((version === 'v3' || version === 'v5') && name && !isValidNamespace(namespace)) &#123;
     document.getElementById('results').innerHTML = '<div class="alert alert-error">Namespace tidak valid. Masukkan UUID namespace yang benar.</div>';
     return false;
-  }
+  &#125;
 
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < count; i++) &#123;
     let uuid;
-    switch (version) {
+    switch (version) &#123;
       case 'v1': uuid = uuidV1(); break;
       case 'v3': uuid = uuidFromHash(name, namespace, 3); break;
       case 'v5': uuid = uuidFromHash(name, namespace, 5); break;
       default: uuid = uuidV4();
-    }
+    &#125;
 
-    if (!uuid) {
+    if (!uuid) &#123;
       document.getElementById('results').innerHTML = '<div class="alert alert-error">Gagal generate UUID. Periksa input Anda.</div>';
       return false;
-    }
+    &#125;
 
     const formatted = formatUUID(uuid, upper, braces);
     results.push(formatted);
     generatedUUIDs.push(formatted);
-  }
+  &#125;
 
   renderResults(results);
   document.getElementById('btnCopyAll').disabled = false;
 
   return false;
-}
+&#125;
 
-function isValidNamespace(ns) {
-  const pattern = /^(\\{)?[0-9a-fA-F]{8}(-)?[0-9a-fA-F]{4}(-)?[0-9a-fA-F]{4}(-)?[0-9a-fA-F]{4}(-)?[0-9a-fA-F]{12}(\\})?$/;
+function isValidNamespace(ns) &#123;
+  const pattern = /^(\\&#123;)?[0-9a-fA-F]&#123;8&#125;(-)?[0-9a-fA-F]&#123;4&#125;(-)?[0-9a-fA-F]&#123;4&#125;(-)?[0-9a-fA-F]&#123;4&#125;(-)?[0-9a-fA-F]&#123;12&#125;(\\&#125;)?$/;
   return pattern.test(ns);
-}
+&#125;
 
-function renderResults(uuids) {
+function renderResults(uuids) &#123;
   let html = '<div class="card card-bordered bg-base-100 p-3 mb-4"><h5 class="mb-3">Hasil UUID</h5><div class="overflow-x-auto"><table class="table table-sm table-zebra align-middle"><thead class="table-light"><tr><th>#</th><th>UUID</th><th>Aksi</th></tr></thead><tbody>';
 
-  uuids.forEach((uuid, idx) => {
-    const id = \`uuid_\${idx}\`;
-    html += \`<tr><td>\${idx + 1}</td><td class="uuid-code"><code id="\${id}">\${escapeHtml(uuid)}</code></td><td><button class="btn btn-sm btn-outline-secondary" onclick="copyText('\${id}')">Copy</button></td></tr>\`;
-  });
+  uuids.forEach((uuid, idx) => &#123;
+    const id = \`uuid_\$&#123;idx&#125;\`;
+    html += \`<tr><td>\$&#123;idx + 1&#125;</td><td class="uuid-code"><code id="\$&#123;id&#125;">\$&#123;escapeHtml(uuid)&#125;</code></td><td><button class="btn btn-sm btn-outline-secondary" onclick="copyText('\$&#123;id&#125;')">Copy</button></td></tr>\`;
+  &#125;);
 
   html += '</tbody></table></div></div>';
   document.getElementById('results').innerHTML = html;
-}
+&#125;
 
-function copyText(id) {
+function copyText(id) &#123;
   const text = document.getElementById(id).innerText;
   navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
-}
+&#125;
 
-function escapeHtml(text) {
+function escapeHtml(text) &#123;
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
-}
+&#125;
 
-function showToast(message) {
+function showToast(message) &#123;
   const toast = document.createElement('div');
   toast.className = 'toast items-center text-bg-light border p-2 toast-fixed';
-  toast.innerHTML = \`<div class="flex"><div class="toast-body">\${message}</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>\`;
+  toast.innerHTML = \`<div class="flex"><div class="toast-body">\$&#123;message&#125;</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>\`;
   document.body.appendChild(toast);
   toast.querySelector('.btn-close').addEventListener('click', () => toast.remove());
   setTimeout(() => toast.remove(), 2200);
-}
+&#125;
 
-document.getElementById('version').addEventListener('change', () => {
+document.getElementById('version').addEventListener('change', () => &#123;
   const v = document.getElementById('version').value;
   document.getElementById('nsSection').style.display = (v === 'v3' || v === 'v5') ? 'block' : 'none';
-});
+&#125;);
 
-document.getElementById('btnCopyAll').addEventListener('click', () => {
-  if (generatedUUIDs.length === 0) {
+document.getElementById('btnCopyAll').addEventListener('click', () => &#123;
+  if (generatedUUIDs.length === 0) &#123;
     showToast('Tidak ada data untuk disalin');
     return;
-  }
+  &#125;
   navigator.clipboard.writeText(generatedUUIDs.join('\\n')).then(() => showToast('All UUIDs copied'));
-});
+&#125;);
 </script>
 

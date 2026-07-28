@@ -12,7 +12,19 @@ const relatedTools = [
   { slug: 'ip-calculator', name: 'Ip Calculator', icon: '🔌' },
   { slug: 'cron-builder', name: 'Cron Builder', icon: '⏰' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#059669;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="6" x2="6" y2="18"/><line x1="10" y1="6" x2="10" y2="18"/><line x1="14" y1="6" x2="14" y2="18"/><line x1="18" y1="6" x2="18" y2="18"/></svg></div><div><h1 class="h3 mb-0">MAC Address Generator</h1><p class="opacity-60 small mb-0">Generate alamat MAC acak dengan berbagai format dan opsi.</p></div></header>
+
+const toolCss = `
+    .mac-cell { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9rem; }
+  `;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#059669;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="6" x2="6" y2="18"/><line x1="10" y1="6" x2="10" y2="18"/><line x1="14" y1="6" x2="14" y2="18"/><line x1="18" y1="6" x2="18" y2="18"/></svg></div><div><h1 class="h3 mb-0">MAC Address Generator</h1><p class="opacity-60 small mb-0">Generate alamat MAC acak dengan berbagai format dan opsi.</p></div></header>
 
 <div class="flex flex-wrap gap-4">
 <div class="lg:w-7/12 w-full">
@@ -91,21 +103,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div>
 </div></div>
-`;
-const toolCss = `
-    .mac-cell { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9rem; }
-  `;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -128,73 +127,73 @@ document.getElementById('year').textContent=new Date().getFullYear();
 var cntInp=document.getElementById('macCount'),fmtInp=document.getElementById('macFormat'),venInp=document.getElementById('macVendor');
 var chkLocal=document.getElementById('macLocal'),tblBody=document.getElementById('macTableBody');
 
-function randomByte(){return Math.floor(Math.random()*256);}
+function randomByte()&#123;return Math.floor(Math.random()*256);&#125;
 
-function formatMAC(bytes,fmt){
+function formatMAC(bytes,fmt)&#123;
   var parts=[];
   for(var i=0;i<6;i++)parts.push(bytes[i].toString(16).toUpperCase().padStart(2,'0'));
   if(fmt==='dash')return parts.join('-');
   if(fmt==='dot')return parts.slice(0,3).join('')+'.'+parts.slice(3,6).join('');
   return parts.join(':');
-}
+&#125;
 
-function generateMAC(){
+function generateMAC()&#123;
   var bytes=[];
   var ven=venInp.value;
-  if(ven){
+  if(ven)&#123;
     for(var i=0;i<3;i++)bytes.push(parseInt(ven.substr(i*2,2),16));
     for(var i=3;i<6;i++)bytes.push(randomByte());
-  }else{
+  &#125;else&#123;
     for(var i=0;i<6;i++)bytes.push(randomByte());
-  }
+  &#125;
   var unicast=document.querySelector('input[name="multicast"]:checked').value==='unicast';
   if(unicast)bytes[0]=bytes[0]&0xFE;
   else bytes[0]=bytes[0]|0x01;
   if(chkLocal.checked)bytes[0]=bytes[0]|0x02;
   else bytes[0]=bytes[0]&0xFD;
   return bytes;
-}
+&#125;
 
-function generate(){
+function generate()&#123;
   var cnt=parseInt(cntInp.value)||5;if(cnt<1)cnt=1;if(cnt>50)cnt=50;
   var fmt=fmtInp.value;
   var rows='';
-  for(var i=0;i<cnt;i++){
+  for(var i=0;i<cnt;i++)&#123;
     var mac=formatMAC(generateMAC(),fmt);
     rows+='<tr><td class="mac-cell">'+(i+1)+'</td><td class="mac-cell font-semibold">'+mac+'</td><td class="text-right"><button class="btn btn-sm btn-outline-secondary copy-single" data-mac="'+mac+'">Copy</button></td></tr>';
-  }
+  &#125;
   tblBody.innerHTML=rows;
-}
+&#125;
 
 document.getElementById('btnGenerate').addEventListener('click',generate);
 
-document.getElementById('btnCopyAll').addEventListener('click',function(){
-  var lines=[];tblBody.querySelectorAll('.mac-cell.font-semibold').forEach(function(el){lines.push(el.textContent);});
-  navigator.clipboard.writeText(lines.join('\\n')).then(function(){showToast(lines.length+' MAC copied');}).catch(function(){});
-});
+document.getElementById('btnCopyAll').addEventListener('click',function()&#123;
+  var lines=[];tblBody.querySelectorAll('.mac-cell.font-semibold').forEach(function(el)&#123;lines.push(el.textContent);&#125;);
+  navigator.clipboard.writeText(lines.join('\\n')).then(function()&#123;showToast(lines.length+' MAC copied');&#125;).catch(function()&#123;&#125;);
+&#125;);
 
-document.addEventListener('click',function(e){
-  if(e.target.classList.contains('copy-single')){
-    navigator.clipboard.writeText(e.target.dataset.mac).then(function(){showToast('MAC copied: '+e.target.dataset.mac);}).catch(function(){});
-  }
-});
+document.addEventListener('click',function(e)&#123;
+  if(e.target.classList.contains('copy-single'))&#123;
+    navigator.clipboard.writeText(e.target.dataset.mac).then(function()&#123;showToast('MAC copied: '+e.target.dataset.mac);&#125;).catch(function()&#123;&#125;);
+  &#125;
+&#125;);
 
-document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+document.querySelectorAll('.preset').forEach(function(el)&#123;el.addEventListener('click',function()&#123;
   if(this.dataset.count)cntInp.value=this.dataset.count;
   if(this.dataset.fmt)fmtInp.value=this.dataset.fmt;
   if(this.dataset.vendor)venInp.value=this.dataset.vendor;
   if(this.dataset.local==='1')chkLocal.checked=true;else chkLocal.checked=false;
   generate();
-})});
+&#125;)&#125;);
 
-function showToast(m){
+function showToast(m)&#123;
   var t=document.createElement('div');t.className='toast items-center text-bg-light border p-2';
   t.style.position='fixed';t.style.right='20px';t.style.bottom='20px';t.style.zIndex=9999;
   t.innerHTML='<div class="flex"><div class="toast-body">'+m+'</div><button type="button" class="btn-close btn-close-white mr-2 m-auto" aria-label="Close"></button></div>';
   document.body.appendChild(t);
-  t.querySelector('.btn-close').addEventListener('click',function(){t.remove();});
-  setTimeout(function(){t.remove();},2500);
-}
+  t.querySelector('.btn-close').addEventListener('click',function()&#123;t.remove();&#125;);
+  setTimeout(function()&#123;t.remove();&#125;,2500);
+&#125;
 
 generate();
 </script>

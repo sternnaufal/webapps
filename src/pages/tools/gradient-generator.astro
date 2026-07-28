@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'contrast-checker', name: 'Contrast Checker', icon: '◐' },
   { slug: 'css-unit', name: 'Css Unit', icon: 'px' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg></div><div><h1 class="h3 mb-0">CSS Gradient Generator</h1><p class="opacity-60 small mb-0">Buat gradient CSS kustom dengan preview langsung.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg></div><div><h1 class="h3 mb-0">CSS Gradient Generator</h1><p class="opacity-60 small mb-0">Buat gradient CSS kustom dengan preview langsung.</p></div></header>
 
 <div class="flex flex-wrap gap-4">
 <div class="col-lgap-4">
@@ -75,18 +84,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
   </div>
 </div>
 </div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -110,36 +109,36 @@ var use3=document.getElementById('useColor3');
 var type=document.getElementById('gradType'),dir=document.getElementById('gradDirection');
 var preview=document.getElementById('preview'),output=document.getElementById('cssOutput');
 
-function syncHex(picker,hex){hex.value=picker.value}
-function syncPicker(hex,picker){picker.value=hex.value}
-color1.addEventListener('input',function(){syncHex(color1,hex1);update();});
-color2.addEventListener('input',function(){syncHex(color2,hex2);update();});
-color3.addEventListener('input',function(){syncHex(color3,hex3);update();});
-hex1.addEventListener('input',function(){syncPicker(hex1,color1);update();});
-hex2.addEventListener('input',function(){syncPicker(hex2,color2);update();});
-hex3.addEventListener('input',function(){syncPicker(hex3,color3);update();});
+function syncHex(picker,hex)&#123;hex.value=picker.value&#125;
+function syncPicker(hex,picker)&#123;picker.value=hex.value&#125;
+color1.addEventListener('input',function()&#123;syncHex(color1,hex1);update();&#125;);
+color2.addEventListener('input',function()&#123;syncHex(color2,hex2);update();&#125;);
+color3.addEventListener('input',function()&#123;syncHex(color3,hex3);update();&#125;);
+hex1.addEventListener('input',function()&#123;syncPicker(hex1,color1);update();&#125;);
+hex2.addEventListener('input',function()&#123;syncPicker(hex2,color2);update();&#125;);
+hex3.addEventListener('input',function()&#123;syncPicker(hex3,color3);update();&#125;);
 use3.addEventListener('change',update);
-type.addEventListener('change',function(){document.getElementById('directionGroup').style.display=this.value==='linear'?'block':'none';update();});
+type.addEventListener('change',function()&#123;document.getElementById('directionGroup').style.display=this.value==='linear'?'block':'none';update();&#125;);
 dir.addEventListener('change',update);
 
-function update(){
+function update()&#123;
   var c1=color1.value,c2=color2.value,c3=color3.value;
   var css;
-  if(type.value==='linear'){
+  if(type.value==='linear')&#123;
     var d=dir.value;
     if(use3.checked) css='linear-gradient('+d+', '+c1+', '+c2+', '+c3+')';
     else css='linear-gradient('+d+', '+c1+', '+c2+')';
-  } else {
+  &#125; else &#123;
     if(use3.checked) css='radial-gradient(circle, '+c1+', '+c2+', '+c3+')';
     else css='radial-gradient(circle, '+c1+', '+c2+')';
-  }
+  &#125;
   preview.style.background=css;
   output.value='background: '+css+';';
-}
+&#125;
 update();
 
-document.getElementById('btnCopy').addEventListener('click',function(){
-  var b=this;navigator.clipboard.writeText(output.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
-});
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
+  var b=this;navigator.clipboard.writeText(output.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
+&#125;);
 </script>
 

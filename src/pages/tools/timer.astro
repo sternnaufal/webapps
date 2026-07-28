@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'pomodoro', name: 'Pomodoro', icon: '🍅' },
   { slug: 'cron-builder', name: 'Cron Builder', icon: '⏰' }
 ];
-const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<ul class="nav nav-tabs mb-4" id="tabNav">
         <li class="nav-item"><a class="nav-link active" href="#" data-tab="stopwatch">Stopwatch</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-tab="timer">Timer</a></li>
       </ul>
@@ -82,18 +91,9 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
           </div>
         </div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -110,16 +110,16 @@ const bodyHtml = `<ul class="nav nav-tabs mb-4" id="tabNav">
 
 <script is:inline>
 // Tab switching
-document.querySelectorAll('#tabNav .nav-link').forEach(function(tab) {
-  tab.addEventListener('click', function(e) {
+document.querySelectorAll('#tabNav .nav-link').forEach(function(tab) &#123;
+  tab.addEventListener('click', function(e) &#123;
     e.preventDefault();
-    document.querySelectorAll('#tabNav .nav-link').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('#tabNav .nav-link').forEach(function(t) &#123; t.classList.remove('active'); &#125;);
     this.classList.add('active');
     var target = this.getAttribute('data-tab');
     document.getElementById('tabStopwatch').style.display = target === 'stopwatch' ? 'block' : 'none';
     document.getElementById('tabTimer').style.display = target === 'timer' ? 'block' : 'none';
-  });
-});
+  &#125;);
+&#125;);
 
 // ============= STOPWATCH =============
 var swInterval = null;
@@ -128,30 +128,30 @@ var swTime = 0; // milliseconds
 var swLaps = [];
 var swDisplay = document.getElementById('swDisplay');
 
-function swFormat(ms) {
+function swFormat(ms) &#123;
   var totalSec = ms / 1000;
   var h = Math.floor(totalSec / 3600);
   var m = Math.floor((totalSec % 3600) / 60);
   var s = Math.floor(totalSec % 60);
   var cs = Math.floor((ms % 1000) / 10);
   return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s) + '.' + (cs < 10 ? '0' + cs : cs);
-}
+&#125;
 
-function swTick() {
+function swTick() &#123;
   swTime += 10;
   swDisplay.textContent = swFormat(swTime);
-}
+&#125;
 
-function swStart() {
+function swStart() &#123;
   if (swRunning) return;
   swRunning = true;
   swInterval = setInterval(swTick, 10);
   document.getElementById('swStart').disabled = true;
   document.getElementById('swPause').disabled = false;
   document.getElementById('swLap').disabled = false;
-}
+&#125;
 
-function swPause() {
+function swPause() &#123;
   if (!swRunning) return;
   swRunning = false;
   clearInterval(swInterval);
@@ -159,9 +159,9 @@ function swPause() {
   document.getElementById('swStart').textContent = 'Resume';
   document.getElementById('swPause').disabled = true;
   document.getElementById('swLap').disabled = true;
-}
+&#125;
 
-function swReset() {
+function swReset() &#123;
   swRunning = false;
   clearInterval(swInterval);
   swTime = 0;
@@ -172,9 +172,9 @@ function swReset() {
   document.getElementById('swPause').disabled = true;
   document.getElementById('swLap').disabled = true;
   document.getElementById('lapList').innerHTML = '';
-}
+&#125;
 
-function swLap() {
+function swLap() &#123;
   if (!swRunning) return;
   swLaps.push(swTime);
   var lapNum = swLaps.length;
@@ -184,7 +184,7 @@ function swLap() {
   div.className = 'lap-item flex justify-between border-bottom py-1';
   div.innerHTML = '<span>Lap ' + lapNum + '</span><span class="lap-time">' + swFormat(lapTime) + ' <span class="opacity-60">(' + swFormat(swLaps[lapNum - 1]) + ')</span></span>';
   container.insertBefore(div, container.firstChild);
-}
+&#125;
 
 document.getElementById('swStart').addEventListener('click', swStart);
 document.getElementById('swPause').addEventListener('click', swPause);
@@ -197,38 +197,38 @@ var tmRunning = false;
 var tmRemaining = 0; // seconds
 var tmDisplay = document.getElementById('tmDisplay');
 
-function tmFormat(sec) {
+function tmFormat(sec) &#123;
   if (sec <= 0) return '00:00';
   var h = Math.floor(sec / 3600);
   var m = Math.floor((sec % 3600) / 60);
   var s = sec % 60;
   if (h > 0) return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
   return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-}
+&#125;
 
-function tmTick() {
+function tmTick() &#123;
   tmRemaining--;
   tmDisplay.textContent = tmFormat(tmRemaining);
-  if (tmRemaining <= 0) {
+  if (tmRemaining <= 0) &#123;
     clearInterval(tmInterval);
     tmRunning = false;
     document.getElementById('tmAlert').style.display = 'block';
     document.getElementById('tmStart').disabled = false;
     document.getElementById('tmPause').disabled = true;
-  }
-}
+  &#125;
+&#125;
 
-function tmGetDuration() {
+function tmGetDuration() &#123;
   var h = parseInt(document.getElementById('tmHours').value, 10) || 0;
   var m = parseInt(document.getElementById('tmMinutes').value, 10) || 0;
   var s = parseInt(document.getElementById('tmSeconds').value, 10) || 0;
   return h * 3600 + m * 60 + s;
-}
+&#125;
 
-function tmStart() {
+function tmStart() &#123;
   if (tmRunning) return;
   var total = tmGetDuration();
-  if (total <= 0) { alert('Set timer duration first'); return; }
+  if (total <= 0) &#123; alert('Set timer duration first'); return; &#125;
   tmRemaining = total;
   tmDisplay.textContent = tmFormat(tmRemaining);
   tmRunning = true;
@@ -236,18 +236,18 @@ function tmStart() {
   document.getElementById('tmStart').disabled = true;
   document.getElementById('tmPause').disabled = false;
   document.getElementById('tmAlert').style.display = 'none';
-}
+&#125;
 
-function tmPause() {
+function tmPause() &#123;
   if (!tmRunning) return;
   tmRunning = false;
   clearInterval(tmInterval);
   document.getElementById('tmStart').disabled = false;
   document.getElementById('tmStart').textContent = 'Resume';
   document.getElementById('tmPause').disabled = true;
-}
+&#125;
 
-function tmReset() {
+function tmReset() &#123;
   tmRunning = false;
   clearInterval(tmInterval);
   tmRemaining = 0;
@@ -256,11 +256,11 @@ function tmReset() {
   document.getElementById('tmStart').textContent = 'Start';
   document.getElementById('tmPause').disabled = true;
   document.getElementById('tmAlert').style.display = 'none';
-}
+&#125;
 
 document.getElementById('tmStart').addEventListener('click', tmStart);
 document.getElementById('tmPause').addEventListener('click', tmPause);
 document.getElementById('tmReset').addEventListener('click', tmReset);
-document.getElementById('tmDismiss').addEventListener('click', function() { document.getElementById('tmAlert').style.display = 'none'; });
+document.getElementById('tmDismiss').addEventListener('click', function() &#123; document.getElementById('tmAlert').style.display = 'none'; &#125;);
 </script>
 

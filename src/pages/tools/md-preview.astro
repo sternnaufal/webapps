@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' },
   { slug: 'textcase', name: 'Textcase', icon: 'Aa' }
 ];
-const bodyHtml = `<div class="flex flex-wrap gap-4">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<div class="flex flex-wrap gap-4">
         <div class="md:w-1/2 w-full">
           <label for="editor" class="label-text">Markdown Input</label>
           <textarea id="editor" class="input input-bordered w-full" placeholder="# Judul&#10;Teks **bold** dan *italic*&#10;- List item 1&#10;- List item 2"></textarea>
@@ -39,23 +48,14 @@ const bodyHtml = `<div class="flex flex-wrap gap-4">
             <tr><td>*teks*</td><td>Italic</td><td><code>*teks miring*</code></td><td><i>teks miring</i></td></tr>
             <tr><td>- item</td><td>List</td><td><code>- satu<br>- dua</code></td><td><ul><li>satu</li><li>dua</li></ul></td></tr>
             <tr><td>[teks](url)</td><td>Link</td><td><code>[Google](https://google.com)</code></td><td><a href="https://google.com">Google</a></td></tr>
-            <tr><td>\`kode\`</td><td>Inline Code</td><td><code>\`console.log("Hi")\`</code></td><td><code>console.log("Hi")</code></td></tr>
-            <tr><td>\`\`\`</td><td>Code Block</td><td><code>\`\`\`js<br>console.log("Hi")<br>\`\`\`</code></td><td><pre><code>console.log("Hi")</code></pre></td></tr>
+            <tr><td>`kode`</td><td>Inline Code</td><td><code>`console.log("Hi")`</code></td><td><code>console.log("Hi")</code></td></tr>
+            <tr><td>```</td><td>Code Block</td><td><code>```js<br>console.log("Hi")<br>```</code></td><td><pre><code>console.log("Hi")</code></pre></td></tr>
           </tbody>
         </table>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -71,31 +71,31 @@ const bodyHtml = `<div class="flex flex-wrap gap-4">
 </script>
 
 <script is:inline>
-marked.setOptions({
+marked.setOptions(&#123;
   breaks: true,
   gfm: true,
-  highlight: function(code, lang) {
+  highlight: function(code, lang) &#123;
     return hljs.highlightAuto(code, [lang]).value;
-  }
-});
+  &#125;
+&#125;);
 
 var editor = document.getElementById('editor');
 var preview = document.getElementById('preview');
 var copyBtn = document.getElementById('copyBtn');
 
-function updatePreview() {
+function updatePreview() &#123;
   preview.innerHTML = marked.parse(editor.value);
-}
+&#125;
 
 editor.addEventListener('input', updatePreview);
 
-copyBtn.addEventListener('click', function() {
+copyBtn.addEventListener('click', function() &#123;
   navigator.clipboard.writeText(preview.innerHTML)
-    .then(function() {
+    .then(function() &#123;
       copyBtn.textContent = '? Copied!';
-      setTimeout(function() { copyBtn.textContent = '?? Copy HTML'; }, 1500);
-    });
-});
+      setTimeout(function() &#123; copyBtn.textContent = '?? Copy HTML'; &#125;, 1500);
+    &#125;);
+&#125;);
 
 editor.value = '# Selamat Datang ??\\n\\nIni **Markdown Previewer**!\\n\\n- Tulisan *italic*\\n- Tulisan **bold**\\n- Link: [Web Naufal Rakha](https://naufalrakha.my.id)\\n\\n\`\`\`js\\nconsole.log(\\'Hello World\\');\\n\`\`\`';
 updatePreview();

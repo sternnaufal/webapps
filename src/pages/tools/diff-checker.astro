@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' }
 ];
-const bodyHtml = `<div class="flex flex-wrap gap-3 mb-3">
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<div class="flex flex-wrap gap-3 mb-3">
         <div class="md:w-1/2 w-full">
           <label for="textA" class="label-text font-semibold">Original (A)</label>
           <textarea id="textA" class="input input-bordered w-full font-monospace" rows="8" placeholder="Text A...">Hello World
@@ -45,18 +54,9 @@ New line added</textarea>
           </div>
         </div>
       </div>
-    \`n`;
----
+    `n
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -72,44 +72,44 @@ New line added</textarea>
 </script>
 
 <script is:inline>
-function diff(a, b) {
+function diff(a, b) &#123;
   var linesA = a.split('\\n');
   var linesB = b.split('\\n');
   var m = linesA.length, n = linesB.length;
   var dp = [];
-  for (var i = 0; i <= m; i++) { dp[i] = []; dp[i][0] = i; }
-  for (var j = 0; j <= n; j++) { dp[0][j] = j; }
-  for (var i = 1; i <= m; i++) {
-    for (var j = 1; j <= n; j++) {
+  for (var i = 0; i <= m; i++) &#123; dp[i] = []; dp[i][0] = i; &#125;
+  for (var j = 0; j <= n; j++) &#123; dp[0][j] = j; &#125;
+  for (var i = 1; i <= m; i++) &#123;
+    for (var j = 1; j <= n; j++) &#123;
       var cost = linesA[i - 1] === linesB[j - 1] ? 0 : 1;
       dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
-    }
-  }
+    &#125;
+  &#125;
 
   var result = [];
   var i = m, j = n;
-  while (i > 0 || j > 0) {
-    if (i > 0 && j > 0 && linesA[i - 1] === linesB[j - 1]) {
-      result.unshift({ type: 'unchanged', textA: linesA[i - 1], textB: linesB[j - 1], lineA: i, lineB: j });
+  while (i > 0 || j > 0) &#123;
+    if (i > 0 && j > 0 && linesA[i - 1] === linesB[j - 1]) &#123;
+      result.unshift(&#123; type: 'unchanged', textA: linesA[i - 1], textB: linesB[j - 1], lineA: i, lineB: j &#125;);
       i--; j--;
-    } else if (j > 0 && (i === 0 || dp[i][j - 1] + 1 <= dp[i - 1][j])) {
-      result.unshift({ type: 'added', textA: '', textB: linesB[j - 1], lineA: null, lineB: j });
+    &#125; else if (j > 0 && (i === 0 || dp[i][j - 1] + 1 <= dp[i - 1][j])) &#123;
+      result.unshift(&#123; type: 'added', textA: '', textB: linesB[j - 1], lineA: null, lineB: j &#125;);
       j--;
-    } else if (i > 0) {
-      result.unshift({ type: 'removed', textA: linesA[i - 1], textB: '', lineA: i, lineB: null });
+    &#125; else if (i > 0) &#123;
+      result.unshift(&#123; type: 'removed', textA: linesA[i - 1], textB: '', lineA: i, lineB: null &#125;);
       i--;
-    }
-  }
+    &#125;
+  &#125;
   return result;
-}
+&#125;
 
-function escapeHtml(s) {
+function escapeHtml(s) &#123;
   var div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
-}
+&#125;
 
-function compare() {
+function compare() &#123;
   var a = document.getElementById('textA').value;
   var b = document.getElementById('textB').value;
   var result = diff(a, b);
@@ -117,32 +117,32 @@ function compare() {
   table.innerHTML = '';
   var added = 0, removed = 0;
 
-  result.forEach(function(row) {
+  result.forEach(function(row) &#123;
     var tr = document.createElement('tr');
-    if (row.type === 'added') {
+    if (row.type === 'added') &#123;
       tr.className = 'diff-added';
       added++;
       tr.innerHTML = '<td class="line-num"></td><td></td><td class="line-num">' + row.lineB + '</td><td><span class="text-success">+ </span>' + escapeHtml(row.textB) + '</td>';
-    } else if (row.type === 'removed') {
+    &#125; else if (row.type === 'removed') &#123;
       tr.className = 'diff-removed';
       removed++;
       tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td><span class="text-error">- </span>' + escapeHtml(row.textA) + '</td><td class="line-num"></td><td></td>';
-    } else {
+    &#125; else &#123;
       tr.className = 'diff-unchanged';
       tr.innerHTML = '<td class="line-num">' + row.lineA + '</td><td>' + escapeHtml(row.textA) + '</td><td class="line-num">' + row.lineB + '</td><td>' + escapeHtml(row.textB) + '</td>';
-    }
+    &#125;
     table.appendChild(tr);
-  });
+  &#125;);
 
   document.getElementById('diffOutput').style.display = 'block';
   document.getElementById('diffStats').textContent = added + ' added, ' + removed + ' removed, ' + (result.length - added - removed) + ' unchanged';
-}
+&#125;
 
 document.getElementById('btnDiff').addEventListener('click', compare);
-document.getElementById('btnClear').addEventListener('click', function() {
+document.getElementById('btnClear').addEventListener('click', function() &#123;
   document.getElementById('textA').value = '';
   document.getElementById('textB').value = '';
   document.getElementById('diffOutput').style.display = 'none';
-});
+&#125;);
 </script>
 

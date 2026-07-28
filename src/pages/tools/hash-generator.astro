@@ -5,125 +5,110 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Hash Generator';
 const description = 'Generate hash MD5, SHA1, SHA256, SHA512 online. Hash generator gratis untuk developer.';
 const keywords = 'hash generator, md5, sha1, sha256, sha512, hash online';
-const aboutText = 'Hash Generator Generate hash MD5, SHA1, SHA256, SHA512 online. Hash generator gratis untuk developer.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Hash generator online untuk menghasilkan nilai hash dari teks menggunakan berbagai algoritma kriptografi: MD5, SHA-1, SHA-256, SHA-512, dan lainnya. Alat ini sangat berguna bagi developer, security engineer, dan siapa pun yang perlu memverifikasi integritas data, menyimpan password, atau membuat checksum file. Cukup masukkan teks pada kolom input, klik Generate, dan semua varian hash akan ditampilkan sekaligus.';
+const aboutExtra = 'Setiap hasil hash dilengkapi tombol Copy untuk menyalin nilai hash ke clipboard. Tabel hasil menampilkan nama algoritma dan nilai hash dalam format heksadesimal. Hash generator menggunakan library CryptoJS yang terpercaya untuk memastikan akurasi. Proses hashing dilakukan sepenuhnya di browser, sehingga teks asli tidak pernah dikirim atau disimpan di server mana pun.';
 const relatedTools = [
-  { slug: 'uuid-generator', name: 'Uuid Generator', icon: '🆔' },
-  { slug: 'base64-coded', name: 'Base64 Coded', icon: 'B64' },
+  { slug: 'uuid-generator', name: 'UUID Generator', icon: '🆔' },
+  { slug: 'base64-coded', name: 'Base64 Encode/Decode', icon: 'B64' },
   { slug: 'password-generator', name: 'Password Generator', icon: '🔑' },
-  { slug: 'jwt-decoder', name: 'Jwt Decoder', icon: 'JWT' }
+  { slug: 'jwt-decoder', name: 'JWT Decoder', icon: 'JWT' },
 ];
-const bodyHtml = `<!-- Navbar khusus mobile -->
-      
-
-      
-
-      <!-- Form -->
-      <div class="mb-4">
-        <div class="mb-3">
-          <label for="text" class="label-text">Input Text</label>
-          <textarea id="text" rows="3" class="input input-bordered w-full" placeholder="Masukkan teks untuk di-hash"></textarea>
-        </div>
-        <button type="button" id="generateBtn" class="btn btn-primary">Generate</button>
-      </div>
-
-      <!-- Hasil -->
-      <div id="results" style="display: none;">
-        <div class="card card-bordered bg-base-100 p-3">
-          <h5 class="mb-3">Hasil Hash</h5>
-          <div class="overflow-x-auto">
-            <table class="table table-bordered table-sm align-middle">
-              <thead>
-                <tr>
-                  <th>Algoritma</th>
-                  <th>Hash</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="hashTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    `;
 ---
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
 
-<Fragment set:html={bodyHtml} />
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+    <!-- Form -->
+    <div class="mb-4">
+      <div class="mb-3">
+        <label for="text" class="text-xs font-medium opacity-60 mb-1 block">Input Text</label>
+        <textarea id="text" rows="3" class="textarea textarea-bordered w-full text-sm font-mono" placeholder="Masukkan teks untuk di-hash"></textarea>
+      </div>
+      <button type="button" id="generateBtn" class="btn btn-primary btn-sm">Generate</button>
+    </div>
 
-  <ToolShell about={aboutText} />
+    <!-- Results -->
+    <div id="results" style="display:none;">
+      <div class="overflow-x-auto">
+        <table class="table table-sm w-full">
+          <thead>
+            <tr class="text-xs opacity-50">
+              <th class="pb-2">Algoritma</th>
+              <th class="pb-2">Hash</th>
+              <th class="pb-2 w-20">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="hashTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
-
 <script is:inline>
-function generateHashes() {
+function generateHashes() &#123;
   const text = document.getElementById('text').value;
-  if (!text.trim()) {
+  if (!text.trim()) &#123;
     alert('Masukkan teks terlebih dahulu');
     return;
-  }
+  &#125;
 
-  const hashes = {
+  const hashes = &#123;
     'MD5': CryptoJS.MD5(text).toString(),
-    'SHA1': CryptoJS.SHA1(text).toString(),
-    'SHA256': CryptoJS.SHA256(text).toString(),
-    'SHA512': CryptoJS.SHA512(text).toString(),
-  };
+    'SHA-1': CryptoJS.SHA1(text).toString(),
+    'SHA-256': CryptoJS.SHA256(text).toString(),
+    'SHA-512': CryptoJS.SHA512(text).toString(),
+  &#125;;
 
   const tbody = document.getElementById('hashTable');
   tbody.innerHTML = '';
 
-  Object.entries(hashes).forEach(([algo, hash]) => {
+  Object.entries(hashes).forEach(([algo, hash]) => &#123;
     const row = document.createElement('tr');
-    row.innerHTML = \`
-      <td><strong>\${algo}</strong></td>
-      <td><code id="hash_\${algo}" style="word-break: break-all;">\${escapeHtml(hash)}</code></td>
-      <td>
-        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="copyHash('hash_\${algo}')">Copy</button>
+    row.className = 'text-sm border-b';
+    row.style.borderColor = 'oklch(0.9 0.005 270)';
+    row.innerHTML = `
+      <td class="py-2 font-semibold text-xs">$&#123;algo&#125;</td>
+      <td class="py-2"><code class="text-xs font-mono" style="word-break:break-all;" id="hash_$&#123;algo&#125;">$&#123;escapeHtml(hash)&#125;</code></td>
+      <td class="py-2">
+        <button type="button" class="btn btn-ghost btn-xs" onclick="copyHash('hash_$&#123;algo&#125;')">Copy</button>
       </td>
-    \`;
+    `;
     tbody.appendChild(row);
-  });
+  &#125;);
 
   document.getElementById('results').style.display = 'block';
-}
+&#125;
 
-function copyHash(id) {
+function copyHash(id) &#123;
   const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector(\`[onclick="copyHash('\${id}')"]\`);
+  navigator.clipboard.writeText(text).then(() => &#123;
+    const btn = document.querySelector(`[onclick="copyHash('$&#123;id&#125;')"]`);
     if (!btn) return;
     const oldText = btn.textContent;
-    btn.textContent = '? Copied!';
-    setTimeout(() => { btn.textContent = oldText; }, 2000);
-  }).catch(() => {
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => &#123; btn.textContent = oldText; &#125;, 2000);
+  &#125;).catch(() => &#123;
     alert('Gagal menyalin');
-  });
-}
+  &#125;);
+&#125;
 
-function escapeHtml(text) {
+function escapeHtml(text) &#123;
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
-}
+&#125;
 
 document.getElementById('generateBtn').addEventListener('click', generateHashes);
-document.getElementById('text').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter' && e.ctrlKey) {
+document.getElementById('text').addEventListener('keypress', (e) => &#123;
+  if (e.key === 'Enter' && e.ctrlKey) &#123;
     generateHashes();
-  }
-});
+  &#125;
+&#125;);
 </script>
-

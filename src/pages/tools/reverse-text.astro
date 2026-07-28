@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'palindrome-checker', name: 'Palindrome Checker', icon: '↔' },
   { slug: 'list-sorter', name: 'List Sorter', icon: '↕' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Reverse Text</h1><p class="opacity-60 small mb-0">Balikkan teks dengan berbagai mode: balik karakter, kata, kalimat, atau baris.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Reverse Text</h1><p class="opacity-60 small mb-0">Balikkan teks dengan berbagai mode: balik karakter, kata, kalimat, atau baris.</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-6">
 <div class="card card-bordered bg-base-100 p-3">
 <div class="mb-3"><label class="label-text font-semibold">Input</label><textarea id="textInput" class="input input-bordered w-full font-mono" rows="5" placeholder="Masukkan teks..." autofocus>Halo, apa kabar?
@@ -27,18 +36,8 @@ Semoga harimu menyenangkan.</textarea></div>
 <div class="flex justify-between items-center mb-2"><label class="label-text font-semibold mb-0">Output</label><button id="btnCopy" class="btn btn-sm btn-outline-secondary">Copy</button></div>
 <textarea id="outputArea" class="input input-bordered w-full font-mono" rows="8" readonly></textarea>
 </div></div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -56,17 +55,17 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),mode=document.getElementById('modeSelect'),out=document.getElementById('outputArea');
-document.getElementById('btnReverse').addEventListener('click',function(){
+document.getElementById('btnReverse').addEventListener('click',function()&#123;
   var t=inp.value,m=mode.value;
   if(m==='chars')out.value=t.split('').reverse().join('');
   else if(m==='words')out.value=t.split(/\\s+/).reverse().join(' ');
   else if(m==='lines')out.value=t.split('\\n').reverse().join('\\n');
-  else if(m==='wordsChars')out.value=t.split(/\\s+/).reverse().map(function(w){return w.split('').reverse().join('')}).join(' ');
-});
-document.getElementById('btnCopy').addEventListener('click',function(){
+  else if(m==='wordsChars')out.value=t.split(/\\s+/).reverse().map(function(w)&#123;return w.split('').reverse().join('')&#125;).join(' ');
+&#125;);
+document.getElementById('btnCopy').addEventListener('click',function()&#123;
   if(!out.value)return;var b=this;
-  navigator.clipboard.writeText(out.value).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy'},1500)});
-});
+  navigator.clipboard.writeText(out.value).then(function()&#123;b.textContent='Copied!';setTimeout(function()&#123;b.textContent='Copy'&#125;,1500)&#125;);
+&#125;);
 document.getElementById('btnReverse').click();
 </script>
 

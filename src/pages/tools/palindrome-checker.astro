@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' },
   { slug: 'textcase', name: 'Textcase', icon: 'Aa' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Palindrome Checker</h1><p class="opacity-60 small mb-0">Periksa apakah kata, kalimat, atau angka adalah palindrome (dibaca sama dari depan dan belakang).</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0891b2;">Aa</div><div><h1 class="h3 mb-0">Palindrome Checker</h1><p class="opacity-60 small mb-0">Periksa apakah kata, kalimat, atau angka adalah palindrome (dibaca sama dari depan dan belakang).</p></div></header>
 <div class="flex flex-wrap gap-4"><div class="col-lg-8">
 <div class="card card-bordered bg-base-100 p-3">
 <textarea id="textInput" class="input input-bordered w-full font-mono mb-3" rows="3" placeholder="Masukkan teks..." autofocus>Kasur ini rusak</textarea>
@@ -34,18 +43,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 <div style="cursor:pointer" class="example">racecar</div>
 </div></div>
 </div></div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -63,8 +62,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput'),res=document.getElementById('resultArea'),icon=document.getElementById('resultIcon'),txt=document.getElementById('resultText'),det=document.getElementById('resultDetail'),cs=document.getElementById('caseSensitive');
-function check(){
-  var t=inp.value.trim();if(!t){res.style.display='none';return}
+function check()&#123;
+  var t=inp.value.trim();if(!t)&#123;res.style.display='none';return&#125;
   var clean=cs.checked?t:t.toLowerCase().replace(/[^a-z0-9]/g,'');
   var rev=clean.split('').reverse().join('');
   var isPal=clean===rev;
@@ -73,13 +72,13 @@ function check(){
   txt.textContent=isPal?'Palindrome!':'Bukan Palindrome';
   txt.style.color=isPal?'#22c55e':'#ef4444';
   det.innerHTML='<span class="opacity-60">Setelah difilter: "'+clean+'"<br>Dibalik: "'+rev+'"</span>';
-}
+&#125;
 document.getElementById('btnCheck').addEventListener('click',check);
-document.getElementById('btnClear').addEventListener('click',function(){inp.value='';res.style.display='none'});
+document.getElementById('btnClear').addEventListener('click',function()&#123;inp.value='';res.style.display='none'&#125;);
 inp.addEventListener('input',check);cs.addEventListener('change',check);
-document.querySelectorAll('.example').forEach(function(el){
-  el.addEventListener('click',function(){inp.value=this.textContent;check()});
-});
+document.querySelectorAll('.example').forEach(function(el)&#123;
+  el.addEventListener('click',function()&#123;inp.value=this.textContent;check()&#125;);
+&#125;);
 inp.value='Kasur ini rusak';check();
 </script>
 

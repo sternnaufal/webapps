@@ -12,7 +12,23 @@ const relatedTools = [
   { slug: 'percentage-calculator', name: 'Percentage Calculator', icon: '%' },
   { slug: 'roman-numeral', name: 'Roman Numeral', icon: 'IV' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#7c3aed;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><text x="2" y="18" font-size="18">½</text></svg></div><div><h1 class="h3 mb-0">Decimal to Fraction Converter</h1><p class="opacity-60 small mb-0">Ubah angka desimal menjadi pecahan biasa atau campuran dengan akurat.</p></div></header>
+
+const toolCss = `
+    .frac-output { font-size: 1.8rem; font-weight: 700; text-align: center; padding: 20px; background: var(--surface-soft); border-radius: 12px; margin-bottom: 15px; }
+    .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+    .frac .num { border-bottom: 2px solid currentColor; padding: 0 8px 3px; }
+    .frac .den { padding: 3px 8px 0; }
+    .frac-step { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; }
+  `;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#faf5ff;color:#7c3aed;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><text x="2" y="18" font-size="18">½</text></svg></div><div><h1 class="h3 mb-0">Decimal to Fraction Converter</h1><p class="opacity-60 small mb-0">Ubah angka desimal menjadi pecahan biasa atau campuran dengan akurat.</p></div></header>
 <div class="flex flex-wrap gap-4">
 <div class="lg:w-7/12 w-full">
 <div class="card card-bordered bg-base-100 p-3">
@@ -49,25 +65,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div>
 </div></div>
-`;
-const toolCss = `
-    .frac-output { font-size: 1.8rem; font-weight: 700; text-align: center; padding: 20px; background: var(--surface-soft); border-radius: 12px; margin-bottom: 15px; }
-    .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
-    .frac .num { border-bottom: 2px solid currentColor; padding: 0 8px 3px; }
-    .frac .den { padding: 3px 8px 0; }
-    .frac-step { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; }
-  `;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -92,31 +91,31 @@ var mixedDisp=document.getElementById('mixedDisplay'),improperDisp=document.getE
 var stepsDisp=document.getElementById('stepsDisplay'),stepsContent=document.getElementById('stepsContent');
 var stepsVisible=false;
 
-function fracHTML(num,den){
+function fracHTML(num,den)&#123;
   return '<span class="frac"><span class="num">'+num+'</span><span class="den">'+den+'</span></span>';
-}
+&#125;
 
-function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t}return a}
+function gcd(a,b)&#123;a=Math.abs(a);b=Math.abs(b);while(b)&#123;var t=b;b=a%b;a=t&#125;return a&#125;
 
-function decToFrac(decimal,tol,maxDen){
+function decToFrac(decimal,tol,maxDen)&#123;
   var neg=decimal<0;decimal=Math.abs(decimal);
   var intPart=Math.floor(decimal),frac=decimal-intPart;
-  if(frac<tol)return{num:neg?-intPart:intPart,den:1,mixed:intPart.toString(),improper:intPart+'/1',steps:['Nilai desimal sudah bilangan bulat']};
+  if(frac<tol)return&#123;num:neg?-intPart:intPart,den:1,mixed:intPart.toString(),improper:intPart+'/1',steps:['Nilai desimal sudah bilangan bulat']&#125;;
   var num1=0,den1=1,num2=1,den2=0,a,n,d,steps=[];
   steps.push('Bilangan desimal: '+(neg?'-':'')+decimal);
   steps.push('Bagian bulat: '+intPart+', pecahan: '+frac.toFixed(10));
   steps.push('Menggunakan algoritma continued fraction:');
   var count=0;
-  while(count<100){
+  while(count<100)&#123;
     a=Math.floor(frac);n=a*num2+num1;d=a*den2+den1;
     steps.push('  Iterasi '+(count+1)+': a='+a+', pecahan='+num2+'/'+den2+' (≈'+(num2/den2).toFixed(8)+')');
-    if(d>maxDen){n=num2;d=den2;steps.push('  Penyebut melebihi batas. Mengembalikan iterasi sebelumnya.');break;}
+    if(d>maxDen)&#123;n=num2;d=den2;steps.push('  Penyebut melebihi batas. Mengembalikan iterasi sebelumnya.');break;&#125;
     var val=n/d;
-    if(Math.abs(val-(decimal-intPart))<tol){steps.push('  Konvergen! Error: '+Math.abs(val-(decimal-intPart)).toExponential(3));break;}
+    if(Math.abs(val-(decimal-intPart))<tol)&#123;steps.push('  Konvergen! Error: '+Math.abs(val-(decimal-intPart)).toExponential(3));break;&#125;
     num1=num2;den1=den2;num2=n;den2=d;
-    if(frac===a){steps.push('  Selesai (pecahan berakhir).');break;}
+    if(frac===a)&#123;steps.push('  Selesai (pecahan berakhir).');break;&#125;
     frac=1/(frac-a);count++;
-  }
+  &#125;
   n=intPart*d+n;
   if(neg)n=-n;
   var g=gcd(Math.abs(n),d);n/=g;d/=g;
@@ -131,31 +130,31 @@ function decToFrac(decimal,tol,maxDen){
   if(neg&&mixedPart===0&&rem>0)mixed='-'+rem+'/'+d;
   steps.push('Pecahan biasa: '+improper);
   steps.push('Pecahan campuran: '+mixed);
-  return{num:n,den:d,mixed:mixed,improper:improper,steps:steps};
-}
+  return&#123;num:n,den:d,mixed:mixed,improper:improper,steps:steps&#125;;
+&#125;
 
-function convert(){
+function convert()&#123;
   var raw=decInp.value.trim().replace(/,/g,'.');
   var val=parseFloat(raw);
-  if(isNaN(val)){mixedDisp.innerHTML='<span class="text-error">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;}
+  if(isNaN(val))&#123;mixedDisp.innerHTML='<span class="text-error">Input tidak valid</span>';improperDisp.textContent='-';decimalDisp.textContent='-';return;&#125;
   var tol=parseFloat(tolInp.value);var maxDen=parseInt(denInp.value)||1000;
   var result=decToFrac(val,tol,maxDen);
-  if(result.den===1){mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;}
-  else{mixedDisp.innerHTML=result.mixed.replace(/(\\d+)\\/(\\d+)/g,function(m,n,d){return fracHTML(n,d)});improperDisp.textContent=result.improper;}
+  if(result.den===1)&#123;mixedDisp.innerHTML=result.mixed;improperDisp.textContent=result.improper;&#125;
+  else&#123;mixedDisp.innerHTML=result.mixed.replace(/(\\d+)\\/(\\d+)/g,function(m,n,d)&#123;return fracHTML(n,d)&#125;);improperDisp.textContent=result.improper;&#125;
   decimalDisp.textContent=val.toString();
-  stepsContent.innerHTML=result.steps.map(function(s){return s+'\\n'}).join('<br>');
+  stepsContent.innerHTML=result.steps.map(function(s)&#123;return s+'\\n'&#125;).join('<br>');
   if(stepsVisible)stepsDisp.style.display='block';
-}
+&#125;
 
 document.getElementById('btnConvert').addEventListener('click',convert);
-document.getElementById('btnToggleSteps').addEventListener('click',function(){
+document.getElementById('btnToggleSteps').addEventListener('click',function()&#123;
   stepsVisible=!stepsVisible;stepsDisp.style.display=stepsVisible?'block':'none';
   this.textContent=stepsVisible?'Sembunyikan Langkah':'Tampilkan Langkah';
-});
-document.querySelectorAll('.preset').forEach(function(el){el.addEventListener('click',function(){
+&#125;);
+document.querySelectorAll('.preset').forEach(function(el)&#123;el.addEventListener('click',function()&#123;
   decInp.value=this.dataset.val;convert();
-})});
-decInp.addEventListener('keydown',function(e){if(e.key==='Enter')convert()});
+&#125;)&#125;);
+decInp.addEventListener('keydown',function(e)&#123;if(e.key==='Enter')convert()&#125;);
 convert();
 </script>
 

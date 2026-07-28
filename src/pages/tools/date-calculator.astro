@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'countdown', name: 'Countdown', icon: '⏳' },
   { slug: 'age-calculator', name: 'Age Calculator', icon: '🎂' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div><div><h1 class="h3 mb-0">Date Duration Calculator</h1><p class="opacity-60 small mb-0">Hitung selisih antar tanggal, tambah/kurang hari, dan konversi format tanggal.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#eef2ff;color:#4f46e5;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div><div><h1 class="h3 mb-0">Date Duration Calculator</h1><p class="opacity-60 small mb-0">Hitung selisih antar tanggal, tambah/kurang hari, dan konversi format tanggal.</p></div></header>
 <div class="flex flex-wrap gap-4">
 <div class="col-lg-6">
 <div class="card card-bordered bg-base-100 p-3 mb-3"><h6 class="mb-3">Selisih Tanggal</h6>
@@ -39,18 +48,8 @@ const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-
 </div>
 </div>
 </div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -68,13 +67,13 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var today=new Date().toISOString().split('T')[0];
-['startDate','endDate','baseDate','convertDate','infoDate'].forEach(function(id){document.getElementById(id).value=today});
+['startDate','endDate','baseDate','convertDate','infoDate'].forEach(function(id)&#123;document.getElementById(id).value=today&#125;);
 
-function fmt(d){return d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function fmt(d)&#123;return d.toLocaleDateString('id-ID',&#123;weekday:'long',day:'numeric',month:'long',year:'numeric'&#125;)&#125;
 
-document.getElementById('btnCalcDiff').addEventListener('click',function(){
+document.getElementById('btnCalcDiff').addEventListener('click',function()&#123;
   var s=new Date(document.getElementById('startDate').value),e=new Date(document.getElementById('endDate').value);
-  if(isNaN(s)||isNaN(e)){document.getElementById('diffResult').innerHTML='<span class="text-error">Tanggal tidak valid</span>';return}
+  if(isNaN(s)||isNaN(e))&#123;document.getElementById('diffResult').innerHTML='<span class="text-error">Tanggal tidak valid</span>';return&#125;
   var ms=e-s,days=Math.round(ms/86400000),weeks=Math.floor(days/7),years=Math.floor(days/365.25),months=Math.floor(years*12+(days%365.25)/30.44);
   document.getElementById('diffResult').innerHTML=
     '<div class="font-bold mb-2">'+fmt(s)+' &rarr; '+fmt(e)+'</div>'+
@@ -82,20 +81,20 @@ document.getElementById('btnCalcDiff').addEventListener('click',function(){
     '<tr><td>Total Minggu</td><td class="font-bold">'+weeks+' minggu '+(days%7)+' hari</td></tr>'+
     '<tr><td>Total Bulan</td><td class="font-bold">'+Math.round(months)+' bulan</td></tr>'+
     '<tr><td>Total Tahun</td><td class="font-bold">'+years+' tahun '+(days%365)+' hari</td></tr></table>';
-});
+&#125;);
 
-['btnAdd','btnSub'].forEach(function(id){
-  document.getElementById(id).addEventListener('click',function(){
+['btnAdd','btnSub'].forEach(function(id)&#123;
+  document.getElementById(id).addEventListener('click',function()&#123;
     var d=new Date(document.getElementById('baseDate').value),n=parseInt(document.getElementById('daysInput').value)||0;
     if(id==='btnSub')n=-n;
     d.setDate(d.getDate()+n);
     document.getElementById('addResult').innerHTML='<span class="font-bold">'+n+' hari</span>: '+fmt(d)+' <span class="opacity-60">('+d.toISOString().split('T')[0]+')</span>';
-  });
-});
+  &#125;);
+&#125;);
 
-document.getElementById('btnConvert').addEventListener('click',function(){
+document.getElementById('btnConvert').addEventListener('click',function()&#123;
   var d=new Date(document.getElementById('convertDate').value);
-  if(isNaN(d)){document.getElementById('convertResult').innerHTML='<span class="text-error">Tanggal tidak valid</span>';return}
+  if(isNaN(d))&#123;document.getElementById('convertResult').innerHTML='<span class="text-error">Tanggal tidak valid</span>';return&#125;
   var months=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
   document.getElementById('convertResult').innerHTML=
     '<table class="table table-sm small mb-0">'+
@@ -104,14 +103,14 @@ document.getElementById('btnConvert').addEventListener('click',function(){
     '<tr><td>Locale US</td><td>'+d.toLocaleDateString('en-US')+'</td></tr>'+
     '<tr><td>Format panjang</td><td>'+fmt(d)+'</td></tr>'+
     '<tr><td>Unix Timestamp</td><td class="font-mono">'+(d.getTime()/1000)+'</td></tr>'+
-    '<tr><td>Nama hari</td><td>'+d.toLocaleDateString('id-ID',{weekday:'long'})+'</td></tr>'+
+    '<tr><td>Nama hari</td><td>'+d.toLocaleDateString('id-ID',&#123;weekday:'long'&#125;)+'</td></tr>'+
     '<tr><td>Nama bulan</td><td>'+months[d.getMonth()]+'</td></tr>'+
     '<tr><td>Tahun</td><td>'+d.getFullYear()+'</td></tr></table>';
-});
+&#125;);
 
-document.getElementById('btnInfo').addEventListener('click',function(){
+document.getElementById('btnInfo').addEventListener('click',function()&#123;
   var d=new Date(document.getElementById('infoDate').value);
-  if(isNaN(d)){document.getElementById('infoResult').innerHTML='<span class="text-error">Tanggal tidak valid</span>';return}
+  if(isNaN(d))&#123;document.getElementById('infoResult').innerHTML='<span class="text-error">Tanggal tidak valid</span>';return&#125;
   var day=d.getDay(),isWeekend=day===0||day===6;
   document.getElementById('infoResult').innerHTML=
     '<table class="table table-sm small mb-0">'+
@@ -120,6 +119,6 @@ document.getElementById('btnInfo').addEventListener('click',function(){
     '<tr><td>Hari dalam tahun</td><td>'+Math.ceil((d-new Date(d.getFullYear(),0,0))/86400000)+'/'+(d.getFullYear()%4===0?366:365)+'</td></tr>'+
     '<tr><td>Status</td><td>'+(isWeekend?'<span class="text-error">Akhir Pekan</span>':'<span class="text-success">Hari Kerja</span>')+'</td></tr>'+
     '<tr><td>Kuartal</td><td>Q'+Math.ceil((d.getMonth()+1)/3)+'</td></tr></table>';
-});
+&#125;);
 </script>
 

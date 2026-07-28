@@ -12,7 +12,16 @@ const relatedTools = [
   { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
   { slug: 'lorem-ipsum', name: 'Lorem Ipsum', icon: '¶' }
 ];
-const bodyHtml = `<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div><div><h1 class="h3 mb-0">Character Counter</h1><p class="opacity-60 small mb-0">Analisis teks secara real-time: karakter, kata, kalimat, paragraf, dan lainnya.</p></div></header>
+
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+>
+
+<header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0f9ff;color:#0284c7;">Aa</div><div><h1 class="h3 mb-0">Character Counter</h1><p class="opacity-60 small mb-0">Analisis teks secara real-time: karakter, kata, kalimat, paragraf, dan lainnya.</p></div></header>
 <textarea id="textInput" class="input input-bordered w-full font-mono mb-3" rows="8" placeholder="Ketik atau paste teks di sini..." autofocus>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -31,18 +40,8 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 <div class="md:w-1/4 w-full"><div class="card card-bordered bg-base-100 p-3 text-center"><div class="h5 mb-0 font-bold" id="density">0</div><small class="opacity-60">Kata unik</small></div></div>
 <div class="md:w-1/2 w-full"><div class="card card-bordered bg-base-100 p-3"><small class="opacity-60">Top words:</small><div id="topWords" class="small mt-1"></div></div></div>
 </div>
-`;
----
 
-<ToolLayout
-  title={title}
-  description={description}
-  keywords={keywords}
->
-
-<Fragment set:html={bodyHtml} />
-
-  <ToolShell about={aboutText} />
+<ToolShell about={aboutText} />
 
 </ToolLayout>
 
@@ -60,24 +59,24 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 <script is:inline>
 var inp=document.getElementById('textInput');
-['charCount','charNoSpace','wordCount','sentCount','paraCount','lineCount','readTime','density'].forEach(function(id){window[id]=document.getElementById(id)});
+['charCount','charNoSpace','wordCount','sentCount','paraCount','lineCount','readTime','density'].forEach(function(id)&#123;window[id]=document.getElementById(id)&#125;);
 window.topWords=document.getElementById('topWords');
-function analyze(){
+function analyze()&#123;
   var t=inp.value;
   charCount.textContent=t.length;
   charNoSpace.textContent=t.replace(/\\s/g,'').length;
   wordCount.textContent=t.trim()?t.trim().split(/\\s+/).length:0;
-  sentCount.textContent=t.split(/[.!?]+/).filter(function(s){return s.trim().length>0}).length;
-  paraCount.textContent=t.split(/\\n\\s*\\n/).filter(function(p){return p.trim().length>0}).length;
+  sentCount.textContent=t.split(/[.!?]+/).filter(function(s)&#123;return s.trim().length>0&#125;).length;
+  paraCount.textContent=t.split(/\\n\\s*\\n/).filter(function(p)&#123;return p.trim().length>0&#125;).length;
   lineCount.textContent=t.split('\\n').length;
   readTime.textContent=Math.max(1,Math.round((t.trim().split(/\\s+/).length||0)/200))+' menit';
   var words=t.toLowerCase().match(/\\b\\w+\\b/g)||[];
-  var uniq={};words.forEach(function(w){uniq[w]=(uniq[w]||0)+1});
+  var uniq=&#123;&#125;;words.forEach(function(w)&#123;uniq[w]=(uniq[w]||0)+1&#125;);
   var keys=Object.keys(uniq);
   density.textContent=keys.length;
-  var sorted=keys.sort(function(a,b){return uniq[b]-uniq[a]}).slice(0,6);
-  topWords.innerHTML=sorted.map(function(w){return '<span class="badge bg-light text-dark mr-1 mb-1">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'}).join('');
-}
+  var sorted=keys.sort(function(a,b)&#123;return uniq[b]-uniq[a]&#125;).slice(0,6);
+  topWords.innerHTML=sorted.map(function(w)&#123;return '<span class="badge bg-light text-dark mr-1 mb-1">'+w+' <span class="opacity-60">x'+uniq[w]+'</span></span>'&#125;).join('');
+&#125;
 inp.addEventListener('input',analyze);analyze();
 </script>
 
