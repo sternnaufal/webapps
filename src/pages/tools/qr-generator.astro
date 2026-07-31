@@ -108,10 +108,8 @@ const relatedTools = [
 </ToolLayout>
 
 <script is:inline>
-</script>
-
-<script is:inline>
 (function(){
+  var isDark = localStorage.getItem('theme') === 'naufal-dark';
   var elText   = document.getElementById('qrText');
   var elSize   = document.getElementById('qrSize');
   var elEcc    = document.getElementById('qrEcc');
@@ -125,12 +123,19 @@ const relatedTools = [
   var wrap     = document.getElementById('qrcode');
   var wrapOuter= document.getElementById('qrWrap');
 
+  // Dark mode defaults
+  if (isDark) {
+    if (elFg.value === '#000000') elFg.value = '#ffffff';
+    if (elBg.value === '#ffffff') elBg.value = '#1e1e2e';
+  }
+
   var lastCanvasDataURL = null;
 
   function clearQR(){
     wrap.innerHTML = '';
     lastCanvasDataURL = null;
     elDl.disabled = true;
+    wrapOuter.style.background = elBg.value;
   }
 
   function gen(previewOnly){
@@ -163,6 +168,7 @@ const relatedTools = [
         elDl.disabled = false;
       }
     }, 80);
+    wrapOuter.style.background = elBg.value;
   }
 
   function downloadPNG(){
@@ -201,8 +207,8 @@ const relatedTools = [
     elSize.value = '320';
     elEcc.value  = 'M';
     elMargin.value = '2';
-    elFg.value = '#000000';
-    elBg.value = '#ffffff';
+    elFg.value = isDark ? '#ffffff' : '#000000';
+    elBg.value = isDark ? '#1e1e2e' : '#ffffff';
     gen();
   }
 

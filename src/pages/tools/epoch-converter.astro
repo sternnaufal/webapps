@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Epoch / Unix Timestamp Converter';
 const description = 'Epoch & Unix timestamp converter online. Ubah timestamp ke tanggal dan sebaliknya. Kalkulator waktu Unix untuk developer.';
 const keywords = 'epoch converter, unix timestamp, epoch time, timestamp to date, date to timestamp, epoch calculator';
-const aboutText = 'Epoch / Unix Timestamp Converter Epoch & Unix timestamp converter online. Ubah timestamp ke tanggal dan sebaliknya. Kalkulator waktu Unix untuk developer.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Epoch & Unix timestamp converter online. Ubah timestamp ke tanggal dan sebaliknya. Kalkulator waktu Unix untuk developer.';
 const relatedTools = [
   { slug: 'cron-builder', name: 'Cron Builder', icon: '⏰' },
   { slug: 'date-calculator', name: 'Date Calculator', icon: '📅' },
@@ -27,17 +27,7 @@ const relatedTools = [
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var tsInp=document.getElementById('timestampInput'),isM=document.getElementById('isMillis'),tsR=document.getElementById('tsResult'),dInp=document.getElementById('dateInput'),dtR=document.getElementById('dtResult'),nTs=document.getElementById('nowTs'),nDt=document.getElementById('nowDate'),nUt=document.getElementById('nowUtc');function pad(n){return(n+'').padStart(2,'0')}function convertTs(){var v=parseFloat(tsInp.value);if(isNaN(v)){tsR.style.display='none';return}var ms=isM.checked?v:v*1000;var d=new Date(ms);if(isNaN(d.getTime())){tsR.innerHTML='<span class="text-error">Invalid timestamp</span>';tsR.style.display='block';return}tsR.style.display='block';tsR.innerHTML='<table class="table table-sm mb-0"><tr><td>Tanggal</td><td class="font-bold">'+d.toLocaleDateString('id-ID',{year:'numeric',month:'long',day:'numeric',weekday:'long'})+'</td></tr><tr><td>Waktu</td><td class="font-bold">'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+'</td></tr><tr><td>UTC</td><td>'+d.toUTCString()+'</td></tr><tr><td>Tahun</td><td>'+d.getFullYear()+'</td></tr><tr><td>Bulan</td><td>'+(d.getMonth()+1)+'</td></tr><tr><td>Hari</td><td>'+d.getDate()+'</td></tr><tr><td>Jam</td><td>'+d.getHours()+'</td></tr><tr><td>Menit</td><td>'+d.getMinutes()+'</td></tr><tr><td>Detik</td><td>'+d.getSeconds()+'</td></tr><tr><td>Milidetik</td><td>'+d.getMilliseconds()+'</td></tr><tr><td>Day of Year</td><td>'+Math.floor((d-new Date(d.getFullYear(),0,0))/(86400000))+'</td></tr><tr><td>Week of Year</td><td>'+Math.ceil((((d-new Date(d.getFullYear(),0,1))/(86400000))+d.getDay()+1)/7)+'</td></tr></table>'}function convertDate(){var v=dInp.value;if(!v){dtR.style.display='none';return}var d=new Date(v);var ts=Math.floor(d.getTime()/1000);dtR.style.display='block';dtR.innerHTML='<table class="table table-sm mb-0"><tr><td>Timestamp (detik)</td><td class="font-bold">'+ts+'</td></tr><tr><td>Timestamp (ms)</td><td class="font-bold">'+d.getTime()+'</td></tr><tr><td>Tanggal</td><td>'+d.toLocaleDateString('id-ID',{year:'numeric',month:'long',day:'numeric',weekday:'long'})+'</td></tr><tr><td>UTC</td><td>'+d.toUTCString()+'</td></tr></table>'}function updateNow(){var n=Date.now();nTs.textContent=Math.floor(n/1000);nDt.textContent=new Date(n).toLocaleString('id-ID');nUt.textContent=new Date(n).toUTCString()}document.getElementById('btnConvert').addEventListener('click',convertTs);document.getElementById('btnDateToTs').addEventListener('click',convertDate);tsInp.addEventListener('input',convertTs);dInp.value=new Date().toISOString().slice(0,16);updateNow();setInterval(updateNow,1000);convertTs();

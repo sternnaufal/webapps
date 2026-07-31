@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Screen Recorder';
 const description = 'Rekam layar browser online gratis. Screen recorder langsung dari browser tanpa install software.';
 const keywords = 'screen recorder, record screen, screen capture, rekam layar';
-const aboutText = 'Screen Recorder Rekam layar browser online gratis. Screen recorder langsung dari browser tanpa install software.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Rekam layar browser online gratis. Screen recorder langsung dari browser tanpa install software.';
 const relatedTools = [
   { slug: 'timer', name: 'Timer', icon: '⏱' },
   { slug: 'stopwatch', name: 'Stopwatch', icon: '⏱' },
@@ -68,7 +68,7 @@ mediaRecorder.onstop=function(){var blob=new Blob(chunks,{type:'video/webm'}),ur
 dlLink.href=url;dlLink.download='recording.webm';dlSection.style.display='block';
 mediaStream.getTracks().forEach(function(t){t.stop()});preview.srcObject=null};
 mediaRecorder.start();btnStart.disabled=true;btnStop.disabled=false;source.disabled=true;
-status.textContent='Recording...';status.className='mt-2 text-xs text-red-500 font-medium';
+status.textContent='Recording..';status.className='mt-2 text-xs text-red-500 font-medium';
 }catch(e){status.textContent='Error: '+e.message;status.className='mt-2 text-xs text-red-500'}}
 
 function stopRec(){if(mediaRecorder&&mediaRecorder.state!=='inactive'){mediaRecorder.stop();btnStart.disabled=false;btnStop.disabled=true;source.disabled=false;status.textContent='Stopped. Download below.';status.className='mt-2 text-xs text-green-600'}}

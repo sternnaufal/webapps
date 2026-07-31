@@ -1,0 +1,194 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import tools from '../data/tools.json';
+
+const allTools = tools.categories.flatMap(c => c.tools);
+const title = 'FAQ - Pertanyaan Umum WebApps';
+const description = 'Pertanyaan umum seputar WebApps: apakah gratis, bagaimana cara menggunakan, apakah data aman, browser apa yang didukung, dan lainnya.';
+const keywords = 'faq webapps, pertanyaan umum, online tools faq, cara menggunakan webapps, privasi data';
+---
+
+<ToolLayout title={title} description={description} keywords={keywords} breadcrumbs={[
+  { name: 'Beranda', url: '/' },
+  { name: 'FAQ', url: '/faq' }
+]}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">Pertanyaan Umum</h1>
+    <p class="text-sm opacity-50 mt-0.5">{allTools.length} online tools gratis — 100% di browser, tanpa server.</p>
+  </div>
+
+  <div class="space-y-8">
+    <!-- Umum -->
+    <section>
+      <h2 class="text-sm font-semibold mb-3 flex items-center gap-1.5 opacity-70">
+        <span>📋</span> Umum
+      </h2>
+      <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apa itu WebApps?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">WebApps adalah koleksi <strong>{allTools.length} alat online gratis</strong> yang mencakup developer tools, konverter, generator, kalkulator, dan utility. Semua alat berjalan 100% di browser — data Anda tidak pernah dikirim ke server.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah WebApps benar-benar gratis?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Ya, 100% gratis selamanya. Tidak ada biaya tersembunyi, tidak perlu berlangganan, tidak perlu daftar akun, dan tidak ada batasan penggunaan. Semua fitur bisa diakses tanpa membayar.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Siapa yang membuat WebApps?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">WebApps dibuat oleh <a href="https://naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Naufal Rakha Putra</a>, seorang developer asal Indonesia.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah perlu daftar akun atau login?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Tidak perlu. Semua alat dapat digunakan langsung tanpa registrasi atau login.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privasi & Keamanan -->
+    <section>
+      <h2 class="text-sm font-semibold mb-3 flex items-center gap-1.5 opacity-70">
+        <span>🔒</span> Privasi &amp; Keamanan
+      </h2>
+      <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah data saya dikirim ke server?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Tidak. Semua pemrosesan dilakukan 100% di browser Anda menggunakan JavaScript. Data tidak pernah dikirim, disimpan, atau dibagikan ke server mana pun. Bahkan tidak ada server backend sama sekali — WebApps adalah situs statis murni.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah ada cookie atau tracker?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">WebApps tidak menggunakan cookie untuk pelacakan. Satu-satunya data yang disimpan di browser adalah preferensi tema (mode gelap/terang) dan status sidebar, yang disimpan di localStorage — bukan cookie.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah aman menggunakan tools ini untuk data sensitif?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Ya. Karena semua pemrosesan terjadi di browser Anda, tidak ada data yang meninggalkan perangkat Anda. Cocok untuk data sensitif seperti password, token, atau informasi pribadi. Namun, tetap pastikan browser dan sistem operasi Anda aman.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teknis -->
+    <section>
+      <h2 class="text-sm font-semibold mb-3 flex items-center gap-1.5 opacity-70">
+        <span>⚙️</span> Teknis
+      </h2>
+      <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Browser apa yang didukung?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">WebApps mendukung semua browser modern: Chrome, Firefox, Safari, Edge, dan Opera. Beberapa tool mungkin memerlukan JavaScript yang diaktifkan. Internet Explorer tidak didukung.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah bisa diakses dari HP?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Ya. WebApps dirancang responsif dan bisa digunakan di smartphone dan tablet. Tampilan akan menyesuaikan dengan ukuran layar perangkat Anda.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah perlu koneksi internet?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Ya, untuk mengakses halaman WebApps diperlukan koneksi internet. Namun, setelah halaman dimuat, beberapa tool dapat berfungsi offline karena semua kode JavaScript berjalan di browser. WebApps belum memiliki Progressive Web App (PWA) untuk offline penuh.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Bagaimana cara mencari tool tertentu?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Gunakan kolom pencarian di halaman beranda atau di sidebar. Ketik kata kunci — hasil akan langsung terfilter secara real-time. Anda juga bisa menekan tombol <kbd class="kbd kbd-xs">/</kbd> di keyboard untuk langsung fokus ke kolom pencarian.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Teknologi apa yang digunakan?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">WebApps dibangun dengan <a href="https://astro.build" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Astro</a> (static site generator), <a href="https://tailwindcss.com" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Tailwind CSS v4</a>, dan <a href="https://daisyui.com" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">daisyUI</a> untuk komponen UI. Di-hosting di <a href="https://vercel.com" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Vercel</a>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section>
+      <h2 class="text-sm font-semibold mb-3 flex items-center gap-1.5 opacity-70">
+        <span>🛠️</span> Seputar Tools
+      </h2>
+      <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Tool apa saja yang tersedia?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Saat ini tersedia <strong>{allTools.length} tools</strong> dalam 6 kategori: Developer Tools, Network &amp; URL, Text &amp; Media, Generators, Converters, dan Utilities. Mulai dari hash generator, JSON formatter, password generator, QR code, subnetting calculator, hingga image resizer.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah tool ini akurat?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Ya. Tools menggunakan standar industri dan API native browser. Hash generator menggunakan Web Crypto API, barcode menggunakan JsBarcode terpercaya, dan kalkulator menggunakan rumus matematika standar.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Bisakah saya menyalin hasil ke clipboard?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Sebagian besar tool dilengkapi tombol Copy untuk menyalin hasil ke clipboard. Beberapa tool juga mendukung download hasil dalam format file (PNG, SVG, CSV, dll).</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah ada rencana menambah tool baru?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Ya. Jumlah tool akan terus bertambah. Jika ada ide tool yang ingin ditambahkan, silakan hubungi melalui halaman <a href="/contact" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Kontak</a>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lainnya -->
+    <section>
+      <h2 class="text-sm font-semibold mb-3 flex items-center gap-1.5 opacity-70">
+        <span>📮</span> Lainnya
+      </h2>
+      <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);">
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Bagaimana cara menghubungi pengembang?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Kunjungi halaman <a href="/contact" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Kontak</a> untuk mengirim pesan, atau temui di <a href="https://naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">naufalrakha.my.id</a>.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Bisakah saya mendukung pengembangan WebApps?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Tentu! Anda bisa mendukung melalui <a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Saweria</a>. Donasi Anda membantu menjaga server dan mengembangkan tool baru.</div>
+          </div>
+        </div>
+
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-sm font-semibold mb-1" itemprop="name">Apakah source code WebApps terbuka?</h3>
+          <div class="text-sm opacity-70" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Saat ini source code WebApps bersifat privat. Jika ada pertanyaan teknis atau saran, silakan hubungi melalui halaman <a href="/contact" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Kontak</a>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ToolLayout>

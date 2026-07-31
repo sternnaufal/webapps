@@ -1,26 +1,28 @@
 ---
 import ToolLayout from '../layouts/ToolLayout.astro';
+import tools from '../data/tools.json';
 
+const allTools = tools.categories.flatMap(c => c.tools);
 const title = 'Tentang WebApps';
-const description = 'Koleksi 86+ online tools gratis untuk developer. 100% client-side, privacy first, tanpa server.';
+const description = `Koleksi ${allTools.length}+ online tools gratis untuk developer. 100% client-side, privacy first, tanpa server.`;
 const keywords = 'tentang webapps, online tools, web tools gratis, developer tools, privacy tools';
-const aboutText = 'WebApps adalah koleksi 86+ alat online gratis untuk developer dan masyarakat umum. Semua alat berjalan 100% di browser — data tidak pernah dikirim ke server.';
+const aboutText = `WebApps adalah koleksi ${allTools.length}+ alat online gratis untuk developer dan masyarakat umum. Semua alat berjalan 100% di browser — data tidak pernah dikirim ke server.`;
 ---
 
 <ToolLayout title={title} description={description} keywords={keywords}>
   <div class="mb-6">
     <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
-    <p class="text-sm opacity-50 mt-0.5">Koleksi 86+ alat online gratis — 100% di browser, data aman.</p>
+    <p class="text-sm opacity-50 mt-0.5">Koleksi {allTools.length}+ alat online gratis — 100% di browser, data aman.</p>
   </div>
 
   <div class="rounded-xl p-5 space-y-4" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #6366f1;">
-    <p class="text-sm leading-relaxed opacity-70">Koleksi <strong>86+ alat online gratis</strong> untuk developer: kalkulator, konverter, generator, utility, dan alat teks. Semua berjalan 100% di browser — data <strong>tidak pernah</strong> dikirim ke server.</p>
+    <p class="text-sm leading-relaxed opacity-70">Koleksi <strong>{allTools.length}+ alat online gratis</strong> untuk developer: kalkulator, konverter, generator, utility, dan alat teks. Semua berjalan 100% di browser — data <strong>tidak pernah</strong> dikirim ke server.</p>
     <p class="text-sm leading-relaxed opacity-70">Dibuat oleh <a href="https://naufalrakha.my.id" class="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity">Naufal Rakha Putra</a>.</p>
 
     <div>
       <h3 class="text-sm font-semibold mb-2">Fitur</h3>
       <ul class="text-sm space-y-1 opacity-70 list-disc list-inside">
-        <li>86+ alat gratis, tanpa registrasi</li>
+        <li>{allTools.length}+ alat gratis, tanpa registrasi</li>
         <li>100% client-side — privacy first</li>
         <li>Mode gelap (dark mode)</li>
         <li>Responsif desktop & mobile</li>

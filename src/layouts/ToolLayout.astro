@@ -1,6 +1,7 @@
 ---
 import Sidebar from '../components/Sidebar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 
 interface Props {
@@ -57,6 +58,20 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     "itemListElement": crumbs.map((c, i) => ({ "@type": "ListItem", "position": i + 1, "name": c.name, "item": c.url.startsWith('http') ? c.url : `${site}${c.url}` }))
   })}></script>
+  {Astro.url.pathname.startsWith('/tools/') && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": title,
+      "url": fullUrl,
+      "description": description,
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" }
+    })}></script>
+  )}
+  <Analytics />
 </head>
 <body class="flex flex-col min-h-screen bg-base-100 text-base-content">
   <div class="flex flex-1">

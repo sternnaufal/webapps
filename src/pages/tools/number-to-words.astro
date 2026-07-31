@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Number to Words';
 const description = 'Konversi angka ke huruf (terbilang) Bahasa Indonesia. Ubah angka menjadi teks terbilang untuk kwitansi, cek, dokumen resmi.';
 const keywords = 'number to words, angka ke huruf, terbilang, konversi angka, angka ke kata, spell number';
-const aboutText = 'Number to Words Konversi angka ke huruf (terbilang) Bahasa Indonesia. Ubah angka menjadi teks terbilang untuk kwitansi, cek, dokumen resmi.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Konversi angka ke huruf (terbilang) Bahasa Indonesia. Ubah angka menjadi teks terbilang untuk kwitansi, cek, dokumen resmi.';
 const relatedTools = [
   { slug: 'konverter-bilangan', name: 'Konverter Bilangan', icon: '2' },
   { slug: 'roman-numeral', name: 'Roman Numeral', icon: 'IV' },
@@ -75,10 +75,10 @@ var ribuan=['','ribu','juta','milyar','trilyun'];
 function terbilang(n){
   if(n===0)return'nol';var r='',i=0;
   while(n>0){var g=n%1000;if(g>0){var s='';
-    if(g>=100){var h=Math.floor(g/100);s+=(h===1?'seratus':sat[h]+' ratus')+' ';g%=100}
-    if(g>=20){s+=puluh[Math.floor(g/10)]+' ';g%=10}
-    if(g>=1){if(g<10)s+=sat[g]+' ';else s+=belas[g-10]+' '}
-    if(i===1&&Math.floor(n/1000)%1000===1&&n<2000)s='seribu ';else r=s+ribuan[i]+' '+r
+    if(g>=100){var h=Math.floor(g/100);s+=(h===1?'seratus':sat[h]+' ratus')+'';g%=100}
+    if(g>=20){s+=puluh[Math.floor(g/10)]+'';g%=10}
+    if(g>=1){if(g<10)s+=sat[g]+'';else s+=belas[g-10]+' '}
+    if(i===1&&Math.floor(n/1000)%1000===1&&n<2000)s='seribu';else r=s+ribuan[i]+' '+r
   }n=Math.floor(n/1000);i++}
   return r.trim();
 }

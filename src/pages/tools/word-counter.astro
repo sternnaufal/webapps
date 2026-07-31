@@ -5,9 +5,13 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Word Counter';
 const description = 'Word counter online. Hitung jumlah kata, karakter, kalimat, paragraf, dan perkiraan waktu baca. Alat hitung kata untuk penulis dan blogger.';
 const keywords = 'word counter, word count, character counter, kata, hitung kata, paragraph counter, reading time, speaking time';
-const aboutText = 'Word Counter Word counter online. Hitung jumlah kata, karakter, kalimat, paragraf, dan perkiraan waktu baca. Alat hitung kata untuk penulis dan blogger.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Word counter online. Hitung jumlah kata, karakter, kalimat, paragraf, dan perkiraan waktu baca. Alat hitung kata untuk penulis dan blogger.';
+const aboutExtra = 'Word counter adalah alat esensial untuk penulis, blogger, pelajar, dan content creator. Hitung secara real-time jumlah kata, karakter (dengan dan tanpa spasi), kalimat, paragraf, rata-rata panjang kata, serta estimasi waktu baca dan bicara. Cukup ketik atau paste teks, semua statistik langsung terupdate otomatis. Berguna untuk menulis artikel yang sesuai batas kata, mengoptimalkan SEO content, atau sekadar menganalisis teks.';
 const relatedTools = [
-
+  { slug: 'char-counter', name: 'Character Counter', icon: '#' },
+  { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
+  { slug: 'word-frequency', name: 'Word Frequency', icon: '📊' },
+  { slug: 'md-preview', name: 'Markdown Preview', icon: 'MD' }
 ];
 
 const toolCss = `.stat-card{text-align:center;padding:0.75rem;border-radius:8px;background:var(--color-base-200)}.stat-card .num{font-size:1.8rem;font-weight:700}.stat-card .lbl{font-size:0.7rem;text-transform:uppercase;opacity:0.6}`;
@@ -25,24 +29,14 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea></div></div><div class="col-lgap-4"><div class="card card-bordered bg-base-100 p-3"><div class="row gap-2"><div class="col-6"><div class="stat-card"><div class="num" id="wordCount">0</div><div class="lbl">Kata</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="charCount">0</div><div class="lbl">Karakter</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="charNoSpace">0</div><div class="lbl">Karakter (no spasi)</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="sentenceCount">0</div><div class="lbl">Kalimat</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="paraCount">0</div><div class="lbl">Paragraf</div></div></div><div class="col-6"><div class="stat-card"><div class="num" id="avgWordLen">0</div><div class="lbl">Rata-rata huruf/kata</div></div></div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-2">Waktu Baca</h6><p class="mb-1">Membaca: <span class="font-bold" id="readTime">0</span></p><p class="mb-0">Berbicara: <span class="font-bold" id="speakTime">0</span></p></div></div></div>
 
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: oklch(1 0 0); border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: oklch(1 0 0); }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('textInput');function count(){var t=inp.value,words=t.trim()?t.trim().split(/\\s+/).length:0,chars=t.length,charsNs=t.replace(/\\s/g,'').length,sents=t.split(/[.!?]+/).filter(function(s){return s.trim().length>0}).length,paras=t.split(/\\n\\s*\\n/).filter(function(p){return p.trim().length>0}).length||(t.trim()?1:0),avg=words>0?Math.round(charsNs/words):0,rt=Math.ceil(words/200)+' menit',st=Math.ceil(words/150)+' menit';document.getElementById('wordCount').textContent=words.toLocaleString();document.getElementById('charCount').textContent=chars.toLocaleString();document.getElementById('charNoSpace').textContent=charsNs.toLocaleString();document.getElementById('sentenceCount').textContent=sents;document.getElementById('paraCount').textContent=paras;document.getElementById('avgWordLen').textContent=avg+' huruf';document.getElementById('readTime').textContent=rt;document.getElementById('speakTime').textContent=st}inp.addEventListener('input',count);count();

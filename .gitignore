@@ -3,3 +3,6 @@ dist/
 .vercel
 .astro/
 _legacy/
+*.pdf
+*.exe
+INV-*.png

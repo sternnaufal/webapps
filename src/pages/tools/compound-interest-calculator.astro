@@ -5,7 +5,8 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Compound Interest Calculator';
 const description = 'Kalkulator bunga majemuk online. Hitung investasi dengan compound interest, proyeksi pertumbuhan, dan tabel tahunan. Simulasi tabungan jangka panjang.';
 const keywords = 'compound interest calculator, bunga majemuk, kalkulator investasi, compound interest, proyeksi investasi, future value';
-const aboutText = 'Compound Interest Calculator Kalkulator bunga majemuk online. Hitung investasi dengan compound interest, proyeksi pertumbuhan, dan tabel tahunan. Simulasi tabungan jangka panjang.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Kalkulator bunga majemuk online. Hitung investasi dengan compound interest, proyeksi pertumbuhan, dan tabel tahunan. Simulasi tabungan jangka panjang.';
+const aboutExtra = 'Compound interest (bunga majemuk) adalah bunga yang dihitung berdasarkan pokok awal plus akumulasi bunga dari periode sebelumnya. Efeknya sering disebut "bunga berbunga" dan merupakan salah satu konsep terpenting dalam investasi jangka panjang. Alat ini menghitung nilai masa depan investasi dengan mempertimbangkan setoran awal, setoran rutin, suku bunga, frekuensi peracikan, dan jangka waktu. Dilengkapi tabel pertumbuhan tahunan untuk melihat progres investasi secara detail.';
 const relatedTools = [
   { slug: 'savings-calculator', name: 'Savings Calculator', icon: '🏦' },
   { slug: 'mortgage-calculator', name: 'Mortgage Calculator', icon: '🏠' },
@@ -23,21 +24,11 @@ const relatedTools = [
 
 <header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#ecfdf5;color:#059669;">$</div><div><h1 class="h3 mb-0">Compound Interest Calculator</h1><p class="opacity-60 small mb-0">Hitung pertumbuhan investasi dengan efek bunga majemuk (compound interest).</p></div></header><div class="flex flex-wrap gap-4"><div class="lg:w-5/12 w-full"><div class="card card-bordered bg-base-100 p-3"><div class="mb-2"><label class="label-text small font-semibold">Investasi Awal (Rp)</label><input type="number" id="principal" class="input input-bordered w-full" value="10000000" min="0"></div><div class="mb-2"><label class="label-text small font-semibold">Setoran Bulanan (Rp)</label><input type="number" id="monthly" class="input input-bordered w-full" value="500000" min="0"></div><div class="row gap-2 mb-2"><div class="col-6"><label class="label-text small">Bunga (%/tahun)</label><input type="number" id="rate" class="input input-bordered w-full" value="12" min="0" max="100" step="0.1"></div><div class="col-6"><label class="label-text small">Jangka Waktu (tahun)</label><input type="number" id="years" class="input input-bordered w-full" value="10" min="1" max="100"></div></div><div class="mb-2"><label class="label-text small">Frekuensi Bunga</label><select id="compoundFreq" class="select select-bordered w-full"><option value="1">Tahunan</option><option value="4">Triwulan</option><option value="12" selected>Bulanan</option><option value="365">Harian</option></select></div><button id="btnCalc" class="btn btn-primary w-full">Hitung</button></div></div><div class="lg:w-7/12 w-full"><div class="card card-bordered bg-base-100 p-3"><div class="row gap-2 text-center"><div class="col-4"><div class="text-sm opacity-60">Nilai Akhir</div><div class="font-bold fs-5 text-success" id="futureValue">Rp 0</div></div><div class="col-4"><div class="text-sm opacity-60">Total Setoran</div><div class="font-bold" id="totalDeposits">Rp 0</div></div><div class="col-4"><div class="text-sm opacity-60">Total Bunga</div><div class="font-bold text-primary" id="totalInterest">Rp 0</div></div></div></div><div class="card card-bordered bg-base-100 p-3 mt-3"><h6 class="mb-2">Tabel Pertumbuhan Tahunan</h6><div id="growthTable" style="max-height:300px;overflow-y:auto;font-size:0.8rem"><table class="table table-sm mb-0"><thead><tr><th>Tahun</th><th>Saldo Awal</th><th>Setoran</th><th>Bunga</th><th>Saldo Akhir</th></tr></thead><tbody id="tableBody"></tbody></table></div></div></div></div>
 
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var pInp=document.getElementById('principal'),mInp=document.getElementById('monthly'),rInp=document.getElementById('rate'),yInp=document.getElementById('years'),cF=document.getElementById('compoundFreq'),fV=document.getElementById('futureValue'),tD=document.getElementById('totalDeposits'),tI=document.getElementById('totalInterest'),tB=document.getElementById('tableBody');function fmt(x){return'Rp '+Math.round(x).toLocaleString('id-ID')}function calc(){var p=parseFloat(pInp.value)||0,m=parseFloat(mInp.value)||0,r=parseFloat(rInp.value)||0/100,y=parseInt(yInp.value)||1,n=parseInt(cF.value);var rate=r/n,periods=y*n,future=p*Math.pow(1+rate,periods);if(m>0)future+=m*(Math.pow(1+rate,periods)-1)/rate;var totalDep=p+m*periods,totalInt=future-totalDep;fV.textContent=fmt(future);tD.textContent=fmt(totalDep);tI.textContent=fmt(totalInt);var html='',bal=p;for(var i=1;i<=y;i++){var startBal=bal,yearlyDep=m*12;for(var j=0;j<12;j++)bal=(bal+m)*Math.pow(1+rate,1/12);var yearlyInt=bal-startBal-yearlyDep;html+='<tr><td>'+i+'</td><td>'+fmt(startBal)+'</td><td>'+fmt(yearlyDep)+'</td><td>'+fmt(yearlyInt)+'</td><td class="font-bold">'+fmt(bal)+'</td></tr>'}tB.innerHTML=html}document.getElementById('btnCalc').addEventListener('click',calc);calc();

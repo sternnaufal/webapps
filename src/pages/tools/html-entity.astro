@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'HTML Entity Encoder/Decoder';
 const description = 'Encode dan decode HTML entities online. Konversi &lt; &gt; &amp; &quot; ke entity HTML.';
 const keywords = 'html entity encoder, html entity decoder, html escape, html unescape, special characters';
-const aboutText = 'HTML Entity Encoder/Decoder Encode dan decode HTML entities online. Konversi &lt; &gt; &amp; &quot; ke entity HTML.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Encode dan decode HTML entities online. Konversi &lt; &gt; &amp; &quot; ke entity HTML.';
 const relatedTools = [
   { slug: 'url-encode', name: 'Url Encode', icon: '%' },
   { slug: 'base64-coded', name: 'Base64 Coded', icon: 'B64' },
@@ -50,17 +50,7 @@ const relatedTools = [
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inp=document.getElementById('inputArea'),out=document.getElementById('outputArea');

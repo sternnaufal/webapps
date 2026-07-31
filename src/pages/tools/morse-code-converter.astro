@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Morse Code Converter';
 const description = 'Morse code converter online. Ubah teks ke kode Morse dan sebaliknya. Lengkap dengan alfabet Morse, audio, dan copy hasil.';
 const keywords = 'morse code converter, kode morse, text to morse, morse translator, sandi morse, sandi';
-const aboutText = 'Morse Code Converter adalah alat untuk mengkonversi teks ke kode Morse dan sebaliknya. Dilengkapi referensi alfabet Morse, visualisasi dot-dash, dan pemutar audio. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'adalah alat untuk mengkonversi teks ke kode Morse dan sebaliknya. Dilengkapi referensi alfabet Morse, visualisasi dot-dash, dan pemutar audio.';
 const aboutExtra = 'Kode Morse adalah sistem representasi huruf, angka, dan tanda baca menggunakan sinyal titik (dot) dan garis (dash). Diciptakan oleh Samuel Morse pada tahun 1830-an, kode Morse masih digunakan hingga sekarang dalam komunikasi radio amatir, sinyal darurat (SOS), dan pembelajaran sejarah telekomunikasi. Morse Code Converter ini mendukung konversi dua arah, visualisasi simbol Morse, dan pemutaran audio untuk belajar mengenali bunyi kode Morse.';
 const relatedTools = [
   { slug: 'ascii-table', name: 'ASCII Table', icon: 'A' },
@@ -86,15 +86,15 @@ function convert(){
   if(mode==='text'){
     var chars=txt.toUpperCase().split('');
     for(var i=0;i<chars.length;i++){
-      if(chars[i]===' ')res+='/ ';
-      else if(MORSE[chars[i]])res+=MORSE[chars[i]]+' ';
-      else res+=chars[i]+' ';
+      if(chars[i]===' ')res+='/';
+      else if(MORSE[chars[i]])res+=MORSE[chars[i]]+'';
+      else res+=chars[i]+'';
     }
     out.textContent=res.trim();
   } else {
     var words=txt.split('/');
     for(var w=0;w<words.length;w++){
-      if(w>0)res+=' ';var letters=words[w].trim().split(' ');
+      if(w>0)res+='';var letters=words[w].trim().split(' ');
       for(var l=0;l<letters.length;l++){
         if(REV[letters[l]])res+=REV[letters[l]];else res+=letters[l];
       }

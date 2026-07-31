@@ -16,7 +16,8 @@
         { "slug": "ascii-table", "name": "ASCII Table", "icon": "A", "desc": "Tabel karakter ASCII" },
         { "slug": "json-to-typescript", "name": "JSON to TS", "icon": "TS", "desc": "JSON → TypeScript Interface" },
         { "slug": "json-schema-generator", "name": "JSON Schema", "icon": "📋", "desc": "Generate JSON Schema" },
-        { "slug": "css-minifier", "name": "CSS Minifier", "icon": "CSS", "desc": "Minify/beautify CSS" }
+        { "slug": "css-minifier", "name": "CSS Minifier", "icon": "CSS", "desc": "Minify/beautify CSS" },
+        { "slug": "html-minifier", "name": "HTML Minifier", "icon": "</>", "desc": "Minify dan beautify HTML code" }
       ]
     },
     {
@@ -48,7 +49,10 @@
         { "slug": "morse-code-converter", "name": "Morse Code", "icon": "···", "desc": "Konversi Morse ↔ teks" },
         { "slug": "markdown-to-html", "name": "Markdown to HTML", "icon": "▶", "desc": "Markdown → HTML instan" },
         { "slug": "word-frequency", "name": "Word Frequency", "icon": "📊", "desc": "Hitung frekuensi kata" },
-        { "slug": "color-converter", "name": "Color Converter", "icon": "🌈", "desc": "HEX/RGB/HSL/CMYK converter" }
+        { "slug": "color-converter", "name": "Color Converter", "icon": "🌈", "desc": "HEX/RGB/HSL/CMYK converter" },
+        { "slug": "emoji-picker", "name": "Emoji Picker", "icon": "😊", "desc": "Browse dan copy emoji by kategori" },
+        { "slug": "slug-generator", "name": "Slug Generator", "icon": "🔗", "desc": "Ubah teks ke URL slug SEO friendly" },
+        { "slug": "word-counter", "name": "Word Counter", "icon": "W", "desc": "Hitung kata, karakter, kalimat, paragraf" }
       ]
     },
     {
@@ -114,7 +118,8 @@
         { "slug": "discount-calculator", "name": "Discount Calculator", "icon": "🏷", "desc": "Hitung harga diskon" },
         { "slug": "mortgage-calculator", "name": "Mortgage Calculator", "icon": "🏠", "desc": "Simulasi cicilan KPR" },
         { "slug": "dice-roller", "name": "Dice Roller", "icon": "🎲", "desc": "Lempar dadu virtual" },
-        { "slug": "image-resizer", "name": "Image Resizer", "icon": "🖼", "desc": "Resize & kompres gambar" }
+        { "slug": "image-resizer", "name": "Image Resizer", "icon": "🖼", "desc": "Resize & kompres gambar" },
+        { "slug": "compound-interest-calculator", "name": "Compound Interest Calculator", "icon": "💰", "desc": "Kalkulator bunga majemuk dan proyeksi investasi" }
       ]
     }
   ]

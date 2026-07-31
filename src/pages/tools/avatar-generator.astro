@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Avatar Generator';
 const description = 'Buat avatar random online gratis. Generator avatar unik dari inisial, ikon, atau emoji. Download PNG siap pakai.';
 const keywords = 'avatar generator, random avatar, profile picture maker, avatar maker, profile pic generator';
-const aboutText = 'Avatar Generator Buat avatar random online gratis. Generator avatar unik dari inisial, ikon, atau emoji. Download PNG siap pakai.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Buat avatar random online gratis. Generator avatar unik dari inisial, ikon, atau emoji. Download PNG siap pakai.';
 const relatedTools = [
   { slug: 'qr-generator', name: 'Qr Generator', icon: '▐▌' },
   { slug: 'barcode-generator', name: 'Barcode Generator', icon: '▮▯' },
@@ -73,21 +73,17 @@ const toolCss = `
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
+
 
 <script is:inline>
+var isDark=localStorage.getItem('theme')==='naufal-dark';
 var canvas = document.getElementById('avatarPreview');
 var ctx = canvas.getContext('2d');
 var currentStyle = 'initials';
 var currentText = '';
 var currentColor = '#6366f1';
-var currentBg = '#eef2ff';
+var currentBg = isDark ? '#1e1e2e' : '#eef2ff';
+if(isDark){var bgInp=document.getElementById('avatarBg');if(bgInp.value==='#eef2ff')bgInp.value='#1e1e2e'}
 
 var emojis = ['😀','😎','🤖','👾','🦊','🐱','🐶','🦄','🐸','🌈','🔥','⭐','💎','🎮','🛸','🧠','🎯','🚀','💡','🎨'];
 var shapes = ['circle','square','triangle','diamond','hexagon'];

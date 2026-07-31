@@ -5,7 +5,8 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'HTML Minifier';
 const description = 'HTML Minifier online. Minify dan beautify HTML code. Kompres HTML untuk performa website lebih cepat.';
 const keywords = 'html minifier, html minify, html beautifier, html formatter, html compressor, minify html online';
-const aboutText = 'HTML Minifier HTML Minifier online. Minify dan beautify HTML code. Kompres HTML untuk performa website lebih cepat.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'HTML Minifier online. Minify dan beautify HTML code. Kompres HTML untuk performa website lebih cepat.';
+const aboutExtra = 'HTML Minifier adalah alat untuk mengompres kode HTML dengan menghapus spasi berlebih, komentar, dan whitespace yang tidak diperlukan. Juga dilengkapi fitur beautify untuk merapikan kode HTML yang berantakan. Alat ini menampilkan perbandingan ukuran sebelum dan sesudah minify, sangat berguna untuk mengoptimalkan performa website. Semua pemrosesan dilakukan 100% di browser tanpa upload data ke server.';
 const relatedTools = [
   { slug: 'css-minifier', name: 'Css Minifier', icon: 'CSS' },
   { slug: 'json-formatter', name: 'Json Formatter', icon: '{}' },
@@ -23,23 +24,13 @@ const relatedTools = [
 
 <header class="flex items-center gap-3 mb-4"><div class="tool-icon" style="background:#f0fdf4;color:#16a34a;">&lt;/&gt;</div><div><h1 class="h3 mb-0">HTML Minifier</h1><p class="opacity-60 small mb-0">Minify dan beautify HTML code untuk performa web lebih baik.</p></div></header><div class="flex flex-wrap gap-4"><div class="col-lg-6"><div class="card card-bordered bg-base-100 p-3"><label class="label-text font-semibold small">Input HTML</label><textarea id="inputHtml" class="input input-bordered w-full font-mono" rows="12" placeholder="Tempel HTML di sini...">&lt;html&gt; &lt;head&gt; &lt;title&gt;    Hello&lt;/title&gt; &lt;/head&gt; &lt;body&gt;    &lt;h1&gt;Hello World&lt;/h1&gt; &lt;/body&gt; &lt;/html&gt;</textarea><div class="flex gap-2 mt-2"><button id="btnMinify" class="btn btn-primary">Minify</button><button id="btnBeautify" class="btn btn-outline-primary">Beautify</button><button id="btnClear" class="btn btn-outline-danger">Clear</button></div></div></div><div class="col-lg-6"><div class="card card-bordered bg-base-100 p-3"><div class="flex justify-between items-center mb-2"><label class="label-text font-semibold small mb-0">Output</label><div class="text-sm opacity-60" id="sizeInfo">Ukuran: 0 byte</div></div><textarea id="outputHtml" class="input input-bordered w-full font-mono" rows="12" placeholder="Hasil..." readonly></textarea><button id="btnCopy" class="btn btn-outline btn-sm mt-2">Copy</button></div></div></div>
 
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
+
 
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
-
-<script is:inline>
-var iH=document.getElementById('inputHtml'),oH=document.getElementById('outputHtml'),sI=document.getElementById('sizeInfo');function minify(){var t=iH.value;t=t.replace(/<!--[\\s\\S]*?-->/g,'').replace(/>\\s+</g,'><').replace(/\\s+/g,' ').replace(/\\s+([\\w\\-]+=)/g,' $1').trim();oH.value=t;updateSize()}function beautify(){var t=iH.value,depth=0,out='';t=t.replace(/>\\s+</g,'><').replace(/<!--[\\s\\S]*?-->/g,'');for(var i=0;i<t.length;i++){var c=t[i];if(c==='<'){if(t[i+1]=='/')depth--;for(var j=0;j<depth;j++)out+='  ';out+=c;if(t[i+1]!=='/'){var ci=i+1;while(ci<t.length&&t[ci]!==' '&&t[ci]!=='>')ci++;var tag=t.substring(i+1,ci).toLowerCase();if(tag!=='br'&&tag!=='hr'&&tag!=='img'&&tag!=='input'&&tag!=='meta'&&tag!=='link'&&tag!=='area'&&tag!=='base'&&tag!=='col'&&tag!=='embed'&&tag!=='source'&&tag!=='track'&&tag!=='wbr'){if(t[i+1]!=='/')depth++}}}else if(c==='>'){out+=c;if(i+1<t.length&&t[i+1]==='<')out+='\\n'}else out+=c}oH.value=out;updateSize()}function updateSize(){var bytes=new Blob([oH.value]).size;sI.textContent='Ukuran: '+bytes.toLocaleString()+' byte'+(bytes>0?' (sebelum: '+new Blob([iH.value]).size.toLocaleString()+' byte)':'')}document.getElementById('btnMinify').addEventListener('click',minify);document.getElementById('btnBeautify').addEventListener('click',beautify);document.getElementById('btnClear').addEventListener('click',function(){iH.value='';oH.value='';sI.textContent='Ukuran: 0 byte'});document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(oH.value).catch(function(){})});minify();
+var iH=document.getElementById('inputHtml'),oH=document.getElementById('outputHtml'),sI=document.getElementById('sizeInfo');function minify(){var t=iH.value;t=t.replace(/<!--[\\s\\S]*?-->/g,'').replace(/>\\s+</g,'><').replace(/\\s+/g,' ').replace(/\\s+([\\w\\-]+=)/g,' $1').trim();oH.value=t;updateSize()}function beautify(){var t=iH.value,depth=0,out='';t=t.replace(/>\\s+</g,'><').replace(/<!--[\\s\\S]*?-->/g,'');for(var i=0;i<t.length;i++){var c=t[i];if(c==='<'){if(t[i+1]=='/')depth--;for(var j=0;j<depth;j++)out+=' ';out+=c;if(t[i+1]!=='/'){var ci=i+1;while(ci<t.length&&t[ci]!==' '&&t[ci]!=='>')ci++;var tag=t.substring(i+1,ci).toLowerCase();if(tag!=='br'&&tag!=='hr'&&tag!=='img'&&tag!=='input'&&tag!=='meta'&&tag!=='link'&&tag!=='area'&&tag!=='base'&&tag!=='col'&&tag!=='embed'&&tag!=='source'&&tag!=='track'&&tag!=='wbr'){if(t[i+1]!=='/')depth++}}}else if(c==='>'){out+=c;if(i+1<t.length&&t[i+1]==='<')out+='\\n'}else out+=c}oH.value=out;updateSize()}function updateSize(){var bytes=new Blob([oH.value]).size;sI.textContent='Ukuran: '+bytes.toLocaleString()+' byte'+(bytes>0?' (sebelum: '+new Blob([iH.value]).size.toLocaleString()+' byte)':'')}document.getElementById('btnMinify').addEventListener('click',minify);document.getElementById('btnBeautify').addEventListener('click',beautify);document.getElementById('btnClear').addEventListener('click',function(){iH.value='';oH.value='';sI.textContent='Ukuran: 0 byte'});document.getElementById('btnCopy').addEventListener('click',function(){navigator.clipboard.writeText(oH.value).catch(function(){})});minify();
 </script>
 

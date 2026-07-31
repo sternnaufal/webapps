@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Roman Numeral Converter';
 const description = 'Konverter angka Romawi online. Ubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.';
 const keywords = 'roman numeral converter, angka romawi, romawi converter, roman to number, number to roman';
-const aboutText = 'Roman Numeral Converter Konverter angka Romawi online. Ubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Konverter angka Romawi online. Ubah angka desimal ke Romawi (I, V, X, L, C, D, M) dan sebaliknya.';
 const relatedTools = [
   { slug: 'konverter-bilangan', name: 'Konverter Bilangan', icon: '2' },
   { slug: 'number-to-words', name: 'Number To Words', icon: '🔤' },
@@ -155,7 +155,7 @@ document.querySelectorAll('[data-val]').forEach(function(b){
 
 var yearsHtml='';
 [1990,2000,2010,2020,2024,2025,2026,2027,2045,2050].forEach(function(y){
-  yearsHtml+='<span class="px-2 py-1 rounded text-xs cursor-pointer" style="background:oklch(0.93 0.003 270);" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span> ';
+  yearsHtml+='<span class="px-2 py-1 rounded text-xs cursor-pointer" style="background:oklch(0.93 0.003 270);" data-yr="'+y+'">'+y+' = '+toRoman(y)+'</span>';
 });
 document.getElementById('yearList').innerHTML=yearsHtml;
 document.querySelectorAll('[data-yr]').forEach(function(el){

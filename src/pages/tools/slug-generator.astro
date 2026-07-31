@@ -5,7 +5,8 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Text to Slug Generator';
 const description = 'Text to slug generator online. Ubah judul atau teks menjadi URL slug yang SEO friendly. Konversi teks ke slug untuk URL.';
 const keywords = 'slug generator, url slug, text to slug, seo slug, slug maker, generate slug, slug converter';
-const aboutText = 'Text to Slug Generator Text to slug generator online. Ubah judul atau teks menjadi URL slug yang SEO friendly. Konversi teks ke slug untuk URL.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Text to slug generator online. Ubah judul atau teks menjadi URL slug yang SEO friendly. Konversi teks ke slug untuk URL.';
+const aboutExtra = 'Slug adalah versi URL-friendly dari sebuah judul atau teks, biasanya terdiri dari huruf kecil, angka, dan tanda hubung. Slug yang baik sangat penting untuk SEO karena mempengaruhi struktur URL dan membantu mesin pencari memahami konten halaman. Alat ini mendukung konversi karakter khusus Indonesia (aksen), opsi hapus kata umum (stop words), dan contoh slug untuk referensi.';
 const relatedTools = [
   { slug: 'url-encode', name: 'Url Encode', icon: '%' },
   { slug: 'textcase', name: 'Textcase', icon: 'Aa' },
@@ -65,7 +66,7 @@ const toolCss = `.slug-result{font-family:monospace;font-size:1.4rem;font-weight
   </div>
 </div>
 
-<ToolShell about={aboutText} />
+<ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
 
 </ToolLayout>
 

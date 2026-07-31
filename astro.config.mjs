@@ -15,8 +15,17 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes('404'),
       serialize(item) {
-        item.changefreq = item.url.endsWith('/') ? 'weekly' : 'monthly';
-        item.priority = item.url.endsWith('/tools/') ? 0.8 : 0.6;
+        const url = item.url.replace(/\/$/, '');
+        if (url === 'https://webapps.naufalrakha.my.id') {
+          item.changefreq = 'daily';
+          item.priority = 1.0;
+        } else if (url.includes('/tools/')) {
+          item.changefreq = 'weekly';
+          item.priority = 0.8;
+        } else {
+          item.changefreq = 'monthly';
+          item.priority = 0.4;
+        }
         return item;
       },
     }),

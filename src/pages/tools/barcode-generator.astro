@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'Barcode Generator';
 const description = 'Barcode generator online gratis. Buat barcode CODE128, EAN-13, EAN-8, UPC-A, CODE39, ITF-14, Codabar, Pharmacode. Download PNG/SVG.';
 const keywords = 'barcode generator, generate barcode, barcode maker, code128, ean13, upc, barcode online gratis';
-const aboutText = 'Barcode Generator Barcode generator online gratis. Buat barcode CODE128, EAN-13, EAN-8, UPC-A, CODE39, ITF-14, Codabar, Pharmacode. Download PNG/SVG.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'Barcode generator online gratis. Buat barcode CODE128, EAN-13, EAN-8, UPC-A, CODE39, ITF-14, Codabar, Pharmacode. Download PNG/SVG.';
 const relatedTools = [
   { slug: 'qr-generator', name: 'Qr Generator', icon: '▐▌' },
   { slug: 'avatar-generator', name: 'Avatar Generator', icon: '👤' },
@@ -99,23 +99,15 @@ const toolCss = `
 <style is:inline>
 {toolCss}
 </style>
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
+
 
 <script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
-
-<script is:inline>
+var isDark=localStorage.getItem('theme')==='naufal-dark';
 var valInp=document.getElementById('barcodeValue'),fmtInp=document.getElementById('barcodeFormat');
 var wInp=document.getElementById('barWidth'),hInp=document.getElementById('barHeight'),mInp=document.getElementById('barMargin');
 var fsInp=document.getElementById('barFontSize'),lcInp=document.getElementById('barLineColor'),bgInp=document.getElementById('barBgColor');
 var svInp=document.getElementById('barShowVal'),svgEl=document.getElementById('barcodeSvg'),outDiv=document.getElementById('barcodeOutput');
+if(isDark){if(lcInp.value==='#000000')lcInp.value='#ffffff';if(bgInp.value==='#ffffff')bgInp.value='#1e1e2e'}
 
 function getOptions(){
   return {
@@ -149,6 +141,7 @@ function generate(){
     return;
   }
   outDiv.innerHTML='<svg id="barcodeSvg"></svg>';
+  outDiv.style.background=bgInp.value;
   var svg=document.getElementById('barcodeSvg');
   try{
     JsBarcode(svg,val,getOptions());
@@ -166,7 +159,7 @@ document.getElementById('btnPng').addEventListener('click',function(){
   var c=document.createElement('canvas');
   c.width=b.width+pad*2;c.height=b.height+pad*2;
   var ctx=c.getContext('2d');
-  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle=bgInp.value;ctx.fillRect(0,0,c.width,c.height);
   var img=new Image();
   var s=new XMLSerializer();
   var svgStr=s.serializeToString(svg);

@@ -1,0 +1,71 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import tools from '../../../data/tools.json';
+import ToolCard from '../../../components/ToolCard.astro';
+
+export function getStaticPaths() {
+  return tools.categories.map(cat => {
+    const slug = cat.name.toLowerCase().replace(/[\s&]+/g, '-').replace(/[^a-z0-9-]/g, '');
+    const catAccent = {
+      'Developer Tools': '#6366f1', 'Network & URL': '#3b82f6',
+      'Text & Media': '#f59e0b', 'Generators': '#10b981',
+      'Converters': '#8b5cf6', 'Utilities': '#14b8a6',
+    }[cat.name] || '#6366f1';
+
+    return {
+      params: { category: slug },
+      props: { category: cat, accent: catAccent },
+    };
+  });
+}
+
+const { category, accent } = Astro.props;
+const title = `${category.icon} ${category.name} — Online Tools Gratis`;
+const description = `Koleksi ${category.tools.length} ${category.name} online gratis. ${category.tools.map(t => t.name).join(', ')}. Semua 100% di browser.`;
+const keywords = `${category.name.toLowerCase()}, ${category.tools.map(t => t.name.toLowerCase()).join(', ')}`;
+const allTools = tools.categories.flatMap(c => c.tools);
+const otherCats = tools.categories.filter(c => c.name !== category.name);
+function slugify(n) { return n.toLowerCase().replace(/[\s&]+/g, '-').replace(/[^a-z0-9-]/g, ''); }
+---
+
+<ToolLayout title={title} description={description} keywords={keywords} breadcrumbs={[
+  { name: 'Beranda', url: '/' },
+  { name: category.name, url: `/tools/category/${slugify(category.name)}` }
+]}>
+  <div class="mb-6">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="text-2xl">{category.icon}</span>
+      <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{category.name}</h1>
+    </div>
+    <p class="text-sm opacity-50">
+      <span class="font-semibold">{category.tools.length}</span> tools tersedia
+    </p>
+  </div>
+
+  <!-- Tools Grid -->
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 mb-10">
+    {category.tools.map(t => (
+      <ToolCard tool={t} />
+    ))}
+  </div>
+
+  <!-- Kategori Lain -->
+  <div class="mt-10 pt-6 border-t" style="border-color:oklch(0.9 0.005 270);">
+    <h2 class="text-sm font-semibold mb-3 flex items-center gap-1.5 opacity-70">
+      <span>📂</span> Kategori Lain
+    </h2>
+    <div class="flex flex-wrap gap-2">
+      {otherCats.map(cat => (
+        <a href={`/tools/category/${slugify(cat.name)}`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
+          {cat.icon} {cat.name}
+          <span class="text-[10px] opacity-50">{cat.tools.length}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Semua Tools Link -->
+  <div class="mt-4">
+    <a href="/" class="text-xs opacity-40 hover:opacity-80 transition-opacity">← Semua Tools</a>
+  </div>
+</ToolLayout>

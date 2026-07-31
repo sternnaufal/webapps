@@ -21,6 +21,29 @@ const currentUrl = Astro.url.href;
   )
 }
 
+<!-- FAQ (visible + schema) -->
+<div class="mt-6 pt-4 border-t" style="border-color:oklch(0.9 0.005 270);" itemscope itemtype="https://schema.org/FAQPage">
+  <h3 class="text-xs font-semibold opacity-40 mb-3 uppercase tracking-wider">Pertanyaan Umum</h3>
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h4 class="text-sm font-medium" itemprop="name">Apakah alat ini gratis?</h4>
+    <div class="text-sm opacity-70 mt-1" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <div itemprop="text">Ya, 100% gratis. Tidak ada biaya tersembunyi, tidak perlu daftar akun, dan tidak ada batasan penggunaan.</div>
+    </div>
+  </div>
+  <div class="mt-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h4 class="text-sm font-medium" itemprop="name">Apakah data saya aman?</h4>
+    <div class="text-sm opacity-70 mt-1" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <div itemprop="text">Semua pemrosesan dilakukan 100% di browser Anda. Data tidak pernah dikirim, disimpan, atau dibagikan ke server mana pun.</div>
+    </div>
+  </div>
+  <div class="mt-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h4 class="text-sm font-medium" itemprop="name">Apakah perlu install aplikasi?</h4>
+    <div class="text-sm opacity-70 mt-1" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <div itemprop="text">Tidak perlu. Cukup buka WebApps di browser Chrome, Firefox, Safari, atau Edge. Berfungsi di komputer dan HP tanpa installasi.</div>
+    </div>
+  </div>
+</div>
+
 <!-- Share -->
 <div class="mt-6 pt-4 flex items-center gap-3 border-t" style="border-color:oklch(0.9 0.005 270);">
   <span class="text-xs opacity-30">Share:</span>

@@ -42,7 +42,8 @@ const iconMap: Record<string, string> = {
   'word-frequency': '📊', 'palindrome-checker': '↔', 'anagram-finder': '🔀',
   'konverter-bilangan': '2', 'time-converter': '🌍', 'date-calculator': '📅',
   'decimal-to-fraction': '½', 'timer': '⏱', 'stopwatch': '⏱', 'notes-app': '📝',
-  'csv-viewer': '📊', 'default': '⚡',
+  'csv-viewer': '📊',   'word-counter': 'W', 'compound-interest-calculator': '$', 'emoji-picker': '😊', 'slug-generator': '🔗', 'html-minifier': '</>',
+  'default': '⚡',
 };
 
 function icon(slug: string): string { return iconMap[slug] || iconMap.default; }
@@ -56,12 +57,13 @@ const colMap: Record<string, string> = {
   'meta-tag-generator': '#ec4899', 'ascii-table': '#14b8a6', 'css-minifier': '#3b82f6',
   'url-encode': '#8b5cf6', 'cron-builder': '#a855f7', 'mac-address-generator': '#6366f1',
   'user-agent-parser': '#64748b', 'textcase': '#f43f5e', 'lorem-ipsum': '#64748b',
-  'md-preview': '#059669', 'image-to-base64': '#0ea5e9', 'color-converter': '#8b5cf6',
+  'md-preview': '#059669', 'image-to-base64': '#0ea5e9',   'color-converter': '#8b5cf6',
+  'emoji-picker': '#ca8a04', 'html-minifier': '#16a34a', 'slug-generator': '#14b8a6', 'word-counter': '#ea580c', 'compound-interest-calculator': '#059669',
 };
 function col(slug: string): string { return colMap[slug] || '#6366f1'; }
 ---
 
-<ToolLayout title="WebApps - 86+ Online Tools Gratis" description="86+ online tools gratis untuk developer. 100% di browser, tanpa server." wide>
+<ToolLayout title={`WebApps - ${allTools.length}+ Online Tools Gratis`} description={`${allTools.length}+ online tools gratis untuk developer. 100% di browser, tanpa server.`} wide>
   <!-- Hero -->
   <div class="mb-10">
     <div class="flex items-start gap-4 mb-4">
@@ -99,11 +101,14 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
 
   <!-- Category Pills -->
   <div class="flex flex-wrap gap-2 mb-8">
-    {tools.categories.map(cat => (
-      <a href={`#cat-${cat.name.replace(/\s+/g, '-')}`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
-        {cat.icon} {cat.name}
-      </a>
-    ))}
+    {tools.categories.map(cat => {
+      const slug = cat.name.toLowerCase().replace(/[\s&]+/g, '-').replace(/[^a-z0-9-]/g, '');
+      return (
+        <a href={`/tools/category/${slug}`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
+          {cat.icon} {cat.name}
+        </a>
+      );
+    })}
   </div>
 
   <!-- Featured -->
@@ -151,13 +156,82 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
   <div id="noResults" class="hidden text-center py-16">
     <div class="text-2xl mb-3 opacity-20">🔍</div>
     <p class="font-medium">Tidak ada tool yang cocok</p>
-    <p class="text-xs opacity-40 mt-1">Coba kata kunci lain</p>
+    <p class="text-xs opacity-40 mt-1">Coba kata kunci lain. Tekan <kbd class="kbd kbd-xs">Esc</kbd> untuk reset.</p>
+  </div>
+
+  <!-- Keyboard Shortcuts Help (hidden by default) -->
+  <div id="shortcutsHelp" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" onclick="closeHelp(event)">
+    <div class="rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl" style="background:oklch(1 0 0);border:1px solid oklch(0.9 0.005 270);" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-bold">Pintasan Keyboard</h3>
+        <button onclick="closeHelp()" class="btn btn-ghost btn-xs btn-square opacity-40 hover:opacity-100" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between items-center"><span class="opacity-60">Cari tool</span><span><kbd class="kbd kbd-xs">/</kbd> atau <kbd class="kbd kbd-xs">Ctrl+K</kbd></span></div>
+        <div class="flex justify-between items-center"><span class="opacity-60">Tutup / Reset</span><span><kbd class="kbd kbd-xs">Esc</kbd></span></div>
+        <div class="flex justify-between items-center"><span class="opacity-60">Bantuan ini</span><span><kbd class="kbd kbd-xs">?</kbd></span></div>
+      </div>
+    </div>
   </div>
 </ToolLayout>
 
 <script is:inline>
-const s=document.getElementById('toolSearch'),g=document.getElementById('toolGrid'),c=document.getElementById('toolCount'),n=document.getElementById('noResults');
-const cards=Array.from(g.querySelectorAll('[data-slug]'));
-s.addEventListener('input',function(){const q=this.value.toLowerCase().trim();let v=0;cards.forEach(cd=>{const ok=!q||cd.textContent.toLowerCase().includes(q);cd.closest('[data-category]').style.display=ok?'':'none';if(ok)v++});c.textContent=v;n.classList.toggle('hidden',v>0||!q)});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==s){e.preventDefault();s.focus()}});
+(function(){
+var s=document.getElementById('toolSearch'),g=document.getElementById('toolGrid'),c=document.getElementById('toolCount'),n=document.getElementById('noResults'),h=document.getElementById('shortcutsHelp');
+var cards=Array.from(g.querySelectorAll('[data-slug]'));
+var t=null;
+
+function filter(q){
+  q=q.toLowerCase().trim();
+  var v=0;
+  cards.forEach(function(cd){
+    var ok=!q||cd.textContent.toLowerCase().includes(q);
+    cd.closest('[data-category]').style.display=ok?'':'none';
+    if(ok)v++;
+  });
+  c.textContent=v;
+  n.classList.toggle('hidden',v>0||!q);
+}
+
+s.addEventListener('input',function(){
+  clearTimeout(t);
+  var val=this.value;
+  t=setTimeout(function(){filter(val)},150);
+});
+
+function closeHelp(e){
+  if(!e||e.target===h){h.classList.add('hidden')}
+}
+
+document.addEventListener('keydown',function(e){
+  var key=e.key;
+  var isSearchFocused=document.activeElement===s;
+
+  // / or Ctrl+K -> focus search
+  if((key==='/'||(key==='k'&&(e.ctrlKey||e.metaKey)))&&!isSearchFocused){
+    e.preventDefault();s.focus();s.select();
+    return;
+  }
+
+  // ? -> toggle help (only when not typing in input)
+  if(key==='?'&&!isSearchFocused){
+    e.preventDefault();
+    h.classList.toggle('hidden');
+    return;
+  }
+
+  // Esc -> clear search or close help
+  if(key==='Escape'){
+    if(!h.classList.contains('hidden')){
+      h.classList.add('hidden');
+      e.preventDefault();
+    } else if(s.value){
+      s.value='';
+      filter('');
+      s.focus();
+      e.preventDefault();
+    }
+  }
+});
+})();
 </script>

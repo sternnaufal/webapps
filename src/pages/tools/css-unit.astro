@@ -5,7 +5,7 @@ import ToolShell from "../../components/ToolShell.astro";
 const title = 'CSS Unit Converter';
 const description = 'CSS unit converter online. Konversi px, rem, em, vw, vh, persen, pt, pc, cm, mm, inci.';
 const keywords = 'css unit converter, px to rem, px to em, rem to px, css units, responsive design';
-const aboutText = 'CSS Unit Converter CSS unit converter online. Konversi px, rem, em, vw, vh, persen, pt, pc, cm, mm, inci.. Alat ini berjalan 100% di browser, data tidak dikirim ke server.';
+const aboutText = 'CSS unit converter online. Konversi px, rem, em, vw, vh, persen, pt, pc, cm, mm, inci.';
 const relatedTools = [
   { slug: 'color-picker', name: 'Color Picker', icon: '🎨' },
   { slug: 'color-converter', name: 'Color Converter', icon: '🌈' },
@@ -59,17 +59,7 @@ const relatedTools = [
 
 </ToolLayout>
 
-<style is:inline>
-.saweria-float { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #ff6b6b; color: #fff; border-radius: 50px; padding: 10px 20px 10px 16px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,107,107,0.4); transition: all 0.3s ease; font-family: "Inter",sans-serif; }
-.saweria-float:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,107,0.6); color: #fff; }
-.saweria-float svg { animation: pulse 1.5s ease infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@media (max-width: 576px) { .saweria-float { bottom: 16px; right: 16px; padding: 8px 14px 8px 10px; font-size: 12px; } }
-</style>
 
-<script is:inline>
-document.getElementById('year').textContent=new Date().getFullYear();
-</script>
 
 <script is:inline>
 var inpVal=document.getElementById('inputValue'),fromU=document.getElementById('fromUnit'),toU=document.getElementById('toUnit');
