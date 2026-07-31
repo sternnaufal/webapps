@@ -6,3 +6,5 @@ _legacy/
 *.pdf
 *.exe
 INV-*.png
+.env
+.env.*
