@@ -31,7 +31,7 @@ const relatedTools = [
           <div class="md:col-span-2">
             <label for="qrText" class="text-xs font-medium opacity-60 mb-1 block">Teks / URL</label>
             <textarea id="qrText" class="textarea textarea-bordered w-full text-sm font-mono" rows="3" placeholder="https://naufalrakha.my.id atau teks biasa..."></textarea>
-            <div class="text-xs opacity-50 mt-0.5">Tip: prefill via URL <code>?t=...</code></div>
+            <div class="text-xs opacity-50 mt-0.5">Bagikan link QR via URL: <code>?link=...&amp;size=...&amp;ecc=...&amp;margin=...&amp;fg=...&amp;bg=...</code></div>
           </div>
 
           <div>
@@ -79,6 +79,7 @@ const relatedTools = [
           <div class="md:col-span-2 flex gap-2 flex-wrap">
             <button type="button" id="btnGenerate" class="btn btn-primary btn-sm">Generate</button>
             <button type="button" id="btnDownload" class="btn btn-ghost btn-sm" disabled>Download PNG</button>
+            <button type="button" id="btnCopyLink" class="btn btn-ghost btn-sm" disabled>Salin Link</button>
             <button type="button" id="btnSample" class="btn btn-ghost btn-sm">Sample</button>
             <button type="button" id="btnClear" class="btn btn-ghost btn-sm">Clear</button>
           </div>
@@ -119,6 +120,7 @@ const relatedTools = [
   var elBg     = document.getElementById('qrBg');
   var elGen    = document.getElementById('btnGenerate');
   var elDl     = document.getElementById('btnDownload');
+  var elCopy   = document.getElementById('btnCopyLink');
   var elSample = document.getElementById('btnSample');
   var elClear  = document.getElementById('btnClear');
   var wrap     = document.getElementById('qrcode');
@@ -136,6 +138,7 @@ const relatedTools = [
     wrap.innerHTML = '';
     lastCanvasDataURL = null;
     elDl.disabled = true;
+    elCopy.disabled = true;
     wrapOuter.style.background = elBg.value;
   }
 
@@ -167,6 +170,7 @@ const relatedTools = [
       if (canvas) {
         lastCanvasDataURL = canvas.toDataURL('image/png');
         elDl.disabled = false;
+        elCopy.disabled = false;
       }
     }, 80);
     wrapOuter.style.background = elBg.value;
@@ -193,14 +197,61 @@ const relatedTools = [
     setTimeout(function() {
       var canvas = tempDiv.querySelector('canvas');
       if (canvas) {
+        var margin = parseInt(elMargin.value, 10) || 0;
+        var outSize = size + margin * 2;
+        var out = document.createElement('canvas');
+        out.width = outSize;
+        out.height = outSize;
+        var ctx = out.getContext('2d');
+        ctx.fillStyle = elBg.value;
+        ctx.fillRect(0, 0, outSize, outSize);
+        ctx.drawImage(canvas, margin, margin);
         var a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');
+        a.href = out.toDataURL('image/png');
         a.download = 'qrcode.png';
         document.body.appendChild(a);
         a.click();
         a.remove();
       }
     }, 100);
+  }
+
+  function copyLink(){
+    var text = elText.value.trim();
+    if (!text) return;
+
+    var params = new URLSearchParams();
+    params.set('link', text);
+    params.set('size', elSize.value);
+    params.set('ecc', elEcc.value);
+    params.set('margin', elMargin.value);
+    params.set('fg', elFg.value.replace('#', ''));
+    params.set('bg', elBg.value.replace('#', ''));
+
+    var url = location.origin + location.pathname + '?' + params.toString();
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(copyDone, function(){ fallbackCopy(url); });
+    } else {
+      fallbackCopy(url);
+    }
+  }
+
+  function copyDone(){
+    elCopy.textContent = 'Tersalin ✓';
+    setTimeout(function(){ elCopy.textContent = 'Salin Link'; }, 1500);
+  }
+
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    ta.remove();
+    copyDone();
   }
 
   function sample(){
@@ -221,15 +272,25 @@ const relatedTools = [
 
   (function() {
     var params = new URLSearchParams(location.search);
-    var t = params.get('t');
+    var t = params.get('link') || params.get('t');
     if (t) {
       elText.value = decodeURIComponent(t);
-      gen();
     }
+    ['size','ecc','margin','fg','bg'].forEach(function(key) {
+      var v = params.get(key);
+      if (!v) return;
+      var el = document.getElementById('qr' + key.charAt(0).toUpperCase() + key.slice(1));
+      if (!el) return;
+      if (key === 'fg' || key === 'bg') v = '#' + v;
+      if (key === 'fg' || key === 'bg') { if (/^#[0-9a-fA-F]{6}$/.test(v)) el.value = v; }
+      else el.value = v;
+    });
+    if (t) gen();
   })();
 
   elGen.addEventListener('click', function() { gen(true); });
   elDl.addEventListener('click', downloadPNG);
+  elCopy.addEventListener('click', copyLink);
   elSample.addEventListener('click', sample);
   elClear.addEventListener('click', clearAll);
 
