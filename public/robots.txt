@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://webapps.naufalrakha.my.id/sitemap.xml
+Sitemap: https://webapps.naufalrakha.my.id/sitemap-index.xml
