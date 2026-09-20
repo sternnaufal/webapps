@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://webapps.naufalrakha.my.id',
   output: 'static',
+  trailingSlash: 'always',
 
   build: {
     assets: 'assets',

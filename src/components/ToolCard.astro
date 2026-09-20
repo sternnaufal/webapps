@@ -20,7 +20,7 @@ const bgColor = colors[tool.slug] || colors.default;
 const ico = tool.slug.includes('password') ? '🔑' : tool.slug.includes('qr') ? '▐▌' : tool.slug.includes('json') ? '{}' : tool.slug.includes('color') ? '🎨' : '⚡';
 ---
 
-<a href={`/tools/${tool.slug}`} class="tool-card" data-slug={tool.slug}>
+<a href={`/tools/${tool.slug}/`} class="tool-card" data-slug={tool.slug}>
   <div class="tool-card-icon" style={`background:${bgColor}15;color:${bgColor}`}>{ico}</div>
   <div class="min-w-0 flex-1">
     <div class="tool-card-name">{tool.name}</div>

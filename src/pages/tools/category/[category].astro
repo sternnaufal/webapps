@@ -56,7 +56,7 @@ function slugify(n) { return n.toLowerCase().replace(/[\s&]+/g, '-').replace(/[^
     </h2>
     <div class="flex flex-wrap gap-2">
       {otherCats.map(cat => (
-        <a href={`/tools/category/${slugify(cat.name)}`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
+        <a href={`/tools/category/${slugify(cat.name)}/`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
           {cat.icon} {cat.name}
           <span class="text-[10px] opacity-50">{cat.tools.length}</span>
         </a>

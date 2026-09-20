@@ -104,7 +104,7 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
     {tools.categories.map(cat => {
       const slug = cat.name.toLowerCase().replace(/[\s&]+/g, '-').replace(/[^a-z0-9-]/g, '');
       return (
-        <a href={`/tools/category/${slug}`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
+        <a href={`/tools/category/${slug}/`} class="btn btn-xs rounded-full gap-1.5 font-normal opacity-60 hover:opacity-100 transition-opacity">
           {cat.icon} {cat.name}
         </a>
       );
@@ -118,7 +118,7 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
     </h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5">
       {featuredTools.map(t => (
-        <a href={`/tools/${t.slug}`} class="tool-card" data-slug={t.slug} style={`border-top:3px solid ${catColor(t.slug)}`}>
+        <a href={`/tools/${t.slug}/`} class="tool-card" data-slug={t.slug} style={`border-top:3px solid ${catColor(t.slug)}`}>
           <div class="tool-card-icon" style={`background:${col(t.slug)}15;color:${col(t.slug)}`}>{icon(t.slug)}</div>
           <div class="min-w-0 flex-1">
             <div class="tool-card-name">{t.name}</div>
@@ -139,7 +139,7 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5">
           {cat.tools.map(t => (
-            <a href={`/tools/${t.slug}`} class="tool-card" data-slug={t.slug} style={`border-top:3px solid ${catColor(t.slug)}`}>
+            <a href={`/tools/${t.slug}/`} class="tool-card" data-slug={t.slug} style={`border-top:3px solid ${catColor(t.slug)}`}>
               <div class="tool-card-icon" style={`background:${col(t.slug)}15;color:${col(t.slug)}`}>{icon(t.slug)}</div>
               <div class="min-w-0 flex-1">
                 <div class="tool-card-name">{t.name}</div>

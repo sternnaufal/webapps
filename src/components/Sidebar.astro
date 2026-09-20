@@ -40,7 +40,7 @@ const allTools = tools.categories.flatMap(c => c.tools);
             {cat.tools.map(t => {
               const isActive = t.slug === current;
               return (
-                <a href={`/tools/${t.slug}`} class={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs transition-all duration-150 my-px ${
+                <a href={`/tools/${t.slug}/`} class={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs transition-all duration-150 my-px ${
                   isActive
                     ? 'bg-primary text-primary-content font-medium'
                     : 'opacity-70 hover:opacity-100 hover:bg-base-300/50'
