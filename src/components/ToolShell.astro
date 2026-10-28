@@ -12,7 +12,7 @@ const currentUrl = Astro.url.href;
 {
   about && (
     <div class="mt-8 pt-6 border-t" style="border-color:oklch(0.9 0.005 270);">
-      <h3 class="text-xs font-semibold opacity-40 mb-3 uppercase tracking-wider">Tentang Tool Ini</h3>
+      <h2 class="text-xs font-semibold text-subtle mb-3 uppercase tracking-wider">Tentang Tool Ini</h2>
       <div class="text-sm leading-relaxed opacity-70 space-y-3 max-w-prose">
         <p>{about}</p>
         {aboutExtra && <p>{aboutExtra}</p>}
@@ -23,21 +23,21 @@ const currentUrl = Astro.url.href;
 
 <!-- FAQ (visible + schema) -->
 <div class="mt-6 pt-4 border-t" style="border-color:oklch(0.9 0.005 270);" itemscope itemtype="https://schema.org/FAQPage">
-  <h3 class="text-xs font-semibold opacity-40 mb-3 uppercase tracking-wider">Pertanyaan Umum</h3>
+  <h2 class="text-xs font-semibold text-subtle mb-3 uppercase tracking-wider">Pertanyaan Umum</h2>
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h4 class="text-sm font-medium" itemprop="name">Apakah alat ini gratis?</h4>
+    <h3 class="text-sm font-medium" itemprop="name">Apakah alat ini gratis?</h3>
     <div class="text-sm opacity-70 mt-1" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <div itemprop="text">Ya, 100% gratis. Tidak ada biaya tersembunyi, tidak perlu daftar akun, dan tidak ada batasan penggunaan.</div>
     </div>
   </div>
   <div class="mt-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h4 class="text-sm font-medium" itemprop="name">Apakah data saya aman?</h4>
+    <h3 class="text-sm font-medium" itemprop="name">Apakah data saya aman?</h3>
     <div class="text-sm opacity-70 mt-1" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <div itemprop="text">Semua pemrosesan dilakukan 100% di browser Anda. Data tidak pernah dikirim, disimpan, atau dibagikan ke server mana pun.</div>
     </div>
   </div>
   <div class="mt-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h4 class="text-sm font-medium" itemprop="name">Apakah perlu install aplikasi?</h4>
+    <h3 class="text-sm font-medium" itemprop="name">Apakah perlu install aplikasi?</h3>
     <div class="text-sm opacity-70 mt-1" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <div itemprop="text">Tidak perlu. Cukup buka WebApps di browser Chrome, Firefox, Safari, atau Edge. Berfungsi di komputer dan HP tanpa installasi.</div>
     </div>
@@ -46,21 +46,21 @@ const currentUrl = Astro.url.href;
 
 <!-- Share -->
 <div class="mt-6 pt-4 flex items-center gap-3 border-t" style="border-color:oklch(0.9 0.005 270);">
-  <span class="text-xs opacity-30">Share:</span>
-  <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-40 hover:opacity-100 transition-opacity" aria-label="Twitter/X">𝕏</a>
-  <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-40 hover:opacity-100 transition-opacity" aria-label="LinkedIn">in</a>
-  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-40 hover:opacity-100 transition-opacity" aria-label="Facebook">f</a>
-  <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-40 hover:opacity-100 transition-opacity" aria-label="WhatsApp">wa</a>
+  <span class="text-xs text-subtle">Share:</span>
+  <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-70 hover:opacity-100 transition-opacity">𝕏<span class="sr-only">Twitter/X</span></a>
+  <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-70 hover:opacity-100 transition-opacity">in<span class="sr-only">LinkedIn</span></a>
+  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-70 hover:opacity-100 transition-opacity">f<span class="sr-only">Facebook</span></a>
+  <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener" class="btn btn-ghost btn-xs btn-square opacity-70 hover:opacity-100 transition-opacity">wa<span class="sr-only">WhatsApp</span></a>
 </div>
 
 <!-- Related -->
 {
   relatedTools && relatedTools.length > 0 && (
     <div class="mt-4">
-      <span class="text-xs opacity-30 mr-2">Alat Terkait:</span>
+      <span class="text-xs text-subtle mr-2">Alat Terkait:</span>
       <div class="flex gap-2 flex-wrap mt-1">
         {relatedTools.map(t => (
-          <a href={`/tools/${t.slug}/`} class="btn btn-ghost btn-xs rounded-full gap-1 opacity-50 hover:opacity-100 transition-opacity">
+          <a href={`/tools/${t.slug}/`} class="btn btn-ghost btn-xs rounded-full gap-1 text-subtle hover:text-base-content transition-colors">
             {t.icon || '⚡'} {t.name}
           </a>
         ))}

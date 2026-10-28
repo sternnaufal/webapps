@@ -6,22 +6,22 @@ const allTools = tools.categories.flatMap(c => c.tools);
 
 <div class="flex flex-col h-full">
   <!-- Header -->
-  <div class="sidebar-header flex items-center gap-2 px-4 py-3 border-b shrink-0" style="border-color:oklch(0.9 0.005 270);">
+  <div class="sidebar-header flex items-center gap-2 px-4 py-3 border-b shrink-0" style="border-color:var(--color-base-300);">
     <a href="/" class="w-8 h-8 rounded-lg bg-primary text-primary-content flex items-center justify-center text-sm font-bold shrink-0">W</a>
     <span class="sidebar-label flex-1 truncate text-sm font-semibold">
       WebApps
-      <span class="text-[10px] font-normal opacity-40 ml-1">{allTools.length}</span>
+      <span class="text-[10px] font-normal text-subtle ml-1">{allTools.length}</span>
     </span>
-    <button id="collapseToggle" class="btn btn-ghost btn-sm btn-square hidden lg:flex opacity-40 hover:opacity-100 transition-all" title="Tutup sidebar">
+    <button id="collapseToggle" class="btn btn-ghost btn-sm btn-square hidden lg:flex opacity-70 hover:opacity-100 transition-all" title="Tutup sidebar">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
     </button>
   </div>
 
   <!-- Search -->
-  <div class="sidebar-search px-3 py-2 border-b shrink-0" style="border-color:oklch(0.9 0.005 270);">
+  <div class="sidebar-search px-3 py-2 border-b shrink-0" role="search" style="border-color:var(--color-base-300);">
     <div class="relative">
-      <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 opacity-30" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd"/></svg>
-      <input type="text" id="sidebarSearch" class="input input-ghost input-xs w-full pl-8 text-xs" placeholder="Cari tool..." />
+      <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-subtle" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd"/></svg>
+      <input type="text" id="sidebarSearch" aria-label="Cari tool" class="input input-ghost input-xs w-full pl-8 text-xs" placeholder="Cari tool..." />
     </div>
   </div>
 
@@ -31,10 +31,10 @@ const allTools = tools.categories.flatMap(c => c.tools);
       const catId = `cat-${cat.name.replace(/\s+/g, '-').toLowerCase()}`;
       return (
         <div class="px-2 mb-0.5">
-          <button class="category-toggle flex items-center gap-2 w-full px-2 py-1.5 rounded-md text-xs font-medium opacity-50 hover:opacity-80 transition-opacity" data-target={catId}>
+          <button class="category-toggle flex items-center gap-2 w-full px-2 py-1.5 rounded-md text-xs font-medium text-subtle hover:text-base-content transition-colors" data-target={catId} aria-expanded={i < 6 ? 'true' : 'false'} aria-controls={catId}>
             <span class="shrink-0">{cat.icon}</span>
             <span class="sidebar-label flex-1 text-left truncate">{cat.name}</span>
-            <span class="sidebar-label text-[10px] opacity-40">{cat.tools.length}</span>
+            <span class="sidebar-label text-[10px] text-subtle">{cat.tools.length}</span>
           </button>
           <div id={catId} class="nav-cat-list ml-1" style={`display:${i < 6 ? 'block' : 'none'}`}>
             {cat.tools.map(t => {
@@ -59,13 +59,13 @@ const allTools = tools.categories.flatMap(c => c.tools);
   </nav>
 
   <!-- Bottom bar -->
-  <div class="border-t px-3 py-2 flex items-center justify-between shrink-0" style="border-color:oklch(0.9 0.005 270);">
-    <span id="expandLabel" class="sidebar-label text-xs opacity-30">WebApps</span>
-    <a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" class="btn btn-ghost btn-xs gap-1 opacity-40 hover:opacity-80 transition-opacity">
+  <div class="border-t px-3 py-2 flex items-center justify-between shrink-0" style="border-color:var(--color-base-300);">
+    <span id="expandLabel" class="sidebar-label text-xs text-subtle">WebApps</span>
+    <a href="https://saweria.co/naufalrakha" target="_blank" rel="noopener" aria-label="Dukung via Saweria" class="btn btn-ghost btn-xs gap-1 opacity-70 hover:opacity-100 transition-opacity">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </a>
     <label class="swap swap-rotate btn btn-ghost btn-xs btn-square" title="Toggle dark mode">
-      <input type="checkbox" id="themeToggleSidebar" />
+      <input type="checkbox" id="themeToggleSidebar" aria-label="Aktifkan mode gelap" />
       <span class="swap-off text-sm">☀️</span>
       <span class="swap-on text-sm">🌙</span>
     </label>
@@ -82,7 +82,9 @@ const allTools = tools.categories.flatMap(c => c.tools);
       if (!wrapper) return;
       const list = wrapper.querySelector('.nav-cat-list');
       if (list) {
-        list.style.display = list.style.display === 'none' ? 'block' : 'none';
+        const open = list.style.display === 'none';
+        list.style.display = open ? 'block' : 'none';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
     });
   });

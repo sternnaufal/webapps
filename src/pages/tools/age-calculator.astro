@@ -18,22 +18,23 @@ const relatedTools = [
 <ToolLayout title={title} description={description} keywords={keywords}>
   <div class="mb-6">
     <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
-    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+    <p class="text-sm text-subtle mt-0.5">{description}</p>
   </div>
 
   <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
     <div class="flex flex-wrap gap-4">
       <div class="lg:w-5/12 w-full">
         <div class="mb-3">
-          <label class="text-xs font-medium opacity-60 mb-1 block">Tanggal Lahir</label>
+          <label for="birthDate" class="text-xs font-medium text-subtle mb-1 block">Tanggal Lahir</label>
           <input type="date" id="birthDate" class="input input-bordered w-full input-sm" value="2000-01-01">
         </div>
         <div class="mb-3">
-          <label class="text-xs font-medium opacity-60 mb-1 block">Hingga Tanggal</label>
+          <label for="modeSelect" class="text-xs font-medium text-subtle mb-1 block">Hingga Tanggal</label>
           <select id="modeSelect" class="select select-bordered w-full select-sm mb-2">
             <option value="now">Sekarang (real-time)</option>
             <option value="custom">Tanggal Tertentu</option>
           </select>
+          <label for="customDate" class="sr-only">Tanggal tertentu</label>
           <input type="date" id="customDate" class="input input-bordered w-full input-sm" disabled>
         </div>
         <button id="btnCalc" class="btn btn-primary w-full btn-sm">Hitung Usia</button>
@@ -42,26 +43,26 @@ const relatedTools = [
       <div class="lg:w-7/12 w-full">
         <div class="grid grid-cols-3 gap-3 mb-3 text-center">
           <div class="p-3 rounded-lg" style="background:oklch(0.55 0.25 270 / 0.1);">
-            <div class="text-2xl font-bold" id="years" style="color:#6366f1">0</div>
-            <div class="text-xs opacity-50">Tahun</div>
+            <div class="text-2xl font-bold" id="years" style="color:#4f46e5">0</div>
+            <div class="text-xs text-subtle">Tahun</div>
           </div>
           <div class="p-3 rounded-lg" style="background:oklch(0.6 0.18 150 / 0.1);">
-            <div class="text-2xl font-bold" id="months" style="color:#16a34a">0</div>
-            <div class="text-xs opacity-50">Bulan</div>
+            <div class="text-2xl font-bold" id="months" style="color:#15803d">0</div>
+            <div class="text-xs text-subtle">Bulan</div>
           </div>
           <div class="p-3 rounded-lg" style="background:oklch(0.8 0.18 85 / 0.1);">
-            <div class="text-2xl font-bold" id="days" style="color:#ca8a04">0</div>
-            <div class="text-xs opacity-50">Hari</div>
+            <div class="text-2xl font-bold" id="days" style="color:#a16207">0</div>
+            <div class="text-xs text-subtle">Hari</div>
           </div>
         </div>
 
         <div class="mb-3">
-          <div class="text-xs font-semibold opacity-50 mb-2">Detail Usia</div>
+          <div class="text-xs font-semibold text-subtle mb-2">Detail Usia</div>
           <div id="ageDetail" class="text-sm"></div>
         </div>
 
         <div>
-          <div class="text-xs font-semibold opacity-50 mb-2">Fakta Menarik</div>
+          <div class="text-xs font-semibold text-subtle mb-2">Fakta Menarik</div>
           <div id="funFacts" class="text-sm"></div>
         </div>
       </div>
@@ -90,13 +91,13 @@ function calc() {
   document.getElementById('days').textContent=d;
 
   document.getElementById('ageDetail').innerHTML='<table class="table table-sm w-full text-xs">'+
-    '<tr><td class="py-1 opacity-60">Tahun</td><td class="py-1 font-bold text-right">'+y+'</td></tr>'+
-    '<tr><td class="py-1 opacity-60">Bulan</td><td class="py-1 font-bold text-right">'+(y*12+m)+' bulan</td></tr>'+
-    '<tr><td class="py-1 opacity-60">Minggu</td><td class="py-1 font-bold text-right">'+Math.floor(ms/604800000)+' minggu</td></tr>'+
-    '<tr><td class="py-1 opacity-60">Hari</td><td class="py-1 font-bold text-right">'+Math.floor(ms/86400000)+' hari</td></tr>'+
-    '<tr><td class="py-1 opacity-60">Jam</td><td class="py-1 font-bold text-right">'+Math.floor(ms/3600000)+' jam</td></tr>'+
-    '<tr><td class="py-1 opacity-60">Menit</td><td class="py-1 font-bold text-right">'+Math.floor(ms/60000)+' menit</td></tr>'+
-    '<tr><td class="py-1 opacity-60">Detik</td><td class="py-1 font-bold text-right">'+Math.floor(ms/1000)+' detik</td></tr></table>';
+    '<tr><td class="py-1 text-subtle">Tahun</td><td class="py-1 font-bold text-right">'+y+'</td></tr>'+
+    '<tr><td class="py-1 text-subtle">Bulan</td><td class="py-1 font-bold text-right">'+(y*12+m)+' bulan</td></tr>'+
+    '<tr><td class="py-1 text-subtle">Minggu</td><td class="py-1 font-bold text-right">'+Math.floor(ms/604800000)+' minggu</td></tr>'+
+    '<tr><td class="py-1 text-subtle">Hari</td><td class="py-1 font-bold text-right">'+Math.floor(ms/86400000)+' hari</td></tr>'+
+    '<tr><td class="py-1 text-subtle">Jam</td><td class="py-1 font-bold text-right">'+Math.floor(ms/3600000)+' jam</td></tr>'+
+    '<tr><td class="py-1 text-subtle">Menit</td><td class="py-1 font-bold text-right">'+Math.floor(ms/60000)+' menit</td></tr>'+
+    '<tr><td class="py-1 text-subtle">Detik</td><td class="py-1 font-bold text-right">'+Math.floor(ms/1000)+' detik</td></tr></table>';
 
   var facts=document.getElementById('funFacts');
   facts.innerHTML='<ul class="space-y-1 text-xs opacity-70">'+

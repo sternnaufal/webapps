@@ -1,0 +1,684 @@
+{
+  "home": {
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 133,
+        "targets": [
+          "#app-sidebar > .h-full.flex-col.flex > .sidebar-header.px-4.py-3 > .font-semibold.text-sm.flex-1 > .font-normal.ml-1.opacity-40",
+          "#app-sidebar > .h-full.flex-col.flex > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(1) > .category-toggle.font-medium[data-target=\"cat-developer-tools\"] > .text-left.flex-1.truncate",
+          "#app-sidebar > .h-full.flex-col.flex > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(1) > .category-toggle.font-medium[data-target=\"cat-developer-tools\"] > .opacity-40.text-\\[10px\\].sidebar-label",
+          "#app-sidebar > .h-full.flex-col.flex > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(2) > .category-toggle.font-medium[data-target=\"cat-network-&-url\"] > .text-left.flex-1.truncate"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Element has insufficient color contrast of 2.74 (foreground color: #949597, background color: #f4f5f7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+        ]
+      },
+      {
+        "id": "link-name",
+        "impact": "serious",
+        "help": "Links must have discernible text",
+        "nodes": 1,
+        "targets": [
+          "#app-sidebar > .h-full.flex-col.flex > .border-t.py-2.px-3 > .gap-1[href$=\"naufalrakha\"][target=\"_blank\"]"
+        ],
+        "why": [
+          "Fix all of the following:",
+          "  Element is in tab order and does not have accessible text",
+          ""
+        ]
+      }
+    ],
+    "structure": {
+      "skipLink": false,
+      "h1": [
+        "WebApps"
+      ],
+      "dupeIds": [
+        "collapseToggle",
+        "sidebarSearch",
+        "cat-developer-tools",
+        "cat-network-&-url",
+        "cat-text-&-media",
+        "cat-generators",
+        "cat-converters",
+        "cat-utilities",
+        "expandLabel",
+        "themeToggleSidebar"
+      ],
+      "navLabels": [
+        "(no label)",
+        "(no label)",
+        "(no label)"
+      ],
+      "landmarks": [
+        "header:0",
+        "nav:3",
+        "main:1",
+        "aside:1",
+        "footer:1"
+      ],
+      "labelledInputs": [
+        {
+          "tag": "input",
+          "id": "sidebarSearch",
+          "type": "text",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "themeToggleSidebar",
+          "type": "checkbox",
+          "name": "☀️ 🌙"
+        },
+        {
+          "tag": "input",
+          "id": "toolSearch",
+          "type": "search",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "sidebarSearch",
+          "type": "text",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "themeToggleSidebar",
+          "type": "checkbox",
+          "name": "☀️ 🌙"
+        }
+      ]
+    },
+    "tabbable": [
+      {
+        "tag": "a",
+        "text": "W",
+        "id": "",
+        "outline": "auto 1px rgb(16, 16, 16)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "button",
+        "text": "",
+        "id": "collapseToggle",
+        "outline": "solid 3px oklch(0.11 0.01 270)",
+        "boxShadow": "oklab(0 0 0 / 0) 0px 0px 0px 0px inset, oklab(0 0 0 / 0) 0px"
+      },
+      {
+        "tag": "input",
+        "text": "",
+        "id": "sidebarSearch",
+        "outline": "solid 2px oklch(0.11 0.01 270)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "button",
+        "text": "💻 Developer Tools 14",
+        "id": "",
+        "outline": "auto 1px rgb(16, 16, 16)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "#  Hash Generator",
+        "id": "",
+        "outline": "auto 1px rgb(12, 12, 13)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "🆔  UUID/GUID Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "B64  Base64 Encode/Decode",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "{}  JSON Formatter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": ".*  Regex Tester",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "⇔  Diff Checker",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "SQL  SQL Formatter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "⇄  YAML/JSON Converter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "🏷  Meta Tag Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "A  ASCII Table",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      }
+    ]
+  },
+  "age": {
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 38,
+        "targets": [
+          "#app-sidebar > .h-full.flex-col > .sidebar-header.px-4.py-3 > .font-semibold.flex-1.text-sm > .font-normal.ml-1.opacity-40",
+          "#app-sidebar > .h-full.flex-col > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(1) > .category-toggle.hover\\:opacity-80[data-target=\"cat-developer-tools\"] > .text-left.flex-1.truncate",
+          "#app-sidebar > .h-full.flex-col > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(1) > .category-toggle.hover\\:opacity-80[data-target=\"cat-developer-tools\"] > .opacity-40.text-\\[10px\\].sidebar-label",
+          "#app-sidebar > .h-full.flex-col > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(2) > .category-toggle.hover\\:opacity-80[data-target=\"cat-network-&-url\"] > .text-left.flex-1.truncate"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Element has insufficient color contrast of 2.74 (foreground color: #949597, background color: #f4f5f7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+        ]
+      },
+      {
+        "id": "heading-order",
+        "impact": "moderate",
+        "help": "Heading levels should only increase by one",
+        "nodes": 1,
+        "targets": [
+          ".mt-8 > h3"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Heading order invalid"
+        ]
+      },
+      {
+        "id": "label-content-name-mismatch",
+        "impact": "serious",
+        "help": "Elements must have their visible text as part of their accessible name",
+        "nodes": 3,
+        "targets": [
+          "a[aria-label=\"Twitter/X\"]",
+          "a[aria-label=\"LinkedIn\"]",
+          "a[aria-label=\"WhatsApp\"]"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Text inside the element is not included in the accessible name"
+        ]
+      },
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 2,
+        "targets": [
+          "#birthDate",
+          "#customDate"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Element does not have an implicit (wrapped) <label>",
+          "  Element does not have an explicit <label>"
+        ]
+      },
+      {
+        "id": "link-name",
+        "impact": "serious",
+        "help": "Links must have discernible text",
+        "nodes": 1,
+        "targets": [
+          "#app-sidebar > .h-full.flex-col > .px-3.justify-between.border-t > .gap-1[href$=\"naufalrakha\"][target=\"_blank\"]"
+        ],
+        "why": [
+          "Fix all of the following:",
+          "  Element is in tab order and does not have accessible text",
+          ""
+        ]
+      },
+      {
+        "id": "select-name",
+        "impact": "critical",
+        "help": "Select element must have an accessible name",
+        "nodes": 1,
+        "targets": [
+          "#modeSelect"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Element does not have an implicit (wrapped) <label>",
+          "  Element does not have an explicit <label>"
+        ]
+      }
+    ],
+    "structure": {
+      "skipLink": false,
+      "h1": [
+        "Age Calculator"
+      ],
+      "dupeIds": [
+        "collapseToggle",
+        "sidebarSearch",
+        "cat-developer-tools",
+        "cat-network-&-url",
+        "cat-text-&-media",
+        "cat-generators",
+        "cat-converters",
+        "cat-utilities",
+        "expandLabel",
+        "themeToggleSidebar"
+      ],
+      "navLabels": [
+        "(no label)",
+        "(no label)",
+        "(no label)"
+      ],
+      "landmarks": [
+        "header:0",
+        "nav:3",
+        "main:1",
+        "aside:1",
+        "footer:1"
+      ],
+      "labelledInputs": [
+        {
+          "tag": "input",
+          "id": "sidebarSearch",
+          "type": "text",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "themeToggleSidebar",
+          "type": "checkbox",
+          "name": "☀️ 🌙"
+        },
+        {
+          "tag": "input",
+          "id": "birthDate",
+          "type": "date",
+          "name": "(none)"
+        },
+        {
+          "tag": "select",
+          "id": "modeSelect",
+          "type": "select-one",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "customDate",
+          "type": "date",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "sidebarSearch",
+          "type": "text",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "themeToggleSidebar",
+          "type": "checkbox",
+          "name": "☀️ 🌙"
+        }
+      ]
+    },
+    "tabbable": [
+      {
+        "tag": "a",
+        "text": "W",
+        "id": "",
+        "outline": "auto 1px rgb(16, 16, 16)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "button",
+        "text": "",
+        "id": "collapseToggle",
+        "outline": "solid 3px oklch(0.11 0.01 270)",
+        "boxShadow": "oklab(0 0 0 / 0) 0px 0px 0px 0px inset, oklab(0 0 0 / 0) 0px"
+      },
+      {
+        "tag": "input",
+        "text": "",
+        "id": "sidebarSearch",
+        "outline": "solid 2px oklch(0.11 0.01 270)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "button",
+        "text": "💻 Developer Tools 14",
+        "id": "",
+        "outline": "auto 1px rgb(16, 16, 16)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "#  Hash Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "🆔  UUID/GUID Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "B64  Base64 Encode/Decode",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "{}  JSON Formatter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": ".*  Regex Tester",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "⇔  Diff Checker",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "SQL  SQL Formatter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "⇄  YAML/JSON Converter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "🏷  Meta Tag Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "A  ASCII Table",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      }
+    ]
+  },
+  "contact": {
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 23,
+        "targets": [
+          "#app-sidebar > .h-full.flex-col > .sidebar-header.px-4.py-3 > .font-semibold.text-sm.flex-1 > .font-normal.ml-1.opacity-40",
+          "#app-sidebar > .h-full.flex-col > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(1) > .category-toggle.font-medium[data-target=\"cat-developer-tools\"] > .text-left.flex-1.truncate",
+          "#app-sidebar > .h-full.flex-col > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(1) > .category-toggle.font-medium[data-target=\"cat-developer-tools\"] > .opacity-40.text-\\[10px\\].sidebar-label",
+          "#app-sidebar > .h-full.flex-col > .sidebar-nav.overflow-y-auto.scrollbar-thin > .mb-0\\.5.px-2:nth-child(2) > .category-toggle.font-medium[data-target=\"cat-network-&-url\"] > .text-left.flex-1.truncate"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Element has insufficient color contrast of 2.74 (foreground color: #949597, background color: #f4f5f7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+        ]
+      },
+      {
+        "id": "heading-order",
+        "impact": "moderate",
+        "help": "Heading levels should only increase by one",
+        "nodes": 1,
+        "targets": [
+          "h3"
+        ],
+        "why": [
+          "Fix any of the following:",
+          "  Heading order invalid"
+        ]
+      },
+      {
+        "id": "link-name",
+        "impact": "serious",
+        "help": "Links must have discernible text",
+        "nodes": 1,
+        "targets": [
+          "#app-sidebar > .h-full.flex-col > .border-t.px-3.justify-between > a[href$=\"naufalrakha\"][target=\"_blank\"][rel=\"noopener\"]"
+        ],
+        "why": [
+          "Fix all of the following:",
+          "  Element is in tab order and does not have accessible text",
+          ""
+        ]
+      }
+    ],
+    "structure": {
+      "skipLink": false,
+      "h1": [
+        "Kontak - WebApps"
+      ],
+      "dupeIds": [
+        "collapseToggle",
+        "sidebarSearch",
+        "cat-developer-tools",
+        "cat-network-&-url",
+        "cat-text-&-media",
+        "cat-generators",
+        "cat-converters",
+        "cat-utilities",
+        "expandLabel",
+        "themeToggleSidebar"
+      ],
+      "navLabels": [
+        "(no label)",
+        "(no label)",
+        "(no label)"
+      ],
+      "landmarks": [
+        "header:0",
+        "nav:3",
+        "main:1",
+        "aside:1",
+        "footer:1"
+      ],
+      "labelledInputs": [
+        {
+          "tag": "input",
+          "id": "sidebarSearch",
+          "type": "text",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "themeToggleSidebar",
+          "type": "checkbox",
+          "name": "☀️ 🌙"
+        },
+        {
+          "tag": "input",
+          "id": "sidebarSearch",
+          "type": "text",
+          "name": "(none)"
+        },
+        {
+          "tag": "input",
+          "id": "themeToggleSidebar",
+          "type": "checkbox",
+          "name": "☀️ 🌙"
+        }
+      ]
+    },
+    "tabbable": [
+      {
+        "tag": "a",
+        "text": "W",
+        "id": "",
+        "outline": "auto 1px rgb(16, 16, 16)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "button",
+        "text": "",
+        "id": "collapseToggle",
+        "outline": "solid 2px oklch(0.11 0.01 270)",
+        "boxShadow": "oklab(0 0 0 / 0) 0px 0.0164168px 0px 0.0164168px inset, okla"
+      },
+      {
+        "tag": "input",
+        "text": "",
+        "id": "sidebarSearch",
+        "outline": "solid 2px oklch(0.11 0.01 270)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "button",
+        "text": "💻 Developer Tools 14",
+        "id": "",
+        "outline": "auto 1px rgb(16, 16, 16)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "#  Hash Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "🆔  UUID/GUID Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "B64  Base64 Encode/Decode",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "{}  JSON Formatter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": ".*  Regex Tester",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "⇔  Diff Checker",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "SQL  SQL Formatter",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "⇄  YAML/JSON Converter",
+        "id": "",
+        "outline": "auto 2px rgb(6, 6, 9)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "🏷  Meta Tag Generator",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      },
+      {
+        "tag": "a",
+        "text": "A  ASCII Table",
+        "id": "",
+        "outline": "auto 3px rgb(3, 4, 7)",
+        "boxShadow": "none"
+      }
+    ]
+  },
+  "manual": {
+    "dark": {
+      "theme": "naufal-dark",
+      "sidebarBg": "oklch(0.97 0.003 270)",
+      "linkColor": "oklch(0.92 0.01 270)",
+      "bodyColor": "oklch(0.92 0.01 270)",
+      "contrast": 1,
+      "linkOpacity": "0.7"
+    },
+    "modal": {
+      "open": true,
+      "activeInside": false,
+      "activeEl": "body",
+      "role": null,
+      "ariaModal": null,
+      "canTabBehind": true
+    }
+  }
+}

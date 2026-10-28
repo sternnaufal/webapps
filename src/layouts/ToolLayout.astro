@@ -83,7 +83,7 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
 <body class="flex flex-col min-h-screen bg-base-100 text-base-content">
   <div class="flex flex-1">
     <!-- Desktop Sidebar -->
-    <aside id="app-sidebar" class="hidden lg:flex w-64 shrink-0 flex-col sidebar-desktop transition-all duration-200" style="position:sticky;top:0;height:100vh;background:oklch(0.97 0.003 270);border-right:1px solid oklch(0.9 0.005 270);">
+    <aside id="app-sidebar" class="hidden lg:flex w-64 shrink-0 flex-col sidebar-desktop transition-all duration-200" style="position:sticky;top:0;height:100vh;background:var(--color-base-200);border-right:1px solid var(--color-base-300);">
       <Sidebar />
     </aside>
 
@@ -92,7 +92,7 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
       <!-- Mobile Nav -->
       <nav class="lg:hidden navbar sticky top-0 z-30" style="background:oklch(1 0 0 / 0.85);backdrop-filter:blur(12px);border-bottom:1px solid oklch(0.9 0.005 270);">
         <div class="flex-1 flex items-center gap-2">
-          <button id="mobileToggle" class="btn btn-ghost btn-sm btn-square">
+          <button id="mobileToggle" class="btn btn-ghost btn-sm btn-square" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobileDrawer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
           </button>
           <a href="/" class="flex items-center gap-2 font-semibold text-sm">
@@ -101,12 +101,12 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
           </a>
         </div>
         <div class="flex-none flex items-center gap-1">
-          <button id="themeToggleMobile" class="btn btn-ghost btn-sm btn-square text-lg" title="Toggle dark mode">☀️</button>
+          <button id="themeToggleMobile" class="btn btn-ghost btn-sm btn-square text-lg" title="Toggle dark mode" aria-label="Ganti tema terang atau gelap">☀️</button>
         </div>
       </nav>
 
       <!-- Content -->
-      <main class="flex-1 p-5 lg:p-8" style={wide ? '' : 'max-width:960px;width:100%;margin-left:auto;margin-right:auto;'}>
+      <main id="main-content" class="flex-1 p-5 lg:p-8" style={wide ? '' : 'max-width:960px;width:100%;margin-left:auto;margin-right:auto;'}>
         <slot />
       </main>
 
@@ -116,7 +116,7 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
 
   <!-- Mobile Drawer -->
   <div id="mobileOverlay" class="hidden fixed inset-0 bg-black/20 z-40 lg:hidden" onclick="toggleMobile()"></div>
-  <div id="mobileDrawer" class="fixed top-0 left-0 w-72 h-full z-50 flex flex-col -translate-x-full transition-transform duration-200 lg:hidden shadow-xl" style="background:oklch(0.97 0.003 270);">
+  <div id="mobileDrawer" class="fixed top-0 left-0 w-72 h-full z-50 flex flex-col -translate-x-full transition-transform duration-200 lg:hidden shadow-xl" style="background:var(--color-base-200);">
     <Sidebar />
   </div>
 
@@ -124,15 +124,18 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
     function toggleMobile() {
       const drawer = document.getElementById('mobileDrawer');
       const overlay = document.getElementById('mobileOverlay');
+      const toggleBtn = document.getElementById('mobileToggle');
       const isOpen = !drawer.classList.contains('-translate-x-full');
       if (isOpen) {
         drawer.classList.add('-translate-x-full');
         overlay.classList.add('hidden');
         document.body.style.overflow = '';
+        toggleBtn?.setAttribute('aria-expanded', 'false');
       } else {
         drawer.classList.remove('-translate-x-full');
         overlay.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        toggleBtn?.setAttribute('aria-expanded', 'true');
       }
     }
     document.getElementById('mobileToggle')?.addEventListener('click', toggleMobile);
@@ -160,8 +163,12 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
       setTheme(!isDark);
     });
 
-    // Escape closes mobile
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMobile(); });
+    // Escape closes mobile drawer only when open
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      const drawer = document.getElementById('mobileDrawer');
+      if (drawer && !drawer.classList.contains('-translate-x-full')) toggleMobile();
+    });
 
     // Sidebar collapse
     const sidebar = document.getElementById('app-sidebar');
