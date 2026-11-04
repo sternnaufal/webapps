@@ -106,6 +106,7 @@ function col(slug: string): string { return colMap[slug] || '#6366f1'; }
       return (
         <a href={`/tools/category/${slug}/`} class="btn btn-xs rounded-full gap-1.5 font-normal text-subtle hover:text-base-content transition-colors">
           {cat.icon} {cat.name}
+          <span class="badge badge-ghost badge-xs">{cat.tools.length}</span>
         </a>
       );
     })}
