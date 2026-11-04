@@ -7,12 +7,12 @@ OLD = ('<p class="mb-0 text-secondary">Jelajahi juga:\n'
 '<a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> |\n'
 '<a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> |\n'
 '<a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> |\n'
-'<a href="https://koleksi.naufalrakha.my.id" class="text-info">Koleksi Desain</a>')
+'<a href="https://www.naufalrakha.my.id/" class="text-info">Portfolio</a>')
 
 # Also handle single-line version (from manually created pages)
-OLD_SINGLE = '<p class="mb-0 text-secondary">Jelajahi juga: <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://koleksi.naufalrakha.my.id" class="text-info">Koleksi Desain</a></p>'
+OLD_SINGLE = '<p class="mb-0 text-secondary">Jelajahi juga: <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://www.naufalrakha.my.id/" class="text-info">Portfolio</a></p>'
 
-NEW_FOOTER_LINE = '<p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://koleksi.naufalrakha.my.id" class="text-info">Koleksi Desain</a></p>'
+NEW_FOOTER_LINE = '<p class="mb-0 text-secondary"><a href="about.html" class="text-info">Tentang</a> | <a href="privacy.html" class="text-info">Privasi</a> | <a href="contact.html" class="text-info">Kontak</a> | <a href="https://naufalrakha.my.id" class="text-info">Website Utama</a> | <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> | <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> | <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> | <a href="https://www.naufalrakha.my.id/" class="text-info">Portfolio</a></p>'
 
 count = 0
 HTML_NEW_FOOTER_LINE = NEW_FOOTER_LINE  # It's already html-safe

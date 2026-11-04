@@ -14,7 +14,7 @@ NEW_FOOTER = """<footer class="bg-dark text-light py-4">
 <a href="https://webapps.naufalrakha.my.id" class="text-info">WebApps</a> |
 <a href="https://digital.naufalrakha.my.id" class="text-info">Digital Gallery</a> |
 <a href="https://demo.naufalrakha.my.id" class="text-info">Demo Artstyle</a> |
-<a href="https://koleksi.naufalrakha.my.id" class="text-info">Koleksi Desain</a>
+<a href="https://www.naufalrakha.my.id/" class="text-info">Portfolio</a>
 </p>
 </div>
 <div class="col-md-4 text-md-end">
