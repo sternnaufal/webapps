@@ -5,6 +5,9 @@
   "devCommand": "npx astro dev",
   "cleanUrls": true,
   "trailingSlash": true,
+  "redirects": [
+    { "source": "/:slug.html", "destination": "/tools/:slug/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

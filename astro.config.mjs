@@ -27,6 +27,7 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.priority = 0.4;
         }
+        item.lastmod = new Date().toISOString().split('T')[0];
         return item;
       },
     }),

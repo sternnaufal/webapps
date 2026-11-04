@@ -65,6 +65,41 @@ const crumbs = breadcrumbs || [{ name: 'Beranda', url: '/' }, { name: title, url
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     "itemListElement": crumbs.map((c, i) => ({ "@type": "ListItem", "position": i + 1, "name": c.name, "item": c.url.startsWith('http') ? c.url : `${site}${c.url}` }))
   })}></script>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "WebApps Naufal Rakha",
+    "alternateName": "WebApps",
+    "url": site,
+    "description": "Koleksi online tools gratis untuk developer, pelajar, dan pekerja digital. Semua berjalan di browser tanpa server.",
+    "inLanguage": "id",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Naufal Rakha",
+      "url": "https://www.naufalrakha.my.id/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${site}/logo-512.png`
+      }
+    }
+  })}></script>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "WebApps Naufal Rakha",
+    "url": site,
+    "logo": `${site}/logo-512.png`,
+    "founder": {
+      "@type": "Person",
+      "name": "Naufal Rakha Putra",
+      "url": "https://www.naufalrakha.my.id/"
+    },
+    "sameAs": [
+      "https://www.naufalrakha.my.id/",
+      "https://github.com/sternnaufal/webapps",
+      "https://digital.naufalrakha.my.id/"
+    ]
+  })}></script>
   {Astro.url.pathname.startsWith('/tools/') && (
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
