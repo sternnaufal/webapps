@@ -1,0 +1,77 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'CSS Box Shadow Generator';
+const description = 'Buat CSS box-shadow secara visual. Atur offset, blur, spread, warna, opacity, dan inset, lalu copy CSS-nya.';
+const keywords = 'box shadow generator, css box shadow, shadow generator, css shadow, box-shadow';
+const aboutText = 'CSS Box Shadow Generator membantu membuat bayangan elemen dengan kontrol visual dan menghasilkan kode CSS siap pakai.';
+const aboutExtra = 'Atur horizontal offset, vertical offset, blur, spread, warna, dan opacity. Centang inset untuk bayangan di dalam elemen. Preview dan kode CSS diperbarui langsung saat nilai diubah.';
+const relatedTools = [
+  { slug: 'border-radius-generator', name: 'Border Radius Generator', icon: 'RAD' },
+  { slug: 'gradient-generator', name: 'CSS Gradient', icon: 'GRD' },
+  { slug: 'color-picker', name: 'Color Picker', icon: 'CLR' },
+  { slug: 'css-unit', name: 'CSS Unit Converter', icon: 'px' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <label>Horizontal offset <span id="vx" class="font-mono opacity-60">8px</span><input id="sx" type="range" min="-50" max="50" value="8" class="range range-xs"></label>
+        <label>Vertical offset <span id="vy" class="font-mono opacity-60">8px</span><input id="sy" type="range" min="-50" max="50" value="8" class="range range-xs"></label>
+        <label>Blur <span id="vb" class="font-mono opacity-60">16px</span><input id="sb" type="range" min="0" max="100" value="16" class="range range-xs"></label>
+        <label>Spread <span id="vs" class="font-mono opacity-60">0px</span><input id="ss" type="range" min="-30" max="50" value="0" class="range range-xs"></label>
+        <label>Warna <input id="sc" type="color" value="#000000" class="input input-bordered input-sm w-full h-9 p-1"></label>
+        <label>Opacity <span id="vo" class="font-mono opacity-60">0.25</span><input id="so" type="range" min="0" max="100" value="25" class="range range-xs"></label>
+      </div>
+      <label class="flex items-center gap-2 text-xs mt-4"><input type="checkbox" id="inset" class="checkbox checkbox-sm"> Inset shadow</label>
+      <div class="flex gap-2 mt-4">
+        <button id="btnCopy" class="btn btn-primary btn-sm">Copy CSS</button>
+        <button id="btnReset" class="btn btn-ghost btn-sm">Reset</button>
+      </div>
+      <textarea id="cssOutput" class="textarea textarea-bordered w-full text-sm font-mono mt-3" rows="2" readonly></textarea>
+    </div>
+    <div class="rounded-xl p-5 flex items-center justify-center min-h-[260px]" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div id="preview" style="width:150px;height:150px;background:#fff;border-radius:16px;box-shadow:8px 8px 16px rgba(0,0,0,.25);"></div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var ids=['sx','sy','sb','ss','sc','so'], preview=document.getElementById('preview'), out=document.getElementById('cssOutput');
+function hexToRgb(hex){
+  var h=hex.replace('#',''); if(h.length===3) h=h.split('').map(function(c){return c+c;}).join('');
+  return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];
+}
+function update(){
+  var x=document.getElementById('sx').value, y=document.getElementById('sy').value, b=document.getElementById('sb').value, s=document.getElementById('ss').value;
+  var c=document.getElementById('sc').value, o=(parseInt(document.getElementById('so').value,10)/100).toFixed(2);
+  var inset=document.getElementById('inset').checked?'inset ':'';
+  var rgb=hexToRgb(c);
+  var shadow=inset+x+'px '+y+'px '+b+'px '+s+'px rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+o+')';
+  preview.style.boxShadow=shadow;
+  out.value='box-shadow: '+shadow+';';
+  document.getElementById('vx').textContent=x+'px'; document.getElementById('vy').textContent=y+'px';
+  document.getElementById('vb').textContent=b+'px'; document.getElementById('vs').textContent=s+'px';
+  document.getElementById('vo').textContent=o;
+}
+ids.forEach(function(id){ document.getElementById(id).addEventListener('input',update); });
+document.getElementById('inset').addEventListener('change',update);
+document.getElementById('btnCopy').addEventListener('click',function(){ if(out.value) navigator.clipboard.writeText(out.value); });
+document.getElementById('btnReset').addEventListener('click',function(){
+  document.getElementById('sx').value=8; document.getElementById('sy').value=8;
+  document.getElementById('sb').value=16; document.getElementById('ss').value=0;
+  document.getElementById('sc').value='#000000'; document.getElementById('so').value=25;
+  document.getElementById('inset').checked=false; update();
+});
+update();
+</script>

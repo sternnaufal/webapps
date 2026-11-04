@@ -1,0 +1,83 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'HTML to Markdown Converter';
+const description = 'Konversi HTML menjadi Markdown online. Heading, link, gambar, list, code, dan blockquote otomatis diubah.';
+const keywords = 'html to markdown, konversi html ke markdown, html markdown converter, markdown generator';
+const aboutText = 'HTML to Markdown Converter mengubah konten HTML menjadi sintaks Markdown yang rapi untuk dokumentasi, README, atau blog.';
+const aboutExtra = 'Alat ini mendukung heading, paragraf, bold, italic, link, gambar, list, blockquote, inline code, dan code block. Hasilnya bisa langsung disalin ke GitHub, Notion, atau editor Markdown favoritmu.';
+const relatedTools = [
+  { slug: 'markdown-to-html', name: 'Markdown to HTML', icon: 'MD' },
+  { slug: 'regex-tester', name: 'Regex Tester', icon: '.*' },
+  { slug: 'html-minifier', name: 'HTML Minifier', icon: '</>' },
+  { slug: 'slug-generator', name: 'Slug Generator', icon: 'URL' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input HTML</label>
+        <textarea id="htmlInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" placeholder="<h1>Judul</h1><p>Isi <strong>tebal</strong>.</p>"><h1>Judul Artikel</h1>
+<p>Ini <strong>tebal</strong> dan <em>miring</em>.</p>
+<ul><li>Satu</li><li>Dua</li></ul></textarea>
+        <button id="btnConvert" class="btn btn-primary btn-sm mt-3">Convert</button>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output Markdown</label>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="mdOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('htmlInput'),output=document.getElementById('mdOutput');
+function innerOf(node){ return Array.prototype.map.call(node.childNodes,function(c){return convertNode(c);}).join(''); }
+function convertNode(node){
+  if(node.nodeType===3) return node.textContent.replace(/\s+/g,' ');
+  if(node.nodeType!==1) return '';
+  var tag=node.tagName.toLowerCase();
+  if(tag==='script'||tag==='style') return '';
+  if(tag==='br') return '\n';
+  if(tag==='hr') return '\n---\n';
+  if(tag==='h1'||tag==='h2'||tag==='h3'||tag==='h4'||tag==='h5'||tag==='h6') return '\n'+'#'.repeat(parseInt(tag[1],10))+' '+innerOf(node).trim()+'\n';
+  if(tag==='p') return '\n'+innerOf(node).trim()+'\n';
+  if(tag==='strong'||tag==='b') return '**'+innerOf(node).trim()+'**';
+  if(tag==='em'||tag==='i') return '*'+innerOf(node).trim()+'*';
+  if(tag==='code') return '`'+node.textContent+'`';
+  if(tag==='pre') return '\n```\n'+node.textContent.replace(/\n$/,'')+'\n```\n';
+  if(tag==='blockquote') return '\n> '+innerOf(node).trim().replace(/\n/g,'\n> ')+'\n';
+  if(tag==='a') return '['+innerOf(node).trim()+']('+(node.getAttribute('href')||'')+')';
+  if(tag==='img') return '!['+(node.getAttribute('alt')||'')+']('+(node.getAttribute('src')||'')+')';
+  if(tag==='ul'||tag==='ol'){
+    var items=Array.prototype.filter.call(node.children,function(c){return c.tagName.toLowerCase()==='li';});
+    return '\n'+items.map(function(li,i){ return (tag==='ol'?(i+1)+'. ':'- ')+innerOf(li).trim().replace(/\n/g,'\n  '); }).join('\n')+'\n';
+  }
+  if(tag==='li') return innerOf(node);
+  return innerOf(node);
+}
+function convert(){
+  var doc=new DOMParser().parseFromString(input.value,'text/html');
+  var md=convertNode(doc.body).replace(/\n{3,}/g,'\n\n').replace(/[ \t]+\n/g,'\n').trim();
+  output.value=md;
+}
+document.getElementById('btnConvert').addEventListener('click',convert);
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function(){ this.textContent='Copied!'; });
+});
+convert();
+</script>

@@ -1,0 +1,67 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Text to Binary Converter';
+const description = 'Konversi teks ke biner dan biner ke teks online. Mendukung UTF-8 dan pemisah spasi.';
+const keywords = 'text to binary, binary to text, konversi teks ke biner, biner ke teks, binary converter';
+const aboutText = 'Text to Binary Converter mengubah teks menjadi kode biner 8-bit dan sebaliknya. Cocok untuk belajar encoding dan debugging data.';
+const aboutExtra = 'Teks dikonversi menggunakan encoding UTF-8, jadi karakter Indonesia dan emoji tetap aman. Kamu bisa memilih output biner dipisah spasi atau tanpa spasi.';
+const relatedTools = [
+  { slug: 'base64-coded', name: 'Base64 Encode/Decode', icon: 'B64' },
+  { slug: 'base32-encoder', name: 'Base32 Encode/Decode', icon: 'B32' },
+  { slug: 'konverter-bilangan', name: 'Konverter Bilangan', icon: '2' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+        <textarea id="binInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" placeholder="Teks atau biner...">Halo!</textarea>
+        <div class="flex flex-wrap gap-2 items-center mt-3">
+          <button id="btnToBinary" class="btn btn-primary btn-sm">Text to Binary</button>
+          <button id="btnToText" class="btn btn-ghost btn-sm">Binary to Text</button>
+          <label class="flex items-center gap-2 text-xs"><input type="checkbox" id="useSpace" class="checkbox checkbox-sm" checked> Pisah spasi</label>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output</label>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="binOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" readonly></textarea>
+        <p id="status" class="text-xs mt-2 opacity-60"></p>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('binInput'),output=document.getElementById('binOutput'),status=document.getElementById('status'),space=document.getElementById('useSpace');
+document.getElementById('btnToBinary').addEventListener('click',function(){
+  var bytes=new TextEncoder().encode(input.value);
+  var arr=Array.prototype.map.call(bytes,function(b){ return b.toString(2).padStart(8,'0'); });
+  output.value=arr.join(space.checked?' ':'');
+  status.textContent=bytes.length+' byte, '+arr.length*8+' bit.'; status.style.color='#10b981';
+});
+document.getElementById('btnToText').addEventListener('click',function(){
+  var bits=input.value.replace(/[^01]/g,'');
+  if(bits.length%8!==0){ status.textContent='Jumlah bit bukan kelipatan 8.'; status.style.color='#ef4444'; output.value=''; return; }
+  var bytes=[];
+  for(var i=0;i<bits.length;i+=8) bytes.push(parseInt(bits.slice(i,i+8),2));
+  try{ output.value=new TextDecoder().decode(new Uint8Array(bytes)); status.textContent=bytes.length+' byte.'; status.style.color='#10b981'; }
+  catch(e){ output.value=''; status.textContent='Biner tidak valid.'; status.style.color='#ef4444'; }
+});
+document.getElementById('btnCopy').addEventListener('click',function(){ if(output.value) navigator.clipboard.writeText(output.value); });
+document.getElementById('btnToBinary').click();
+</script>

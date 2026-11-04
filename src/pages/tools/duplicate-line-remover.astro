@@ -1,0 +1,73 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Duplicate Line Remover';
+const description = 'Hapus baris duplikat dari teks atau daftar secara online. Urutan baris pertama tetap dipertahankan.';
+const keywords = 'duplicate line remover, hapus baris duplikat, unique lines, deduplicate text, remove duplicates';
+const aboutText = 'Duplicate Line Remover menghapus baris yang muncul lebih dari sekali dan menyisakan kemunculan pertama.';
+const aboutExtra = 'Cocok untuk membersihkan daftar email, URL, kata, atau data hasil copy-paste. Tersedia opsi abaikan huruf besar/kecil, trim spasi, dan hapus baris kosong.';
+const relatedTools = [
+  { slug: 'list-sorter', name: 'List Sorter', icon: 'SORT' },
+  { slug: 'whitespace-remover', name: 'Whitespace Remover', icon: 'WS' },
+  { slug: 'word-frequency', name: 'Word Frequency', icon: 'FRQ' },
+  { slug: 'find-replace', name: 'Find & Replace', icon: 'F/R' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+        <textarea id="dupInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" placeholder="Satu baris satu item...">apel
+jeruk
+apel
+mangga
+jeruk</textarea>
+        <div class="flex flex-wrap gap-3 mt-3 text-xs">
+          <label class="flex items-center gap-2"><input type="checkbox" id="ignoreCase" class="checkbox checkbox-sm"> Abaikan besar/kecil</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="trimLines" class="checkbox checkbox-sm" checked> Trim spasi</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="dropEmpty" class="checkbox checkbox-sm" checked> Hapus baris kosong</label>
+        </div>
+        <button id="btnRemove" class="btn btn-primary btn-sm mt-3">Hapus Duplikat</button>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output</label>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="dupOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" readonly></textarea>
+        <p id="dupStats" class="text-xs mt-2 opacity-60"></p>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('dupInput'),output=document.getElementById('dupOutput'),stats=document.getElementById('dupStats');
+function removeDup(){
+  var lines=input.value.split('\n'), seen={}, out=[], removed=0;
+  lines.forEach(function(line){
+    var key=line;
+    if(document.getElementById('trimLines').checked) key=key.trim();
+    if(document.getElementById('dropEmpty').checked && key==='') return;
+    if(document.getElementById('ignoreCase').checked) key=key.toLowerCase();
+    if(seen[key]){ removed++; return; }
+    seen[key]=true; out.push(line);
+  });
+  output.value=out.join('\n');
+  stats.textContent=lines.length+' baris → '+out.length+' baris ('+removed+' duplikat dihapus).';
+}
+document.getElementById('btnRemove').addEventListener('click',removeDup);
+document.getElementById('btnCopy').addEventListener('click',function(){ if(output.value) navigator.clipboard.writeText(output.value); });
+['ignoreCase','trimLines','dropEmpty'].forEach(function(id){ document.getElementById(id).addEventListener('change',removeDup); });
+removeDup();
+</script>

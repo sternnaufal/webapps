@@ -1,0 +1,75 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'URL Parser';
+const description = 'Bedah komponen URL online: protocol, host, port, path, query string, dan hash. Lihat juga parameter query satu per satu.';
+const keywords = 'url parser, parse url, url components, query string, url analyzer';
+const aboutText = 'URL Parser memecah sebuah URL menjadi komponen-komponennya sehingga mudah diperiksa dan dipakai untuk debugging.';
+const aboutExtra = 'Alat ini menampilkan protocol, hostname, port, origin, path, query string, dan hash. Parameter query diurai menjadi tabel key-value. Semua proses berjalan di browser.';
+const relatedTools = [
+  { slug: 'query-string-parser', name: 'Query String Parser', icon: '?' },
+  { slug: 'url-encode', name: 'URL Encode/Decode', icon: '%' },
+  { slug: 'slug-generator', name: 'Slug Generator', icon: 'URL' },
+  { slug: 'http-status', name: 'HTTP Status', icon: 'HTTP' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <label class="text-xs font-medium opacity-60 mb-1 block">URL</label>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="urlInput" type="text" class="input input-bordered w-full text-sm font-mono" value="https://example.com/blog/post?id=123&utm_source=google#comments">
+      <button id="btnParse" class="btn btn-primary btn-sm shrink-0">Parse</button>
+    </div>
+    <p id="status" class="text-xs mt-2 opacity-60"></p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <div class="overflow-x-auto rounded-lg border" style="border-color:oklch(0.9 0.005 270);">
+        <table class="table table-sm w-full text-xs">
+          <tbody id="urlTable"></tbody>
+        </table>
+      </div>
+      <div>
+        <div class="text-xs font-medium opacity-60 mb-2">Query Parameters</div>
+        <div class="overflow-x-auto rounded-lg border" style="border-color:oklch(0.9 0.005 270);">
+          <table class="table table-sm w-full text-xs">
+            <thead><tr><th>Key</th><th>Value</th></tr></thead>
+            <tbody id="queryTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('urlInput'),table=document.getElementById('urlTable'),queryTable=document.getElementById('queryTable'),status=document.getElementById('status');
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function row(k,v){ return '<tr><td class="opacity-60 w-28">'+esc(k)+'</td><td class="font-mono break-all">'+esc(v||'-')+'</td></tr>'; }
+function parseUrl(){
+  var raw=input.value.trim();
+  if(!raw){ status.textContent='Masukkan URL dulu.'; return; }
+  if(!/^[a-z][a-z0-9+.-]*:\/\//i.test(raw)) raw='https://'+raw;
+  var u;
+  try{ u=new URL(raw); }catch(e){ status.textContent='URL tidak valid.'; status.style.color='#ef4444'; table.innerHTML=''; queryTable.innerHTML=''; return; }
+  status.textContent='URL valid.'; status.style.color='#10b981';
+  table.innerHTML=[
+    row('Protocol',u.protocol),row('Hostname',u.hostname),row('Port',u.port),row('Origin',u.origin),
+    row('Pathname',u.pathname),row('Search',u.search),row('Hash',u.hash),
+    row('Username',u.username),row('Password',u.password ? '••••••' : '')
+  ].join('');
+  var rows=[]; u.searchParams.forEach(function(v,k){ rows.push(row(k,v)); });
+  queryTable.innerHTML=rows.length?rows.join(''):'<tr><td colspan="2" class="opacity-60">Tidak ada query parameter.</td></tr>';
+}
+document.getElementById('btnParse').addEventListener('click',parseUrl);
+input.addEventListener('keydown',function(e){ if(e.key==='Enter') parseUrl(); });
+parseUrl();
+</script>

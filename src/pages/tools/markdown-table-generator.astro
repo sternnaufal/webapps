@@ -1,0 +1,81 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Markdown Table Generator';
+const description = 'Buat tabel Markdown dari data baris dan kolom. Atur header dan alignment tabel dengan cepat.';
+const keywords = 'markdown table generator, tabel markdown, markdown table maker, github table';
+const aboutText = 'Markdown Table Generator mengubah data tabular menjadi tabel Markdown yang rapi untuk README, dokumentasi, atau blog.';
+const aboutExtra = 'Tulis satu baris per row dan pisahkan kolom dengan tanda pipa (|) atau tab. Kamu bisa memilih baris pertama sebagai header dan mengatur alignment kiri, tengah, atau kanan.';
+const relatedTools = [
+  { slug: 'markdown-to-html', name: 'Markdown to HTML', icon: 'MD' },
+  { slug: 'md-preview', name: 'Markdown Previewer', icon: 'MD' },
+  { slug: 'csv-to-json', name: 'CSV to JSON', icon: 'CSV' },
+  { slug: 'csv-viewer', name: 'CSV Viewer', icon: 'TBL' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Data (satu baris per row)</label>
+        <textarea id="tableInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" placeholder="Nama | Role | Kota&#10;Naufal | Developer | Malang">Nama | Role | Kota
+Naufal | Developer | Malang
+Rakha | Designer | Bukittinggi</textarea>
+        <div class="flex flex-wrap gap-3 items-center mt-3">
+          <label class="flex items-center gap-2 text-xs"><input type="checkbox" id="hasHeader" class="checkbox checkbox-sm" checked> Baris pertama header</label>
+          <select id="align" class="select select-bordered select-sm">
+            <option value="left">Kiri</option>
+            <option value="center">Tengah</option>
+            <option value="right">Kanan</option>
+          </select>
+          <button id="btnGenerate" class="btn btn-primary btn-sm">Generate</button>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output Markdown</label>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="tableOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="8" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('tableInput'),output=document.getElementById('tableOutput'),hasHeader=document.getElementById('hasHeader'),align=document.getElementById('align');
+function splitRow(line){
+  if(line.indexOf('|')>=0) return line.split('|').map(function(s){return s.trim();});
+  if(line.indexOf('\t')>=0) return line.split('\t').map(function(s){return s.trim();});
+  return [line.trim()];
+}
+function cell(s){ return String(s).replace(/\|/g,'\\|').replace(/\n/g,' '); }
+function generate(){
+  var rows=input.value.split('\n').map(splitRow).filter(function(r){return r.some(function(c){return c!=='';});});
+  if(!rows.length){ output.value=''; return; }
+  var cols=Math.max.apply(null,rows.map(function(r){return r.length;}));
+  rows=rows.map(function(r){ while(r.length<cols) r.push(''); return r; });
+  var header=hasHeader.checked?rows.shift():Array.from({length:cols},function(_,i){return 'Kolom '+(i+1);});
+  var sep=align.value==='center'?':---:':align.value==='right'?'---:':'---';
+  var lines=[];
+  lines.push('| '+header.map(cell).join(' | ')+' |');
+  lines.push('| '+Array.from({length:cols},function(){return sep;}).join(' | ')+' |');
+  rows.forEach(function(r){ lines.push('| '+r.map(cell).join(' | ')+' |'); });
+  output.value=lines.join('\n');
+}
+document.getElementById('btnGenerate').addEventListener('click',generate);
+document.getElementById('btnCopy').addEventListener('click',function(){ if(output.value) navigator.clipboard.writeText(output.value); });
+input.addEventListener('input',generate);
+hasHeader.addEventListener('change',generate);
+align.addEventListener('change',generate);
+generate();
+</script>

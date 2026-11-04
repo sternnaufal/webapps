@@ -17,7 +17,12 @@
         { "slug": "json-to-typescript", "name": "JSON to TS", "icon": "TS", "desc": "JSON → TypeScript Interface" },
         { "slug": "json-schema-generator", "name": "JSON Schema", "icon": "📋", "desc": "Generate JSON Schema" },
         { "slug": "css-minifier", "name": "CSS Minifier", "icon": "CSS", "desc": "Minify/beautify CSS" },
-        { "slug": "html-minifier", "name": "HTML Minifier", "icon": "</>", "desc": "Minify dan beautify HTML code" }
+        { "slug": "html-minifier", "name": "HTML Minifier", "icon": "</>", "desc": "Minify dan beautify HTML code" },
+        { "slug": "csv-to-json", "name": "CSV to JSON", "icon": "CSV", "desc": "Konversi CSV/TSV menjadi JSON" },
+        { "slug": "xml-formatter", "name": "XML Formatter", "icon": "XML", "desc": "Format, minify, dan validasi XML" },
+        { "slug": "xml-to-json", "name": "XML to JSON", "icon": "X2J", "desc": "Konversi XML menjadi JSON" },
+        { "slug": "html-to-markdown", "name": "HTML to Markdown", "icon": "H2M", "desc": "Konversi HTML menjadi Markdown" },
+        { "slug": "base32-encoder", "name": "Base32 Encode/Decode", "icon": "B32", "desc": "Encode dan decode Base32" }
       ]
     },
     {
@@ -29,7 +34,9 @@
         { "slug": "url-encode", "name": "URL Encode/Decode", "icon": "%", "desc": "Encode/decode URL" },
         { "slug": "cron-builder", "name": "Cron Builder", "icon": "⏰", "desc": "Buat cron expression visual" },
         { "slug": "mac-address-generator", "name": "MAC Generator", "icon": "🔗", "desc": "Generate alamat MAC acak" },
-        { "slug": "user-agent-parser", "name": "User Agent Parser", "icon": "🖥", "desc": "Parse User Agent string" }
+        { "slug": "user-agent-parser", "name": "User Agent Parser", "icon": "🖥", "desc": "Parse User Agent string" },
+        { "slug": "url-parser", "name": "URL Parser", "icon": "URL", "desc": "Bedah komponen URL dan query" },
+        { "slug": "query-string-parser", "name": "Query String Parser", "icon": "?", "desc": "Parse dan build query string" }
       ]
     },
     {
@@ -52,7 +59,12 @@
         { "slug": "color-converter", "name": "Color Converter", "icon": "🌈", "desc": "HEX/RGB/HSL/CMYK converter" },
         { "slug": "emoji-picker", "name": "Emoji Picker", "icon": "😊", "desc": "Browse dan copy emoji by kategori" },
         { "slug": "slug-generator", "name": "Slug Generator", "icon": "🔗", "desc": "Ubah teks ke URL slug SEO friendly" },
-        { "slug": "word-counter", "name": "Word Counter", "icon": "W", "desc": "Hitung kata, karakter, kalimat, paragraf" }
+        { "slug": "word-counter", "name": "Word Counter", "icon": "W", "desc": "Hitung kata, karakter, kalimat, paragraf" },
+        { "slug": "markdown-table-generator", "name": "Markdown Table", "icon": "MD", "desc": "Buat tabel Markdown dari data" },
+        { "slug": "text-to-binary", "name": "Text to Binary", "icon": "01", "desc": "Konversi teks ke biner dan sebaliknya" },
+        { "slug": "duplicate-line-remover", "name": "Duplicate Line Remover", "icon": "DUP", "desc": "Hapus baris duplikat" },
+        { "slug": "find-replace", "name": "Find & Replace", "icon": "F/R", "desc": "Cari dan ganti teks massal" },
+        { "slug": "whitespace-remover", "name": "Whitespace Remover", "icon": "WS", "desc": "Rapikan spasi dan baris kosong" }
       ]
     },
     {
@@ -76,7 +88,9 @@
         { "slug": "avatar-generator", "name": "Avatar Generator", "icon": "👤", "desc": "Buat avatar acak" },
         { "slug": "barcode-generator", "name": "Barcode Generator", "icon": "▮▯", "desc": "Generate barcode" },
         { "slug": "password-memorable", "name": "Memorable Password", "icon": "🔐", "desc": "Password kata-kata acak" },
-        { "slug": "email-validator", "name": "Email Validator", "icon": "@", "desc": "Validasi format email" }
+        { "slug": "email-validator", "name": "Email Validator", "icon": "@", "desc": "Validasi format email" },
+        { "slug": "box-shadow-generator", "name": "Box Shadow Generator", "icon": "BOX", "desc": "Buat CSS box-shadow visual" },
+        { "slug": "border-radius-generator", "name": "Border Radius Generator", "icon": "RAD", "desc": "Buat CSS border-radius visual" }
       ]
     },
     {

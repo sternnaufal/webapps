@@ -1,0 +1,75 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Whitespace Remover';
+const description = 'Rapikan spasi berlebih, tab, dan baris kosong dalam teks. Bersihkan teks hasil copy-paste dengan cepat.';
+const keywords = 'whitespace remover, hapus spasi berlebih, remove whitespace, trim text, rapikan teks';
+const aboutText = 'Whitespace Remover membersihkan spasi ganda, tab, spasi di awal/akhir baris, dan baris kosong dari teks.';
+const aboutExtra = 'Pilih opsi yang dibutuhkan: trim tiap baris, gabungkan spasi ganda, hapus tab, hapus baris kosong, atau hapus semua whitespace. Berguna untuk membersihkan data CSV, kode, dan teks hasil copy-paste.';
+const relatedTools = [
+  { slug: 'duplicate-line-remover', name: 'Duplicate Line Remover', icon: 'DUP' },
+  { slug: 'find-replace', name: 'Find & Replace', icon: 'F/R' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' },
+  { slug: 'word-counter', name: 'Word Counter', icon: 'W' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+        <textarea id="wsInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10">  Halo    dunia
+   
+  Ini   teks   dengan   spasi   berlebih.
+  
+  Baris kosong di atas dan bawah.  </textarea>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 text-xs">
+          <label class="flex items-center gap-2"><input type="checkbox" id="wsTrim" class="checkbox checkbox-sm" checked> Trim tiap baris</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="wsCollapse" class="checkbox checkbox-sm" checked> Gabung spasi ganda</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="wsTabs" class="checkbox checkbox-sm" checked> Hapus tab</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="wsBlank" class="checkbox checkbox-sm" checked> Hapus baris kosong</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="wsAll" class="checkbox checkbox-sm"> Hapus semua whitespace</label>
+        </div>
+        <button id="wsBtn" class="btn btn-primary btn-sm mt-3">Bersihkan</button>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output</label>
+          <button id="wsCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="wsOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" readonly></textarea>
+        <p id="wsStats" class="text-xs mt-2 opacity-60"></p>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('wsInput'),output=document.getElementById('wsOutput'),stats=document.getElementById('wsStats');
+function clean(){
+  var t=input.value, before=t.length;
+  if(document.getElementById('wsAll').checked){
+    t=t.replace(/\s+/g,' ').trim();
+  } else {
+    if(document.getElementById('wsTrim').checked) t=t.split('\n').map(function(l){return l.trim();}).join('\n');
+    if(document.getElementById('wsCollapse').checked) t=t.replace(/[ \t]+/g,' ');
+    if(document.getElementById('wsTabs').checked) t=t.replace(/\t/g,'');
+    if(document.getElementById('wsBlank').checked) t=t.split('\n').filter(function(l){return l.trim()!=='';}).join('\n');
+  }
+  output.value=t;
+  stats.textContent=before+' → '+t.length+' karakter ('+(before-t.length)+' dihapus).';
+}
+document.getElementById('wsBtn').addEventListener('click',clean);
+document.getElementById('wsCopy').addEventListener('click',function(){ if(output.value) navigator.clipboard.writeText(output.value); });
+['wsTrim','wsCollapse','wsTabs','wsBlank','wsAll'].forEach(function(id){ document.getElementById(id).addEventListener('change',clean); });
+clean();
+</script>

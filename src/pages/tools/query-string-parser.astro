@@ -1,0 +1,85 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Query String Parser & Builder';
+const description = 'Parse query string menjadi tabel atau JSON, dan build query string dari daftar key=value.';
+const keywords = 'query string parser, query string builder, parse query, url params, query params';
+const aboutText = 'Query String Parser & Builder membantu membaca parameter URL dan membuat query string baru dengan format yang benar.';
+const aboutExtra = 'Mode Parse mengubah ?foo=bar&x=1 menjadi tabel dan JSON. Mode Build menggabungkan baris key=value menjadi query string yang sudah di-encode. Semua proses berjalan di browser.';
+const relatedTools = [
+  { slug: 'url-parser', name: 'URL Parser', icon: 'URL' },
+  { slug: 'url-encode', name: 'URL Encode/Decode', icon: '%' },
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'slug-generator', name: 'Slug Generator', icon: 'URL' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-2">Parse</div>
+      <textarea id="qsInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="5" placeholder="?foo=bar&x=1">?foo=bar&x=1&nama=Naufal%20Rakha</textarea>
+      <button id="btnParse" class="btn btn-primary btn-sm mt-3">Parse</button>
+      <div class="overflow-x-auto rounded-lg border mt-3" style="border-color:oklch(0.9 0.005 270);">
+        <table class="table table-sm w-full text-xs">
+          <thead><tr><th>Key</th><th>Value</th></tr></thead>
+          <tbody id="qsTable"></tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between mt-3 mb-1">
+        <span class="text-xs font-medium opacity-60">JSON</span>
+        <button id="btnCopyJson" class="btn btn-ghost btn-xs">Copy</button>
+      </div>
+      <textarea id="qsJson" class="textarea textarea-bordered w-full text-sm font-mono" rows="3" readonly></textarea>
+    </div>
+
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="text-xs font-medium opacity-60 mb-2">Build</div>
+      <textarea id="qsLines" class="textarea textarea-bordered w-full text-sm font-mono" rows="5" placeholder="foo=bar&#10;x=1&#10;nama=Naufal Rakha">foo=bar
+x=1
+nama=Naufal Rakha</textarea>
+      <button id="btnBuild" class="btn btn-primary btn-sm mt-3">Build</button>
+      <div class="flex items-center justify-between mt-3 mb-1">
+        <span class="text-xs font-medium opacity-60">Query String</span>
+        <button id="btnCopyBuild" class="btn btn-ghost btn-xs">Copy</button>
+      </div>
+      <input id="qsOutput" type="text" class="input input-bordered w-full text-sm font-mono" readonly>
+      <p class="text-xs opacity-60 mt-2">Satu baris satu parameter, format <code>key=value</code>.</p>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('qsInput'),table=document.getElementById('qsTable'),json=document.getElementById('qsJson'),lines=document.getElementById('qsLines'),out=document.getElementById('qsOutput');
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function parseQs(){
+  var raw=input.value.trim().replace(/^.*\?/,'');
+  var params=new URLSearchParams(raw), obj={}, rows=[];
+  params.forEach(function(v,k){ rows.push('<tr><td class="font-mono break-all">'+esc(k)+'</td><td class="font-mono break-all">'+esc(v)+'</td></tr>'); if(obj[k]===undefined) obj[k]=v; else if(Array.isArray(obj[k])) obj[k].push(v); else obj[k]=[obj[k],v]; });
+  table.innerHTML=rows.length?rows.join(''):'<tr><td colspan="2" class="opacity-60">Tidak ada parameter.</td></tr>';
+  json.value=JSON.stringify(obj,null,2);
+}
+function buildQs(){
+  var params=new URLSearchParams();
+  lines.value.split('\n').forEach(function(line){
+    line=line.trim(); if(!line) return;
+    var idx=line.indexOf('=');
+    if(idx<0) params.append(line,'');
+    else params.append(line.slice(0,idx).trim(),line.slice(idx+1).trim());
+  });
+  out.value='?'+params.toString();
+}
+document.getElementById('btnParse').addEventListener('click',parseQs);
+document.getElementById('btnBuild').addEventListener('click',buildQs);
+document.getElementById('btnCopyJson').addEventListener('click',function(){ if(json.value) navigator.clipboard.writeText(json.value); });
+document.getElementById('btnCopyBuild').addEventListener('click',function(){ if(out.value) navigator.clipboard.writeText(out.value); });
+parseQs(); buildQs();
+</script>

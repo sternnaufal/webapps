@@ -1,0 +1,81 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Find and Replace Text';
+const description = 'Cari dan ganti teks secara massal. Mendukung mode regex, case sensitive, dan hitungan penggantian.';
+const keywords = 'find and replace, cari dan ganti teks, text replace, regex replace, replace all';
+const aboutText = 'Find and Replace memudahkan penggantian kata atau pola teks di dalam paragraf, kode, atau daftar panjang.';
+const aboutExtra = 'Gunakan mode teks biasa untuk penggantian literal, atau mode regex untuk pola lanjutan seperti \\d+, \\s+, dan grup tangkapan. Jumlah kecocokan ditampilkan setelah proses.';
+const relatedTools = [
+  { slug: 'regex-tester', name: 'Regex Tester', icon: '.*' },
+  { slug: 'duplicate-line-remover', name: 'Duplicate Line Remover', icon: 'DUP' },
+  { slug: 'whitespace-remover', name: 'Whitespace Remover', icon: 'WS' },
+  { slug: 'textcase', name: 'Text Case Converter', icon: 'Aa' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <label class="text-xs font-medium opacity-60 mb-1 block">Teks</label>
+    <textarea id="frText" class="textarea textarea-bordered w-full text-sm font-mono" rows="7">Halo Naufal, website Naufal keren. Naufal suka coding.</textarea>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Cari</label>
+        <input id="frFind" type="text" class="input input-bordered w-full input-sm" value="Naufal">
+      </div>
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Ganti dengan</label>
+        <input id="frReplace" type="text" class="input input-bordered w-full input-sm" value="Rakha">
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 items-center mt-3 text-xs">
+      <label class="flex items-center gap-2"><input type="checkbox" id="frRegex" class="checkbox checkbox-sm"> Regex</label>
+      <label class="flex items-center gap-2"><input type="checkbox" id="frCase" class="checkbox checkbox-sm"> Case sensitive</label>
+      <button id="frBtn" class="btn btn-primary btn-sm">Replace All</button>
+      <span id="frCount" class="opacity-60"></span>
+    </div>
+    <div class="mt-4">
+      <div class="flex items-center justify-between mb-1">
+        <label class="text-xs font-medium opacity-60">Hasil</label>
+        <button id="frCopy" class="btn btn-ghost btn-xs">Copy</button>
+      </div>
+      <textarea id="frOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="7" readonly></textarea>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var text=document.getElementById('frText'),find=document.getElementById('frFind'),rep=document.getElementById('frReplace'),out=document.getElementById('frOutput'),count=document.getElementById('frCount');
+function replaceAll(){
+  var f=find.value, t=text.value;
+  if(!f){ out.value=t; count.textContent='Isi teks pencarian.'; count.style.color='#ef4444'; return; }
+  if(document.getElementById('frRegex').checked){
+    try{
+      var re=new RegExp(f,document.getElementById('frCase').checked?'g':'gi');
+      var m=t.match(re);
+      out.value=t.replace(re,rep.value);
+      count.textContent=(m?m.length:0)+' kecocokan.';
+      count.style.color='#10b981';
+    }catch(e){ out.value=t; count.textContent='Regex tidak valid: '+e.message; count.style.color='#ef4444'; }
+  } else {
+    var flags=document.getElementById('frCase').checked?undefined:'i';
+    var parts=f.split('');
+    var regex=new RegExp(f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'+(flags||''));
+    var matches=t.match(regex);
+    out.value=t.split(f).join(rep.value);
+    count.textContent=(matches?matches.length:0)+' kecocokan.';
+    count.style.color='#10b981';
+  }
+}
+document.getElementById('frBtn').addEventListener('click',replaceAll);
+document.getElementById('frCopy').addEventListener('click',function(){ if(out.value) navigator.clipboard.writeText(out.value); });
+replaceAll();
+</script>

@@ -1,0 +1,89 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'Base32 Encode / Decode';
+const description = 'Encode dan decode Base32 online sesuai RFC 4648. Mendukung teks UTF-8 dan opsi padding.';
+const keywords = 'base32 encoder, base32 decoder, encode base32, decode base32, rfc 4648';
+const aboutText = 'Base32 Encode / Decode mengubah teks menjadi string Base32 atau sebaliknya. Base32 sering dipakai untuk token, TOTP, dan data yang butuh alfabet aman.';
+const aboutExtra = 'Encoding memakai alfabet RFC 4648 A-Z dan 2-7. Kamu bisa memilih apakah hasil encode memakai padding = atau tidak. Semua proses berjalan di browser.';
+const relatedTools = [
+  { slug: 'base64-coded', name: 'Base64 Encode/Decode', icon: 'B64' },
+  { slug: 'hash-generator', name: 'Hash Generator', icon: '#' },
+  { slug: 'jwt-decoder', name: 'JWT Decoder', icon: 'JWT' },
+  { slug: 'uuid-generator', name: 'UUID Generator', icon: 'ID' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input</label>
+        <textarea id="b32Input" class="textarea textarea-bordered w-full text-sm font-mono" rows="7" placeholder="Teks atau Base32...">Halo Naufal!</textarea>
+        <div class="flex flex-wrap gap-2 items-center mt-3">
+          <button id="btnEncode" class="btn btn-primary btn-sm">Encode</button>
+          <button id="btnDecode" class="btn btn-ghost btn-sm">Decode</button>
+          <label class="flex items-center gap-2 text-xs">
+            <input type="checkbox" id="usePadding" class="checkbox checkbox-sm" checked>
+            Pakai padding =
+          </label>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output</label>
+          <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+        </div>
+        <textarea id="b32Output" class="textarea textarea-bordered w-full text-sm font-mono" rows="7" readonly></textarea>
+        <p id="status" class="text-xs mt-2 opacity-60"></p>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+var input=document.getElementById('b32Input'),output=document.getElementById('b32Output'),status=document.getElementById('status'),pad=document.getElementById('usePadding');
+function encodeBase32(bytes,withPad){
+  var bits=0,value=0,out='';
+  for(var i=0;i<bytes.length;i++){
+    value=(value<<8)|bytes[i]; bits+=8;
+    while(bits>=5){ out+=ALPHABET[(value>>>(bits-5))&31]; bits-=5; }
+  }
+  if(bits>0) out+=ALPHABET[(value<<(5-bits))&31];
+  if(withPad) while(out.length%8) out+='=';
+  return out;
+}
+function decodeBase32(str){
+  str=str.toUpperCase().replace(/\s+/g,'').replace(/=+$/,'');
+  var bits=0,value=0,out=[];
+  for(var i=0;i<str.length;i++){
+    var idx=ALPHABET.indexOf(str[i]);
+    if(idx<0) throw new Error('Karakter Base32 tidak valid: '+str[i]);
+    value=(value<<5)|idx; bits+=5;
+    if(bits>=8){ out.push((value>>>(bits-8))&255); bits-=8; }
+  }
+  return new Uint8Array(out);
+}
+document.getElementById('btnEncode').addEventListener('click',function(){
+  try{ output.value=encodeBase32(new TextEncoder().encode(input.value),pad.checked); status.textContent='Encode selesai.'; status.style.color='#10b981'; }
+  catch(e){ status.textContent=e.message; status.style.color='#ef4444'; }
+});
+document.getElementById('btnDecode').addEventListener('click',function(){
+  try{ output.value=new TextDecoder().decode(decodeBase32(input.value)); status.textContent='Decode selesai.'; status.style.color='#10b981'; }
+  catch(e){ output.value=''; status.textContent=e.message; status.style.color='#ef4444'; }
+});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function(){ status.textContent='Output disalin.'; status.style.color='#10b981'; });
+});
+document.getElementById('btnEncode').click();
+</script>

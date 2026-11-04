@@ -1,0 +1,113 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'CSV to JSON Converter';
+const description = 'Konversi CSV atau TSV menjadi JSON online. Mendukung delimiter koma, titik koma, pipe, tab, dan baris header.';
+const keywords = 'csv to json, konversi csv ke json, csv converter, tsv to json, csv parser';
+const aboutText = 'CSV to JSON Converter mengubah data tabular dari CSV/TSV menjadi JSON yang siap dipakai di aplikasi, API, atau spreadsheet.';
+const aboutExtra = 'Parser mendukung nilai ber-kutip, delimiter koma/titik koma/pipe/tab, serta opsi baris pertama sebagai header. Semua proses berjalan di browser, jadi data tidak dikirim ke server.';
+const relatedTools = [
+  { slug: 'json-csv', name: 'JSON to CSV', icon: 'CSV' },
+  { slug: 'csv-viewer', name: 'CSV Viewer', icon: 'TBL' },
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'yaml-json', name: 'YAML to JSON', icon: 'YML' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs font-medium opacity-60 mb-1 block">Input CSV / TSV</label>
+        <textarea id="csvInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" placeholder="name,email,role&#10;Naufal,naufal@example.com,Admin&#10;Rakha,rakha@example.com,User">name,email,role
+Naufal,naufal@example.com,Admin
+Rakha,rakha@example.com,User</textarea>
+        <div class="flex flex-wrap gap-3 items-center mt-3">
+          <select id="delimiter" class="select select-bordered select-sm">
+            <option value=",">Koma (,)</option>
+            <option value=";">Titik koma (;)</option>
+            <option value="|">Pipe (|)</option>
+            <option value="tab">Tab</option>
+          </select>
+          <label class="flex items-center gap-2 text-xs">
+            <input type="checkbox" id="hasHeader" class="checkbox checkbox-sm" checked>
+            Baris pertama header
+          </label>
+          <button id="btnConvert" class="btn btn-primary btn-sm">Convert</button>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-medium opacity-60">Output JSON</label>
+          <div class="flex gap-1">
+            <button id="btnCopy" class="btn btn-ghost btn-xs">Copy</button>
+            <button id="btnDownload" class="btn btn-ghost btn-xs">Download</button>
+          </div>
+        </div>
+        <textarea id="jsonOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="10" readonly></textarea>
+        <p id="status" class="text-xs opacity-60 mt-2"></p>
+      </div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('csvInput'),delim=document.getElementById('delimiter'),hasHeader=document.getElementById('hasHeader'),output=document.getElementById('jsonOutput'),status=document.getElementById('status');
+function parseCSV(text,d){
+  var rows=[],row=[],cur='',quoted=false;
+  for(var i=0;i<text.length;i++){
+    var c=text[i];
+    if(quoted){
+      if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else quoted=false; }
+      else cur+=c;
+    } else {
+      if(c==='"') quoted=true;
+      else if(c===d){ row.push(cur);cur=''; }
+      else if(c==='\n'){ row.push(cur);rows.push(row);row=[];cur=''; }
+      else if(c!=='\r') cur+=c;
+    }
+  }
+  row.push(cur);
+  if(row.length>1 || row[0]!=='') rows.push(row);
+  return rows;
+}
+function convert(){
+  var d=delim.value==='tab'?'\t':delim.value;
+  var rows=parseCSV(input.value.trim(),d);
+  if(!rows.length){ output.value=''; status.textContent='Tidak ada data.'; return; }
+  var headers;
+  if(hasHeader.checked){
+    headers=rows.shift().map(function(h,i){ return h.trim()||('column_'+(i+1)); });
+  } else {
+    headers=rows[0].map(function(_,i){ return 'column_'+(i+1); });
+  }
+  var data=rows.filter(function(r){ return r.some(function(v){ return v!==''; }); }).map(function(row){
+    var obj={};
+    headers.forEach(function(h,i){ obj[h]=row[i]===undefined?'':row[i]; });
+    return obj;
+  });
+  output.value=JSON.stringify(data,null,2);
+  status.textContent=data.length+' baris, '+headers.length+' kolom.';
+}
+document.getElementById('btnConvert').addEventListener('click',convert);
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function(){ status.textContent='JSON disalin.'; });
+});
+document.getElementById('btnDownload').addEventListener('click',function(){
+  if(!output.value) return;
+  var blob=new Blob([output.value],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='data.json'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+});
+convert();
+</script>

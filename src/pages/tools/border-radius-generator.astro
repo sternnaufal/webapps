@@ -1,0 +1,70 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'CSS Border Radius Generator';
+const description = 'Buat CSS border-radius secara visual. Atur sudut kiri atas, kanan atas, kanan bawah, dan kiri bawah.';
+const keywords = 'border radius generator, css border radius, rounded corners, css generator, border-radius';
+const aboutText = 'CSS Border Radius Generator membantu membuat sudut membulat pada elemen dengan kontrol terpisah untuk setiap sudut.';
+const aboutExtra = 'Atur nilai tiap sudut dengan slider, pilih unit px atau persen, lalu salin kode CSS yang dihasilkan. Preview berubah langsung saat nilai diubah.';
+const relatedTools = [
+  { slug: 'box-shadow-generator', name: 'Box Shadow Generator', icon: 'BOX' },
+  { slug: 'gradient-generator', name: 'CSS Gradient', icon: 'GRD' },
+  { slug: 'css-unit', name: 'CSS Unit Converter', icon: 'px' },
+  { slug: 'color-picker', name: 'Color Picker', icon: 'CLR' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <label>Kiri atas <span id="vtl" class="font-mono opacity-60">16px</span><input id="rtl" type="range" min="0" max="100" value="16" class="range range-xs"></label>
+        <label>Kanan atas <span id="vtr" class="font-mono opacity-60">16px</span><input id="rtr" type="range" min="0" max="100" value="16" class="range range-xs"></label>
+        <label>Kanan bawah <span id="vbr" class="font-mono opacity-60">16px</span><input id="rbr" type="range" min="0" max="100" value="16" class="range range-xs"></label>
+        <label>Kiri bawah <span id="vbl" class="font-mono opacity-60">16px</span><input id="rbl" type="range" min="0" max="100" value="16" class="range range-xs"></label>
+        <label>Unit
+          <select id="unit" class="select select-bordered select-sm w-full">
+            <option value="px">px</option>
+            <option value="%">%</option>
+          </select>
+        </label>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="btnCopy" class="btn btn-primary btn-sm">Copy CSS</button>
+        <button id="btnReset" class="btn btn-ghost btn-sm">Reset</button>
+      </div>
+      <textarea id="cssOutput" class="textarea textarea-bordered w-full text-sm font-mono mt-3" rows="2" readonly></textarea>
+    </div>
+    <div class="rounded-xl p-5 flex items-center justify-center min-h-[260px]" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+      <div id="preview" style="width:160px;height:160px;background:linear-gradient(135deg,#6366f1,#ec4899);border-radius:16px 16px 16px 16px;"></div>
+    </div>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var ids=['rtl','rtr','rbr','rbl'], preview=document.getElementById('preview'), out=document.getElementById('cssOutput'), unit=document.getElementById('unit');
+function update(){
+  var u=unit.value;
+  var a=document.getElementById('rtl').value+u, b=document.getElementById('rtr').value+u, c=document.getElementById('rbr').value+u, d=document.getElementById('rbl').value+u;
+  preview.style.borderRadius=a+' '+b+' '+c+' '+d;
+  out.value='border-radius: '+a+' '+b+' '+c+' '+d+';';
+  document.getElementById('vtl').textContent=a; document.getElementById('vtr').textContent=b;
+  document.getElementById('vbr').textContent=c; document.getElementById('vbl').textContent=d;
+}
+ids.forEach(function(id){ document.getElementById(id).addEventListener('input',update); });
+unit.addEventListener('change',update);
+document.getElementById('btnCopy').addEventListener('click',function(){ if(out.value) navigator.clipboard.writeText(out.value); });
+document.getElementById('btnReset').addEventListener('click',function(){
+  ids.forEach(function(id){ document.getElementById(id).value=16; });
+  unit.value='px'; update();
+});
+update();
+</script>

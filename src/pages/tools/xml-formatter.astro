@@ -1,0 +1,87 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ToolShell from "../../components/ToolShell.astro";
+
+const title = 'XML Formatter & Validator';
+const description = 'Format, minify, dan validasi XML online. Rapikan struktur XML dan cek apakah dokumen XML valid.';
+const keywords = 'xml formatter, xml validator, xml beautifier, minify xml, format xml online';
+const aboutText = 'XML Formatter membantu merapikan dokumen XML agar mudah dibaca, sekaligus memvalidasi apakah struktur XML valid.';
+const aboutExtra = 'Gunakan tombol Format untuk memberi indentasi, Minify untuk menghapus spasi antar tag, dan Validate untuk memeriksa kesalahan sintaks XML. Semua proses berjalan di browser.';
+const relatedTools = [
+  { slug: 'xml-to-json', name: 'XML to JSON', icon: 'X2J' },
+  { slug: 'html-minifier', name: 'HTML Minifier', icon: '</>' },
+  { slug: 'json-formatter', name: 'JSON Formatter', icon: '{}' },
+  { slug: 'yaml-json', name: 'YAML to JSON', icon: 'YML' }
+];
+---
+
+<ToolLayout title={title} description={description} keywords={keywords}>
+  <div class="mb-6">
+    <h1 class="text-xl font-bold tracking-tight" style="letter-spacing:-0.03em;">{title}</h1>
+    <p class="text-sm opacity-50 mt-0.5">{description}</p>
+  </div>
+
+  <div class="rounded-xl p-5" style="background:oklch(0.97 0.003 270);border:1px solid oklch(0.9 0.005 270);border-top:3px solid #14b8a6;">
+    <label class="text-xs font-medium opacity-60 mb-1 block">Input XML</label>
+    <textarea id="xmlInput" class="textarea textarea-bordered w-full text-sm font-mono" rows="9" placeholder="<root><item>Contoh</item></root>"><root><item id="1">Contoh</item><item id="2">Data</item></root></textarea>
+    <div class="flex flex-wrap gap-2 mt-3">
+      <button id="btnFormat" class="btn btn-primary btn-sm">Format</button>
+      <button id="btnMinify" class="btn btn-ghost btn-sm">Minify</button>
+      <button id="btnValidate" class="btn btn-ghost btn-sm">Validate</button>
+      <button id="btnCopy" class="btn btn-ghost btn-sm">Copy Output</button>
+    </div>
+    <div class="mt-4">
+      <label class="text-xs font-medium opacity-60 mb-1 block">Output</label>
+      <textarea id="xmlOutput" class="textarea textarea-bordered w-full text-sm font-mono" rows="9" readonly></textarea>
+    </div>
+    <p id="status" class="text-xs mt-2 opacity-60">Siap memproses XML.</p>
+  </div>
+
+  <ToolShell about={aboutText} aboutExtra={aboutExtra} relatedTools={relatedTools} />
+</ToolLayout>
+
+<script is:inline>
+var input=document.getElementById('xmlInput'),output=document.getElementById('xmlOutput'),status=document.getElementById('status');
+function validateXml(xml){
+  var doc=new DOMParser().parseFromString(xml,'application/xml');
+  var err=doc.querySelector('parsererror');
+  return err?err.textContent:'';
+}
+function formatXml(xml){
+  var reg=/(>)(<)(\/*)/g;
+  xml=xml.replace(reg,'$1\n$2$3');
+  var pad=0,out='';
+  xml.split('\n').forEach(function(node){
+    if(node.match(/^<\/\w/)) pad--;
+    var indent=node.match(/^<\w[^>]*[^\/]>$/) ? 1 : 0;
+    out+='  '.repeat(Math.max(pad,0))+node+'\n';
+    pad+=indent;
+  });
+  return out.trim();
+}
+document.getElementById('btnFormat').addEventListener('click',function(){
+  var xml=input.value.trim(); if(!xml) return;
+  var err=validateXml(xml);
+  if(err){ status.textContent='XML tidak valid: '+err.split('\n')[0]; status.style.color='#ef4444'; return; }
+  output.value=formatXml(xml);
+  status.textContent='XML diformat.'; status.style.color='#10b981';
+});
+document.getElementById('btnMinify').addEventListener('click',function(){
+  var xml=input.value.trim(); if(!xml) return;
+  var err=validateXml(xml);
+  if(err){ status.textContent='XML tidak valid: '+err.split('\n')[0]; status.style.color='#ef4444'; return; }
+  output.value=xml.replace(/>\s+</g,'><').trim();
+  status.textContent='XML diminify.'; status.style.color='#10b981';
+});
+document.getElementById('btnValidate').addEventListener('click',function(){
+  var xml=input.value.trim(); if(!xml) return;
+  var err=validateXml(xml);
+  status.textContent=err?'XML tidak valid: '+err.split('\n')[0]:'XML valid.';
+  status.style.color=err?'#ef4444':'#10b981';
+});
+document.getElementById('btnCopy').addEventListener('click',function(){
+  if(!output.value) return;
+  navigator.clipboard.writeText(output.value).then(function(){ status.textContent='Output disalin.'; status.style.color='#10b981'; });
+});
+document.getElementById('btnFormat').click();
+</script>
